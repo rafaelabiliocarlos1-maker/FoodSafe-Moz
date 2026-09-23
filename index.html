@@ -117,6 +117,13 @@
       height: 20px;
     }
 
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    select,
     textarea,
     input {
       width: 100%;
@@ -125,6 +132,7 @@
       border-radius: 10px;
       font-size: 15px;
       margin-top: 8px;
+      background: white;
     }
 
     textarea {
@@ -141,7 +149,7 @@
       border-radius: 10px;
       font-size: 16px;
       font-weight: bold;
-      margin-top: 12px;
+      margin-top: 15px;
     }
 
     .success {
@@ -153,6 +161,20 @@
       margin-top: 15px;
       font-weight: bold;
       text-align: center;
+    }
+
+    .result {
+      display: none;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .attention {
+      background: #fff3bf;
+      color: #8a5a00;
     }
 
     .history-item {
@@ -195,8 +217,11 @@
 
 <main>
 
+  <!-- INÍCIO -->
   <section id="inicio" class="section active">
+
     <div class="card welcome">
+
       <h2>Bem-vindo ao FoodSafe Moz 🇲🇿</h2>
 
       <p>
@@ -215,15 +240,67 @@
       <button class="menu-button" onclick="showSection('problemas')">
         ⚠️ Registar Problema
       </button>
+
     </div>
+
   </section>
 
 
+  <!-- TEMPERATURA -->
   <section id="temperatura" class="section">
+
     <div class="card">
+
       <h2>🌡️ Registo de Temperatura</h2>
 
-      <label>Temperatura (°C)</label>
+      <p>
+        Registe a temperatura observada durante a verificação.
+      </p>
+
+      <label for="foodType">
+        Alimento ou equipamento
+      </label>
+
+      <select id="foodType">
+
+        <option value="">
+          Selecionar...
+        </option>
+
+        <option value="Frigorífico">
+          Frigorífico
+        </option>
+
+        <option value="Congelador">
+          Congelador
+        </option>
+
+        <option value="Carne">
+          Carne
+        </option>
+
+        <option value="Peixe">
+          Peixe
+        </option>
+
+        <option value="Leite e derivados">
+          Leite e derivados
+        </option>
+
+        <option value="Alimentos preparados">
+          Alimentos preparados
+        </option>
+
+        <option value="Outro">
+          Outro
+        </option>
+
+      </select>
+
+
+      <label for="temperatureInput">
+        Temperatura (°C)
+      </label>
 
       <input
         type="number"
@@ -232,18 +309,31 @@
         step="0.1"
       >
 
+
       <button class="save-button" onclick="saveTemperature()">
-        Guardar temperatura
+        💾 Guardar temperatura
       </button>
+
 
       <div id="temperatureSuccess" class="success">
         ✅ Temperatura registada com sucesso!
       </div>
+
+
+      <div id="temperatureResult" class="result attention">
+        ⚠️ Registo guardado. O limite aplicável deve ser definido
+        conforme o tipo de alimento/equipamento e o procedimento
+        de segurança utilizado.
+      </div>
+
     </div>
+
   </section>
 
 
+  <!-- CHECKLIST -->
   <section id="checklist" class="section">
+
     <div class="card">
 
       <h2>📋 Checklist de Segurança Alimentar</h2>
@@ -289,9 +379,11 @@
       </div>
 
     </div>
+
   </section>
 
 
+  <!-- PROBLEMAS -->
   <section id="problemas" class="section">
 
     <div class="card">
@@ -320,6 +412,7 @@
   </section>
 
 
+  <!-- DASHBOARD -->
   <section id="dashboard" class="section">
 
     <div class="card">
@@ -346,6 +439,7 @@
   </section>
 
 
+  <!-- HISTÓRICO -->
   <section id="historico" class="section">
 
     <div class="card">
@@ -374,6 +468,7 @@
 
 </main>
 
+
 <footer>
   FoodSafe Moz 🇲🇿<br>
   Alimentos seguros, famílias protegidas.
@@ -382,218 +477,438 @@
 
 <script>
 
-function showSection(sectionId) {
+  // =========================
+  // NAVEGAÇÃO
+  // =========================
 
-  const sections = document.querySelectorAll(".section");
+  function showSection(sectionId) {
 
-  sections.forEach(section => {
-    section.classList.remove("active");
-  });
+    const sections =
+      document.querySelectorAll(".section");
 
-  document.getElementById(sectionId).classList.add("active");
-
-  updateDashboard();
-  updateHistory();
-}
-
-
-function saveProblem() {
-
-  const input = document.getElementById("problemInput");
-  const success = document.getElementById("problemSuccess");
-
-  const problem = input.value.trim();
-
-  if (problem === "") {
-
-    alert("⚠️ Por favor, escreva o problema antes de guardar.");
-
-    input.focus();
-
-    return;
-  }
-
-  const problems =
-    JSON.parse(localStorage.getItem("foodsafemoz_problems")) || [];
-
-  problems.push({
-    description: problem,
-    date: new Date().toLocaleString("pt-PT")
-  });
-
-  localStorage.setItem(
-    "foodsafemoz_problems",
-    JSON.stringify(problems)
-  );
-
-  success.style.display = "block";
-
-  input.value = "";
-
-  updateDashboard();
-  updateHistory();
-
-  setTimeout(() => {
-    success.style.display = "none";
-  }, 3000);
-}
-
-
-function saveTemperature() {
-
-  const input = document.getElementById("temperatureInput");
-  const success = document.getElementById("temperatureSuccess");
-
-  const temperature = input.value.trim();
-
-  if (temperature === "") {
-
-    alert("⚠️ Digite uma temperatura.");
-
-    input.focus();
-
-    return;
-  }
-
-  const temperatures =
-    JSON.parse(localStorage.getItem("foodsafemoz_temperatures")) || [];
-
-  temperatures.push({
-    value: temperature,
-    date: new Date().toLocaleString("pt-PT")
-  });
-
-  localStorage.setItem(
-    "foodsafemoz_temperatures",
-    JSON.stringify(temperatures)
-  );
-
-  success.style.display = "block";
-
-  input.value = "";
-
-  updateDashboard();
-  updateHistory();
-
-  setTimeout(() => {
-    success.style.display = "none";
-  }, 3000);
-}
-
-
-function updateDashboard() {
-
-  const problems =
-    JSON.parse(localStorage.getItem("foodsafemoz_problems")) || [];
-
-  const temperatures =
-    JSON.parse(localStorage.getItem("foodsafemoz_temperatures")) || [];
-
-  const checked =
-    document.querySelectorAll(".check:checked").length;
-
-  document.getElementById("problemCount").textContent =
-    problems.length;
-
-  document.getElementById("temperatureCount").textContent =
-    temperatures.length;
-
-  document.getElementById("checkedCount").textContent =
-    checked;
-}
-
-
-function updateHistory() {
-
-  const problemContainer =
-    document.getElementById("problemHistory");
-
-  const temperatureContainer =
-    document.getElementById("temperatureHistory");
-
-  const problems =
-    JSON.parse(localStorage.getItem("foodsafemoz_problems")) || [];
-
-  const temperatures =
-    JSON.parse(localStorage.getItem("foodsafemoz_temperatures")) || [];
-
-
-  if (problems.length === 0) {
-
-    problemContainer.innerHTML =
-      '<div class="empty">Ainda não existem problemas registados.</div>';
-
-  } else {
-
-    problemContainer.innerHTML = "";
-
-    problems.slice().reverse().forEach(problem => {
-
-      const item = document.createElement("div");
-
-      item.className = "history-item";
-
-      item.innerHTML = `
-        <strong>⚠️ Problema</strong>
-        <p>${escapeHTML(problem.description)}</p>
-        <small>📅 ${problem.date}</small>
-      `;
-
-      problemContainer.appendChild(item);
-
+    sections.forEach(section => {
+      section.classList.remove("active");
     });
-  }
 
+    document
+      .getElementById(sectionId)
+      .classList.add("active");
 
-  if (temperatures.length === 0) {
-
-    temperatureContainer.innerHTML =
-      '<div class="empty">Ainda não existem registos.</div>';
-
-  } else {
-
-    temperatureContainer.innerHTML = "";
-
-    temperatures.slice().reverse().forEach(item => {
-
-      const temperatureItem =
-        document.createElement("div");
-
-      temperatureItem.className = "history-item";
-
-      temperatureItem.innerHTML = `
-        <strong>🌡️ ${escapeHTML(item.value)} °C</strong>
-        <p><small>📅 ${item.date}</small></p>
-      `;
-
-      temperatureContainer.appendChild(temperatureItem);
-
-    });
-  }
-}
-
-
-function escapeHTML(text) {
-
-  const div = document.createElement("div");
-
-  div.textContent = text;
-
-  return div.innerHTML;
-}
-
-
-document.addEventListener("change", function(event) {
-
-  if (event.target.classList.contains("check")) {
     updateDashboard();
+    updateHistory();
   }
 
-});
+
+  // =========================
+  // TEMPERATURA
+  // =========================
+
+  function saveTemperature() {
+
+    const type =
+      document.getElementById("foodType").value;
+
+    const input =
+      document.getElementById("temperatureInput");
+
+    const success =
+      document.getElementById("temperatureSuccess");
+
+    const result =
+      document.getElementById("temperatureResult");
+
+    const temperature =
+      input.value.trim();
 
 
-updateDashboard();
-updateHistory();
+    if (type === "") {
+
+      alert(
+        "⚠️ Selecione o alimento ou equipamento."
+      );
+
+      return;
+    }
+
+
+    if (temperature === "") {
+
+      alert(
+        "⚠️ Digite a temperatura."
+      );
+
+      input.focus();
+
+      return;
+    }
+
+
+    const temperatures =
+      JSON.parse(
+        localStorage.getItem(
+          "foodsafemoz_temperatures"
+        )
+      ) || [];
+
+
+    const now =
+      new Date();
+
+
+    temperatures.push({
+
+      type: type,
+
+      value: temperature,
+
+      date: now.toLocaleDateString("pt-PT"),
+
+      time: now.toLocaleTimeString(
+        "pt-PT",
+        {
+          hour: "2-digit",
+          minute: "2-digit"
+        }
+      )
+
+    });
+
+
+    localStorage.setItem(
+      "foodsafemoz_temperatures",
+      JSON.stringify(temperatures)
+    );
+
+
+    success.style.display = "block";
+
+    result.style.display = "block";
+
+    input.value = "";
+
+    document.getElementById("foodType").value = "";
+
+
+    updateDashboard();
+
+    updateHistory();
+
+
+    setTimeout(() => {
+
+      success.style.display = "none";
+
+      result.style.display = "none";
+
+    }, 5000);
+
+  }
+
+
+  // =========================
+  // PROBLEMAS
+  // =========================
+
+  function saveProblem() {
+
+    const input =
+      document.getElementById("problemInput");
+
+    const success =
+      document.getElementById("problemSuccess");
+
+    const problem =
+      input.value.trim();
+
+
+    if (problem === "") {
+
+      alert(
+        "⚠️ Por favor, escreva o problema antes de guardar."
+      );
+
+      input.focus();
+
+      return;
+    }
+
+
+    const problems =
+      JSON.parse(
+        localStorage.getItem(
+          "foodsafemoz_problems"
+        )
+      ) || [];
+
+
+    problems.push({
+
+      description: problem,
+
+      date:
+        new Date().toLocaleString("pt-PT")
+
+    });
+
+
+    localStorage.setItem(
+      "foodsafemoz_problems",
+      JSON.stringify(problems)
+    );
+
+
+    success.style.display = "block";
+
+    input.value = "";
+
+
+    updateDashboard();
+
+    updateHistory();
+
+
+    setTimeout(() => {
+
+      success.style.display = "none";
+
+    }, 3000);
+
+  }
+
+
+  // =========================
+  // DASHBOARD
+  // =========================
+
+  function updateDashboard() {
+
+    const problems =
+      JSON.parse(
+        localStorage.getItem(
+          "foodsafemoz_problems"
+        )
+      ) || [];
+
+
+    const temperatures =
+      JSON.parse(
+        localStorage.getItem(
+          "foodsafemoz_temperatures"
+        )
+      ) || [];
+
+
+    const checked =
+      document.querySelectorAll(
+        ".check:checked"
+      ).length;
+
+
+    document.getElementById(
+      "problemCount"
+    ).textContent =
+      problems.length;
+
+
+    document.getElementById(
+      "temperatureCount"
+    ).textContent =
+      temperatures.length;
+
+
+    document.getElementById(
+      "checkedCount"
+    ).textContent =
+      checked;
+
+  }
+
+
+  // =========================
+  // HISTÓRICO
+  // =========================
+
+  function updateHistory() {
+
+    const problemContainer =
+      document.getElementById(
+        "problemHistory"
+      );
+
+
+    const temperatureContainer =
+      document.getElementById(
+        "temperatureHistory"
+      );
+
+
+    const problems =
+      JSON.parse(
+        localStorage.getItem(
+          "foodsafemoz_problems"
+        )
+      ) || [];
+
+
+    const temperatures =
+      JSON.parse(
+        localStorage.getItem(
+          "foodsafemoz_temperatures"
+        )
+      ) || [];
+
+
+    // PROBLEMAS
+
+    if (problems.length === 0) {
+
+      problemContainer.innerHTML =
+        '<div class="empty">Ainda não existem problemas registados.</div>';
+
+    } else {
+
+      problemContainer.innerHTML = "";
+
+
+      problems
+        .slice()
+        .reverse()
+        .forEach(problem => {
+
+          const item =
+            document.createElement("div");
+
+          item.className =
+            "history-item";
+
+
+          item.innerHTML = `
+
+            <strong>⚠️ Problema</strong>
+
+            <p>
+              ${escapeHTML(
+                problem.description
+              )}
+            </p>
+
+            <small>
+              📅 ${problem.date}
+            </small>
+
+          `;
+
+
+          problemContainer.appendChild(item);
+
+        });
+
+    }
+
+
+    // TEMPERATURAS
+
+    if (temperatures.length === 0) {
+
+      temperatureContainer.innerHTML =
+        '<div class="empty">Ainda não existem registos.</div>';
+
+    } else {
+
+      temperatureContainer.innerHTML = "";
+
+
+      temperatures
+        .slice()
+        .reverse()
+        .forEach(item => {
+
+          const temperatureItem =
+            document.createElement("div");
+
+
+          temperatureItem.className =
+            "history-item";
+
+
+          temperatureItem.innerHTML = `
+
+            <strong>
+              🌡️ ${escapeHTML(item.type)}
+            </strong>
+
+            <p>
+              Temperatura:
+              <strong>
+                ${escapeHTML(item.value)} °C
+              </strong>
+            </p>
+
+            <small>
+              📅 ${item.date}
+              &nbsp; 🕐 ${item.time}
+            </small>
+
+          `;
+
+
+          temperatureContainer
+            .appendChild(
+              temperatureItem
+            );
+
+        });
+
+    }
+
+  }
+
+
+  // =========================
+  // SEGURANÇA DO TEXTO
+  // =========================
+
+  function escapeHTML(text) {
+
+    const div =
+      document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+
+  }
+
+
+  // =========================
+  // CHECKLIST
+  // =========================
+
+  document.addEventListener(
+    "change",
+    function(event) {
+
+      if (
+        event.target.classList.contains(
+          "check"
+        )
+      ) {
+
+        updateDashboard();
+
+      }
+
+    }
+  );
+
+
+  // =========================
+  // INICIALIZAÇÃO
+  // =========================
+
+  updateDashboard();
+
+  updateHistory();
 
 </script>
 
