@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>FoodSafe Moz</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f8f6;
+      color: #173b2d;
+    }
+
+    .header {
+      background: #0b7a4b;
+      color: white;
+      padding: 45px 25px 35px;
+      border-radius: 0 0 30px 30px;
+    }
+
+    .logo {
+      font-size: 34px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .logo span {
+      color: #b9f227;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      line-height: 1.5;
+      opacity: 0.95;
+    }
+
+    .container {
+      padding: 25px 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .welcome {
+      margin-bottom: 25px;
+    }
+
+    .welcome h2 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .welcome p {
+      color: #61736b;
+      line-height: 1.5;
+    }
+
+    .button {
+      width: 100%;
+      padding: 17px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 15px;
+      background: white;
+      color: #173b2d;
+      font-size: 17px;
+      font-weight: bold;
+      text-align: left;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      cursor: pointer;
+    }
+
+    .button:hover {
+      transform: scale(1.01);
+    }
+
+    .icon {
+      font-size: 25px;
+      margin-right: 12px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      padding: 20px;
+      color: #789087;
+      font-size: 13px;
+    }
+
+    #app {
+      display: none;
+    }
+
+    .back {
+      background: #0b7a4b;
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+      margin-bottom: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-top: 10px;
+      border: 1px solid #d5dfda;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    .check {
+      margin-top: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="logo">
+      FoodSafe <span>Moz</span>
+    </div>
+
+    <div class="subtitle">
+      Alimentos seguros, famílias protegidas.
+    </div>
+  </header>
+
+
+  <main class="container" id="home">
+
+    <section class="welcome">
+      <h2>Bem-vindo ao FoodSafe Moz 👋</h2>
+
+      <p>
+        Uma ferramenta digital para ajudar no controlo,
+        prevenção e segurança dos alimentos.
+      </p>
+    </section>
+
+
+    <button class="button" onclick="abrir('temperatura')">
+      <span class="icon">🌡️</span>
+      Controlo de temperatura
+    </button>
+
+
+    <button class="button" onclick="abrir('higiene')">
+      <span class="icon">🧼</span>
+      Higiene e limpeza
+    </button>
+
+
+    <button class="button" onclick="abrir('checklist')">
+      <span class="icon">📋</span>
+      Checklist de segurança
+    </button>
+
+
+    <button class="button" onclick="abrir('problema')">
+      <span class="icon">⚠️</span>
+      Registar problema
+    </button>
+
+
+    <button class="button" onclick="abrir('dashboard')">
+      <span class="icon">📊</span>
+      Dashboard
+    </button>
+
+
+    <div class="footer">
+      FoodSafe Moz © 2026<br>
+      Tecnologia para alimentos mais seguros.
+    </div>
+
+  </main>
+
+
+  <main class="container" id="app">
+
+    <button class="back" onclick="voltar()">
+      ← Voltar
+    </button>
+
+
+    <div id="temperatura" class="card">
+
+      <h2>🌡️ Controlo de temperatura</h2>
+
+      <p style="margin-top:10px;">
+        Registe a temperatura do alimento ou equipamento.
+      </p>
+
+      <input
+        type="number"
+        id="temp"
+        placeholder="Ex: 5"
+      >
+
+      <button
+        class="button"
+        style="margin-top:15px;background:#0b7a4b;color:white;"
+        onclick="verificarTemperatura()"
+      >
+        Verificar
+      </button>
+
+      <p id="resultado"></p>
+
+    </div>
+
+
+    <div id="higiene" class="card">
+
+      <h2>🧼 Higiene e limpeza</h2>
+
+      <div class="check">
+        <input type="checkbox">
+        Higiene das mãos
+      </div>
+
+      <div class="check">
+        <input type="checkbox">
+        Superfícies limpas
+      </div>
+
+      <div class="check">
+        <input type="checkbox">
+        Equipamentos limpos
+      </div>
+
+      <div class="check">
+        <input type="checkbox">
+        Água segura
+      </div>
+
+    </div>
+
+
+    <div id="checklist" class="card">
+
+      <h2>📋 Checklist</h2>
+
+      <div class="check">
+        <input type="checkbox">
+        Alimentos recebidos em boas condições
+      </div>
+
+      <div class="check">
+        <input type="checkbox">
+        Armazenamento adequado
+      </div>
+
+      <div class="check">
+        <input type="checkbox">
+        Preparação segura
+      </div>
+
+      <div class="check">
+        <input type="checkbox">
+        Cozedura adequada
+      </div>
+
+      <div class="check">
+        <input type="checkbox">
+        Conservação adequada
+      </div>
+
+    </div>
+
+
+    <div id="problema" class="card">
+
+      <h2>⚠️ Registar problema</h2>
+
+      <input
+        type="text"
+        id="problemaTexto"
+        placeholder="Descreva o problema"
+      >
+
+      <button
+        class="button"
+        style="margin-top:15px;background:#0b7a4b;color:white;"
+        onclick="guardarProblema()"
+      >
+        Guardar problema
+      </button>
+
+      <p id="problemaResultado"></p>
+
+    </div>
+
+
+    <div id="dashboard" class="card">
+
+      <h2>📊 Dashboard</h2>
+
+      <p style="margin-top:15px;">
+        Registos realizados:
+        <strong id="registos">0</strong>
+      </p>
+
+      <p style="margin-top:10px;">
+        Problemas encontrados:
+        <strong id="problemas">0</strong>
+      </p>
+
+      <p style="margin-top:10px;">
+        Estado geral:
+        <strong>Em avaliação</strong>
+      </p>
+
+    </div>
+
+  </main>
+
+
+  <script>
+
+    let totalRegistos = 0;
+    let totalProblemas = 0;
+
+
+    function abrir(pagina) {
+
+      document.getElementById("home").style.display = "none";
+
+      document.getElementById("app").style.display = "block";
+
+      document.getElementById(pagina).scrollIntoView({
+        behavior: "smooth"
+      });
+
+    }
+
+
+    function voltar() {
+
+      document.getElementById("app").style.display = "none";
+
+      document.getElementById("home").style.display = "block";
+
+      window.scrollTo(0, 0);
+
+    }
+
+
+    function verificarTemperatura() {
+
+      let temperatura =
+        parseFloat(
+          document.getElementById("temp").value
+        );
+
+      let resultado =
+        document.getElementById("resultado");
+
+
+      if (isNaN(temperatura)) {
+
+        resultado.innerHTML =
+          "⚠️ Introduza uma temperatura.";
+
+        return;
+
+      }
+
+
+      totalRegistos++;
+
+      document.getElementById("registos").innerText =
+        totalRegistos;
+
+
+      if (temperatura <= 5) {
+
+        resultado.innerHTML =
+          "✅ Temperatura dentro de uma faixa de refrigeração comum.";
+
+      } else {
+
+        resultado.innerHTML =
+          "⚠️ Atenção: verifique as condições de conservação do alimento.";
+
+      }
+
+    }
+
+
+    function guardarProblema() {
+
+      let problema =
+        document.getElementById("problemaTexto").value;
+
+      let resultado =
+        document.getElementById("problemaResultado");
+
+
+      if (problema.trim() === "") {
+
+        resultado.innerHTML =
+          "⚠️ Descreva o problema primeiro.";
+
+        return;
+
+      }
+
+
+      totalProblemas++;
+
+      document.getElementById("problemas").innerText =
+        totalProblemas;
+
+
+      resultado.innerHTML =
+        "✅ Problema registado com sucesso.";
+
+      document.getElementById("problemaTexto").value = "";
+
+    }
+
+  </script>
+
+</body>
+</html>
