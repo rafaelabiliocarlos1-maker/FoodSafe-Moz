@@ -163,20 +163,6 @@
       text-align: center;
     }
 
-    .result {
-      display: none;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 15px;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    .attention {
-      background: #fff3bf;
-      color: #8a5a00;
-    }
-
     .history-item {
       background: #f8f9fa;
       border-radius: 10px;
@@ -202,8 +188,8 @@
 <body>
 
 <header>
-  <h1>FoodSafe Moz</h1>
-  <p>Alimentos seguros, famílias protegidas 🇲🇿</p>
+  <h1>FoodSafe Moz 🇲🇿</h1>
+  <p>Alimentos seguros, famílias protegidas</p>
 </header>
 
 <nav>
@@ -229,15 +215,18 @@
         e qualidade dos alimentos.
       </p>
 
-      <button class="menu-button" onclick="showSection('checklist')">
+      <button class="menu-button"
+        onclick="showSection('checklist')">
         📋 Fazer Checklist
       </button>
 
-      <button class="menu-button" onclick="showSection('temperatura')">
+      <button class="menu-button"
+        onclick="showSection('temperatura')">
         🌡️ Registar Temperatura
       </button>
 
-      <button class="menu-button" onclick="showSection('problemas')">
+      <button class="menu-button"
+        onclick="showSection('problemas')">
         ⚠️ Registar Problema
       </button>
 
@@ -254,7 +243,8 @@
       <h2>🌡️ Registo de Temperatura</h2>
 
       <p>
-        Registe a temperatura observada durante a verificação.
+        Selecione o alimento ou equipamento e introduza
+        a temperatura observada.
       </p>
 
       <label for="foodType">
@@ -297,7 +287,6 @@
 
       </select>
 
-
       <label for="temperatureInput">
         Temperatura (°C)
       </label>
@@ -309,21 +298,14 @@
         step="0.1"
       >
 
-
-      <button class="save-button" onclick="saveTemperature()">
+      <button
+        class="save-button"
+        onclick="saveTemperature()">
         💾 Guardar temperatura
       </button>
 
-
       <div id="temperatureSuccess" class="success">
         ✅ Temperatura registada com sucesso!
-      </div>
-
-
-      <div id="temperatureResult" class="result attention">
-        ⚠️ Registo guardado. O limite aplicável deve ser definido
-        conforme o tipo de alimento/equipamento e o procedimento
-        de segurança utilizado.
       </div>
 
     </div>
@@ -399,7 +381,9 @@
         placeholder="Ex.: Frigorífico apresenta temperatura acima do recomendado."
       ></textarea>
 
-      <button class="save-button" onclick="saveProblem()">
+      <button
+        class="save-button"
+        onclick="saveProblem()">
         Guardar problema
       </button>
 
@@ -468,7 +452,6 @@
 
 </main>
 
-
 <footer>
   FoodSafe Moz 🇲🇿<br>
   Alimentos seguros, famílias protegidas.
@@ -476,10 +459,6 @@
 
 
 <script>
-
-  // =========================
-  // NAVEGAÇÃO
-  // =========================
 
   function showSection(sectionId) {
 
@@ -499,10 +478,6 @@
   }
 
 
-  // =========================
-  // TEMPERATURA
-  // =========================
-
   function saveTemperature() {
 
     const type =
@@ -513,9 +488,6 @@
 
     const success =
       document.getElementById("temperatureSuccess");
-
-    const result =
-      document.getElementById("temperatureResult");
 
     const temperature =
       input.value.trim();
@@ -551,8 +523,7 @@
       ) || [];
 
 
-    const now =
-      new Date();
+    const now = new Date();
 
 
     temperatures.push({
@@ -561,15 +532,17 @@
 
       value: temperature,
 
-      date: now.toLocaleDateString("pt-PT"),
+      date:
+        now.toLocaleDateString("pt-PT"),
 
-      time: now.toLocaleTimeString(
-        "pt-PT",
-        {
-          hour: "2-digit",
-          minute: "2-digit"
-        }
-      )
+      time:
+        now.toLocaleTimeString(
+          "pt-PT",
+          {
+            hour: "2-digit",
+            minute: "2-digit"
+          }
+        )
 
     });
 
@@ -582,11 +555,11 @@
 
     success.style.display = "block";
 
-    result.style.display = "block";
-
     input.value = "";
 
-    document.getElementById("foodType").value = "";
+    document.getElementById(
+      "foodType"
+    ).value = "";
 
 
     updateDashboard();
@@ -598,16 +571,10 @@
 
       success.style.display = "none";
 
-      result.style.display = "none";
-
-    }, 5000);
+    }, 3000);
 
   }
 
-
-  // =========================
-  // PROBLEMAS
-  // =========================
 
   function saveProblem() {
 
@@ -676,10 +643,6 @@
   }
 
 
-  // =========================
-  // DASHBOARD
-  // =========================
-
   function updateDashboard() {
 
     const problems =
@@ -724,17 +687,12 @@
   }
 
 
-  // =========================
-  // HISTÓRICO
-  // =========================
-
   function updateHistory() {
 
     const problemContainer =
       document.getElementById(
         "problemHistory"
       );
-
 
     const temperatureContainer =
       document.getElementById(
@@ -758,8 +716,6 @@
       ) || [];
 
 
-    // PROBLEMAS
-
     if (problems.length === 0) {
 
       problemContainer.innerHTML =
@@ -768,7 +724,6 @@
     } else {
 
       problemContainer.innerHTML = "";
-
 
       problems
         .slice()
@@ -781,23 +736,11 @@
           item.className =
             "history-item";
 
-
           item.innerHTML = `
-
             <strong>⚠️ Problema</strong>
-
-            <p>
-              ${escapeHTML(
-                problem.description
-              )}
-            </p>
-
-            <small>
-              📅 ${problem.date}
-            </small>
-
+            <p>${escapeHTML(problem.description)}</p>
+            <small>📅 ${problem.date}</small>
           `;
-
 
           problemContainer.appendChild(item);
 
@@ -805,8 +748,6 @@
 
     }
 
-
-    // TEMPERATURAS
 
     if (temperatures.length === 0) {
 
@@ -817,7 +758,6 @@
 
       temperatureContainer.innerHTML = "";
 
-
       temperatures
         .slice()
         .reverse()
@@ -826,36 +766,24 @@
           const temperatureItem =
             document.createElement("div");
 
-
           temperatureItem.className =
             "history-item";
 
-
           temperatureItem.innerHTML = `
-
-            <strong>
-              🌡️ ${escapeHTML(item.type)}
-            </strong>
-
+            <strong>🌡️ ${escapeHTML(item.type)}</strong>
             <p>
               Temperatura:
-              <strong>
-                ${escapeHTML(item.value)} °C
-              </strong>
+              <strong>${escapeHTML(item.value)} °C</strong>
             </p>
-
             <small>
               📅 ${item.date}
               &nbsp; 🕐 ${item.time}
             </small>
-
           `;
 
-
-          temperatureContainer
-            .appendChild(
-              temperatureItem
-            );
+          temperatureContainer.appendChild(
+            temperatureItem
+          );
 
         });
 
@@ -863,10 +791,6 @@
 
   }
 
-
-  // =========================
-  // SEGURANÇA DO TEXTO
-  // =========================
 
   function escapeHTML(text) {
 
@@ -880,18 +804,12 @@
   }
 
 
-  // =========================
-  // CHECKLIST
-  // =========================
-
   document.addEventListener(
     "change",
     function(event) {
 
       if (
-        event.target.classList.contains(
-          "check"
-        )
+        event.target.classList.contains("check")
       ) {
 
         updateDashboard();
@@ -901,10 +819,6 @@
     }
   );
 
-
-  // =========================
-  // INICIALIZAÇÃO
-  // =========================
 
   updateDashboard();
 
