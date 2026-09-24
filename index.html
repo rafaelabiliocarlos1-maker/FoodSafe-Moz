@@ -13,7 +13,7 @@
 
 body{
     margin:0;
-    font-family:Arial, sans-serif;
+    font-family:Arial,sans-serif;
     background:#f4f7f5;
     color:#222;
 }
@@ -114,10 +114,6 @@ button.primary{
     color:white;
     font-size:16px;
     font-weight:bold;
-}
-
-button.primary:active{
-    transform:scale(.98);
 }
 
 .resultado{
@@ -233,26 +229,6 @@ button.primary:active{
     display:none;
 }
 
-.historico-item{
-    background:white;
-    padding:15px;
-    border-radius:10px;
-    margin-bottom:12px;
-    box-shadow:0 2px 6px rgba(0,0,0,.07);
-}
-
-.historico-item.good-border{
-    border-left:6px solid #1b9b42;
-}
-
-.historico-item.danger-border{
-    border-left:6px solid #d40000;
-}
-
-.historico-item.info-border{
-    border-left:6px solid #e0a800;
-}
-
 .problema-card{
     background:white;
     padding:16px;
@@ -274,6 +250,16 @@ button.primary:active{
     border-left-color:#087f3e;
 }
 
+.badge{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:20px;
+    background:#eee;
+    margin:3px;
+    font-size:13px;
+    font-weight:bold;
+}
+
 .status-pendente{
     color:#d40000;
     font-weight:bold;
@@ -289,40 +275,52 @@ button.primary:active{
     font-weight:bold;
 }
 
-.badge{
-    display:inline-block;
-    padding:5px 9px;
-    border-radius:20px;
-    background:#eee;
-    margin:3px;
-    font-size:13px;
+.btn-tratamento{
+    border:none;
+    background:#e09b00;
+    color:white;
+    padding:11px 13px;
+    border-radius:7px;
+    margin-top:10px;
     font-weight:bold;
+    width:100%;
 }
 
 .btn-resolver{
     border:none;
     background:#087f3e;
     color:white;
-    padding:9px 12px;
+    padding:11px 13px;
     border-radius:7px;
     margin-top:10px;
     font-weight:bold;
-}
-
-.btn-tratamento{
-    border:none;
-    background:#e0a800;
-    color:white;
-    padding:9px 12px;
-    border-radius:7px;
-    margin-top:10px;
-    font-weight:bold;
+    width:100%;
 }
 
 .vazio{
     text-align:center;
     padding:20px;
     color:#777;
+}
+
+.historico-item{
+    background:white;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:12px;
+    box-shadow:0 2px 6px rgba(0,0,0,.07);
+}
+
+.good-border{
+    border-left:6px solid #1b9b42;
+}
+
+.danger-border{
+    border-left:6px solid #d40000;
+}
+
+.info-border{
+    border-left:6px solid #e0a800;
 }
 
 footer{
@@ -338,17 +336,17 @@ footer{
         font-size:24px;
     }
 
+    nav button{
+        font-size:13px;
+        padding:9px 11px;
+    }
+
     .stats{
         grid-template-columns:1fr 1fr;
     }
 
     .stat-number{
         font-size:25px;
-    }
-
-    nav button{
-        font-size:13px;
-        padding:9px 11px;
     }
 }
 </style>
@@ -379,13 +377,13 @@ footer{
         <h2>Bem-vindo ao FoodSafe Moz 🇲🇿</h2>
 
         <p>
-            O FoodSafe Moz é uma ferramenta para apoiar o controlo
-            da segurança dos alimentos.
+            O FoodSafe Moz é uma ferramenta para apoiar
+            o controlo da segurança dos alimentos.
         </p>
 
         <p>
             Registe temperaturas, faça verificações,
-            identifique problemas e acompanhe as ações corretivas.
+            identifique problemas e acompanhe ações corretivas.
         </p>
     </div>
 
@@ -505,7 +503,8 @@ footer{
         <h2>🚨 Gestão de Problemas</h2>
 
         <p>
-            Registe um problema encontrado e defina como será tratado.
+            Registe um problema encontrado e defina
+            a respetiva ação corretiva.
         </p>
 
         <label>Problema encontrado</label>
@@ -519,7 +518,7 @@ footer{
 
         <select id="prioridade">
             <option value="Alta">🔴 Alta</option>
-            <option value="Média">🟠 Média</option>
+            <option value="Média" selected>🟠 Média</option>
             <option value="Baixa">🟢 Baixa</option>
         </select>
 
@@ -639,7 +638,6 @@ footer{
 
     </div>
 
-
     <div id="alertaDashboard" class="alert-dashboard"></div>
 
 </section>
@@ -669,9 +667,9 @@ footer{
 
 <script>
 
-/* ================================
+/* =========================
    DADOS
-================================ */
+========================= */
 
 let temperaturas =
     JSON.parse(
@@ -684,9 +682,9 @@ let problemas =
     ) || [];
 
 
-/* ================================
+/* =========================
    NAVEGAÇÃO
-================================ */
+========================= */
 
 function abrir(nome){
 
@@ -712,9 +710,9 @@ function abrir(nome){
 }
 
 
-/* ================================
+/* =========================
    TEMPERATURA
-================================ */
+========================= */
 
 function avaliarTemperatura(){
 
@@ -739,15 +737,17 @@ function avaliarTemperatura(){
 
     if(!tipo || isNaN(temperatura)){
 
-        alert("Selecione o tipo e introduza uma temperatura.");
+        alert(
+            "Selecione o tipo e introduza uma temperatura."
+        );
 
         return;
     }
 
 
-    let status = "";
-    let avaliacao = "";
-    let classe = "";
+    let status;
+    let avaliacao;
+    let classe;
 
 
     if(tipo === "Frigorífico"){
@@ -761,13 +761,13 @@ function avaliarTemperatura(){
         }else{
 
             status = "danger";
-            avaliacao = "ATENÇÃO! Temperatura acima do limite definido.";
+            avaliacao =
+                "ATENÇÃO! Temperatura acima do limite definido.";
             classe = "danger";
 
         }
 
     }
-
 
     else if(tipo === "Congelador"){
 
@@ -780,13 +780,13 @@ function avaliarTemperatura(){
         }else{
 
             status = "danger";
-            avaliacao = "ATENÇÃO! Temperatura acima do limite definido.";
+            avaliacao =
+                "ATENÇÃO! Temperatura acima do limite definido.";
             classe = "danger";
 
         }
 
     }
-
 
     else{
 
@@ -803,11 +803,10 @@ function avaliarTemperatura(){
         "resultado " + classe;
 
     resultado.innerHTML =
-        "🌡️ " +
-        tipo +
+        "🌡️ " + tipo +
         "<br><br>" +
-        temperatura +
-        " °C<br><br>" +
+        temperatura + " °C" +
+        "<br><br>" +
         avaliacao;
 
     resultado.style.display = "block";
@@ -823,6 +822,7 @@ function avaliarTemperatura(){
 
     sucesso.style.display = "block";
 
+
     setTimeout(
         function(){
             sucesso.style.display = "none";
@@ -830,13 +830,14 @@ function avaliarTemperatura(){
         2500
     );
 
+
     atualizarDashboard();
 }
 
 
-/* ================================
+/* =========================
    GUARDAR TEMPERATURA
-================================ */
+========================= */
 
 function guardarTemperatura(
     tipo,
@@ -869,23 +870,30 @@ function guardarTemperatura(
 }
 
 
-/* ================================
+/* =========================
    GUARDAR PROBLEMA
-================================ */
+========================= */
 
 function guardarProblema(){
 
     const problema =
-        document.getElementById("problema").value.trim();
+        document.getElementById("problema")
+        .value
+        .trim();
 
     const prioridade =
-        document.getElementById("prioridade").value;
+        document.getElementById("prioridade")
+        .value;
 
     const responsavel =
-        document.getElementById("responsavel").value.trim();
+        document.getElementById("responsavel")
+        .value
+        .trim();
 
     const acaoCorretiva =
-        document.getElementById("acaoCorretiva").value.trim();
+        document.getElementById("acaoCorretiva")
+        .value
+        .trim();
 
     const sucesso =
         document.getElementById("problemaSucesso");
@@ -893,7 +901,9 @@ function guardarProblema(){
 
     if(!problema){
 
-        alert("Descreva o problema encontrado.");
+        alert(
+            "Descreva o problema encontrado."
+        );
 
         return;
     }
@@ -913,6 +923,7 @@ function guardarProblema(){
         acaoCorretiva:
             acaoCorretiva || "Não definida",
 
+        /* IMPORTANTE */
         status: "Pendente",
 
         data: new Date().toLocaleString("pt-PT")
@@ -941,9 +952,7 @@ function guardarProblema(){
 
     setTimeout(
         function(){
-
             sucesso.style.display = "none";
-
         },
         2500
     );
@@ -952,17 +961,19 @@ function guardarProblema(){
     mostrarProblemas();
 
     atualizarDashboard();
+
 }
 
 
-/* ================================
+/* =========================
    MOSTRAR PROBLEMAS
-================================ */
+========================= */
 
 function mostrarProblemas(){
 
     const lista =
         document.getElementById("listaProblemas");
+
 
     if(!lista){
         return;
@@ -975,7 +986,9 @@ function mostrarProblemas(){
     if(problemas.length === 0){
 
         lista.innerHTML =
-            '<div class="vazio">Nenhum problema registado.</div>';
+            '<div class="vazio">' +
+            'Nenhum problema registado.' +
+            '</div>';
 
         return;
     }
@@ -988,43 +1001,77 @@ function mostrarProblemas(){
     ordenados.forEach(
         function(p){
 
-            let prioridadeClasse = "";
+            /*
+             * CORREÇÃO IMPORTANTE:
+             * problemas antigos que não tenham
+             * status recebem automaticamente
+             * "Pendente".
+             */
+
+            if(
+                !p.status ||
+                (
+                    p.status !== "Pendente" &&
+                    p.status !== "Em tratamento" &&
+                    p.status !== "Resolvido"
+                )
+            ){
+
+                p.status = "Pendente";
+            }
+
+
+            let prioridadeClasse =
+                "prioridade-baixa";
+
 
             if(p.prioridade === "Alta"){
-                prioridadeClasse = "prioridade-alta";
+
+                prioridadeClasse =
+                    "prioridade-alta";
+
             }
 
             else if(p.prioridade === "Média"){
-                prioridadeClasse = "prioridade-media";
+
+                prioridadeClasse =
+                    "prioridade-media";
+
             }
 
-            else{
-                prioridadeClasse = "prioridade-baixa";
+
+            let statusClasse =
+                "status-pendente";
+
+
+            if(p.status === "Em tratamento"){
+
+                statusClasse =
+                    "status-tratamento";
+
             }
 
+            else if(p.status === "Resolvido"){
 
-            let statusClasse = "";
+                statusClasse =
+                    "status-resolvido";
 
-            if(p.status === "Pendente"){
-                statusClasse = "status-pendente";
-            }
-
-            else if(p.status === "Em tratamento"){
-                statusClasse = "status-tratamento";
-            }
-
-            else{
-                statusClasse = "status-resolvido";
             }
 
 
             let botoes = "";
 
 
+            /*
+             * PENDENTE
+             */
+
             if(p.status === "Pendente"){
 
                 botoes +=
-                    '<button class="btn-tratamento" onclick="mudarStatus(' +
+                    '<button ' +
+                    'class="btn-tratamento" ' +
+                    'onclick="mudarStatus(' +
                     p.id +
                     ', \'Em tratamento\')">' +
                     '🔄 Colocar em tratamento' +
@@ -1033,10 +1080,16 @@ function mostrarProblemas(){
             }
 
 
-            if(p.status !== "Resolvido"){
+            /*
+             * EM TRATAMENTO
+             */
+
+            if(p.status === "Em tratamento"){
 
                 botoes +=
-                    '<button class="btn-resolver" onclick="mudarStatus(' +
+                    '<button ' +
+                    'class="btn-resolver" ' +
+                    'onclick="mudarStatus(' +
                     p.id +
                     ', \'Resolvido\')">' +
                     '✅ Marcar como resolvido' +
@@ -1044,6 +1097,10 @@ function mostrarProblemas(){
 
             }
 
+
+            /*
+             * MOSTRAR CARD
+             */
 
             lista.innerHTML +=
 
@@ -1055,30 +1112,43 @@ function mostrarProblemas(){
                 escaparHTML(p.problema) +
                 '</h3>' +
 
-                '<span class="badge">Prioridade: ' +
-                escaparHTML(p.prioridade) +
+                '<span class="badge">' +
+                'Prioridade: ' +
+                escaparHTML(p.prioridade || "Média") +
                 '</span>' +
 
-                '<span class="badge">Responsável: ' +
-                escaparHTML(p.responsavel) +
+                '<span class="badge">' +
+                'Responsável: ' +
+                escaparHTML(
+                    p.responsavel || "Não definido"
+                ) +
                 '</span>' +
 
                 '<p>' +
                 '<strong>Estado:</strong> ' +
+
                 '<span class="' +
                 statusClasse +
                 '">' +
+
                 escaparHTML(p.status) +
+
                 '</span>' +
+
                 '</p>' +
 
                 '<p>' +
                 '<strong>Ação corretiva:</strong><br>' +
-                escaparHTML(p.acaoCorretiva) +
+                escaparHTML(
+                    p.acaoCorretiva ||
+                    "Não definida"
+                ) +
                 '</p>' +
 
                 '<small>📅 ' +
-                escaparHTML(p.data) +
+                escaparHTML(
+                    p.data || ""
+                ) +
                 '</small>' +
 
                 '<br>' +
@@ -1088,29 +1158,46 @@ function mostrarProblemas(){
                 '</div>';
         }
     );
+
+
+    /*
+     * Guarda eventuais correções
+     * feitas nos problemas antigos.
+     */
+
+    localStorage.setItem(
+        "foodsafemoz_problemas",
+        JSON.stringify(problemas)
+    );
 }
 
 
-/* ================================
+/* =========================
    MUDAR STATUS
-================================ */
+========================= */
 
 function mudarStatus(id, novoStatus){
 
     const problema =
         problemas.find(
             function(p){
-                return p.id === id;
+                return Number(p.id) === Number(id);
             }
         );
 
 
     if(!problema){
+
+        alert(
+            "Problema não encontrado."
+        );
+
         return;
     }
 
 
-    problema.status = novoStatus;
+    problema.status =
+        novoStatus;
 
 
     localStorage.setItem(
@@ -1127,9 +1214,9 @@ function mudarStatus(id, novoStatus){
 }
 
 
-/* ================================
+/* =========================
    DASHBOARD
-================================ */
+========================= */
 
 function atualizarDashboard(){
 
@@ -1164,6 +1251,11 @@ function atualizarDashboard(){
     const pendentes =
         problemas.filter(
             function(p){
+
+                if(!p.status){
+                    return true;
+                }
+
                 return p.status === "Pendente";
             }
         ).length;
@@ -1221,32 +1313,38 @@ function atualizarDashboard(){
 
     document.getElementById(
         "problemasTotal"
-    ).textContent = problemas.length;
+    ).textContent =
+        problemas.length;
 
 
     document.getElementById(
         "problemasPendentes"
-    ).textContent = pendentes;
+    ).textContent =
+        pendentes;
 
 
     document.getElementById(
         "problemasTratamento"
-    ).textContent = tratamento;
+    ).textContent =
+        tratamento;
 
 
     document.getElementById(
         "problemasResolvidos"
-    ).textContent = resolvidos;
+    ).textContent =
+        resolvidos;
 
 
     document.getElementById(
         "problemasAlta"
-    ).textContent = alta;
+    ).textContent =
+        alta;
 
 
     document.getElementById(
         "checklistTotal"
-    ).textContent = checklist;
+    ).textContent =
+        checklist;
 
 
     const avaliados =
@@ -1310,33 +1408,27 @@ function atualizarDashboard(){
             "🟢 SITUAÇÃO NORMAL: Não existem temperaturas avaliadas fora do limite.";
 
         alerta.style.display = "block";
-
     }
 
 
-    if(problemas.length > 0){
+    if(pendentes > 0){
 
-        if(pendentes > 0){
+        alerta.style.display = "block";
 
-            alerta.style.display = "block";
+        alerta.className =
+            "alert-dashboard danger";
 
-            alerta.className =
-                "alert-dashboard danger";
-
-            alerta.innerHTML +=
-                "<br><br>🚨 Existem também " +
-                pendentes +
-                " problema(s) pendente(s) de tratamento.";
-
-        }
-
+        alerta.innerHTML +=
+            "<br><br>🚨 Existem " +
+            pendentes +
+            " problema(s) pendente(s) de tratamento.";
     }
 }
 
 
-/* ================================
+/* =========================
    HISTÓRICO
-================================ */
+========================= */
 
 function mostrarHistorico(){
 
@@ -1360,7 +1452,9 @@ function mostrarHistorico(){
     ){
 
         lista.innerHTML =
-            '<div class="vazio">Nenhum registo encontrado.</div>';
+            '<div class="vazio">' +
+            'Nenhum registo encontrado.' +
+            '</div>';
 
         return;
     }
@@ -1376,9 +1470,11 @@ function mostrarHistorico(){
             let classe =
                 "info-border";
 
+
             if(t.status === "good"){
                 classe = "good-border";
             }
+
 
             if(t.status === "danger"){
                 classe = "danger-border";
@@ -1432,21 +1528,30 @@ function mostrarHistorico(){
 
                 '<p>' +
                 '<strong>Prioridade:</strong> ' +
-                escaparHTML(p.prioridade) +
+                escaparHTML(
+                    p.prioridade || "Média"
+                ) +
                 '</p>' +
 
                 '<p>' +
                 '<strong>Estado:</strong> ' +
-                escaparHTML(p.status) +
+                escaparHTML(
+                    p.status || "Pendente"
+                ) +
                 '</p>' +
 
                 '<p>' +
                 '<strong>Ação corretiva:</strong> ' +
-                escaparHTML(p.acaoCorretiva) +
+                escaparHTML(
+                    p.acaoCorretiva ||
+                    "Não definida"
+                ) +
                 '</p>' +
 
                 '<small>📅 ' +
-                escaparHTML(p.data) +
+                escaparHTML(
+                    p.data || ""
+                ) +
                 '</small>' +
 
                 '</div>';
@@ -1455,28 +1560,28 @@ function mostrarHistorico(){
 }
 
 
-/* ================================
-   SEGURANÇA DO TEXTO
-================================ */
+/* =========================
+   PROTEÇÃO DO TEXTO
+========================= */
 
 function escaparHTML(texto){
 
     return String(texto)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 }
 
 
-/* ================================
+/* =========================
    INICIALIZAÇÃO
-================================ */
-
-atualizarDashboard();
+========================= */
 
 mostrarProblemas();
+
+atualizarDashboard();
 
 mostrarHistorico();
 
