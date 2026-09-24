@@ -163,6 +163,39 @@
       text-align: center;
     }
 
+    .evaluation {
+      display: none;
+      padding: 16px;
+      border-radius: 12px;
+      margin-top: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .evaluation.good {
+      display: block;
+      background: #d3f9d8;
+      color: #087f5b;
+    }
+
+    .evaluation.warning {
+      display: block;
+      background: #fff3bf;
+      color: #8a5a00;
+    }
+
+    .evaluation.info {
+      display: block;
+      background: #e7f5ff;
+      color: #1864ab;
+    }
+
+    .evaluation.danger {
+      display: block;
+      background: #ffe3e3;
+      color: #c92a2a;
+    }
+
     .history-item {
       background: #f8f9fa;
       border-radius: 10px;
@@ -170,10 +203,32 @@
       margin-top: 10px;
     }
 
+    .status-good {
+      color: #087f5b;
+      font-weight: bold;
+    }
+
+    .status-warning {
+      color: #c92a2a;
+      font-weight: bold;
+    }
+
+    .status-info {
+      color: #1864ab;
+      font-weight: bold;
+    }
+
     .empty {
       color: #777;
       text-align: center;
       padding: 15px;
+    }
+
+    .dashboard-box {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 15px;
+      margin-top: 10px;
     }
 
     footer {
@@ -240,7 +295,7 @@
 
     <div class="card">
 
-      <h2>🌡️ Registo de Temperatura</h2>
+      <h2>🌡️ Registo e Avaliação de Temperatura</h2>
 
       <p>
         Selecione o alimento ou equipamento e introduza
@@ -301,11 +356,16 @@
       <button
         class="save-button"
         onclick="saveTemperature()">
-        💾 Guardar temperatura
+        🔎 Avaliar e guardar
       </button>
 
-      <div id="temperatureSuccess" class="success">
-        ✅ Temperatura registada com sucesso!
+      <div id="temperatureEvaluation"
+           class="evaluation">
+      </div>
+
+      <div id="temperatureSuccess"
+           class="success">
+        ✅ Registo guardado com sucesso!
       </div>
 
     </div>
@@ -387,7 +447,8 @@
         Guardar problema
       </button>
 
-      <div id="problemSuccess" class="success">
+      <div id="problemSuccess"
+           class="success">
         ✅ Problema registado com sucesso!
       </div>
 
@@ -403,20 +464,35 @@
 
       <h2>📊 Dashboard</h2>
 
-      <p>
+      <div class="dashboard-box">
         🌡️ Registos de temperatura:
         <strong id="temperatureCount">0</strong>
-      </p>
+      </div>
 
-      <p>
+      <div class="dashboard-box">
+        🟢 Dentro do limite:
+        <strong id="goodTemperatureCount">0</strong>
+      </div>
+
+      <div class="dashboard-box">
+        🔴 Atenção:
+        <strong id="warningTemperatureCount">0</strong>
+      </div>
+
+      <div class="dashboard-box">
+        ℹ️ Sem limite definido:
+        <strong id="infoTemperatureCount">0</strong>
+      </div>
+
+      <div class="dashboard-box">
         ⚠️ Problemas registados:
         <strong id="problemCount">0</strong>
-      </p>
+      </div>
 
-      <p>
+      <div class="dashboard-box">
         📋 Itens verificados:
         <strong id="checkedCount">0</strong>
-      </p>
+      </div>
 
     </div>
 
@@ -460,6 +536,48 @@
 
 <script>
 
+  /*
+   * =========================================================
+   * CONFIGURAÇÃO DOS LIMITES
+   * =========================================================
+   *
+   * IMPORTANTE:
+   * Estes critérios são específicos da categoria.
+   *
+   * FRIGORÍFICO:
+   * Para esta primeira versão usamos 6 °C como limite
+   * operacional de avaliação para armazenamento refrigerado.
+   *
+   * CONGELADOR:
+   * -18 °C ou menos para alimentos congelados.
+   *
+   * Para Carne, Peixe, Leite e derivados e Alimentos preparados
+   * não vamos inventar um limite universal nesta versão.
+   * O aplicativo informa que o critério deve ser definido
+   * conforme o produto e o processo.
+   */
+
+  const temperatureRules = {
+
+    "Frigorífico": {
+      type: "maximum",
+      limit: 6,
+      label: "máximo de 6 °C"
+    },
+
+    "Congelador": {
+      type: "maximum",
+      limit: -18,
+      label: "-18 °C ou inferior"
+    }
+
+  };
+
+
+  // =========================================================
+  // NAVEGAÇÃO
+  // =========================================================
+
   function showSection(sectionId) {
 
     const sections =
@@ -478,6 +596,109 @@
   }
 
 
+  // =========================================================
+  // AVALIAÇÃO AUTOMÁTICA
+  // =========================================================
+
+  function evaluateTemperature(type, temperature) {
+
+    const rule =
+      temperatureRules[type];
+
+
+    // Sem regra específica
+    if (!rule) {
+
+      return {
+        status: "info",
+
+        title: "ℹ️ Limite não definido",
+
+        message:
+          "A temperatura foi registada, mas esta categoria ainda não possui um limite automático configurado no FoodSafe Moz. Consulte o procedimento aplicável ao produto."
+      };
+
+    }
+
+
+    // Frigorífico
+    if (type === "Frigorífico") {
+
+      if (temperature <= rule.limit) {
+
+        return {
+
+          status: "good",
+
+          title: "🟢 Dentro do limite",
+
+          message:
+            "A temperatura registada está dentro do limite configurado para esta categoria: " +
+            rule.label + "."
+
+        };
+
+      } else {
+
+        return {
+
+          status: "danger",
+
+          title: "🔴 Atenção",
+
+          message:
+            "A temperatura registada está acima do limite configurado para esta categoria: " +
+            rule.label + "."
+
+        };
+
+      }
+
+    }
+
+
+    // Congelador
+    if (type === "Congelador") {
+
+      if (temperature <= rule.limit) {
+
+        return {
+
+          status: "good",
+
+          title: "🟢 Dentro do limite",
+
+          message:
+            "A temperatura registada está dentro do critério configurado para alimentos congelados: " +
+            rule.label + "."
+
+        };
+
+      } else {
+
+        return {
+
+          status: "danger",
+
+          title: "🔴 Atenção",
+
+          message:
+            "A temperatura registada está acima do critério configurado para alimentos congelados: " +
+            rule.label + "."
+
+        };
+
+      }
+
+    }
+
+  }
+
+
+  // =========================================================
+  // GUARDAR TEMPERATURA
+  // =========================================================
+
   function saveTemperature() {
 
     const type =
@@ -486,10 +707,17 @@
     const input =
       document.getElementById("temperatureInput");
 
-    const success =
-      document.getElementById("temperatureSuccess");
+    const evaluation =
+      document.getElementById(
+        "temperatureEvaluation"
+      );
 
-    const temperature =
+    const success =
+      document.getElementById(
+        "temperatureSuccess"
+      );
+
+    const temperatureText =
       input.value.trim();
 
 
@@ -503,7 +731,7 @@
     }
 
 
-    if (temperature === "") {
+    if (temperatureText === "") {
 
       alert(
         "⚠️ Digite a temperatura."
@@ -515,6 +743,43 @@
     }
 
 
+    const temperature =
+      Number(temperatureText);
+
+
+    if (!Number.isFinite(temperature)) {
+
+      alert(
+        "⚠️ Introduza uma temperatura válida."
+      );
+
+      input.focus();
+
+      return;
+    }
+
+
+    const result =
+      evaluateTemperature(
+        type,
+        temperature
+      );
+
+
+    // Mostrar avaliação
+
+    evaluation.className =
+      "evaluation " + result.status;
+
+    evaluation.innerHTML =
+      "<strong>" +
+      result.title +
+      "</strong><br><br>" +
+      result.message;
+
+
+    // Obter histórico existente
+
     const temperatures =
       JSON.parse(
         localStorage.getItem(
@@ -523,7 +788,8 @@
       ) || [];
 
 
-    const now = new Date();
+    const now =
+      new Date();
 
 
     temperatures.push({
@@ -531,6 +797,12 @@
       type: type,
 
       value: temperature,
+
+      status: result.status,
+
+      evaluation: result.title,
+
+      message: result.message,
 
       date:
         now.toLocaleDateString("pt-PT"),
@@ -553,7 +825,9 @@
     );
 
 
-    success.style.display = "block";
+    success.style.display =
+      "block";
+
 
     input.value = "";
 
@@ -569,20 +843,29 @@
 
     setTimeout(() => {
 
-      success.style.display = "none";
+      success.style.display =
+        "none";
 
     }, 3000);
 
   }
 
 
+  // =========================================================
+  // PROBLEMAS
+  // =========================================================
+
   function saveProblem() {
 
     const input =
-      document.getElementById("problemInput");
+      document.getElementById(
+        "problemInput"
+      );
 
     const success =
-      document.getElementById("problemSuccess");
+      document.getElementById(
+        "problemSuccess"
+      );
 
     const problem =
       input.value.trim();
@@ -624,7 +907,8 @@
     );
 
 
-    success.style.display = "block";
+    success.style.display =
+      "block";
 
     input.value = "";
 
@@ -636,12 +920,17 @@
 
     setTimeout(() => {
 
-      success.style.display = "none";
+      success.style.display =
+        "none";
 
     }, 3000);
 
   }
 
+
+  // =========================================================
+  // DASHBOARD
+  // =========================================================
 
   function updateDashboard() {
 
@@ -667,16 +956,52 @@
       ).length;
 
 
-    document.getElementById(
-      "problemCount"
-    ).textContent =
-      problems.length;
+    const good =
+      temperatures.filter(
+        item => item.status === "good"
+      ).length;
+
+
+    const warning =
+      temperatures.filter(
+        item => item.status === "danger"
+      ).length;
+
+
+    const info =
+      temperatures.filter(
+        item => item.status === "info"
+      ).length;
 
 
     document.getElementById(
       "temperatureCount"
     ).textContent =
       temperatures.length;
+
+
+    document.getElementById(
+      "goodTemperatureCount"
+    ).textContent =
+      good;
+
+
+    document.getElementById(
+      "warningTemperatureCount"
+    ).textContent =
+      warning;
+
+
+    document.getElementById(
+      "infoTemperatureCount"
+    ).textContent =
+      info;
+
+
+    document.getElementById(
+      "problemCount"
+    ).textContent =
+      problems.length;
 
 
     document.getElementById(
@@ -687,12 +1012,17 @@
   }
 
 
+  // =========================================================
+  // HISTÓRICO
+  // =========================================================
+
   function updateHistory() {
 
     const problemContainer =
       document.getElementById(
         "problemHistory"
       );
+
 
     const temperatureContainer =
       document.getElementById(
@@ -716,6 +1046,10 @@
       ) || [];
 
 
+    // -------------------------
+    // PROBLEMAS
+    // -------------------------
+
     if (problems.length === 0) {
 
       problemContainer.innerHTML =
@@ -725,29 +1059,50 @@
 
       problemContainer.innerHTML = "";
 
+
       problems
         .slice()
         .reverse()
         .forEach(problem => {
 
           const item =
-            document.createElement("div");
+            document.createElement(
+              "div"
+            );
+
 
           item.className =
             "history-item";
 
+
           item.innerHTML = `
+
             <strong>⚠️ Problema</strong>
-            <p>${escapeHTML(problem.description)}</p>
-            <small>📅 ${problem.date}</small>
+
+            <p>
+              ${escapeHTML(
+                problem.description
+              )}
+            </p>
+
+            <small>
+              📅 ${problem.date}
+            </small>
+
           `;
 
-          problemContainer.appendChild(item);
+
+          problemContainer
+            .appendChild(item);
 
         });
 
     }
 
+
+    // -------------------------
+    // TEMPERATURAS
+    // -------------------------
 
     if (temperatures.length === 0) {
 
@@ -756,34 +1111,97 @@
 
     } else {
 
-      temperatureContainer.innerHTML = "";
+      temperatureContainer.innerHTML =
+        "";
+
 
       temperatures
         .slice()
         .reverse()
         .forEach(item => {
 
-          const temperatureItem =
-            document.createElement("div");
+          const itemElement =
+            document.createElement(
+              "div"
+            );
 
-          temperatureItem.className =
+
+          itemElement.className =
             "history-item";
 
-          temperatureItem.innerHTML = `
-            <strong>🌡️ ${escapeHTML(item.type)}</strong>
+
+          let statusClass =
+            "status-info";
+
+
+          if (
+            item.status === "good"
+          ) {
+
+            statusClass =
+              "status-good";
+
+          }
+
+
+          if (
+            item.status === "danger"
+          ) {
+
+            statusClass =
+              "status-warning";
+
+          }
+
+
+          itemElement.innerHTML = `
+
+            <strong>
+              🌡️ ${escapeHTML(
+                item.type
+              )}
+            </strong>
+
             <p>
               Temperatura:
-              <strong>${escapeHTML(item.value)} °C</strong>
+              <strong>
+                ${escapeHTML(
+                  String(item.value)
+                )} °C
+              </strong>
             </p>
+
+            <p class="${statusClass}">
+              ${escapeHTML(
+                item.evaluation
+              )}
+            </p>
+
             <small>
-              📅 ${item.date}
-              &nbsp; 🕐 ${item.time}
+              ${escapeHTML(
+                item.message
+              )}
             </small>
+
+            <br><br>
+
+            <small>
+              📅 ${escapeHTML(
+                item.date
+              )}
+              &nbsp;
+              🕐 ${escapeHTML(
+                item.time
+              )}
+            </small>
+
           `;
 
-          temperatureContainer.appendChild(
-            temperatureItem
-          );
+
+          temperatureContainer
+            .appendChild(
+              itemElement
+            );
 
         });
 
@@ -792,24 +1210,37 @@
   }
 
 
+  // =========================================================
+  // SEGURANÇA DO TEXTO
+  // =========================================================
+
   function escapeHTML(text) {
 
     const div =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
-    div.textContent = text;
+    div.textContent =
+      text;
 
     return div.innerHTML;
 
   }
 
 
+  // =========================================================
+  // CHECKLIST
+  // =========================================================
+
   document.addEventListener(
     "change",
     function(event) {
 
       if (
-        event.target.classList.contains("check")
+        event.target.classList.contains(
+          "check"
+        )
       ) {
 
         updateDashboard();
@@ -819,6 +1250,10 @@
     }
   );
 
+
+  // =========================================================
+  // INICIALIZAÇÃO
+  // =========================================================
 
   updateDashboard();
 
