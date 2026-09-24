@@ -7,6 +7,7 @@
 <title>FoodSafe Moz</title>
 
 <style>
+
 * {
   box-sizing: border-box;
 }
@@ -27,6 +28,7 @@ header {
 
 header h1 {
   margin: 0;
+  font-size: 28px;
 }
 
 header p {
@@ -50,6 +52,7 @@ nav button {
   padding: 14px;
   font-weight: bold;
   white-space: nowrap;
+  cursor: pointer;
 }
 
 .container {
@@ -78,6 +81,10 @@ h2 {
   color: #087f5b;
 }
 
+h3 {
+  margin-top: 25px;
+}
+
 button.primary {
   width: 100%;
   padding: 14px;
@@ -88,6 +95,11 @@ button.primary {
   color: white;
   font-size: 16px;
   font-weight: bold;
+  cursor: pointer;
+}
+
+button.primary:active {
+  transform: scale(0.98);
 }
 
 select,
@@ -99,13 +111,20 @@ textarea {
   border: 1px solid #ccc;
   border-radius: 9px;
   font-size: 16px;
+  background: white;
+}
+
+textarea {
+  min-height: 120px;
 }
 
 label {
   font-weight: bold;
 }
 
-/* RESULTADO */
+/* =========================
+   RESULTADO TEMPERATURA
+========================= */
 
 #resultadoTemperatura {
   display: none;
@@ -138,7 +157,12 @@ label {
   border: 3px solid #d39e00;
 }
 
-#mensagemSucesso {
+/* =========================
+   MENSAGENS
+========================= */
+
+#mensagemSucesso,
+#problemaSucesso {
   display: none;
   margin-top: 12px;
   padding: 14px;
@@ -149,28 +173,28 @@ label {
   font-weight: bold;
 }
 
-.check {
-  padding: 12px;
-  border-bottom: 1px solid #eee;
-}
+/* =========================
+   DASHBOARD
+========================= */
 
-.check input {
-  width: auto;
-  margin-right: 10px;
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
 }
 
 .stat {
   background: white;
-  padding: 18px;
-  margin-bottom: 12px;
+  padding: 18px 10px;
   border-radius: 12px;
   text-align: center;
   border: 1px solid #eee;
 }
 
 .numero {
-  font-size: 28px;
+  font-size: 30px;
   font-weight: bold;
+  margin-bottom: 7px;
 }
 
 .verde {
@@ -184,6 +208,81 @@ label {
 .amarelo {
   color: #b77900;
 }
+
+/* =========================
+   PERCENTAGEM
+========================= */
+
+.percentagem-box {
+  text-align: center;
+  padding: 20px;
+  margin-top: 18px;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+.percentagem {
+  font-size: 42px;
+  font-weight: bold;
+  color: #087f5b;
+}
+
+.barra {
+  width: 100%;
+  height: 18px;
+  background: #e5e5e5;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 15px;
+}
+
+.barra-progresso {
+  height: 100%;
+  width: 0%;
+  background: #087f5b;
+  transition: width 0.5s;
+}
+
+/* =========================
+   ALERTA DASHBOARD
+========================= */
+
+.alerta-dashboard {
+  display: none;
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: 12px;
+  background: #ffe0e0;
+  color: #c62828;
+  border: 2px solid #c62828;
+  text-align: center;
+  font-weight: bold;
+}
+
+.alerta-dashboard.normal {
+  display: block;
+  background: #d9f7e8;
+  color: #087f5b;
+  border: 2px solid #087f5b;
+}
+
+/* =========================
+   CHECKLIST
+========================= */
+
+.check {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.check input {
+  width: auto;
+  margin-right: 10px;
+}
+
+/* =========================
+   HISTÓRICO
+========================= */
 
 .historico {
   background: #f8f9fa;
@@ -201,34 +300,84 @@ label {
   border-left-color: #d39e00;
 }
 
+.sem-registos {
+  text-align: center;
+  color: #777;
+  padding: 20px;
+}
+
 footer {
   text-align: center;
   color: #777;
   padding: 30px;
   font-size: 13px;
 }
+
+@media (max-width: 500px) {
+
+  .dashboard-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stat {
+    font-size: 14px;
+  }
+
+  .numero {
+    font-size: 26px;
+  }
+
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
+
 <h1>FoodSafe Moz 🇲🇿</h1>
+
 <p>Alimentos seguros, famílias protegidas</p>
+
 </header>
 
+
 <nav>
-<button onclick="abrir('inicio')">Início</button>
-<button onclick="abrir('temperatura')">Temperatura</button>
-<button onclick="abrir('checklist')">Checklist</button>
-<button onclick="abrir('problemas')">Problemas</button>
-<button onclick="abrir('dashboard')">Dashboard</button>
-<button onclick="abrir('historico')">Histórico</button>
+
+<button onclick="abrir('inicio')">
+Início
+</button>
+
+<button onclick="abrir('temperatura')">
+Temperatura
+</button>
+
+<button onclick="abrir('checklist')">
+Checklist
+</button>
+
+<button onclick="abrir('problemas')">
+Problemas
+</button>
+
+<button onclick="abrir('dashboard')">
+Dashboard
+</button>
+
+<button onclick="abrir('historico')">
+Histórico
+</button>
+
 </nav>
+
 
 <div class="container">
 
-<!-- INÍCIO -->
+
+<!-- =========================
+     INÍCIO
+========================= -->
 
 <section id="inicio" class="section active">
 
@@ -240,16 +389,27 @@ footer {
 Ferramenta para ajudar no controlo da segurança dos alimentos.
 </p>
 
-<button class="primary" onclick="abrir('temperatura')">
+<button class="primary"
+onclick="abrir('temperatura')">
+
 🌡️ Registar temperatura
+
 </button>
 
-<button class="primary" onclick="abrir('checklist')">
+
+<button class="primary"
+onclick="abrir('checklist')">
+
 ✅ Fazer checklist
+
 </button>
 
-<button class="primary" onclick="abrir('problemas')">
+
+<button class="primary"
+onclick="abrir('problemas')">
+
 ⚠️ Registar problema
+
 </button>
 
 </div>
@@ -257,7 +417,9 @@ Ferramenta para ajudar no controlo da segurança dos alimentos.
 </section>
 
 
-<!-- TEMPERATURA -->
+<!-- =========================
+     TEMPERATURA
+========================= -->
 
 <section id="temperatura" class="section">
 
@@ -265,20 +427,53 @@ Ferramenta para ajudar no controlo da segurança dos alimentos.
 
 <h2>🌡️ Controlo de Temperatura</h2>
 
-<label>Frigorífico ou equipamento</label>
+
+<label>
+Frigorífico ou equipamento
+</label>
+
 
 <select id="tipo">
-<option value="">Selecione uma opção</option>
-<option value="Frigorífico">Frigorífico</option>
-<option value="Congelador">Congelador</option>
-<option value="Carne">Carne</option>
-<option value="Peixe">Peixe</option>
-<option value="Leite e derivados">Leite e derivados</option>
-<option value="Alimentos preparados">Alimentos preparados</option>
-<option value="Outro">Outro</option>
+
+<option value="">
+Selecione uma opção
+</option>
+
+<option value="Frigorífico">
+Frigorífico
+</option>
+
+<option value="Congelador">
+Congelador
+</option>
+
+<option value="Carne">
+Carne
+</option>
+
+<option value="Peixe">
+Peixe
+</option>
+
+<option value="Leite e derivados">
+Leite e derivados
+</option>
+
+<option value="Alimentos preparados">
+Alimentos preparados
+</option>
+
+<option value="Outro">
+Outro
+</option>
+
 </select>
 
-<label>Temperatura (°C)</label>
+
+<label>
+Temperatura (°C)
+</label>
+
 
 <input
 type="number"
@@ -287,17 +482,23 @@ placeholder="Ex.: 8"
 step="0.1"
 >
 
-<button class="primary" onclick="avaliarTemperatura()">
+
+<button
+class="primary"
+onclick="avaliarTemperatura()">
+
 🔎 Avaliar temperatura
+
 </button>
 
 
-<!-- RESULTADO -->
-
 <div id="resultadoTemperatura"></div>
 
+
 <div id="mensagemSucesso">
+
 ✅ Registo guardado com sucesso!
+
 </div>
 
 </div>
@@ -305,7 +506,9 @@ step="0.1"
 </section>
 
 
-<!-- CHECKLIST -->
+<!-- =========================
+     CHECKLIST
+========================= -->
 
 <section id="checklist" class="section">
 
@@ -313,44 +516,76 @@ step="0.1"
 
 <h2>✅ Checklist de Segurança Alimentar</h2>
 
+
 <div class="check">
+
 <input type="checkbox" checked>
+
 As mãos estão limpas?
+
 </div>
 
+
 <div class="check">
+
 <input type="checkbox" checked>
+
 Os alimentos estão protegidos?
+
 </div>
 
+
 <div class="check">
+
 <input type="checkbox" checked>
+
 Os equipamentos estão limpos?
+
 </div>
 
+
 <div class="check">
+
 <input type="checkbox" checked>
+
 Os alimentos estão dentro da validade?
+
 </div>
 
+
 <div class="check">
+
 <input type="checkbox" checked>
+
 Existe separação entre alimentos crus e cozinhados?
+
 </div>
 
+
 <div class="check">
+
 <input type="checkbox" checked>
+
 A área de preparação está limpa?
+
 </div>
 
+
 <div class="check">
+
 <input type="checkbox" checked>
+
 Os alimentos estão armazenados corretamente?
+
 </div>
 
+
 <div class="check">
+
 <input type="checkbox" checked>
+
 Existe controlo adequado de temperatura?
+
 </div>
 
 </div>
@@ -358,7 +593,9 @@ Existe controlo adequado de temperatura?
 </section>
 
 
-<!-- PROBLEMAS -->
+<!-- =========================
+     PROBLEMAS
+========================= -->
 
 <section id="problemas" class="section">
 
@@ -366,26 +603,26 @@ Existe controlo adequado de temperatura?
 
 <h2>⚠️ Registar problema</h2>
 
+
 <textarea
 id="problema"
 placeholder="Descreva o problema encontrado..."
 ></textarea>
 
-<button class="primary" onclick="guardarProblema()">
+
+<button
+class="primary"
+onclick="guardarProblema()">
+
 💾 Guardar problema
+
 </button>
 
-<div id="problemaSucesso" style="
-display:none;
-margin-top:12px;
-padding:14px;
-background:#d9f7e8;
-color:#087f5b;
-border-radius:10px;
-text-align:center;
-font-weight:bold;
-">
+
+<div id="problemaSucesso">
+
 ✅ Problema registado com sucesso!
+
 </div>
 
 </div>
@@ -393,45 +630,160 @@ font-weight:bold;
 </section>
 
 
-<!-- DASHBOARD -->
+<!-- =========================
+     DASHBOARD
+========================= -->
 
 <section id="dashboard" class="section">
 
 <div class="card">
 
-<h2>📊 Dashboard</h2>
+<h2>📊 Dashboard Inteligente</h2>
+
+
+<div class="dashboard-grid">
+
 
 <div class="stat">
-<div id="total" class="numero">0</div>
-Registos de temperatura
+
+<div id="total"
+class="numero">
+
+0
+
 </div>
 
+🌡️ Registos de temperatura
+
+</div>
+
+
 <div class="stat">
-<div id="bons" class="numero verde">0</div>
+
+<div id="bons"
+class="numero verde">
+
+0
+
+</div>
+
 🟢 Dentro do limite
+
 </div>
 
+
 <div class="stat">
-<div id="maus" class="numero vermelho">0</div>
+
+<div id="maus"
+class="numero vermelho">
+
+0
+
+</div>
+
 🔴 Atenção
+
 </div>
 
+
 <div class="stat">
-<div id="semLimite" class="numero amarelo">0</div>
+
+<div id="semLimite"
+class="numero amarelo">
+
+0
+
+</div>
+
 🟡 Sem limite automático
+
 </div>
 
+
 <div class="stat">
-<div id="problemasTotal" class="numero vermelho">0</div>
-Problemas registados
+
+<div id="problemasTotal"
+class="numero vermelho">
+
+0
+
 </div>
+
+⚠️ Problemas registados
+
+</div>
+
+
+<div class="stat">
+
+<div id="checklistTotal"
+class="numero verde">
+
+0
+
+</div>
+
+✅ Itens verificados
+
+</div>
+
+
+</div>
+
+
+<!-- PERCENTAGEM -->
+
+<div class="percentagem-box">
+
+<h3>
+📈 Percentagem dentro do limite
+</h3>
+
+
+<div
+id="percentagem"
+class="percentagem">
+
+0%
+
+</div>
+
+
+<div class="barra">
+
+<div
+id="barraProgresso"
+class="barra-progresso">
+
+</div>
+
+</div>
+
+
+<p>
+Percentagem dos registos com limite automático que estão dentro do limite.
+</p>
+
+</div>
+
+
+<!-- ALERTA -->
+
+<div
+id="alertaDashboard"
+class="alerta-dashboard">
+
+</div>
+
 
 </div>
 
 </section>
 
 
-<!-- HISTÓRICO -->
+<!-- =========================
+     HISTÓRICO
+========================= -->
 
 <section id="historico" class="section">
 
@@ -439,19 +791,29 @@ Problemas registados
 
 <h2>📋 Histórico</h2>
 
+
 <div id="listaHistorico">
-<p>Não existem registos.</p>
+
+<div class="sem-registos">
+
+Ainda não existem registos.
+
+</div>
+
 </div>
 
 </div>
 
 </section>
 
+
 </div>
 
 
 <footer>
+
 FoodSafe Moz 🇲🇿 — Alimentos seguros, famílias protegidas
+
 </footer>
 
 
@@ -463,21 +825,36 @@ FoodSafe Moz 🇲🇿 — Alimentos seguros, famílias protegidas
 
 function abrir(nome) {
 
-document.querySelectorAll(".section").forEach(function(secao) {
+document
+.querySelectorAll(".section")
+.forEach(function(secao) {
+
 secao.classList.remove("active");
+
 });
 
-document.getElementById(nome).classList.add("active");
+
+document
+.getElementById(nome)
+.classList.add("active");
+
 
 if (nome === "dashboard") {
+
 atualizarDashboard();
+
 }
+
 
 if (nome === "historico") {
+
 mostrarHistorico();
+
 }
 
-window.scrollTo(0,0);
+
+window.scrollTo(0, 0);
+
 }
 
 
@@ -486,10 +863,19 @@ window.scrollTo(0,0);
 ========================= */
 
 let temperaturas =
-JSON.parse(localStorage.getItem("foodsafemoz_temperaturas")) || [];
+JSON.parse(
+localStorage.getItem(
+"foodsafemoz_temperaturas"
+)
+) || [];
+
 
 let problemas =
-JSON.parse(localStorage.getItem("foodsafemoz_problemas")) || [];
+JSON.parse(
+localStorage.getItem(
+"foodsafemoz_problemas"
+)
+) || [];
 
 
 /* =========================
@@ -498,18 +884,27 @@ JSON.parse(localStorage.getItem("foodsafemoz_problemas")) || [];
 
 function avaliarTemperatura() {
 
-let tipo = document.getElementById("tipo").value;
+let tipo =
+document.getElementById("tipo").value;
 
-let valor = document.getElementById("temperatura").value;
+
+let valor =
+document.getElementById("temperatura").value;
+
 
 let resultado =
-document.getElementById("resultadoTemperatura");
+document.getElementById(
+"resultadoTemperatura"
+);
+
 
 let sucesso =
-document.getElementById("mensagemSucesso");
+document.getElementById(
+"mensagemSucesso"
+);
 
 
-/* Limpar resultados anteriores */
+/* Limpar */
 
 resultado.className = "";
 
@@ -520,13 +915,16 @@ resultado.innerHTML = "";
 sucesso.style.display = "none";
 
 
-/* Verificar tipo */
+/* Verificar equipamento */
 
 if (tipo === "") {
 
-alert("Selecione o frigorífico ou equipamento.");
+alert(
+"Selecione o frigorífico ou equipamento."
+);
 
 return;
+
 }
 
 
@@ -534,9 +932,12 @@ return;
 
 if (valor === "") {
 
-alert("Digite a temperatura.");
+alert(
+"Digite a temperatura."
+);
 
 return;
+
 }
 
 
@@ -548,16 +949,28 @@ parseFloat(valor);
 
 if (tipo === "Frigorífico") {
 
+
 if (temperatura <= 6) {
+
 
 resultado.className =
 "resultado-verde";
 
+
 resultado.innerHTML =
-"🟢 DENTRO DO LIMITE<br>" +
-"<small>Temperatura: " +
+
+"🟢 DENTRO DO LIMITE" +
+
+"<br><small>" +
+
+"Temperatura: " +
+
 temperatura +
-" °C</small>";
+
+" °C" +
+
+"</small>";
+
 
 guardarTemperatura(
 tipo,
@@ -566,17 +979,32 @@ temperatura,
 "Dentro do limite"
 );
 
+
 } else {
+
 
 resultado.className =
 "resultado-vermelho";
 
+
 resultado.innerHTML =
-"🔴 ATENÇÃO!<br>" +
-"<small>Temperatura: " +
+
+"🔴 ATENÇÃO!" +
+
+"<br><small>" +
+
+"Temperatura: " +
+
 temperatura +
-" °C<br>" +
-"Está acima do limite configurado.</small>";
+
+" °C" +
+
+"<br>" +
+
+"Está acima do limite configurado." +
+
+"</small>";
+
 
 guardarTemperatura(
 tipo,
@@ -594,16 +1022,28 @@ temperatura,
 
 else if (tipo === "Congelador") {
 
+
 if (temperatura <= -18) {
+
 
 resultado.className =
 "resultado-verde";
 
+
 resultado.innerHTML =
-"🟢 DENTRO DO LIMITE<br>" +
-"<small>Temperatura: " +
+
+"🟢 DENTRO DO LIMITE" +
+
+"<br><small>" +
+
+"Temperatura: " +
+
 temperatura +
-" °C</small>";
+
+" °C" +
+
+"</small>";
+
 
 guardarTemperatura(
 tipo,
@@ -612,17 +1052,32 @@ temperatura,
 "Dentro do limite"
 );
 
+
 } else {
+
 
 resultado.className =
 "resultado-vermelho";
 
+
 resultado.innerHTML =
-"🔴 ATENÇÃO!<br>" +
-"<small>Temperatura: " +
+
+"🔴 ATENÇÃO!" +
+
+"<br><small>" +
+
+"Temperatura: " +
+
 temperatura +
-" °C<br>" +
-"Está acima do limite configurado.</small>";
+
+" °C" +
+
+"<br>" +
+
+"Está acima do limite configurado." +
+
+"</small>";
+
 
 guardarTemperatura(
 tipo,
@@ -640,12 +1095,21 @@ temperatura,
 
 else {
 
+
 resultado.className =
 "resultado-amarelo";
 
+
 resultado.innerHTML =
-"🟡 TEMPERATURA REGISTADA<br>" +
-"<small>Esta categoria ainda não possui limite automático configurado.</small>";
+
+"🟡 TEMPERATURA REGISTADA" +
+
+"<br><small>" +
+
+"Esta categoria ainda não possui limite automático configurado." +
+
+"</small>";
+
 
 guardarTemperatura(
 tipo,
@@ -661,6 +1125,9 @@ temperatura,
 
 sucesso.style.display = "block";
 
+
+atualizarDashboard();
+
 }
 
 
@@ -675,7 +1142,10 @@ status,
 avaliacao
 ) {
 
-let agora = new Date();
+
+let agora =
+new Date();
+
 
 temperaturas.push({
 
@@ -687,9 +1157,11 @@ status: status,
 
 avaliacao: avaliacao,
 
-data: agora.toLocaleDateString("pt-PT"),
+data:
+agora.toLocaleDateString("pt-PT"),
 
-hora: agora.toLocaleTimeString("pt-PT")
+hora:
+agora.toLocaleTimeString("pt-PT")
 
 });
 
@@ -708,33 +1180,45 @@ JSON.stringify(temperaturas)
 
 function guardarProblema() {
 
+
 let campo =
 document.getElementById("problema");
+
 
 let texto =
 campo.value.trim();
 
+
 let sucesso =
-document.getElementById("problemaSucesso");
+document.getElementById(
+"problemaSucesso"
+);
 
 
 if (texto === "") {
 
-alert("Escreva o problema antes de guardar.");
+alert(
+"Escreva o problema antes de guardar."
+);
 
 return;
+
 }
 
 
-let agora = new Date();
+let agora =
+new Date();
+
 
 problemas.push({
 
 texto: texto,
 
-data: agora.toLocaleDateString("pt-PT"),
+data:
+agora.toLocaleDateString("pt-PT"),
 
-hora: agora.toLocaleTimeString("pt-PT")
+hora:
+agora.toLocaleTimeString("pt-PT")
 
 });
 
@@ -747,28 +1231,36 @@ JSON.stringify(problemas)
 
 campo.value = "";
 
+
 sucesso.style.display = "block";
 
+
 atualizarDashboard();
+
+
+mostrarHistorico();
 
 }
 
 
 /* =========================
-   DASHBOARD
+   DASHBOARD INTELIGENTE
 ========================= */
 
 function atualizarDashboard() {
+
 
 let bons =
 temperaturas.filter(
 item => item.status === "good"
 ).length;
 
+
 let maus =
 temperaturas.filter(
 item => item.status === "danger"
 ).length;
+
 
 let info =
 temperaturas.filter(
@@ -776,20 +1268,159 @@ item => item.status === "info"
 ).length;
 
 
-document.getElementById("total").textContent =
+/* Totais */
+
+document.getElementById("total")
+.textContent =
 temperaturas.length;
 
-document.getElementById("bons").textContent =
+
+document.getElementById("bons")
+.textContent =
 bons;
 
-document.getElementById("maus").textContent =
+
+document.getElementById("maus")
+.textContent =
 maus;
 
-document.getElementById("semLimite").textContent =
+
+document.getElementById("semLimite")
+.textContent =
 info;
 
-document.getElementById("problemasTotal").textContent =
+
+document.getElementById("problemasTotal")
+.textContent =
 problemas.length;
+
+
+/* Checklist */
+
+let caixas =
+document.querySelectorAll(
+"#checklist input[type='checkbox']"
+);
+
+
+let verificadas = 0;
+
+
+caixas.forEach(function(caixa) {
+
+if (caixa.checked) {
+
+verificadas++;
+
+}
+
+});
+
+
+document.getElementById(
+"checklistTotal"
+).textContent =
+verificadas;
+
+
+/* =========================
+   PERCENTAGEM
+========================= */
+
+
+/*
+Somente os registos que possuem
+avaliação automática entram no cálculo.
+*/
+
+let avaliados =
+bons + maus;
+
+
+let percentagem = 0;
+
+
+if (avaliados > 0) {
+
+percentagem =
+Math.round(
+(bons / avaliados) * 100
+);
+
+}
+
+
+document.getElementById(
+"percentagem"
+).textContent =
+percentagem + "%";
+
+
+document.getElementById(
+"barraProgresso"
+).style.width =
+percentagem + "%";
+
+
+/* =========================
+   ALERTA AUTOMÁTICO
+========================= */
+
+let alerta =
+document.getElementById(
+"alertaDashboard"
+);
+
+
+if (maus > 0) {
+
+
+alerta.className =
+"alerta-dashboard";
+
+
+alerta.style.display =
+"block";
+
+
+alerta.innerHTML =
+
+"🚨 ATENÇÃO<br><br>" +
+
+"Existem " +
+
+maus +
+
+" registo(s) de temperatura fora do limite. " +
+
+"Verifique o histórico e tome as medidas necessárias.";
+
+
+} else if (avaliados > 0) {
+
+
+alerta.className =
+"alerta-dashboard normal";
+
+
+alerta.style.display =
+"block";
+
+
+alerta.innerHTML =
+
+"🟢 SITUAÇÃO NORMAL<br><br>" +
+
+"Não existem registos de temperatura fora do limite automático.";
+
+
+} else {
+
+
+alerta.style.display =
+"none";
+
+}
 
 }
 
@@ -800,8 +1431,11 @@ problemas.length;
 
 function mostrarHistorico() {
 
+
 let lista =
-document.getElementById("listaHistorico");
+document.getElementById(
+"listaHistorico"
+);
 
 
 if (
@@ -809,8 +1443,15 @@ temperaturas.length === 0 &&
 problemas.length === 0
 ) {
 
+
 lista.innerHTML =
-"<p>Não existem registos.</p>";
+
+'<div class="sem-registos">' +
+
+'Ainda não existem registos.' +
+
+'</div>';
+
 
 return;
 
@@ -820,28 +1461,42 @@ return;
 lista.innerHTML = "";
 
 
-/* TEMPERATURAS */
+/* =========================
+   TEMPERATURAS
+========================= */
 
-temperaturas.slice().reverse().forEach(function(item) {
+temperaturas
+.slice()
+.reverse()
+.forEach(function(item) {
+
 
 let div =
 document.createElement("div");
 
+
 if (item.status === "danger") {
+
 
 div.className =
 "historico historico-vermelho";
 
+
 }
 
+
 else if (item.status === "info") {
+
 
 div.className =
 "historico historico-amarelo";
 
+
 }
 
+
 else {
+
 
 div.className =
 "historico";
@@ -849,24 +1504,59 @@ div.className =
 }
 
 
+let icone = "🟢";
+
+
+if (item.status === "danger") {
+
+icone = "🔴";
+
+}
+
+
+if (item.status === "info") {
+
+icone = "🟡";
+
+}
+
+
 div.innerHTML =
 
 "<strong>" +
+
+icone +
+
+" " +
+
 item.avaliacao +
-"</strong><br><br>" +
+
+"</strong>" +
+
+"<br><br>" +
 
 "Equipamento: " +
+
 item.tipo +
+
 "<br>" +
 
 "Temperatura: " +
+
 item.temperatura +
-" °C<br><br>" +
+
+" °C" +
+
+"<br><br>" +
 
 "<small>" +
+
 item.data +
+
 " às " +
+
 item.hora +
+
 "</small>";
 
 
@@ -875,28 +1565,46 @@ lista.appendChild(div);
 });
 
 
-/* PROBLEMAS */
+/* =========================
+   PROBLEMAS
+========================= */
 
-problemas.slice().reverse().forEach(function(item) {
+problemas
+.slice()
+.reverse()
+.forEach(function(item) {
+
 
 let div =
 document.createElement("div");
 
+
 div.className =
 "historico historico-vermelho";
 
+
 div.innerHTML =
 
-"<strong>⚠️ Problema</strong><br><br>" +
+"<strong>" +
+
+"⚠️ Problema registado" +
+
+"</strong>" +
+
+"<br><br>" +
 
 item.texto +
 
 "<br><br>" +
 
 "<small>" +
+
 item.data +
+
 " às " +
+
 item.hora +
+
 "</small>";
 
 
@@ -908,12 +1616,29 @@ lista.appendChild(div);
 
 
 /* =========================
-   INICIALIZAR
+   INICIAR
 ========================= */
 
 atualizarDashboard();
 
 mostrarHistorico();
+
+
+/* Atualizar dashboard quando
+   checklist for alterada */
+
+document
+.querySelectorAll(
+"#checklist input[type='checkbox']"
+)
+.forEach(function(caixa) {
+
+caixa.addEventListener(
+"change",
+atualizarDashboard
+);
+
+});
 
 </script>
 
