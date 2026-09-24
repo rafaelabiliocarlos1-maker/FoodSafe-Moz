@@ -3,351 +3,279 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>FoodSafe Moz</title>
 
 <style>
 *{
-    box-sizing:border-box;
+  box-sizing:border-box;
 }
 
 body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#f4f7f5;
-    color:#222;
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f2f6f8;
+  color:#17202a;
 }
 
 header{
-    background:#087f3e;
-    color:white;
-    padding:25px 15px;
-    text-align:center;
+  background:#087f5b;
+  color:white;
+  padding:22px 15px;
+  text-align:center;
 }
 
 header h1{
-    margin:0;
-    font-size:28px;
+  margin:0;
+  font-size:28px;
 }
 
 header p{
-    margin:8px 0 0;
+  margin:7px 0 0;
+  font-size:14px;
 }
 
 nav{
-    display:flex;
-    overflow-x:auto;
-    gap:6px;
-    padding:10px;
-    background:white;
-    position:sticky;
-    top:0;
-    z-index:10;
-    box-shadow:0 2px 8px rgba(0,0,0,.1);
+  display:flex;
+  overflow-x:auto;
+  background:white;
+  border-bottom:1px solid #ddd;
+  position:sticky;
+  top:0;
+  z-index:10;
 }
 
 nav button{
-    border:none;
-    background:#087f3e;
-    color:white;
-    padding:10px 14px;
-    border-radius:8px;
-    white-space:nowrap;
-    font-weight:bold;
+  border:0;
+  background:white;
+  padding:14px 13px;
+  white-space:nowrap;
+  font-weight:bold;
+  color:#087f5b;
 }
 
-.container{
-    max-width:900px;
-    margin:auto;
-    padding:15px;
+nav button:hover{
+  background:#e8f5f0;
 }
 
-section{
-    display:none;
+main{
+  max-width:900px;
+  margin:auto;
+  padding:18px;
 }
 
-section.active{
-    display:block;
+.secao{
+  display:none;
+}
+
+.secao.ativa{
+  display:block;
 }
 
 .card{
-    background:white;
-    padding:20px;
-    border-radius:14px;
-    margin-bottom:15px;
-    box-shadow:0 2px 8px rgba(0,0,0,.08);
+  background:white;
+  border-radius:14px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 
 h2{
-    color:#087f3e;
+  color:#087f5b;
+  margin-top:0;
+}
+
+h3{
+  margin-bottom:8px;
 }
 
 label{
-    display:block;
-    font-weight:bold;
-    margin-top:12px;
-    margin-bottom:6px;
+  display:block;
+  font-weight:bold;
+  margin-top:12px;
+  margin-bottom:6px;
 }
 
-input,
-select,
-textarea{
-    width:100%;
-    padding:12px;
-    border:1px solid #ccc;
-    border-radius:8px;
-    font-size:16px;
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #ccc;
+  border-radius:9px;
+  font-size:16px;
 }
 
 textarea{
-    min-height:100px;
-    resize:vertical;
+  min-height:90px;
+  resize:vertical;
 }
 
-button.primary{
-    width:100%;
-    margin-top:15px;
-    padding:13px;
-    border:none;
-    border-radius:8px;
-    background:#087f3e;
-    color:white;
-    font-size:16px;
-    font-weight:bold;
+.btn{
+  width:100%;
+  padding:13px;
+  border:0;
+  border-radius:9px;
+  margin-top:14px;
+  font-size:16px;
+  font-weight:bold;
+  background:#087f5b;
+  color:white;
+}
+
+.btn-danger{
+  background:#c92a2a;
+}
+
+.btn-warning{
+  background:#e67700;
+}
+
+.btn-success{
+  background:#2b8a3e;
+}
+
+.btn-secondary{
+  background:#495057;
 }
 
 .resultado{
-    margin-top:15px;
-    padding:15px;
-    border-radius:10px;
-    font-weight:bold;
-    display:none;
+  padding:14px;
+  border-radius:10px;
+  margin-top:15px;
+  font-weight:bold;
+  text-align:center;
 }
 
-.good{
-    background:#d9f7df;
-    color:#116b2d;
-    border-left:6px solid #1b9b42;
+.verde{
+  background:#d3f9d8;
+  color:#176b2c;
 }
 
-.danger{
-    background:#ffdede;
-    color:#a50000;
-    border-left:6px solid #d40000;
+.vermelho{
+  background:#ffe3e3;
+  color:#a61e1e;
 }
 
-.info{
-    background:#fff3cd;
-    color:#856404;
-    border-left:6px solid #e0a800;
+.amarelo{
+  background:#fff3bf;
+  color:#8a5a00;
 }
 
-.sucesso{
-    display:none;
-    background:#d9f7df;
-    color:#116b2d;
-    padding:12px;
-    border-radius:8px;
-    margin-top:12px;
-    font-weight:bold;
+.check{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 0;
+  border-bottom:1px solid #eee;
 }
 
-.checklist-item{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:10px 0;
-    border-bottom:1px solid #eee;
+.check input{
+  width:20px;
+  height:20px;
 }
 
-.checklist-item input{
-    width:auto;
+.problema{
+  border-left:5px solid #e67700;
+  background:#fffaf0;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:12px;
 }
 
-.stats{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-}
-
-.stat{
-    background:white;
-    padding:18px;
-    border-radius:12px;
-    text-align:center;
-    box-shadow:0 2px 8px rgba(0,0,0,.08);
-}
-
-.stat-number{
-    display:block;
-    font-size:30px;
-    font-weight:bold;
-    color:#087f3e;
-    margin-bottom:5px;
-}
-
-.stat-title{
-    font-size:14px;
-}
-
-.percent-box{
-    background:white;
-    padding:20px;
-    border-radius:14px;
-    margin-top:15px;
-    box-shadow:0 2px 8px rgba(0,0,0,.08);
-}
-
-.percent-number{
-    font-size:40px;
-    font-weight:bold;
-    color:#087f3e;
-    text-align:center;
-}
-
-.progress{
-    width:100%;
-    height:22px;
-    background:#ddd;
-    border-radius:20px;
-    overflow:hidden;
-    margin-top:12px;
-}
-
-.progress-bar{
-    height:100%;
-    width:0%;
-    background:#087f3e;
-    transition:.4s;
-}
-
-.alert-dashboard{
-    padding:15px;
-    border-radius:10px;
-    margin-top:15px;
-    font-weight:bold;
-    display:none;
-}
-
-.problema-card{
-    background:white;
-    padding:16px;
-    border-radius:12px;
-    margin-top:12px;
-    box-shadow:0 2px 7px rgba(0,0,0,.08);
-    border-left:6px solid #777;
-}
-
-.prioridade-alta{
-    border-left-color:#d40000;
-}
-
-.prioridade-media{
-    border-left-color:#e0a800;
-}
-
-.prioridade-baixa{
-    border-left-color:#087f3e;
+.problema.resolvido{
+  border-left-color:#2b8a3e;
+  background:#f1f8f2;
 }
 
 .badge{
-    display:inline-block;
-    padding:6px 10px;
-    border-radius:20px;
-    background:#eee;
-    margin:3px;
-    font-size:13px;
-    font-weight:bold;
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
+  margin:3px;
+}
+
+.alta{
+  background:#ffe3e3;
+  color:#c92a2a;
+}
+
+.media{
+  background:#fff3bf;
+  color:#8a5a00;
+}
+
+.baixa{
+  background:#d3f9d8;
+  color:#176b2c;
 }
 
 .status-pendente{
-    color:#d40000;
-    font-weight:bold;
+  background:#ffe3e3;
+  color:#c92a2a;
 }
 
 .status-tratamento{
-    color:#e08b00;
-    font-weight:bold;
+  background:#fff3bf;
+  color:#8a5a00;
 }
 
 .status-resolvido{
-    color:#087f3e;
-    font-weight:bold;
+  background:#d3f9d8;
+  color:#176b2c;
 }
 
-.btn-tratamento{
-    border:none;
-    background:#e09b00;
-    color:white;
-    padding:11px 13px;
-    border-radius:7px;
-    margin-top:10px;
-    font-weight:bold;
-    width:100%;
+.acoes{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:12px;
 }
 
-.btn-resolver{
-    border:none;
-    background:#087f3e;
-    color:white;
-    padding:11px 13px;
-    border-radius:7px;
-    margin-top:10px;
-    font-weight:bold;
-    width:100%;
+.acoes button{
+  flex:1;
+  min-width:180px;
+  padding:11px;
+  border:0;
+  border-radius:8px;
+  font-weight:bold;
 }
 
-.vazio{
-    text-align:center;
-    padding:20px;
-    color:#777;
+.stats{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.stat{
+  background:white;
+  border-radius:12px;
+  padding:18px;
+  text-align:center;
+  box-shadow:0 2px 7px rgba(0,0,0,.07);
+}
+
+.stat strong{
+  display:block;
+  font-size:28px;
+  color:#087f5b;
 }
 
 .historico-item{
-    background:white;
-    padding:15px;
-    border-radius:10px;
-    margin-bottom:12px;
-    box-shadow:0 2px 6px rgba(0,0,0,.07);
+  border-bottom:1px solid #ddd;
+  padding:12px 0;
 }
 
-.good-border{
-    border-left:6px solid #1b9b42;
-}
-
-.danger-border{
-    border-left:6px solid #d40000;
-}
-
-.info-border{
-    border-left:6px solid #e0a800;
+.vazio{
+  text-align:center;
+  color:#777;
+  padding:20px;
 }
 
 footer{
-    text-align:center;
-    padding:25px;
-    color:#777;
-    font-size:13px;
-}
-
-@media(max-width:600px){
-
-    header h1{
-        font-size:24px;
-    }
-
-    nav button{
-        font-size:13px;
-        padding:9px 11px;
-    }
-
-    .stats{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .stat-number{
-        font-size:25px;
-    }
+  text-align:center;
+  color:#777;
+  font-size:13px;
+  padding:25px;
 }
 </style>
 </head>
@@ -355,1235 +283,853 @@ footer{
 <body>
 
 <header>
-    <h1>FoodSafe Moz 🇲🇿</h1>
-    <p>Alimentos seguros, famílias protegidas</p>
+  <h1>FoodSafe Moz</h1>
+  <p>Alimentos seguros, famílias protegidas 🇲🇿</p>
 </header>
 
 <nav>
-    <button onclick="abrir('inicio')">Início</button>
-    <button onclick="abrir('temperatura')">Temperatura</button>
-    <button onclick="abrir('checklist')">Checklist</button>
-    <button onclick="abrir('problemas')">Problemas</button>
-    <button onclick="abrir('dashboard')">Dashboard</button>
-    <button onclick="abrir('historico')">Histórico</button>
+  <button onclick="mostrarSecao('inicio')">🏠 Início</button>
+  <button onclick="mostrarSecao('temperatura')">🌡️ Temperatura</button>
+  <button onclick="mostrarSecao('checklist')">✅ Checklist</button>
+  <button onclick="mostrarSecao('problemas')">⚠️ Problemas</button>
+  <button onclick="mostrarSecao('dashboard')">📊 Dashboard</button>
+  <button onclick="mostrarSecao('historico')">📜 Histórico</button>
 </nav>
 
-<div class="container">
+<main>
 
-<!-- INÍCIO -->
-<section id="inicio" class="active">
+<section id="inicio" class="secao ativa">
 
-    <div class="card">
-        <h2>Bem-vindo ao FoodSafe Moz 🇲🇿</h2>
+<div class="card">
+<h2>Bem-vindo ao FoodSafe Moz</h2>
+<p>
+Ferramenta para apoiar o controlo da segurança dos alimentos,
+temperaturas, problemas e ações corretivas.
+</p>
+</div>
 
-        <p>
-            O FoodSafe Moz é uma ferramenta para apoiar
-            o controlo da segurança dos alimentos.
-        </p>
-
-        <p>
-            Registe temperaturas, faça verificações,
-            identifique problemas e acompanhe ações corretivas.
-        </p>
-    </div>
-
-    <div class="card">
-        <h2>🎯 Objetivo</h2>
-
-        <p>
-            Ajudar estabelecimentos e profissionais a organizar
-            informações relacionadas com segurança alimentar.
-        </p>
-    </div>
+<div class="card">
+<h3>Como utilizar</h3>
+<p>1️⃣ Registe temperaturas.</p>
+<p>2️⃣ Faça a checklist.</p>
+<p>3️⃣ Registe problemas encontrados.</p>
+<p>4️⃣ Defina responsáveis e ações corretivas.</p>
+<p>5️⃣ Acompanhe o estado dos problemas no Dashboard.</p>
+</div>
 
 </section>
 
 
-<!-- TEMPERATURA -->
-<section id="temperatura">
+<section id="temperatura" class="secao">
 
-    <div class="card">
+<div class="card">
 
-        <h2>🌡️ Controlo de Temperatura</h2>
+<h2>🌡️ Registo de Temperatura</h2>
 
-        <label>Tipo de alimento/equipamento</label>
+<label>Tipo de alimento/equipamento</label>
 
-        <select id="tipo">
-            <option value="">Selecione</option>
-            <option value="Frigorífico">Frigorífico</option>
-            <option value="Congelador">Congelador</option>
-            <option value="Carne">Carne</option>
-            <option value="Peixe">Peixe</option>
-            <option value="Leite e derivados">Leite e derivados</option>
-            <option value="Alimentos preparados">Alimentos preparados</option>
-            <option value="Outro">Outro</option>
-        </select>
+<select id="tipoTemperatura">
+<option value="Frigorífico">Frigorífico</option>
+<option value="Congelador">Congelador</option>
+<option value="Carne">Carne</option>
+<option value="Peixe">Peixe</option>
+<option value="Leite e derivados">Leite e derivados</option>
+<option value="Alimentos preparados">Alimentos preparados</option>
+<option value="Outro">Outro</option>
+</select>
 
-        <label>Temperatura (°C)</label>
+<label>Temperatura (°C)</label>
 
-        <input
-            id="temperatura"
-            type="number"
-            step="0.1"
-            placeholder="Ex.: 4"
-        >
+<input type="number" id="valorTemperatura" step="0.1" placeholder="Ex.: 4">
 
-        <button class="primary" onclick="avaliarTemperatura()">
-            🔎 Avaliar temperatura
-        </button>
+<button class="btn" onclick="guardarTemperatura()">
+Guardar temperatura
+</button>
 
-        <div id="resultadoTemperatura" class="resultado"></div>
-
-        <div id="mensagemSucesso" class="sucesso">
-            ✅ Registo guardado com sucesso!
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- CHECKLIST -->
-<section id="checklist">
-
-    <div class="card">
-
-        <h2>✅ Checklist de Segurança Alimentar</h2>
-
-        <div class="checklist-item">
-            <input type="checkbox" checked>
-            <span>Mãos limpas antes da manipulação</span>
-        </div>
-
-        <div class="checklist-item">
-            <input type="checkbox" checked>
-            <span>Superfícies de trabalho limpas</span>
-        </div>
-
-        <div class="checklist-item">
-            <input type="checkbox" checked>
-            <span>Equipamentos limpos</span>
-        </div>
-
-        <div class="checklist-item">
-            <input type="checkbox" checked>
-            <span>Alimentos protegidos</span>
-        </div>
-
-        <div class="checklist-item">
-            <input type="checkbox" checked>
-            <span>Separação entre alimentos crus e cozinhados</span>
-        </div>
-
-        <div class="checklist-item">
-            <input type="checkbox" checked>
-            <span>Temperaturas controladas</span>
-        </div>
-
-        <div class="checklist-item">
-            <input type="checkbox" checked>
-            <span>Validade dos alimentos verificada</span>
-        </div>
-
-        <div class="checklist-item">
-            <input type="checkbox" checked>
-            <span>Armazenamento adequado</span>
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- PROBLEMAS -->
-<section id="problemas">
-
-    <div class="card">
-
-        <h2>🚨 Gestão de Problemas</h2>
-
-        <p>
-            Registe um problema encontrado e defina
-            a respetiva ação corretiva.
-        </p>
-
-        <label>Problema encontrado</label>
-
-        <textarea
-            id="problema"
-            placeholder="Ex.: Frigorífico apresentou temperatura elevada."
-        ></textarea>
-
-        <label>Prioridade</label>
-
-        <select id="prioridade">
-            <option value="Alta">🔴 Alta</option>
-            <option value="Média" selected>🟠 Média</option>
-            <option value="Baixa">🟢 Baixa</option>
-        </select>
-
-        <label>Responsável</label>
-
-        <input
-            id="responsavel"
-            type="text"
-            placeholder="Nome do responsável"
-        >
-
-        <label>Ação corretiva</label>
-
-        <textarea
-            id="acaoCorretiva"
-            placeholder="Ex.: Regular o equipamento e verificar novamente a temperatura."
-        ></textarea>
-
-        <button class="primary" onclick="guardarProblema()">
-            💾 Registar problema
-        </button>
-
-        <div id="problemaSucesso" class="sucesso">
-            ✅ Problema registado com sucesso!
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2>📋 Problemas registados</h2>
-
-        <div id="listaProblemas"></div>
-
-    </div>
-
-</section>
-
-
-<!-- DASHBOARD -->
-<section id="dashboard">
-
-    <h2>📊 Dashboard</h2>
-
-    <div class="stats">
-
-        <div class="stat">
-            <span id="totalTemperaturas" class="stat-number">0</span>
-            <span class="stat-title">Temperaturas</span>
-        </div>
-
-        <div class="stat">
-            <span id="bons" class="stat-number">0</span>
-            <span class="stat-title">Dentro do limite</span>
-        </div>
-
-        <div class="stat">
-            <span id="maus" class="stat-number">0</span>
-            <span class="stat-title">Atenção</span>
-        </div>
-
-        <div class="stat">
-            <span id="semLimite" class="stat-number">0</span>
-            <span class="stat-title">Sem limite automático</span>
-        </div>
-
-        <div class="stat">
-            <span id="problemasTotal" class="stat-number">0</span>
-            <span class="stat-title">Problemas</span>
-        </div>
-
-        <div class="stat">
-            <span id="problemasPendentes" class="stat-number">0</span>
-            <span class="stat-title">Pendentes</span>
-        </div>
-
-        <div class="stat">
-            <span id="problemasTratamento" class="stat-number">0</span>
-            <span class="stat-title">Em tratamento</span>
-        </div>
-
-        <div class="stat">
-            <span id="problemasResolvidos" class="stat-number">0</span>
-            <span class="stat-title">Resolvidos</span>
-        </div>
-
-        <div class="stat">
-            <span id="problemasAlta" class="stat-number">0</span>
-            <span class="stat-title">Prioridade alta</span>
-        </div>
-
-        <div class="stat">
-            <span id="checklistTotal" class="stat-number">0</span>
-            <span class="stat-title">Checklist verificado</span>
-        </div>
-
-    </div>
-
-
-    <div class="percent-box">
-
-        <h3>📈 Temperaturas dentro do limite</h3>
-
-        <div id="percentagem" class="percent-number">
-            0%
-        </div>
-
-        <div class="progress">
-            <div id="barraProgresso" class="progress-bar"></div>
-        </div>
-
-        <p style="text-align:center;">
-            Percentagem baseada apenas nos registos
-            com avaliação automática.
-        </p>
-
-    </div>
-
-    <div id="alertaDashboard" class="alert-dashboard"></div>
-
-</section>
-
-
-<!-- HISTÓRICO -->
-<section id="historico">
-
-    <div class="card">
-
-        <h2>📚 Histórico</h2>
-
-        <div id="listaHistorico"></div>
-
-    </div>
-
-</section>
+<div id="resultadoTemperatura"></div>
 
 </div>
 
+<div class="card">
+
+<h3>Últimos registos</h3>
+
+<div id="listaTemperaturas"></div>
+
+</div>
+
+</section>
+
+
+<section id="checklist" class="secao">
+
+<div class="card">
+
+<h2>✅ Checklist de Segurança Alimentar</h2>
+
+<div class="check">
+<input type="checkbox" checked>
+<span>As mãos estão limpas antes da manipulação?</span>
+</div>
+
+<div class="check">
+<input type="checkbox" checked>
+<span>Os alimentos estão protegidos contra contaminação?</span>
+</div>
+
+<div class="check">
+<input type="checkbox" checked>
+<span>Os equipamentos estão limpos?</span>
+</div>
+
+<div class="check">
+<input type="checkbox" checked>
+<span>Os alimentos estão armazenados corretamente?</span>
+</div>
+
+<div class="check">
+<input type="checkbox" checked>
+<span>As temperaturas estão sendo controladas?</span>
+</div>
+
+<div class="check">
+<input type="checkbox" checked>
+<span>Os manipuladores utilizam higiene adequada?</span>
+</div>
+
+<div class="check">
+<input type="checkbox" checked>
+<span>Os produtos estão dentro da validade?</span>
+</div>
+
+<div class="check">
+<input type="checkbox" checked>
+<span>As áreas de preparação estão limpas?</span>
+</div>
+
+<button class="btn" onclick="guardarChecklist()">
+Guardar checklist
+</button>
+
+<div id="resultadoChecklist"></div>
+
+</div>
+
+</section>
+
+
+<section id="problemas" class="secao">
+
+<div class="card">
+
+<h2>⚠️ Registar problema</h2>
+
+<label>Descrição do problema</label>
+
+<textarea id="descricaoProblema"
+placeholder="Descreva o problema encontrado..."></textarea>
+
+<label>Prioridade</label>
+
+<select id="prioridadeProblema">
+<option value="Alta">Alta</option>
+<option value="Média" selected>Média</option>
+<option value="Baixa">Baixa</option>
+</select>
+
+<label>Responsável</label>
+
+<input id="responsavelProblema"
+placeholder="Nome do responsável">
+
+<label>Ação corretiva</label>
+
+<textarea id="acaoCorretiva"
+placeholder="O que deve ser feito para corrigir o problema?"></textarea>
+
+<button class="btn btn-warning" onclick="guardarProblema()">
+⚠️ Registar problema
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Problemas registados</h2>
+
+<div id="listaProblemas"></div>
+
+</div>
+
+</section>
+
+
+<section id="dashboard" class="secao">
+
+<div class="card">
+
+<h2>📊 Dashboard</h2>
+
+<div class="stats">
+
+<div class="stat">
+<strong id="totalProblemas">0</strong>
+Problemas
+</div>
+
+<div class="stat">
+<strong id="pendentes">0</strong>
+Pendentes
+</div>
+
+<div class="stat">
+<strong id="tratamento">0</strong>
+Em tratamento
+</div>
+
+<div class="stat">
+<strong id="resolvidos">0</strong>
+Resolvidos
+</div>
+
+<div class="stat">
+<strong id="prioridadeAlta">0</strong>
+Prioridade alta
+</div>
+
+<div class="stat">
+<strong id="temperaturasTotal">0</strong>
+Temperaturas
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="historico" class="secao">
+
+<div class="card">
+
+<h2>📜 Histórico</h2>
+
+<div id="historicoConteudo"></div>
+
+</div>
+
+</section>
+
+</main>
 
 <footer>
-    FoodSafe Moz 🇲🇿<br>
-    Alimentos seguros, famílias protegidas
+FoodSafe Moz — Segurança Alimentar 🇲🇿
 </footer>
 
 
 <script>
 
-/* =========================
-   DADOS
-========================= */
+function mostrarSecao(id){
+
+document.querySelectorAll('.secao').forEach(function(secao){
+secao.classList.remove('ativa');
+});
+
+document.getElementById(id).classList.add('ativa');
+
+if(id === 'problemas'){
+mostrarProblemas();
+}
+
+if(id === 'dashboard'){
+atualizarDashboard();
+}
+
+if(id === 'historico'){
+mostrarHistorico();
+}
+
+if(id === 'temperatura'){
+mostrarTemperaturas();
+}
+
+}
+
+
+function guardarTemperatura(){
+
+const tipo =
+document.getElementById('tipoTemperatura').value;
+
+const valor =
+parseFloat(document.getElementById('valorTemperatura').value);
+
+const resultado =
+document.getElementById('resultadoTemperatura');
+
+if(isNaN(valor)){
+
+resultado.innerHTML =
+'<div class="resultado vermelho">Digite uma temperatura válida.</div>';
+
+return;
+}
+
+let estado = "";
+let classe = "";
+
+if(tipo === "Frigorífico"){
+
+if(valor <= 6){
+
+estado = "DENTRO DO LIMITE";
+classe = "verde";
+
+}else{
+
+estado = "ATENÇÃO!";
+classe = "vermelho";
+
+}
+
+}
+
+else if(tipo === "Congelador"){
+
+if(valor <= -18){
+
+estado = "DENTRO DO LIMITE";
+classe = "verde";
+
+}else{
+
+estado = "ATENÇÃO!";
+classe = "vermelho";
+
+}
+
+}
+
+else{
+
+estado = "TEMPERATURA REGISTADA";
+classe = "amarelo";
+
+}
+
+resultado.innerHTML =
+'<div class="resultado '+classe+'">'+
+estado+
+'<br>'+
+tipo+
+': '+
+valor+
+' °C'+
+'</div>';
+
 
 let temperaturas =
-    JSON.parse(
-        localStorage.getItem("foodsafemoz_temperaturas")
-    ) || [];
+JSON.parse(localStorage.getItem('foodsafemoz_temperaturas') || '[]');
 
-let problemas =
-    JSON.parse(
-        localStorage.getItem("foodsafemoz_problemas")
-    ) || [];
+temperaturas.unshift({
 
+tipo:tipo,
 
-/* =========================
-   NAVEGAÇÃO
-========================= */
+valor:valor,
 
-function abrir(nome){
+estado:estado,
 
-    document.querySelectorAll("section").forEach(
-        function(section){
-            section.classList.remove("active");
-        }
-    );
+data:new Date().toLocaleString('pt-PT')
 
-    document.getElementById(nome).classList.add("active");
+});
 
-    if(nome === "dashboard"){
-        atualizarDashboard();
-    }
+localStorage.setItem(
+'foodsafemoz_temperaturas',
+JSON.stringify(temperaturas)
+);
 
-    if(nome === "historico"){
-        mostrarHistorico();
-    }
+document.getElementById('valorTemperatura').value = "";
 
-    if(nome === "problemas"){
-        mostrarProblemas();
-    }
+mostrarTemperaturas();
+
+atualizarDashboard();
+
 }
 
 
-/* =========================
-   TEMPERATURA
-========================= */
+function mostrarTemperaturas(){
 
-function avaliarTemperatura(){
+const lista =
+document.getElementById('listaTemperaturas');
 
-    const tipo =
-        document.getElementById("tipo").value;
+if(!lista) return;
 
-    const temperatura =
-        parseFloat(
-            document.getElementById("temperatura").value
-        );
+const temperaturas =
+JSON.parse(localStorage.getItem('foodsafemoz_temperaturas') || '[]');
 
-    const resultado =
-        document.getElementById("resultadoTemperatura");
+if(temperaturas.length === 0){
 
-    const sucesso =
-        document.getElementById("mensagemSucesso");
+lista.innerHTML =
+'<div class="vazio">Nenhuma temperatura registada.</div>';
 
+return;
 
-    resultado.style.display = "none";
-    sucesso.style.display = "none";
+}
 
+lista.innerHTML =
+temperaturas.slice(0,10).map(function(t){
 
-    if(!tipo || isNaN(temperatura)){
+return `
+<div class="historico-item">
+<strong>${t.tipo}</strong><br>
+Temperatura: ${t.valor} °C<br>
+Estado: ${t.estado}<br>
+<small>${t.data}</small>
+</div>
+`;
 
-        alert(
-            "Selecione o tipo e introduza uma temperatura."
-        );
+}).join('');
 
-        return;
-    }
-
-
-    let status;
-    let avaliacao;
-    let classe;
-
-
-    if(tipo === "Frigorífico"){
-
-        if(temperatura <= 6){
-
-            status = "good";
-            avaliacao = "DENTRO DO LIMITE";
-            classe = "good";
-
-        }else{
-
-            status = "danger";
-            avaliacao =
-                "ATENÇÃO! Temperatura acima do limite definido.";
-            classe = "danger";
-
-        }
-
-    }
-
-    else if(tipo === "Congelador"){
-
-        if(temperatura <= -18){
-
-            status = "good";
-            avaliacao = "DENTRO DO LIMITE";
-            classe = "good";
-
-        }else{
-
-            status = "danger";
-            avaliacao =
-                "ATENÇÃO! Temperatura acima do limite definido.";
-            classe = "danger";
-
-        }
-
-    }
-
-    else{
-
-        status = "info";
-
-        avaliacao =
-            "TEMPERATURA REGISTADA — sem limite automático configurado.";
-
-        classe = "info";
-    }
-
-
-    resultado.className =
-        "resultado " + classe;
-
-    resultado.innerHTML =
-        "🌡️ " + tipo +
-        "<br><br>" +
-        temperatura + " °C" +
-        "<br><br>" +
-        avaliacao;
-
-    resultado.style.display = "block";
-
-
-    guardarTemperatura(
-        tipo,
-        temperatura,
-        status,
-        avaliacao
-    );
-
-
-    sucesso.style.display = "block";
-
-
-    setTimeout(
-        function(){
-            sucesso.style.display = "none";
-        },
-        2500
-    );
-
-
-    atualizarDashboard();
 }
 
 
-/* =========================
-   GUARDAR TEMPERATURA
-========================= */
+function guardarChecklist(){
 
-function guardarTemperatura(
-    tipo,
-    temperatura,
-    status,
-    avaliacao
-){
+document.getElementById('resultadoChecklist').innerHTML =
+'<div class="resultado verde">Checklist guardada com sucesso! ✅</div>';
 
-    temperaturas.push({
+let historico =
+JSON.parse(localStorage.getItem('foodsafemoz_historico') || '[]');
 
-        id: Date.now(),
+historico.unshift({
 
-        tipo: tipo,
+tipo:'Checklist',
 
-        temperatura: temperatura,
+descricao:'Checklist de segurança alimentar realizada',
 
-        status: status,
+data:new Date().toLocaleString('pt-PT')
 
-        avaliacao: avaliacao,
+});
 
-        data: new Date().toLocaleString("pt-PT")
+localStorage.setItem(
+'foodsafemoz_historico',
+JSON.stringify(historico)
+);
 
-    });
-
-
-    localStorage.setItem(
-        "foodsafemoz_temperaturas",
-        JSON.stringify(temperaturas)
-    );
 }
 
-
-/* =========================
-   GUARDAR PROBLEMA
-========================= */
 
 function guardarProblema(){
 
-    const problema =
-        document.getElementById("problema")
-        .value
-        .trim();
+const problema =
+document.getElementById('descricaoProblema').value.trim();
 
-    const prioridade =
-        document.getElementById("prioridade")
-        .value;
+const prioridade =
+document.getElementById('prioridadeProblema').value;
 
-    const responsavel =
-        document.getElementById("responsavel")
-        .value
-        .trim();
+const responsavel =
+document.getElementById('responsavelProblema').value.trim();
 
-    const acaoCorretiva =
-        document.getElementById("acaoCorretiva")
-        .value
-        .trim();
+const acaoCorretiva =
+document.getElementById('acaoCorretiva').value.trim();
 
-    const sucesso =
-        document.getElementById("problemaSucesso");
+if(problema === ""){
 
+alert("Digite o problema antes de guardar.");
 
-    if(!problema){
+return;
 
-        alert(
-            "Descreva o problema encontrado."
-        );
+}
 
-        return;
-    }
+let problemas =
+JSON.parse(localStorage.getItem('foodsafemoz_problemas') || '[]');
 
+problemas.unshift({
 
-    const novoProblema = {
+id:Date.now(),
 
-        id: Date.now(),
+problema:problema,
 
-        problema: problema,
+prioridade:prioridade,
 
-        prioridade: prioridade,
+responsavel:responsavel || "Não definido",
 
-        responsavel:
-            responsavel || "Não definido",
+acaoCorretiva:acaoCorretiva || "Não definida",
 
-        acaoCorretiva:
-            acaoCorretiva || "Não definida",
+status:"Pendente",
 
-        /* IMPORTANTE */
-        status: "Pendente",
+data:new Date().toLocaleString('pt-PT')
 
-        data: new Date().toLocaleString("pt-PT")
+});
 
-    };
+localStorage.setItem(
+'foodsafemoz_problemas',
+JSON.stringify(problemas)
+);
 
+document.getElementById('descricaoProblema').value = "";
+document.getElementById('responsavelProblema').value = "";
+document.getElementById('acaoCorretiva').value = "";
 
-    problemas.push(novoProblema);
+alert("Problema registado com sucesso! ✅");
 
-
-    localStorage.setItem(
-        "foodsafemoz_problemas",
-        JSON.stringify(problemas)
-    );
-
-
-    document.getElementById("problema").value = "";
-
-    document.getElementById("responsavel").value = "";
-
-    document.getElementById("acaoCorretiva").value = "";
-
-
-    sucesso.style.display = "block";
-
-
-    setTimeout(
-        function(){
-            sucesso.style.display = "none";
-        },
-        2500
-    );
-
-
-    mostrarProblemas();
-
-    atualizarDashboard();
+mostrarProblemas();
+atualizarDashboard();
 
 }
 
 
-/* =========================
-   MOSTRAR PROBLEMAS
-========================= */
+function mudarStatus(id,novoStatus){
 
-function mostrarProblemas(){
+let problemas =
+JSON.parse(localStorage.getItem('foodsafemoz_problemas') || '[]');
 
-    const lista =
-        document.getElementById("listaProblemas");
+problemas = problemas.map(function(p){
 
+if(p.id === id){
 
-    if(!lista){
-        return;
-    }
+p.status = novoStatus;
 
+p.ultimaAlteracao =
+new Date().toLocaleString('pt-PT');
 
-    lista.innerHTML = "";
-
-
-    if(problemas.length === 0){
-
-        lista.innerHTML =
-            '<div class="vazio">' +
-            'Nenhum problema registado.' +
-            '</div>';
-
-        return;
-    }
-
-
-    const ordenados =
-        [...problemas].reverse();
-
-
-    ordenados.forEach(
-        function(p){
-
-            /*
-             * CORREÇÃO IMPORTANTE:
-             * problemas antigos que não tenham
-             * status recebem automaticamente
-             * "Pendente".
-             */
-
-            if(
-                !p.status ||
-                (
-                    p.status !== "Pendente" &&
-                    p.status !== "Em tratamento" &&
-                    p.status !== "Resolvido"
-                )
-            ){
-
-                p.status = "Pendente";
-            }
-
-
-            let prioridadeClasse =
-                "prioridade-baixa";
-
-
-            if(p.prioridade === "Alta"){
-
-                prioridadeClasse =
-                    "prioridade-alta";
-
-            }
-
-            else if(p.prioridade === "Média"){
-
-                prioridadeClasse =
-                    "prioridade-media";
-
-            }
-
-
-            let statusClasse =
-                "status-pendente";
-
-
-            if(p.status === "Em tratamento"){
-
-                statusClasse =
-                    "status-tratamento";
-
-            }
-
-            else if(p.status === "Resolvido"){
-
-                statusClasse =
-                    "status-resolvido";
-
-            }
-
-
-            let botoes = "";
-
-
-            /*
-             * PENDENTE
-             */
-
-            if(p.status === "Pendente"){
-
-                botoes +=
-                    '<button ' +
-                    'class="btn-tratamento" ' +
-                    'onclick="mudarStatus(' +
-                    p.id +
-                    ', \'Em tratamento\')">' +
-                    '🔄 Colocar em tratamento' +
-                    '</button>';
-
-            }
-
-
-            /*
-             * EM TRATAMENTO
-             */
-
-            if(p.status === "Em tratamento"){
-
-                botoes +=
-                    '<button ' +
-                    'class="btn-resolver" ' +
-                    'onclick="mudarStatus(' +
-                    p.id +
-                    ', \'Resolvido\')">' +
-                    '✅ Marcar como resolvido' +
-                    '</button>';
-
-            }
-
-
-            /*
-             * MOSTRAR CARD
-             */
-
-            lista.innerHTML +=
-
-                '<div class="problema-card ' +
-                prioridadeClasse +
-                '">' +
-
-                '<h3>🚨 ' +
-                escaparHTML(p.problema) +
-                '</h3>' +
-
-                '<span class="badge">' +
-                'Prioridade: ' +
-                escaparHTML(p.prioridade || "Média") +
-                '</span>' +
-
-                '<span class="badge">' +
-                'Responsável: ' +
-                escaparHTML(
-                    p.responsavel || "Não definido"
-                ) +
-                '</span>' +
-
-                '<p>' +
-                '<strong>Estado:</strong> ' +
-
-                '<span class="' +
-                statusClasse +
-                '">' +
-
-                escaparHTML(p.status) +
-
-                '</span>' +
-
-                '</p>' +
-
-                '<p>' +
-                '<strong>Ação corretiva:</strong><br>' +
-                escaparHTML(
-                    p.acaoCorretiva ||
-                    "Não definida"
-                ) +
-                '</p>' +
-
-                '<small>📅 ' +
-                escaparHTML(
-                    p.data || ""
-                ) +
-                '</small>' +
-
-                '<br>' +
-
-                botoes +
-
-                '</div>';
-        }
-    );
-
-
-    /*
-     * Guarda eventuais correções
-     * feitas nos problemas antigos.
-     */
-
-    localStorage.setItem(
-        "foodsafemoz_problemas",
-        JSON.stringify(problemas)
-    );
 }
 
+return p;
 
-/* =========================
-   MUDAR STATUS
-========================= */
+});
 
-function mudarStatus(id, novoStatus){
-
-    const problema =
-        problemas.find(
-            function(p){
-                return Number(p.id) === Number(id);
-            }
-        );
-
-
-    if(!problema){
-
-        alert(
-            "Problema não encontrado."
-        );
-
-        return;
-    }
-
-
-    problema.status =
-        novoStatus;
-
-
-    localStorage.setItem(
-        "foodsafemoz_problemas",
-        JSON.stringify(problemas)
-    );
-
-
-    mostrarProblemas();
-
-    atualizarDashboard();
-
-    mostrarHistorico();
-}
-
-
-/* =========================
-   DASHBOARD
-========================= */
-
-function atualizarDashboard(){
-
-    const bons =
-        temperaturas.filter(
-            function(t){
-                return t.status === "good";
-            }
-        ).length;
-
-
-    const maus =
-        temperaturas.filter(
-            function(t){
-                return t.status === "danger";
-            }
-        ).length;
-
-
-    const semLimite =
-        temperaturas.filter(
-            function(t){
-                return t.status === "info";
-            }
-        ).length;
-
-
-    const total =
-        temperaturas.length;
-
-
-    const pendentes =
-        problemas.filter(
-            function(p){
-
-                if(!p.status){
-                    return true;
-                }
-
-                return p.status === "Pendente";
-            }
-        ).length;
-
-
-    const tratamento =
-        problemas.filter(
-            function(p){
-                return p.status === "Em tratamento";
-            }
-        ).length;
-
-
-    const resolvidos =
-        problemas.filter(
-            function(p){
-                return p.status === "Resolvido";
-            }
-        ).length;
-
-
-    const alta =
-        problemas.filter(
-            function(p){
-                return p.prioridade === "Alta";
-            }
-        ).length;
-
-
-    const checklist =
-        document.querySelectorAll(
-            '#checklist input[type="checkbox"]:checked'
-        ).length;
-
-
-    document.getElementById(
-        "totalTemperaturas"
-    ).textContent = total;
-
-
-    document.getElementById(
-        "bons"
-    ).textContent = bons;
-
-
-    document.getElementById(
-        "maus"
-    ).textContent = maus;
-
-
-    document.getElementById(
-        "semLimite"
-    ).textContent = semLimite;
-
-
-    document.getElementById(
-        "problemasTotal"
-    ).textContent =
-        problemas.length;
-
-
-    document.getElementById(
-        "problemasPendentes"
-    ).textContent =
-        pendentes;
-
-
-    document.getElementById(
-        "problemasTratamento"
-    ).textContent =
-        tratamento;
-
-
-    document.getElementById(
-        "problemasResolvidos"
-    ).textContent =
-        resolvidos;
-
-
-    document.getElementById(
-        "problemasAlta"
-    ).textContent =
-        alta;
-
-
-    document.getElementById(
-        "checklistTotal"
-    ).textContent =
-        checklist;
-
-
-    const avaliados =
-        bons + maus;
-
-
-    let percentagem = 0;
-
-
-    if(avaliados > 0){
-
-        percentagem =
-            Math.round(
-                (bons / avaliados) * 100
-            );
-
-    }
-
-
-    document.getElementById(
-        "percentagem"
-    ).textContent =
-        percentagem + "%";
-
-
-    document.getElementById(
-        "barraProgresso"
-    ).style.width =
-        percentagem + "%";
-
-
-    const alerta =
-        document.getElementById(
-            "alertaDashboard"
-        );
-
-
-    alerta.style.display = "none";
-
-
-    if(maus > 0){
-
-        alerta.className =
-            "alert-dashboard danger";
-
-        alerta.innerHTML =
-            "🚨 ATENÇÃO: Existem " +
-            maus +
-            " registo(s) de temperatura fora do limite.";
-
-        alerta.style.display = "block";
-
-    }
-
-    else if(avaliados > 0){
-
-        alerta.className =
-            "alert-dashboard good";
-
-        alerta.innerHTML =
-            "🟢 SITUAÇÃO NORMAL: Não existem temperaturas avaliadas fora do limite.";
-
-        alerta.style.display = "block";
-    }
-
-
-    if(pendentes > 0){
-
-        alerta.style.display = "block";
-
-        alerta.className =
-            "alert-dashboard danger";
-
-        alerta.innerHTML +=
-            "<br><br>🚨 Existem " +
-            pendentes +
-            " problema(s) pendente(s) de tratamento.";
-    }
-}
-
-
-/* =========================
-   HISTÓRICO
-========================= */
-
-function mostrarHistorico(){
-
-    const lista =
-        document.getElementById(
-            "listaHistorico"
-        );
-
-
-    if(!lista){
-        return;
-    }
-
-
-    lista.innerHTML = "";
-
-
-    if(
-        temperaturas.length === 0 &&
-        problemas.length === 0
-    ){
-
-        lista.innerHTML =
-            '<div class="vazio">' +
-            'Nenhum registo encontrado.' +
-            '</div>';
-
-        return;
-    }
-
-
-    const temperaturasOrdenadas =
-        [...temperaturas].reverse();
-
-
-    temperaturasOrdenadas.forEach(
-        function(t){
-
-            let classe =
-                "info-border";
-
-
-            if(t.status === "good"){
-                classe = "good-border";
-            }
-
-
-            if(t.status === "danger"){
-                classe = "danger-border";
-            }
-
-
-            lista.innerHTML +=
-
-                '<div class="historico-item ' +
-                classe +
-                '">' +
-
-                '<strong>🌡️ Temperatura</strong>' +
-
-                '<p>' +
-                escaparHTML(t.tipo) +
-                ': ' +
-                t.temperatura +
-                ' °C' +
-                '</p>' +
-
-                '<p>' +
-                escaparHTML(t.avaliacao) +
-                '</p>' +
-
-                '<small>📅 ' +
-                escaparHTML(t.data) +
-                '</small>' +
-
-                '</div>';
-        }
-    );
-
-
-    const problemasOrdenados =
-        [...problemas].reverse();
-
-
-    problemasOrdenados.forEach(
-        function(p){
-
-            lista.innerHTML +=
-
-                '<div class="historico-item">' +
-
-                '<strong>🚨 Problema</strong>' +
-
-                '<p>' +
-                escaparHTML(p.problema) +
-                '</p>' +
-
-                '<p>' +
-                '<strong>Prioridade:</strong> ' +
-                escaparHTML(
-                    p.prioridade || "Média"
-                ) +
-                '</p>' +
-
-                '<p>' +
-                '<strong>Estado:</strong> ' +
-                escaparHTML(
-                    p.status || "Pendente"
-                ) +
-                '</p>' +
-
-                '<p>' +
-                '<strong>Ação corretiva:</strong> ' +
-                escaparHTML(
-                    p.acaoCorretiva ||
-                    "Não definida"
-                ) +
-                '</p>' +
-
-                '<small>📅 ' +
-                escaparHTML(
-                    p.data || ""
-                ) +
-                '</small>' +
-
-                '</div>';
-        }
-    );
-}
-
-
-/* =========================
-   PROTEÇÃO DO TEXTO
-========================= */
-
-function escaparHTML(texto){
-
-    return String(texto)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-}
-
-
-/* =========================
-   INICIALIZAÇÃO
-========================= */
+localStorage.setItem(
+'foodsafemoz_problemas',
+JSON.stringify(problemas)
+);
 
 mostrarProblemas();
 
 atualizarDashboard();
 
 mostrarHistorico();
+
+}
+
+
+function eliminarProblema(id){
+
+if(!confirm("Deseja eliminar este problema?")){
+return;
+}
+
+let problemas =
+JSON.parse(localStorage.getItem('foodsafemoz_problemas') || '[]');
+
+problemas =
+problemas.filter(function(p){
+return p.id !== id;
+});
+
+localStorage.setItem(
+'foodsafemoz_problemas',
+JSON.stringify(problemas)
+);
+
+mostrarProblemas();
+atualizarDashboard();
+
+}
+
+
+function mostrarProblemas(){
+
+const lista =
+document.getElementById('listaProblemas');
+
+if(!lista) return;
+
+let problemas =
+JSON.parse(localStorage.getItem('foodsafemoz_problemas') || '[]');
+
+
+problemas = problemas.map(function(p){
+
+if(
+p.status !== "Pendente" &&
+p.status !== "Em tratamento" &&
+p.status !== "Resolvido"
+){
+
+p.status = "Pendente";
+
+}
+
+return p;
+
+});
+
+
+localStorage.setItem(
+'foodsafemoz_problemas',
+JSON.stringify(problemas)
+);
+
+
+if(problemas.length === 0){
+
+lista.innerHTML =
+'<div class="vazio">Nenhum problema registado.</div>';
+
+return;
+
+}
+
+
+lista.innerHTML =
+problemas.map(function(p){
+
+let prioridadeClasse =
+p.prioridade === "Alta"
+? "alta"
+: p.prioridade === "Média"
+? "media"
+: "baixa";
+
+
+let statusClasse =
+p.status === "Pendente"
+? "status-pendente"
+: p.status === "Em tratamento"
+? "status-tratamento"
+: "status-resolvido";
+
+
+let botoes = "";
+
+
+if(p.status === "Pendente"){
+
+botoes += `
+<button
+class="btn-warning"
+onclick="mudarStatus(${p.id}, 'Em tratamento')">
+🔄 Colocar em tratamento
+</button>
+`;
+
+}
+
+
+if(p.status === "Em tratamento"){
+
+botoes += `
+<button
+class="btn-success"
+onclick="mudarStatus(${p.id}, 'Resolvido')">
+✅ Marcar como resolvido
+</button>
+`;
+
+}
+
+
+if(p.status === "Resolvido"){
+
+botoes += `
+<button
+class="btn-secondary"
+onclick="mudarStatus(${p.id}, 'Pendente')">
+↩️ Reabrir problema
+</button>
+`;
+
+}
+
+
+botoes += `
+<button
+class="btn-danger"
+onclick="eliminarProblema(${p.id})">
+🗑️ Eliminar
+</button>
+`;
+
+
+return `
+
+<div class="problema ${p.status === 'Resolvido' ? 'resolvido' : ''}">
+
+<h3>${p.problema}</h3>
+
+<span class="badge ${prioridadeClasse}">
+Prioridade: ${p.prioridade}
+</span>
+
+<span class="badge ${statusClasse}">
+${p.status}
+</span>
+
+<p><strong>Responsável:</strong>
+${p.responsavel}</p>
+
+<p><strong>Ação corretiva:</strong>
+${p.acaoCorretiva}</p>
+
+<p><small>Registado em: ${p.data}</small></p>
+
+${p.ultimaAlteracao ?
+'<p><small>Última alteração: '+p.ultimaAlteracao+'</small></p>'
+: ''}
+
+<div class="acoes">
+${botoes}
+</div>
+
+</div>
+
+`;
+
+}).join('');
+
+}
+
+
+function atualizarDashboard(){
+
+let problemas =
+JSON.parse(localStorage.getItem('foodsafemoz_problemas') || '[]');
+
+let temperaturas =
+JSON.parse(localStorage.getItem('foodsafemoz_temperaturas') || '[]');
+
+
+document.getElementById('totalProblemas').textContent =
+problemas.length;
+
+document.getElementById('pendentes').textContent =
+problemas.filter(function(p){
+return p.status === "Pendente";
+}).length;
+
+document.getElementById('tratamento').textContent =
+problemas.filter(function(p){
+return p.status === "Em tratamento";
+}).length;
+
+document.getElementById('resolvidos').textContent =
+problemas.filter(function(p){
+return p.status === "Resolvido";
+}).length;
+
+document.getElementById('prioridadeAlta').textContent =
+problemas.filter(function(p){
+return p.prioridade === "Alta";
+}).length;
+
+document.getElementById('temperaturasTotal').textContent =
+temperaturas.length;
+
+}
+
+
+function mostrarHistorico(){
+
+const conteudo =
+document.getElementById('historicoConteudo');
+
+if(!conteudo) return;
+
+let temperaturas =
+JSON.parse(localStorage.getItem('foodsafemoz_temperaturas') || '[]');
+
+let problemas =
+JSON.parse(localStorage.getItem('foodsafemoz_problemas') || '[]');
+
+let historico =
+JSON.parse(localStorage.getItem('foodsafemoz_historico') || '[]');
+
+
+let itens = [];
+
+
+temperaturas.forEach(function(t){
+
+itens.push({
+
+data:t.data,
+
+texto:
+"🌡️ Temperatura: "+
+t.tipo+
+" — "+
+t.valor+
+" °C — "+
+t.estado
+
+});
+
+});
+
+
+problemas.forEach(function(p){
+
+itens.push({
+
+data:p.data,
+
+texto:
+"⚠️ Problema: "+
+p.problema+
+" — "+
+p.status
+
+});
+
+});
+
+
+historico.forEach(function(h){
+
+itens.push({
+
+data:h.data,
+
+texto:
+"✅ "+
+h.descricao
+
+});
+
+});
+
+
+if(itens.length === 0){
+
+conteudo.innerHTML =
+'<div class="vazio">Ainda não existem registos no histórico.</div>';
+
+return;
+
+}
+
+
+conteudo.innerHTML =
+itens.map(function(i){
+
+return `
+<div class="historico-item">
+${i.texto}
+<br>
+<small>${i.data}</small>
+</div>
+`;
+
+}).join('');
+
+}
+
+
+mostrarTemperaturas();
+mostrarProblemas();
+atualizarDashboard();
 
 </script>
 
