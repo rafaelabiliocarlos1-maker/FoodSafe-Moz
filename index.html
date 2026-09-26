@@ -2,8 +2,8 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0f766e">
 <title>FoodSafe Moz</title>
 
 <style>
@@ -14,282 +14,286 @@
 
 body{
   margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#f4f7f9;
-  color:#17212b;
-  padding-bottom:82px;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  background:#f4f7f8;
+  color:#17202a;
 }
 
 header{
-  background:#087f5b;
-  color:#fff;
-  text-align:center;
-  padding:18px 12px;
+  background:#0f766e;
+  color:white;
+  padding:18px 16px;
   position:sticky;
   top:0;
-  z-index:50;
+  z-index:20;
 }
 
-header h1{
-  margin:0;
-  font-size:22px;
+.header-title{
+  font-size:23px;
+  font-weight:800;
 }
 
-header p{
-  margin:5px 0 0;
+.header-sub{
   font-size:13px;
+  opacity:.9;
+  margin-top:4px;
+}
+
+nav{
+  display:flex;
+  overflow-x:auto;
+  gap:8px;
+  padding:10px;
+  background:white;
+  border-bottom:1px solid #ddd;
+  position:sticky;
+  top:78px;
+  z-index:19;
+}
+
+nav button{
+  flex:0 0 auto;
+  border:0;
+  background:#eef3f3;
+  color:#17423f;
+  padding:11px 14px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+  touch-action:manipulation;
+}
+
+nav button.active{
+  background:#0f766e;
+  color:white;
+}
+
+main{
+  max-width:1000px;
+  margin:auto;
+  padding:16px;
+  padding-bottom:50px;
 }
 
 .page{
   display:none;
-  max-width:720px;
-  margin:auto;
-  padding:16px;
 }
 
 .page.active{
   display:block;
 }
 
-.card{
-  background:#fff;
-  border-radius:14px;
-  padding:16px;
-  margin-bottom:15px;
-  box-shadow:0 2px 10px rgba(0,0,0,.07);
-}
-
 h2{
-  color:#087f5b;
-  margin-top:0;
+  margin-top:5px;
+  color:#0f766e;
 }
 
 h3{
-  margin-top:5px;
+  margin-bottom:8px;
+}
+
+.card{
+  background:white;
+  border-radius:16px;
+  padding:17px;
+  margin-bottom:15px;
+  box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+@media(max-width:650px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+}
+
+.stat{
+  background:white;
+  border-radius:15px;
+  padding:16px;
+  box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.stat-number{
+  font-size:27px;
+  font-weight:800;
+  color:#0f766e;
+}
+
+.stat-label{
+  font-size:13px;
+  color:#64748b;
+  margin-top:3px;
 }
 
 label{
   display:block;
-  font-weight:bold;
+  font-weight:700;
   margin:12px 0 6px;
 }
 
-input,select,textarea{
+input,
+select,
+textarea{
   width:100%;
   padding:13px;
-  border:1px solid #ccd4d9;
+  border:1px solid #ccd5d8;
   border-radius:10px;
+  background:white;
   font-size:16px;
-  background:#fff;
+  outline:none;
 }
 
 textarea{
-  min-height:100px;
+  min-height:90px;
+  resize:vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:#0f766e;
 }
 
 button{
-  width:100%;
-  padding:14px;
-  margin-top:11px;
+  font-family:inherit;
+}
+
+.btn{
   border:0;
   border-radius:10px;
-  font-size:16px;
-  font-weight:bold;
+  padding:12px 16px;
+  margin-top:12px;
+  font-weight:800;
   cursor:pointer;
   touch-action:manipulation;
 }
 
 .btn-primary{
-  background:#087f5b;
+  background:#0f766e;
   color:white;
 }
 
 .btn-secondary{
-  background:#e8f5f0;
-  color:#087f5b;
+  background:#e8f0ef;
+  color:#0f766e;
 }
 
 .btn-danger{
-  background:#ffe7e7;
-  color:#b42318;
+  background:#fee2e2;
+  color:#b91c1c;
 }
 
-.check{
-  width:24px;
-  height:24px;
+.btn-warning{
+  background:#fef3c7;
+  color:#92400e;
+}
+
+.btn-success{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.btn-small{
+  padding:8px 10px;
+  margin:4px 3px 0 0;
+  font-size:13px;
 }
 
 .check-item{
   display:flex;
   align-items:center;
   gap:12px;
-  padding:13px 3px;
-  border-bottom:1px solid #eee;
+  padding:13px 5px;
+  border-bottom:1px solid #edf0f0;
 }
 
-.stats{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+.check-item:last-child{
+  border-bottom:0;
 }
 
-.stat{
-  background:#fff;
-  padding:17px;
-  border-radius:14px;
-  text-align:center;
-  box-shadow:0 2px 10px rgba(0,0,0,.06);
+.check-item input[type="checkbox"]{
+  width:24px;
+  height:24px;
+  flex:0 0 24px;
+  accent-color:#0f766e;
 }
 
-.stat-number{
-  font-size:30px;
-  font-weight:bold;
-  color:#087f5b;
-}
-
-.stat-label{
-  font-size:12px;
-  color:#68737c;
-}
-
-.result{
-  margin-top:15px;
-  padding:15px;
-  background:#f0f8f4;
-  border-radius:12px;
-}
-
-.percent{
-  font-size:38px;
-  font-weight:bold;
-  color:#087f5b;
-  text-align:center;
-}
-
-.alert{
-  padding:13px;
-  border-radius:10px;
-  margin-top:10px;
-}
-
-.success{
-  background:#e7f8ee;
-  color:#17663f;
-}
-
-.warning{
-  background:#fff4d6;
-  color:#805600;
-}
-
-.danger{
-  background:#ffe7e7;
-  color:#a11b1b;
-}
-
-.small{
-  font-size:13px;
-  color:#68737c;
+.check-item span{
+  font-size:15px;
 }
 
 .badge{
   display:inline-block;
-  padding:6px 10px;
+  padding:5px 9px;
   border-radius:20px;
   font-size:12px;
-  font-weight:bold;
+  font-weight:800;
 }
 
-.pending{
-  background:#fff0d6;
-  color:#8a5a00;
+.badge-green{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.badge-yellow{
+  background:#fef3c7;
+  color:#92400e;
+}
+
+.badge-red{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.badge-blue{
+  background:#dbeafe;
+  color:#1d4ed8;
+}
+
+.est-card{
+  border:1px solid #e1e7e8;
+  border-radius:14px;
+  padding:15px;
+  margin-bottom:12px;
+}
+
+.est-title{
+  font-size:18px;
+  font-weight:800;
+  color:#0f766e;
+}
+
+.est-meta{
+  font-size:14px;
+  color:#52616b;
+  margin-top:6px;
+  line-height:1.6;
 }
 
 .progress{
-  background:#e5efff;
-  color:#1456a0;
+  height:10px;
+  background:#e5e7eb;
+  border-radius:20px;
+  overflow:hidden;
+  margin:8px 0;
 }
 
-.done{
-  background:#dcf7e8;
-  color:#087f5b;
-}
-
-.action-card{
-  border-left:5px solid #087f5b;
-}
-
-.report-card{
-  border-top:5px solid #087f5b;
-}
-
-.report-title{
-  text-align:center;
-  margin-bottom:5px;
-}
-
-.report-id{
-  text-align:center;
-  font-size:13px;
-  color:#68737c;
-}
-
-.report-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:12px;
-}
-
-.report-table td,
-.report-table th{
-  border:1px solid #ddd;
-  padding:9px;
-  text-align:left;
-  font-size:13px;
-}
-
-.report-table th{
-  background:#f2f5f6;
-}
-
-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  height:72px;
-  background:white;
-  border-top:1px solid #ddd;
-  display:flex;
-  z-index:100;
-  box-shadow:0 -2px 10px rgba(0,0,0,.08);
-}
-
-nav button{
-  margin:0;
-  padding:6px 2px;
-  border-radius:0;
-  background:white;
-  color:#66727c;
-  font-size:10px;
-  font-weight:normal;
-}
-
-nav button.active{
-  color:#087f5b;
-  font-weight:bold;
-}
-
-.nav-icon{
-  display:block;
-  font-size:20px;
-  margin-bottom:3px;
+.progress-bar{
+  height:100%;
+  background:#0f766e;
+  border-radius:20px;
 }
 
 .empty{
   text-align:center;
-  color:#737d85;
-  padding:22px 5px;
+  padding:30px 15px;
+  color:#718096;
 }
 
 .modal{
@@ -297,9 +301,9 @@ nav button.active{
   position:fixed;
   inset:0;
   background:rgba(0,0,0,.55);
-  z-index:500;
-  overflow:auto;
+  z-index:100;
   padding:15px;
+  overflow:auto;
 }
 
 .modal.show{
@@ -308,41 +312,126 @@ nav button.active{
 
 .modal-box{
   background:white;
-  max-width:720px;
-  margin:20px auto;
-  border-radius:15px;
-  padding:17px;
+  max-width:850px;
+  margin:30px auto;
+  border-radius:18px;
+  padding:20px;
+}
+
+.modal-close{
+  float:right;
+  border:0;
+  background:#eee;
+  border-radius:50%;
+  width:36px;
+  height:36px;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.report{
+  background:white;
+}
+
+.report-header{
+  border-bottom:2px solid #0f766e;
+  padding-bottom:12px;
+  margin-bottom:15px;
+}
+
+.report-title{
+  color:#0f766e;
+  font-size:25px;
+  font-weight:900;
+}
+
+.report-row{
+  display:grid;
+  grid-template-columns:180px 1fr;
+  padding:8px 0;
+  border-bottom:1px solid #eee;
+}
+
+@media(max-width:600px){
+  .report-row{
+    grid-template-columns:1fr;
+  }
+}
+
+.report-section{
+  margin-top:20px;
+}
+
+.report-list{
+  padding-left:20px;
+}
+
+.success-box{
+  background:#ecfdf5;
+  border:1px solid #a7f3d0;
+  color:#065f46;
+  padding:13px;
+  border-radius:10px;
+  margin-top:12px;
+}
+
+.warning-box{
+  background:#fffbeb;
+  border:1px solid #fde68a;
+  color:#92400e;
+  padding:13px;
+  border-radius:10px;
+  margin-top:12px;
+}
+
+.danger-box{
+  background:#fef2f2;
+  border:1px solid #fecaca;
+  color:#991b1b;
+  padding:13px;
+  border-radius:10px;
+  margin-top:12px;
+}
+
+.small{
+  font-size:13px;
+  color:#64748b;
+}
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-top:8px;
 }
 
 @media print{
   body{
-    background:#fff;
-    padding:0;
+    background:white;
   }
 
-  header,nav,.no-print{
-    display:none!important;
-  }
-
-  .page{
-    display:none!important;
-  }
-
-  #relatorioPrint{
-    display:block!important;
-    padding:0;
+  header,
+  nav,
+  .no-print{
+    display:none !important;
   }
 
   .modal{
     position:static;
-    display:block!important;
-    background:#fff;
+    background:white;
     padding:0;
+    display:block !important;
   }
 
   .modal-box{
+    max-width:none;
     margin:0;
+    padding:0;
     box-shadow:none;
+  }
+
+  .report{
+    display:block !important;
   }
 }
 </style>
@@ -351,55 +440,135 @@ nav button.active{
 <body>
 
 <header>
-  <h1>FoodSafe Moz</h1>
-  <p>Alimentos seguros, famílias protegidas</p>
+  <div class="header-title">🛡️ FoodSafe Moz</div>
+  <div class="header-sub">Alimentos seguros, famílias protegidas</div>
 </header>
 
+<nav id="menu">
+  <button data-page="inicio" class="active">🏠 Início</button>
+  <button data-page="estabelecimentos">🏢 Estabelecimentos</button>
+  <button data-page="temperatura">🌡️ Temperatura</button>
+  <button data-page="checklist">✅ Inspeção</button>
+  <button data-page="problemas">⚠️ Ações</button>
+  <button data-page="dashboard">📊 Dashboard</button>
+  <button data-page="historico">📚 Histórico</button>
+</nav>
+
+<main>
 
 <!-- INÍCIO -->
 <section id="inicio" class="page active">
 
   <div class="card">
-    <h2>👋 Bem-vindo ao FoodSafe Moz</h2>
+    <h2>Bem-vindo ao FoodSafe Moz</h2>
     <p>
-      Sistema de apoio à inspeção, controlo e acompanhamento
-      da segurança alimentar.
+      Sistema digital para apoiar a inspeção, monitorização e gestão
+      da segurança dos alimentos.
     </p>
+
+    <button class="btn btn-primary" onclick="mostrarPagina('estabelecimentos')">
+      🏢 Cadastrar estabelecimento
+    </button>
+
+    <button class="btn btn-secondary" onclick="mostrarPagina('checklist')">
+      ✅ Nova inspeção
+    </button>
   </div>
 
-  <div class="stats">
+  <div class="grid">
+    <div class="stat">
+      <div class="stat-number" id="inicioEstabelecimentos">0</div>
+      <div class="stat-label">Estabelecimentos</div>
+    </div>
 
     <div class="stat">
-      <div class="stat-number" id="homeInspecoes">0</div>
+      <div class="stat-number" id="inicioInspecoes">0</div>
       <div class="stat-label">Inspeções</div>
     </div>
 
     <div class="stat">
-      <div class="stat-number" id="homeAcoes">0</div>
+      <div class="stat-number" id="inicioAcoes">0</div>
       <div class="stat-label">Ações corretivas</div>
     </div>
 
+    <div class="stat">
+      <div class="stat-number" id="inicioPendentes">0</div>
+      <div class="stat-label">Ações pendentes</div>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ESTABELECIMENTOS -->
+<section id="estabelecimentos" class="page">
+
+  <div class="card">
+    <h2>🏢 Cadastro de Estabelecimentos</h2>
+    <p class="small">
+      Cadastre os estabelecimentos para reutilizar os seus dados durante as inspeções.
+    </p>
+
+    <form id="formEstabelecimento">
+
+      <label>Nome do estabelecimento *</label>
+      <input id="estNome" required placeholder="Ex.: Restaurante Nampula">
+
+      <label>Tipo de estabelecimento *</label>
+      <select id="estTipo" required>
+        <option value="">Selecione</option>
+        <option>Restaurante</option>
+        <option>Cantina</option>
+        <option>Padaria</option>
+        <option>Talho</option>
+        <option>Mercado</option>
+        <option>Hotel</option>
+        <option>Escola</option>
+        <option>Hospital</option>
+        <option>Fábrica / Indústria alimentar</option>
+        <option>Supermercado</option>
+        <option>Outro</option>
+      </select>
+
+      <label>Localização *</label>
+      <input id="estLocalizacao" required placeholder="Ex.: Nampula, Bairro Central">
+
+      <label>Responsável *</label>
+      <input id="estResponsavel" required placeholder="Nome do responsável">
+
+      <label>Contacto</label>
+      <input id="estContacto" type="tel" placeholder="Ex.: 84 000 0000">
+
+      <label>Data de cadastro *</label>
+      <input id="estData" type="date" required>
+
+      <button class="btn btn-primary" type="submit">
+        💾 Cadastrar estabelecimento
+      </button>
+
+      <button
+        class="btn btn-secondary"
+        type="button"
+        onclick="cancelarEdicaoEstabelecimento()"
+        id="btnCancelarEst"
+        style="display:none"
+      >
+        Cancelar edição
+      </button>
+
+    </form>
   </div>
 
   <div class="card">
+    <h2>Estabelecimentos cadastrados</h2>
 
-    <h3>🚀 Acesso rápido</h3>
+    <input
+      id="buscaEstabelecimento"
+      placeholder="🔎 Procurar estabelecimento..."
+      oninput="renderEstabelecimentos()"
+    >
 
-    <button class="btn-primary"
-            onclick="mostrarPagina('checklist')">
-      📝 Nova inspeção
-    </button>
-
-    <button class="btn-secondary"
-            onclick="mostrarPagina('problemas')">
-      🛠️ Plano de ação
-    </button>
-
-    <button class="btn-secondary"
-            onclick="mostrarPagina('temperatura')">
-      🌡️ Temperatura
-    </button>
-
+    <div id="listaEstabelecimentos" style="margin-top:15px"></div>
   </div>
 
 </section>
@@ -409,144 +578,98 @@ nav button.active{
 <section id="temperatura" class="page">
 
   <div class="card">
+    <h2>🌡️ Registo de Temperatura</h2>
 
-    <h2>🌡️ Controlo de Temperatura</h2>
+    <label>Estabelecimento</label>
+    <select id="tempEstabelecimento"></select>
 
-    <label>Nome do alimento</label>
-    <input id="tempAlimento"
-           placeholder="Ex.: Carne de frango">
+    <label>Alimento / equipamento</label>
+    <input id="tempAlimento" placeholder="Ex.: Frango refrigerado">
 
-    <label>Temperatura °C</label>
-    <input id="tempValor"
-           type="number"
-           step="0.1"
-           placeholder="Ex.: 4">
+    <label>Temperatura (°C)</label>
+    <input id="tempValor" type="number" step="0.1" placeholder="Ex.: 4">
 
-    <label>Tipo de controlo</label>
+    <label>Observação</label>
+    <textarea id="tempObs" placeholder="Observações..."></textarea>
 
-    <select id="tempTipo">
-      <option>Refrigeração</option>
-      <option>Congelação</option>
-      <option>Cozedura</option>
-      <option>Outro</option>
-    </select>
-
-    <button class="btn-primary"
-            onclick="guardarTemperatura()">
+    <button class="btn btn-primary" onclick="guardarTemperatura()">
       💾 Guardar temperatura
     </button>
-
-    <div id="tempMensagem"></div>
-
   </div>
 
   <div class="card">
-    <h3>Registos recentes</h3>
+    <h2>Registos recentes</h2>
     <div id="listaTemperaturas"></div>
   </div>
 
 </section>
 
 
-<!-- CHECKLIST -->
+<!-- CHECKLIST / INSPEÇÃO -->
 <section id="checklist" class="page">
 
   <div class="card">
+    <h2>✅ Nova Inspeção</h2>
 
-    <h2>📝 Nova Inspeção</h2>
+    <label>Estabelecimento *</label>
+    <select id="inspEstabelecimento" onchange="preencherDadosInspecao()">
+      <option value="">Selecione um estabelecimento</option>
+    </select>
 
-    <label>Nome do estabelecimento *</label>
-    <input id="estabelecimento"
-           placeholder="Ex.: Restaurante Teste">
+    <button
+      class="btn btn-secondary"
+      onclick="mostrarPagina('estabelecimentos')"
+      type="button"
+    >
+      ➕ Cadastrar novo estabelecimento
+    </button>
 
-    <label>Responsável *</label>
-    <input id="responsavel"
-           placeholder="Nome do responsável">
+    <div id="dadosEstabelecimentoSelecionado" style="margin-top:12px"></div>
 
-    <label>Data</label>
-    <input id="dataInspecao" type="date">
+    <label>Responsável pela inspeção *</label>
+    <input id="inspResponsavel" placeholder="Responsável">
+
+    <label>Data da inspeção *</label>
+    <input id="inspData" type="date">
 
   </div>
 
-
   <div class="card">
+    <h2>Checklist de Segurança Alimentar</h2>
 
-    <h3>Checklist de Segurança Alimentar</h3>
+    <p class="small">
+      Marque cada item que estiver em conformidade.
+    </p>
 
-    <div class="check-item">
-      <input class="check" type="checkbox">
-      <span>Instalações limpas e organizadas</span>
-    </div>
+    <div id="checklistItens"></div>
 
-    <div class="check-item">
-      <input class="check" type="checkbox">
-      <span>Manipuladores com higiene adequada</span>
-    </div>
-
-    <div class="check-item">
-      <input class="check" type="checkbox">
-      <span>Água potável disponível</span>
-    </div>
-
-    <div class="check-item">
-      <input class="check" type="checkbox">
-      <span>Equipamentos limpos e em bom estado</span>
-    </div>
-
-    <div class="check-item">
-      <input class="check" type="checkbox">
-      <span>Alimentos armazenados corretamente</span>
-    </div>
-
-    <div class="check-item">
-      <input class="check" type="checkbox">
-      <span>Temperaturas controladas</span>
-    </div>
-
-    <div class="check-item">
-      <input class="check" type="checkbox">
-      <span>Produtos dentro do prazo de validade</span>
-    </div>
-
-    <div class="check-item">
-      <input class="check" type="checkbox">
-      <span>Ausência de sinais de pragas</span>
-    </div>
-
-    <div class="check-item">
-      <input class="check" type="checkbox">
-      <span>Resíduos descartados adequadamente</span>
-    </div>
-
-    <button class="btn-primary"
-            onclick="calcularInspecao()">
-      📊 Calcular resultado
+    <button class="btn btn-primary" onclick="calcularInspecao()">
+      📊 Calcular inspeção
     </button>
 
     <div id="resultadoInspecao"></div>
-
   </div>
 
 </section>
 
 
-<!-- PROBLEMAS -->
+<!-- AÇÕES CORRETIVAS -->
 <section id="problemas" class="page">
 
   <div class="card">
-
-    <h2>🛠️ Plano de Ação Corretiva</h2>
+    <h2>⚠️ Plano de Ação Corretiva</h2>
 
     <label>Estabelecimento *</label>
-    <input id="acaoEstabelecimento"
-           placeholder="Nome do estabelecimento">
+    <select id="acaoEstabelecimento">
+      <option value="">Selecione um estabelecimento</option>
+    </select>
 
-    <label>Problema / Não conformidade *</label>
-    <textarea id="acaoProblema"
-              placeholder="Descreva o problema"></textarea>
+    <label>Problema / não conformidade *</label>
+    <textarea id="acaoProblema" placeholder="Descreva o problema"></textarea>
 
-    <label>Gravidade</label>
+    <label>Gravidade *</label>
     <select id="acaoGravidade">
+      <option value="">Selecione</option>
       <option>Baixa</option>
       <option>Média</option>
       <option>Alta</option>
@@ -554,34 +677,28 @@ nav button.active{
     </select>
 
     <label>Ação corretiva *</label>
-    <textarea id="acaoCorretiva"
-              placeholder="O que deve ser feito?"></textarea>
+    <textarea id="acaoCorretiva" placeholder="O que deve ser feito?"></textarea>
 
-    <label>Responsável</label>
-    <input id="acaoResponsavel"
-           placeholder="Responsável pela correção">
+    <label>Responsável *</label>
+    <input id="acaoResponsavel" placeholder="Responsável pela correção">
 
-    <label>Prazo</label>
+    <label>Prazo *</label>
     <input id="acaoPrazo" type="date">
 
     <label>Estado</label>
-    <select id="acaoEstado">
+    <select id="acaoStatus">
       <option>Pendente</option>
       <option>Em andamento</option>
       <option>Resolvido</option>
     </select>
 
-    <button class="btn-primary"
-            onclick="guardarAcao()">
+    <button class="btn btn-primary" onclick="guardarAcao()">
       💾 Guardar ação corretiva
     </button>
-
-    <div id="acaoMensagem"></div>
-
   </div>
 
   <div class="card">
-    <h3>📋 Ações registadas</h3>
+    <h2>Ações registadas</h2>
     <div id="listaAcoes"></div>
   </div>
 
@@ -593,12 +710,15 @@ nav button.active{
 
   <div class="card">
     <h2>📊 Dashboard</h2>
-    <p class="small">
-      Visão geral do desempenho das inspeções.
-    </p>
+    <p class="small">Visão geral do FoodSafe Moz.</p>
   </div>
 
-  <div class="stats">
+  <div class="grid">
+
+    <div class="stat">
+      <div class="stat-number" id="dashEstabelecimentos">0</div>
+      <div class="stat-label">Estabelecimentos</div>
+    </div>
 
     <div class="stat">
       <div class="stat-number" id="dashInspecoes">0</div>
@@ -607,7 +727,7 @@ nav button.active{
 
     <div class="stat">
       <div class="stat-number" id="dashConformes">0</div>
-      <div class="stat-label">≥ 70% conformidade</div>
+      <div class="stat-label">Inspeções ≥ 70%</div>
     </div>
 
     <div class="stat">
@@ -617,17 +737,14 @@ nav button.active{
 
     <div class="stat">
       <div class="stat-number" id="dashPendentes">0</div>
-      <div class="stat-label">Pendentes</div>
+      <div class="stat-label">Ações pendentes</div>
     </div>
 
   </div>
 
   <div class="card">
-
-    <h3>📌 Situação das ações</h3>
-
-    <div id="resumoAcoes"></div>
-
+    <h2>📈 Últimas inspeções</h2>
+    <div id="dashUltimas"></div>
   </div>
 
 </section>
@@ -637,1479 +754,1401 @@ nav button.active{
 <section id="historico" class="page">
 
   <div class="card">
-
-    <h2>📜 Histórico de Inspeções</h2>
-
+    <h2>📚 Histórico de Inspeções</h2>
     <div id="listaHistorico"></div>
-
   </div>
 
 </section>
 
+</main>
 
-<!-- RELATÓRIO -->
+
+<!-- MODAL RELATÓRIO -->
 <div id="modalRelatorio" class="modal">
 
   <div class="modal-box">
 
-    <div id="relatorioPrint">
+    <button class="modal-close no-print" onclick="fecharRelatorio()">×</button>
 
-      <div class="report-card">
+    <div id="conteudoRelatorio"></div>
 
-        <div class="report-title">
+    <div class="no-print" style="margin-top:20px">
 
-          <h2>FoodSafe Moz</h2>
+      <button class="btn btn-primary" onclick="window.print()">
+        🖨️ Imprimir / Guardar PDF
+      </button>
 
-          <h3>RELATÓRIO DE INSPEÇÃO DE SEGURANÇA ALIMENTAR</h3>
-
-          <div class="report-id" id="relatorioId"></div>
-
-        </div>
-
-        <hr>
-
-        <table class="report-table">
-
-          <tr>
-            <th>Estabelecimento</th>
-            <td id="relatorioEstabelecimento"></td>
-          </tr>
-
-          <tr>
-            <th>Responsável</th>
-            <td id="relatorioResponsavel"></td>
-          </tr>
-
-          <tr>
-            <th>Data</th>
-            <td id="relatorioData"></td>
-          </tr>
-
-          <tr>
-            <th>Conformidade</th>
-            <td id="relatorioPercentual"></td>
-          </tr>
-
-          <tr>
-            <th>Itens conformes</th>
-            <td id="relatorioConformes"></td>
-          </tr>
-
-          <tr>
-            <th>Itens não conformes</th>
-            <td id="relatorioNaoConformes"></td>
-          </tr>
-
-        </table>
-
-
-        <h3>✅ Itens conformes</h3>
-
-        <div id="relatorioListaConformes"></div>
-
-
-        <h3>❌ Não conformidades</h3>
-
-        <div id="relatorioListaNaoConformes"></div>
-
-
-        <h3>🛠️ Ações corretivas relacionadas</h3>
-
-        <div id="relatorioAcoes"></div>
-
-
-        <hr>
-
-        <p class="small">
-          Relatório gerado pelo sistema FoodSafe Moz.
-        </p>
-
-      </div>
+      <button class="btn btn-secondary" onclick="fecharRelatorio()">
+        Fechar
+      </button>
 
     </div>
-
-
-    <button class="btn-primary no-print"
-            onclick="window.print()">
-      🖨️ Imprimir / Guardar como PDF
-    </button>
-
-    <button class="btn-secondary no-print"
-            onclick="fecharRelatorio()">
-      ✕ Fechar relatório
-    </button>
 
   </div>
 
 </div>
 
 
-<!-- MENU -->
-<nav>
-
-  <button id="nav-inicio"
-          class="active"
-          onclick="mostrarPagina('inicio')">
-    <span class="nav-icon">🏠</span>
-    Início
-  </button>
-
-  <button id="nav-temperatura"
-          onclick="mostrarPagina('temperatura')">
-    <span class="nav-icon">🌡️</span>
-    Temperatura
-  </button>
-
-  <button id="nav-checklist"
-          onclick="mostrarPagina('checklist')">
-    <span class="nav-icon">📝</span>
-    Checklist
-  </button>
-
-  <button id="nav-problemas"
-          onclick="mostrarPagina('problemas')">
-    <span class="nav-icon">🛠️</span>
-    Problemas
-  </button>
-
-  <button id="nav-dashboard"
-          onclick="mostrarPagina('dashboard')">
-    <span class="nav-icon">📊</span>
-    Dashboard
-  </button>
-
-  <button id="nav-historico"
-          onclick="mostrarPagina('historico')">
-    <span class="nav-icon">📜</span>
-    Histórico
-  </button>
-
-</nav>
-
-
 <script>
 
-/* =====================================================
-   CONFIGURAÇÃO
-===================================================== */
-
-const KEY_TEMP =
-"foodsafemoz_temperaturas";
-
-const KEY_INSPECOES =
-"foodsafemoz_inspecoes";
-
-const KEY_ACOES =
-"foodsafemoz_acoes";
+const KEY_ESTAB = "foodsafemoz_estabelecimentos";
+const KEY_TEMP = "foodsafemoz_temperaturas";
+const KEY_INSP = "foodsafemoz_inspecoes";
+const KEY_ACAO = "foodsafemoz_acoes";
 
 
-const NOMES_CHECKLIST = [
-
-"Instalações limpas e organizadas",
-
-"Manipuladores com higiene adequada",
-
-"Água potável disponível",
-
-"Equipamentos limpos e em bom estado",
-
-"Alimentos armazenados corretamente",
-
-"Temperaturas controladas",
-
-"Produtos dentro do prazo de validade",
-
-"Ausência de sinais de pragas",
-
-"Resíduos descartados adequadamente"
-
+const checklistItens = [
+  "Instalações limpas e organizadas",
+  "Manipuladores com higiene adequada",
+  "Água potável disponível",
+  "Equipamentos limpos e em bom estado",
+  "Alimentos armazenados corretamente",
+  "Temperaturas controladas",
+  "Produtos dentro do prazo de validade",
+  "Ausência de sinais de pragas",
+  "Resíduos descartados adequadamente"
 ];
 
 
-let ultimaInspecao = null;
+let editandoEstabelecimentoId = null;
 
 
-/* =====================================================
-   LOCAL STORAGE
-===================================================== */
+/* =========================
+   UTILITÁRIOS
+========================= */
 
-function obterDados(chave){
-
+function ler(key){
   try{
-
-    return JSON.parse(
-      localStorage.getItem(chave)
-    ) || [];
-
+    return JSON.parse(localStorage.getItem(key)) || [];
   }catch(e){
-
     return [];
-
   }
-
 }
 
-
-function guardarDados(chave,dados){
-
-  localStorage.setItem(
-    chave,
-    JSON.stringify(dados)
-  );
-
+function guardar(key, dados){
+  localStorage.setItem(key, JSON.stringify(dados));
 }
 
-
-/* =====================================================
-   NAVEGAÇÃO
-===================================================== */
-
-function mostrarPagina(pagina){
-
-  document.querySelectorAll(".page")
-    .forEach(function(p){
-
-      p.classList.remove("active");
-
-    });
-
-
-  const elemento =
-    document.getElementById(pagina);
-
-
-  if(elemento){
-
-    elemento.classList.add("active");
-
-  }
-
-
-  document.querySelectorAll("nav button")
-    .forEach(function(btn){
-
-      btn.classList.remove("active");
-
-    });
-
-
-  const nav =
-    document.getElementById("nav-"+pagina);
-
-
-  if(nav){
-
-    nav.classList.add("active");
-
-  }
-
-
-  window.scrollTo(0,0);
-
-  atualizarTudo();
-
+function gerarId(prefixo){
+  return prefixo + "-" + Date.now() + "-" +
+    Math.random().toString(36).substring(2,7).toUpperCase();
 }
 
+function hoje(){
+  const d = new Date();
+  const mes = String(d.getMonth()+1).padStart(2,"0");
+  const dia = String(d.getDate()).padStart(2,"0");
+  return `${d.getFullYear()}-${mes}-${dia}`;
+}
 
-/* =====================================================
-   UTILITÁRIO
-===================================================== */
+function formatarData(data){
+  if(!data) return "-";
 
-function escapar(valor){
+  const partes = data.split("-");
 
-  if(valor===undefined ||
-     valor===null){
-
-    return "";
-
+  if(partes.length === 3){
+    return `${partes[2]}/${partes[1]}/${partes[0]}`;
   }
 
-  return String(valor)
+  return data;
+}
 
+function escapar(texto){
+  return String(texto ?? "")
     .replace(/&/g,"&amp;")
-
     .replace(/</g,"&lt;")
-
     .replace(/>/g,"&gt;")
-
     .replace(/"/g,"&quot;")
-
     .replace(/'/g,"&#039;");
-
 }
 
 
-/* =====================================================
-   DATA
-===================================================== */
+/* =========================
+   NAVEGAÇÃO
+========================= */
 
-function colocarData(){
+function mostrarPagina(id){
 
-  const campo =
-    document.getElementById("dataInspecao");
-
-  if(!campo.value){
-
-    const d = new Date();
-
-    campo.value =
-      d.getFullYear()+"-"+
-      String(d.getMonth()+1).padStart(2,"0")+"-"+
-      String(d.getDate()).padStart(2,"0");
-
-  }
-
-}
-
-
-/* =====================================================
-   TEMPERATURA
-===================================================== */
-
-function guardarTemperatura(){
-
-  const alimento =
-    document.getElementById("tempAlimento")
-    .value.trim();
-
-  const valor =
-    document.getElementById("tempValor")
-    .value;
-
-  const tipo =
-    document.getElementById("tempTipo")
-    .value;
-
-
-  if(!alimento || valor===""){
-
-    document.getElementById("tempMensagem")
-      .innerHTML =
-      '<div class="alert warning">⚠️ Preencha os campos.</div>';
-
-    return;
-
-  }
-
-
-  const dados =
-    obterDados(KEY_TEMP);
-
-
-  dados.push({
-
-    id:Date.now(),
-
-    alimento:alimento,
-
-    temperatura:Number(valor),
-
-    tipo:tipo,
-
-    data:new Date().toLocaleString("pt-PT")
-
+  document.querySelectorAll(".page").forEach(p=>{
+    p.classList.remove("active");
   });
 
+  const pagina = document.getElementById(id);
 
-  guardarDados(KEY_TEMP,dados);
+  if(pagina){
+    pagina.classList.add("active");
+  }
 
+  document.querySelectorAll("nav button").forEach(btn=>{
+    btn.classList.remove("active");
+  });
 
-  document.getElementById("tempAlimento")
-    .value="";
+  const botao = document.querySelector(`nav button[data-page="${id}"]`);
 
-  document.getElementById("tempValor")
-    .value="";
+  if(botao){
+    botao.classList.add("active");
+  }
 
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
-  document.getElementById("tempMensagem")
-    .innerHTML =
-    '<div class="alert success">✅ Temperatura guardada.</div>';
-
-
-  mostrarTemperaturas();
-
-  atualizarDashboard();
-
+  atualizarTudo();
 }
 
 
-function mostrarTemperaturas(){
-
-  const lista =
-    document.getElementById("listaTemperaturas");
-
-  const dados =
-    obterDados(KEY_TEMP)
-    .slice()
-    .reverse();
+document.querySelectorAll("nav button").forEach(btn=>{
+  btn.addEventListener("click",function(){
+    mostrarPagina(this.dataset.page);
+  });
+});
 
 
-  if(!dados.length){
+/* =========================
+   ESTABELECIMENTOS
+========================= */
 
-    lista.innerHTML =
-      '<div class="empty">Nenhum registo.</div>';
+function renderSelectEstabelecimentos(){
 
-    return;
+  const estabelecimentos = ler(KEY_ESTAB);
 
-  }
+  const selects = [
+    document.getElementById("inspEstabelecimento"),
+    document.getElementById("acaoEstabelecimento"),
+    document.getElementById("tempEstabelecimento")
+  ];
 
+  selects.forEach(select=>{
 
-  lista.innerHTML =
-    dados.slice(0,10)
-    .map(function(item){
+    if(!select) return;
 
-      return `
+    const valorAtual = select.value;
 
-      <div class="card">
+    let html = "";
 
-        <strong>${escapar(item.alimento)}</strong>
-
-        <p>🌡️ ${item.temperatura} °C</p>
-
-        <p class="small">
-          ${escapar(item.tipo)} ·
-          ${escapar(item.data)}
-        </p>
-
-      </div>
-
-      `;
-
-    }).join("");
-
-}
-
-
-/* =====================================================
-   INSPEÇÃO
-===================================================== */
-
-function calcularInspecao(){
-
-  const estabelecimento =
-    document.getElementById("estabelecimento")
-    .value.trim();
-
-  const responsavel =
-    document.getElementById("responsavel")
-    .value.trim();
-
-  const data =
-    document.getElementById("dataInspecao")
-    .value;
-
-
-  if(!estabelecimento || !responsavel){
-
-    document.getElementById("resultadoInspecao")
-      .innerHTML =
-      '<div class="alert warning">⚠️ Preencha estabelecimento e responsável.</div>';
-
-    return;
-
-  }
-
-
-  const checks =
-    Array.from(
-      document.querySelectorAll(".check")
-    );
-
-
-  const conformes = [];
-
-  const naoConformes = [];
-
-
-  checks.forEach(function(check,index){
-
-    if(check.checked){
-
-      conformes.push(
-        NOMES_CHECKLIST[index]
-      );
-
+    if(select.id === "inspEstabelecimento"){
+      html = `<option value="">Selecione um estabelecimento</option>`;
     }else{
-
-      naoConformes.push(
-        NOMES_CHECKLIST[index]
-      );
-
+      html = `<option value="">Selecione um estabelecimento</option>`;
     }
 
+    estabelecimentos
+      .sort((a,b)=>a.nome.localeCompare(b.nome))
+      .forEach(est=>{
+        html += `
+          <option value="${escapar(est.id)}">
+            ${escapar(est.nome)}
+          </option>
+        `;
+      });
+
+    select.innerHTML = html;
+
+    if(estabelecimentos.some(e=>e.id === valorAtual)){
+      select.value = valorAtual;
+    }
   });
+}
 
 
-  const percentual =
-    Math.round(
-      (conformes.length/checks.length)*100
+function salvarEstabelecimento(event){
+
+  event.preventDefault();
+
+  const nome = document.getElementById("estNome").value.trim();
+  const tipo = document.getElementById("estTipo").value;
+  const localizacao = document.getElementById("estLocalizacao").value.trim();
+  const responsavel = document.getElementById("estResponsavel").value.trim();
+  const contacto = document.getElementById("estContacto").value.trim();
+  const dataCadastro = document.getElementById("estData").value;
+
+  if(!nome || !tipo || !localizacao || !responsavel || !dataCadastro){
+    alert("Preencha todos os campos obrigatórios.");
+    return;
+  }
+
+  const estabelecimentos = ler(KEY_ESTAB);
+
+  const nomeDuplicado = estabelecimentos.some(est =>
+    est.nome.toLowerCase() === nome.toLowerCase() &&
+    est.id !== editandoEstabelecimentoId
+  );
+
+  if(nomeDuplicado){
+    alert("Já existe um estabelecimento com este nome.");
+    return;
+  }
+
+  if(editandoEstabelecimentoId){
+
+    const index = estabelecimentos.findIndex(
+      est => est.id === editandoEstabelecimentoId
     );
 
+    if(index !== -1){
 
-  const id =
-    "FSM-"+Date.now();
+      estabelecimentos[index] = {
+        ...estabelecimentos[index],
+        nome,
+        tipo,
+        localizacao,
+        responsavel,
+        contacto,
+        dataCadastro
+      };
+    }
 
-
-  ultimaInspecao = {
-
-    id:id,
-
-    estabelecimento:estabelecimento,
-
-    responsavel:responsavel,
-
-    data:data,
-
-    conformes:conformes.length,
-
-    naoConformes:naoConformes.length,
-
-    percentual:percentual,
-
-    listaConformes:conformes,
-
-    problemas:naoConformes
-
-  };
-
-
-  let mensagem;
-
-
-  if(percentual>=90){
-
-    mensagem =
-      "Excelente — nível elevado de conformidade.";
-
-  }else if(percentual>=70){
-
-    mensagem =
-      "Atenção — existem pontos que precisam de melhoria.";
+    alert("Estabelecimento atualizado com sucesso.");
 
   }else{
 
-    mensagem =
-      "Necessita de ação corretiva.";
+    estabelecimentos.push({
+      id:gerarId("EST"),
+      nome,
+      tipo,
+      localizacao,
+      responsavel,
+      contacto,
+      dataCadastro
+    });
 
+    alert("Estabelecimento cadastrado com sucesso.");
   }
 
+  guardar(KEY_ESTAB, estabelecimentos);
 
-  let problemasHTML = "";
+  cancelarEdicaoEstabelecimento();
+  renderEstabelecimentos();
+  renderSelectEstabelecimentos();
+  atualizarDashboard();
+}
 
 
-  if(naoConformes.length){
+document.getElementById("formEstabelecimento")
+  .addEventListener("submit", salvarEstabelecimento);
 
-    problemasHTML = `
 
-      <hr>
+function editarEstabelecimento(id){
 
-      <strong>❌ Não conformidades:</strong>
+  const estabelecimentos = ler(KEY_ESTAB);
 
-      <ul>
+  const est = estabelecimentos.find(e=>e.id === id);
 
-        ${naoConformes.map(function(item){
+  if(!est) return;
 
-          return "<li>"+
-            escapar(item)+
-            "</li>";
+  editandoEstabelecimentoId = id;
 
-        }).join("")}
+  document.getElementById("estNome").value = est.nome;
+  document.getElementById("estTipo").value = est.tipo;
+  document.getElementById("estLocalizacao").value = est.localizacao;
+  document.getElementById("estResponsavel").value = est.responsavel;
+  document.getElementById("estContacto").value = est.contacto || "";
+  document.getElementById("estData").value = est.dataCadastro || hoje();
 
-      </ul>
+  document.getElementById("btnCancelarEst").style.display = "inline-block";
 
+  mostrarPagina("estabelecimentos");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+function cancelarEdicaoEstabelecimento(){
+
+  editandoEstabelecimentoId = null;
+
+  document.getElementById("formEstabelecimento").reset();
+
+  document.getElementById("estData").value = hoje();
+
+  document.getElementById("btnCancelarEst").style.display = "none";
+}
+
+
+function eliminarEstabelecimento(id){
+
+  const estabelecimentos = ler(KEY_ESTAB);
+
+  const est = estabelecimentos.find(e=>e.id === id);
+
+  if(!est) return;
+
+  const inspecoes = ler(KEY_INSP);
+
+  const usado = inspecoes.some(i=>i.estabelecimentoId === id);
+
+  let mensagem =
+    `Tem certeza que deseja eliminar "${est.nome}"?`;
+
+  if(usado){
+    mensagem +=
+      "\n\nEste estabelecimento possui inspeções associadas. As inspeções históricas serão mantidas.";
+  }
+
+  if(!confirm(mensagem)){
+    return;
+  }
+
+  guardar(
+    KEY_ESTAB,
+    estabelecimentos.filter(e=>e.id !== id)
+  );
+
+  renderEstabelecimentos();
+  renderSelectEstabelecimentos();
+  atualizarDashboard();
+
+  alert("Estabelecimento eliminado.");
+}
+
+
+function renderEstabelecimentos(){
+
+  const container = document.getElementById("listaEstabelecimentos");
+
+  if(!container) return;
+
+  const estabelecimentos = ler(KEY_ESTAB);
+  const inspecoes = ler(KEY_INSP);
+
+  const busca = (
+    document.getElementById("buscaEstabelecimento")?.value || ""
+  ).toLowerCase().trim();
+
+  const filtrados = estabelecimentos.filter(est =>
+    est.nome.toLowerCase().includes(busca) ||
+    est.localizacao.toLowerCase().includes(busca) ||
+    est.tipo.toLowerCase().includes(busca)
+  );
+
+  if(filtrados.length === 0){
+
+    container.innerHTML = `
+      <div class="empty">
+        ${
+          estabelecimentos.length === 0
+          ? "Ainda não existem estabelecimentos cadastrados."
+          : "Nenhum estabelecimento encontrado."
+        }
+      </div>
     `;
 
-  }else{
-
-    problemasHTML =
-      '<div class="alert success">✅ Nenhuma não conformidade.</div>';
-
-  }
-
-
-  document.getElementById("resultadoInspecao")
-    .innerHTML = `
-
-    <div class="result">
-
-      <div class="percent">
-        ${percentual}%
-      </div>
-
-      <p style="text-align:center">
-        ${escapar(mensagem)}
-      </p>
-
-      <hr>
-
-      <p>
-        ✅ <strong>${conformes.length}</strong>
-        conformes
-      </p>
-
-      <p>
-        ❌ <strong>${naoConformes.length}</strong>
-        não conformes
-      </p>
-
-      ${problemasHTML}
-
-      <button class="btn-primary"
-              onclick="guardarInspecao()">
-        💾 Guardar inspeção
-      </button>
-
-      <button class="btn-secondary"
-              onclick="abrirRelatorio(ultimaInspecao)">
-        📄 Ver relatório
-      </button>
-
-      ${
-        naoConformes.length
-        ?
-        `<button class="btn-secondary"
-                 onclick="prepararAcao()">
-          🛠️ Criar ação corretiva
-        </button>`
-        :
-        ""
-      }
-
-    </div>
-
-  `;
-
-}
-
-
-/* =====================================================
-   GUARDAR INSPEÇÃO
-===================================================== */
-
-function guardarInspecao(){
-
-  if(!ultimaInspecao){
-
-    alert("Calcule primeiro a inspeção.");
-
     return;
-
   }
 
+  container.innerHTML = filtrados.map(est=>{
 
-  const dados =
-    obterDados(KEY_INSPECOES);
-
-
-  const jaExiste =
-    dados.some(function(item){
-
-      return item.id===ultimaInspecao.id;
-
-    });
-
-
-  if(!jaExiste){
-
-    dados.push(ultimaInspecao);
-
-    guardarDados(
-      KEY_INSPECOES,
-      dados
+    const relacionadas = inspecoes.filter(i =>
+      i.estabelecimentoId === est.id ||
+      (
+        !i.estabelecimentoId &&
+        String(i.estabelecimento).toLowerCase() ===
+        est.nome.toLowerCase()
+      )
     );
 
-  }
-
-
-  alert(
-    "✅ Inspeção guardada com sucesso."
-  );
-
-
-  atualizarTudo();
-
-}
-
-
-/* =====================================================
-   PREPARAR AÇÃO
-===================================================== */
-
-function prepararAcao(){
-
-  if(!ultimaInspecao ||
-     !ultimaInspecao.problemas.length){
-
-    return;
-
-  }
-
-
-  document.getElementById(
-    "acaoEstabelecimento"
-  ).value =
-    ultimaInspecao.estabelecimento;
-
-
-  document.getElementById(
-    "acaoProblema"
-  ).value =
-    ultimaInspecao.problemas.join("\n");
-
-
-  document.getElementById(
-    "acaoCorretiva"
-  ).value =
-    "Corrigir as não conformidades identificadas na inspeção.";
-
-
-  mostrarPagina("problemas");
-
-}
-
-
-/* =====================================================
-   AÇÕES CORRETIVAS
-===================================================== */
-
-function guardarAcao(){
-
-  const estabelecimento =
-    document.getElementById(
-      "acaoEstabelecimento"
-    ).value.trim();
-
-
-  const problema =
-    document.getElementById(
-      "acaoProblema"
-    ).value.trim();
-
-
-  const gravidade =
-    document.getElementById(
-      "acaoGravidade"
-    ).value;
-
-
-  const corretiva =
-    document.getElementById(
-      "acaoCorretiva"
-    ).value.trim();
-
-
-  const responsavel =
-    document.getElementById(
-      "acaoResponsavel"
-    ).value.trim();
-
-
-  const prazo =
-    document.getElementById(
-      "acaoPrazo"
-    ).value;
-
-
-  const estado =
-    document.getElementById(
-      "acaoEstado"
-    ).value;
-
-
-  if(!estabelecimento ||
-     !problema ||
-     !corretiva){
-
-    document.getElementById(
-      "acaoMensagem"
-    ).innerHTML =
-      '<div class="alert warning">⚠️ Preencha os campos obrigatórios.</div>';
-
-    return;
-
-  }
-
-
-  const dados =
-    obterDados(KEY_ACOES);
-
-
-  dados.push({
-
-    id:Date.now(),
-
-    estabelecimento:estabelecimento,
-
-    problema:problema,
-
-    gravidade:gravidade,
-
-    corretiva:corretiva,
-
-    responsavel:
-      responsavel || "Não definido",
-
-    prazo:
-      prazo || "Não definido",
-
-    estado:estado,
-
-    dataCriacao:
-      new Date().toLocaleString("pt-PT")
-
-  });
-
-
-  guardarDados(
-    KEY_ACOES,
-    dados
-  );
-
-
-  document.getElementById(
-    "acaoEstabelecimento"
-  ).value="";
-
-  document.getElementById(
-    "acaoProblema"
-  ).value="";
-
-  document.getElementById(
-    "acaoCorretiva"
-  ).value="";
-
-  document.getElementById(
-    "acaoResponsavel"
-  ).value="";
-
-  document.getElementById(
-    "acaoPrazo"
-  ).value="";
-
-
-  document.getElementById(
-    "acaoMensagem"
-  ).innerHTML =
-    '<div class="alert success">✅ Ação corretiva guardada.</div>';
-
-
-  mostrarAcoes();
-
-  atualizarDashboard();
-
-}
-
-
-function mostrarAcoes(){
-
-  const lista =
-    document.getElementById(
-      "listaAcoes"
-    );
-
-
-  const dados =
-    obterDados(KEY_ACOES)
-    .slice()
-    .reverse();
-
-
-  if(!dados.length){
-
-    lista.innerHTML =
-      '<div class="empty">Nenhuma ação registada.</div>';
-
-    return;
-
-  }
-
-
-  lista.innerHTML =
-    dados.map(function(item){
-
-      let estadoClasse =
-        "pending";
-
-      if(item.estado==="Em andamento")
-        estadoClasse="progress";
-
-      if(item.estado==="Resolvido")
-        estadoClasse="done";
-
-
-      return `
-
-      <div class="card action-card">
-
-        <strong>
-          ${escapar(item.estabelecimento)}
-        </strong>
-
-        <p>
-          ❌ <strong>Problema:</strong><br>
-          ${escapar(item.problema)}
-        </p>
-
-        <p>
-          🛠️ <strong>Ação:</strong><br>
-          ${escapar(item.corretiva)}
-        </p>
-
-        <p>
-          ⚠️ <strong>Gravidade:</strong>
-          ${escapar(item.gravidade)}
-        </p>
-
-        <p>
-          👤 <strong>Responsável:</strong>
-          ${escapar(item.responsavel)}
-        </p>
-
-        <p>
-          📅 <strong>Prazo:</strong>
-          ${escapar(item.prazo)}
-        </p>
-
-        <p>
-          <span class="badge ${estadoClasse}">
-            ${escapar(item.estado)}
+    let media = 0;
+
+    if(relacionadas.length){
+      media =
+        relacionadas.reduce(
+          (total,i)=>total + Number(i.percentual || 0),
+          0
+        ) / relacionadas.length;
+    }
+
+    return `
+      <div class="est-card">
+
+        <div class="est-title">
+          🏢 ${escapar(est.nome)}
+        </div>
+
+        <div style="margin-top:7px">
+          <span class="badge badge-blue">
+            ${escapar(est.tipo)}
           </span>
-        </p>
-
-        <button class="btn-secondary"
-                onclick="alterarEstado(${item.id})">
-          🔄 Alterar estado
-        </button>
-
-        <button class="btn-danger"
-                onclick="eliminarAcao(${item.id})">
-          🗑️ Eliminar
-        </button>
-
-      </div>
-
-      `;
-
-    }).join("");
-
-}
-
-
-function alterarEstado(id){
-
-  const dados =
-    obterDados(KEY_ACOES);
-
-
-  const item =
-    dados.find(function(x){
-
-      return x.id===id;
-
-    });
-
-
-  if(!item) return;
-
-
-  if(item.estado==="Pendente"){
-
-    item.estado="Em andamento";
-
-  }else if(item.estado==="Em andamento"){
-
-    item.estado="Resolvido";
-
-  }else{
-
-    item.estado="Pendente";
-
-  }
-
-
-  guardarDados(
-    KEY_ACOES,
-    dados
-  );
-
-
-  mostrarAcoes();
-
-  atualizarDashboard();
-
-}
-
-
-function eliminarAcao(id){
-
-  if(!confirm(
-    "Eliminar esta ação corretiva?"
-  )) return;
-
-
-  const dados =
-    obterDados(KEY_ACOES)
-    .filter(function(item){
-
-      return item.id!==id;
-
-    });
-
-
-  guardarDados(
-    KEY_ACOES,
-    dados
-  );
-
-
-  mostrarAcoes();
-
-  atualizarDashboard();
-
-}
-
-
-/* =====================================================
-   RELATÓRIO
-===================================================== */
-
-function abrirRelatorio(inspecao){
-
-  if(!inspecao){
-
-    alert("Não foi possível abrir o relatório.");
-
-    return;
-
-  }
-
-
-  document.getElementById(
-    "relatorioId"
-  ).textContent =
-    "ID da inspeção: "+inspecao.id;
-
-
-  document.getElementById(
-    "relatorioEstabelecimento"
-  ).textContent =
-    inspecao.estabelecimento;
-
-
-  document.getElementById(
-    "relatorioResponsavel"
-  ).textContent =
-    inspecao.responsavel;
-
-
-  document.getElementById(
-    "relatorioData"
-  ).textContent =
-    inspecao.data;
-
-
-  document.getElementById(
-    "relatorioPercentual"
-  ).textContent =
-    inspecao.percentual+"%";
-
-
-  document.getElementById(
-    "relatorioConformes"
-  ).textContent =
-    inspecao.conformes;
-
-
-  document.getElementById(
-    "relatorioNaoConformes"
-  ).textContent =
-    inspecao.naoConformes;
-
-
-  const listaConformes =
-    document.getElementById(
-      "relatorioListaConformes"
-    );
-
-
-  if(inspecao.listaConformes &&
-     inspecao.listaConformes.length){
-
-    listaConformes.innerHTML =
-      "<ul>"+
-      inspecao.listaConformes.map(
-        function(item){
-
-          return "<li>"+
-            escapar(item)+
-            "</li>";
-
+        </div>
+
+        <div class="est-meta">
+          📍 ${escapar(est.localizacao)}<br>
+          👤 ${escapar(est.responsavel)}<br>
+          📞 ${escapar(est.contacto || "Não informado")}<br>
+          📅 Cadastro: ${formatarData(est.dataCadastro)}
+        </div>
+
+        <div style="margin-top:12px">
+          <strong>${relacionadas.length}</strong>
+          inspeção(ões)
+        </div>
+
+        ${
+          relacionadas.length
+          ? `
+            <div class="small">
+              Média de conformidade: ${media.toFixed(1)}%
+            </div>
+
+            <div class="progress">
+              <div
+                class="progress-bar"
+                style="width:${Math.min(media,100)}%"
+              ></div>
+            </div>
+          `
+          : `
+            <div class="small" style="margin-top:5px">
+              Ainda sem inspeções.
+            </div>
+          `
         }
-      ).join("")+
-      "</ul>";
 
-  }else{
+        <div class="actions">
 
-    listaConformes.innerHTML =
-      "<p>Nenhum item conforme.</p>";
+          <button
+            class="btn btn-secondary btn-small"
+            onclick="editarEstabelecimento('${est.id}')"
+          >
+            ✏️ Editar
+          </button>
 
-  }
+          <button
+            class="btn btn-danger btn-small"
+            onclick="eliminarEstabelecimento('${est.id}')"
+          >
+            🗑️ Eliminar
+          </button>
 
-
-  const listaNao =
-    document.getElementById(
-      "relatorioListaNaoConformes"
-    );
-
-
-  if(inspecao.problemas &&
-     inspecao.problemas.length){
-
-    listaNao.innerHTML =
-      "<ul>"+
-      inspecao.problemas.map(
-        function(item){
-
-          return "<li>"+
-            escapar(item)+
-            "</li>";
-
-        }
-      ).join("")+
-      "</ul>";
-
-  }else{
-
-    listaNao.innerHTML =
-      '<div class="alert success">Nenhuma não conformidade.</div>';
-
-  }
-
-
-  /* AÇÕES DO ESTABELECIMENTO */
-
-  const acoes =
-    obterDados(KEY_ACOES)
-    .filter(function(item){
-
-      return item.estabelecimento
-        .toLowerCase() ===
-        inspecao.estabelecimento
-        .toLowerCase();
-
-    });
-
-
-  const areaAcoes =
-    document.getElementById(
-      "relatorioAcoes"
-    );
-
-
-  if(!acoes.length){
-
-    areaAcoes.innerHTML =
-      "<p>Nenhuma ação corretiva registada para este estabelecimento.</p>";
-
-  }else{
-
-    areaAcoes.innerHTML =
-      acoes.map(function(item){
-
-        return `
-
-        <div style="
-          border:1px solid #ddd;
-          padding:10px;
-          border-radius:8px;
-          margin-bottom:8px;
-        ">
-
-          <strong>
-            ${escapar(item.problema)}
-          </strong>
-
-          <p>
-            Ação:
-            ${escapar(item.corretiva)}
-          </p>
-
-          <p>
-            Responsável:
-            ${escapar(item.responsavel)}
-          </p>
-
-          <p>
-            Prazo:
-            ${escapar(item.prazo)}
-          </p>
-
-          <p>
-            Estado:
-            ${escapar(item.estado)}
-          </p>
+          <button
+            class="btn btn-primary btn-small"
+            onclick="verInspecoesEstabelecimento('${est.id}')"
+          >
+            📊 Ver inspeções
+          </button>
 
         </div>
 
-        `;
+      </div>
+    `;
 
-      }).join("");
+  }).join("");
+}
 
+
+function verInspecoesEstabelecimento(id){
+
+  const inspecoes = ler(KEY_INSP);
+
+  const relacionadas = inspecoes.filter(i =>
+    i.estabelecimentoId === id
+  );
+
+  if(relacionadas.length === 0){
+    alert("Este estabelecimento ainda não possui inspeções.");
+    return;
   }
 
+  mostrarPagina("historico");
 
-  document.getElementById(
-    "modalRelatorio"
-  ).classList.add("show");
+  const container = document.getElementById("listaHistorico");
 
+  container.innerHTML = relacionadas.map(i=>cardHistorico(i)).join("");
+}
+
+
+/* =========================
+   INSPEÇÃO
+========================= */
+
+function renderChecklist(){
+
+  const container = document.getElementById("checklistItens");
+
+  container.innerHTML = checklistItens.map((item,index)=>`
+    <label class="check-item">
+      <input
+        type="checkbox"
+        class="checklist-check"
+        value="${index}"
+      >
+      <span>${escapar(item)}</span>
+    </label>
+  `).join("");
+}
+
+
+function preencherDadosInspecao(){
+
+  const id =
+    document.getElementById("inspEstabelecimento").value;
+
+  const estabs = ler(KEY_ESTAB);
+
+  const est = estabs.find(e=>e.id === id);
+
+  const box =
+    document.getElementById("dadosEstabelecimentoSelecionado");
+
+  if(!est){
+
+    box.innerHTML = "";
+
+    document.getElementById("inspResponsavel").value = "";
+
+    return;
+  }
+
+  document.getElementById("inspResponsavel").value =
+    est.responsavel || "";
+
+  box.innerHTML = `
+    <div class="success-box">
+      <strong>${escapar(est.nome)}</strong><br>
+      📍 ${escapar(est.localizacao)}<br>
+      🏷️ ${escapar(est.tipo)}<br>
+      📞 ${escapar(est.contacto || "Sem contacto")}
+    </div>
+  `;
+}
+
+
+function calcularInspecao(){
+
+  const estabelecimentoId =
+    document.getElementById("inspEstabelecimento").value;
+
+  const responsavel =
+    document.getElementById("inspResponsavel").value.trim();
+
+  const data =
+    document.getElementById("inspData").value;
+
+  if(!estabelecimentoId){
+    alert("Selecione um estabelecimento.");
+    return;
+  }
+
+  if(!responsavel){
+    alert("Informe o responsável pela inspeção.");
+    return;
+  }
+
+  if(!data){
+    alert("Informe a data da inspeção.");
+    return;
+  }
+
+  const estabelecimentos = ler(KEY_ESTAB);
+
+  const est = estabelecimentos.find(
+    e=>e.id === estabelecimentoId
+  );
+
+  if(!est){
+    alert("Estabelecimento não encontrado.");
+    return;
+  }
+
+  const checks =
+    Array.from(
+      document.querySelectorAll(".checklist-check")
+    );
+
+  const conformes =
+    checks.filter(c=>c.checked).length;
+
+  const naoConformes =
+    checks.length - conformes;
+
+  const percentual =
+    checks.length
+    ? Math.round((conformes / checks.length) * 100)
+    : 0;
+
+  const listaConformes =
+    checks
+      .filter(c=>c.checked)
+      .map(c=>checklistItens[Number(c.value)]);
+
+  const problemas =
+    checks
+      .filter(c=>!c.checked)
+      .map(c=>checklistItens[Number(c.value)]);
+
+  const inspecao = {
+    id:gerarId("FSM"),
+    estabelecimentoId:est.id,
+    estabelecimento:est.nome,
+    tipoEstabelecimento:est.tipo,
+    localizacao:est.localizacao,
+    responsavel,
+    data,
+    conformes,
+    naoConformes,
+    percentual,
+    listaConformes,
+    problemas
+  };
+
+  const inspecoes = ler(KEY_INSP);
+
+  inspecoes.unshift(inspecao);
+
+  guardar(KEY_INSP, inspecoes);
+
+  let classe = "success-box";
+  let mensagem = "Boa conformidade.";
+
+  if(percentual < 70){
+    classe = "danger-box";
+    mensagem = "Atenção: foram identificadas várias não conformidades.";
+  }else if(percentual < 90){
+    classe = "warning-box";
+    mensagem = "Conformidade razoável. Recomenda-se acompanhamento.";
+  }
+
+  document.getElementById("resultadoInspecao").innerHTML = `
+    <div class="${classe}">
+      <strong>Resultado: ${percentual}% de conformidade</strong><br>
+      ${mensagem}<br><br>
+
+      ✅ Conformes: ${conformes}<br>
+      ❌ Não conformes: ${naoConformes}
+
+      ${
+        problemas.length
+        ? `
+          <hr>
+          <strong>Não conformidades:</strong>
+          <ul>
+            ${problemas.map(p=>`<li>${escapar(p)}</li>`).join("")}
+          </ul>
+        `
+        : ""
+      }
+
+      <button
+        class="btn btn-primary"
+        onclick='abrirRelatorio(${JSON.stringify(inspecao)})'
+      >
+        📄 Abrir relatório
+      </button>
+    </div>
+  `;
+
+  atualizarTudo();
+
+  alert("Inspeção guardada com sucesso.");
+}
+
+
+/* =========================
+   RELATÓRIO
+========================= */
+
+function abrirRelatorio(inspecao){
+
+  const acoes = ler(KEY_ACAO);
+
+  const relacionadas = acoes.filter(a =>
+    (
+      a.estabelecimentoId &&
+      inspecao.estabelecimentoId &&
+      a.estabelecimentoId === inspecao.estabelecimentoId
+    ) ||
+    (
+      !a.estabelecimentoId &&
+      String(a.estabelecimento || "").toLowerCase() ===
+      String(inspecao.estabelecimento || "").toLowerCase()
+    )
+  );
+
+  const conformidade =
+    Number(inspecao.percentual || 0);
+
+  let estadoClasse = "badge-green";
+  let estadoTexto = "Boa conformidade";
+
+  if(conformidade < 70){
+    estadoClasse = "badge-red";
+    estadoTexto = "Atenção";
+  }else if(conformidade < 90){
+    estadoClasse = "badge-yellow";
+    estadoTexto = "Necessita acompanhamento";
+  }
+
+  const html = `
+    <div class="report">
+
+      <div class="report-header">
+        <div class="report-title">🛡️ FoodSafe Moz</div>
+        <div>Relatório de Inspeção de Segurança Alimentar</div>
+        <div class="small">
+          ID: ${escapar(inspecao.id)}
+        </div>
+      </div>
+
+      <div class="report-section">
+
+        <div class="report-row">
+          <strong>Estabelecimento</strong>
+          <span>${escapar(inspecao.estabelecimento)}</span>
+        </div>
+
+        <div class="report-row">
+          <strong>Tipo</strong>
+          <span>${escapar(inspecao.tipoEstabelecimento || "-")}</span>
+        </div>
+
+        <div class="report-row">
+          <strong>Localização</strong>
+          <span>${escapar(inspecao.localizacao || "-")}</span>
+        </div>
+
+        <div class="report-row">
+          <strong>Responsável</strong>
+          <span>${escapar(inspecao.responsavel)}</span>
+        </div>
+
+        <div class="report-row">
+          <strong>Data</strong>
+          <span>${formatarData(inspecao.data)}</span>
+        </div>
+
+        <div class="report-row">
+          <strong>Conformidade</strong>
+          <span>
+            <span class="badge ${estadoClasse}">
+              ${conformidade}% — ${estadoTexto}
+            </span>
+          </span>
+        </div>
+
+        <div class="report-row">
+          <strong>Itens conformes</strong>
+          <span>${inspecao.conformes}</span>
+        </div>
+
+        <div class="report-row">
+          <strong>Não conformidades</strong>
+          <span>${inspecao.naoConformes}</span>
+        </div>
+
+      </div>
+
+
+      <div class="report-section">
+
+        <h3>✅ Itens conformes</h3>
+
+        ${
+          inspecao.listaConformes?.length
+          ? `
+            <ul class="report-list">
+              ${inspecao.listaConformes
+                .map(x=>`<li>${escapar(x)}</li>`)
+                .join("")}
+            </ul>
+          `
+          : "<p>Nenhum item marcado como conforme.</p>"
+        }
+
+      </div>
+
+
+      <div class="report-section">
+
+        <h3>❌ Não conformidades</h3>
+
+        ${
+          inspecao.problemas?.length
+          ? `
+            <ul class="report-list">
+              ${inspecao.problemas
+                .map(x=>`<li>${escapar(x)}</li>`)
+                .join("")}
+            </ul>
+          `
+          : `
+            <div class="success-box">
+              Não foram registadas não conformidades.
+            </div>
+          `
+        }
+
+      </div>
+
+
+      <div class="report-section">
+
+        <h3>🛠️ Ações corretivas relacionadas</h3>
+
+        ${
+          relacionadas.length
+          ? relacionadas.map(a=>`
+
+            <div class="card" style="box-shadow:none;border:1px solid #ddd">
+
+              <strong>${escapar(a.problema)}</strong>
+
+              <div class="small">
+                Gravidade: ${escapar(a.gravidade)}<br>
+                Ação: ${escapar(a.corretiva)}<br>
+                Responsável: ${escapar(a.responsavel)}<br>
+                Prazo: ${formatarData(a.prazo)}<br>
+                Estado: ${escapar(a.status)}
+              </div>
+
+            </div>
+
+          `).join("")
+          : "<p>Não existem ações corretivas relacionadas.</p>"
+        }
+
+      </div>
+
+
+      <div class="report-section">
+        <p class="small">
+          Documento gerado pelo FoodSafe Moz.
+        </p>
+      </div>
+
+    </div>
+  `;
+
+  document.getElementById("conteudoRelatorio").innerHTML = html;
+
+  document.getElementById("modalRelatorio")
+    .classList.add("show");
 }
 
 
 function fecharRelatorio(){
 
-  document.getElementById(
-    "modalRelatorio"
-  ).classList.remove("show");
-
+  document.getElementById("modalRelatorio")
+    .classList.remove("show");
 }
 
 
-/* =====================================================
-   HISTÓRICO
-===================================================== */
+/* =========================
+   AÇÕES CORRETIVAS
+========================= */
 
-function mostrarHistorico(){
+function guardarAcao(){
 
-  const lista =
-    document.getElementById(
-      "listaHistorico"
-    );
+  const estabelecimentoId =
+    document.getElementById("acaoEstabelecimento").value;
 
+  const problema =
+    document.getElementById("acaoProblema").value.trim();
 
-  const dados =
-    obterDados(KEY_INSPECOES)
-    .slice()
-    .reverse();
+  const gravidade =
+    document.getElementById("acaoGravidade").value;
 
+  const corretiva =
+    document.getElementById("acaoCorretiva").value.trim();
 
-  if(!dados.length){
+  const responsavel =
+    document.getElementById("acaoResponsavel").value.trim();
 
-    lista.innerHTML =
-      '<div class="empty">Nenhuma inspeção guardada.</div>';
+  const prazo =
+    document.getElementById("acaoPrazo").value;
 
+  const status =
+    document.getElementById("acaoStatus").value;
+
+  if(
+    !estabelecimentoId ||
+    !problema ||
+    !gravidade ||
+    !corretiva ||
+    !responsavel ||
+    !prazo
+  ){
+    alert("Preencha todos os campos obrigatórios.");
     return;
-
   }
 
+  const estabs = ler(KEY_ESTAB);
 
-  lista.innerHTML =
-    dados.map(function(item){
+  const est = estabs.find(
+    e=>e.id === estabelecimentoId
+  );
 
-      let classe =
-        "success";
+  if(!est){
+    alert("Estabelecimento não encontrado.");
+    return;
+  }
 
-      if(item.percentual<70){
+  const acoes = ler(KEY_ACAO);
 
-        classe="danger";
+  acoes.unshift({
+    id:gerarId("AC"),
+    estabelecimentoId:est.id,
+    estabelecimento:est.nome,
+    problema,
+    gravidade,
+    corretiva,
+    responsavel,
+    prazo,
+    status,
+    dataCriacao:hoje()
+  });
 
-      }else if(item.percentual<90){
+  guardar(KEY_ACAO, acoes);
 
-        classe="warning";
+  document.getElementById("acaoProblema").value = "";
+  document.getElementById("acaoGravidade").value = "";
+  document.getElementById("acaoCorretiva").value = "";
+  document.getElementById("acaoResponsavel").value = "";
+  document.getElementById("acaoPrazo").value = "";
+  document.getElementById("acaoStatus").value = "Pendente";
 
-      }
+  renderAcoes();
+  atualizarDashboard();
+
+  alert("Ação corretiva guardada com sucesso.");
+}
 
 
-      return `
+function alterarStatusAcao(id){
 
-      <div class="card">
+  const acoes = ler(KEY_ACAO);
 
-        <strong>
-          ${escapar(item.estabelecimento)}
-        </strong>
+  const acao = acoes.find(a=>a.id === id);
 
-        <p class="small">
-          ID: ${escapar(item.id)}
+  if(!acao) return;
+
+  const novoStatus = prompt(
+    "Digite o novo estado:\n\nPendente\nEm andamento\nResolvido",
+    acao.status
+  );
+
+  if(!novoStatus) return;
+
+  const permitido = [
+    "Pendente",
+    "Em andamento",
+    "Resolvido"
+  ];
+
+  if(!permitido.includes(novoStatus)){
+    alert("Estado inválido.");
+    return;
+  }
+
+  acao.status = novoStatus;
+
+  guardar(KEY_ACAO, acoes);
+
+  renderAcoes();
+  atualizarDashboard();
+}
+
+
+function eliminarAcao(id){
+
+  if(!confirm("Eliminar esta ação corretiva?")){
+    return;
+  }
+
+  const acoes = ler(KEY_ACAO);
+
+  guardar(
+    KEY_ACAO,
+    acoes.filter(a=>a.id !== id)
+  );
+
+  renderAcoes();
+  atualizarDashboard();
+}
+
+
+function renderAcoes(){
+
+  const container =
+    document.getElementById("listaAcoes");
+
+  if(!container) return;
+
+  const acoes = ler(KEY_ACAO);
+
+  if(acoes.length === 0){
+
+    container.innerHTML = `
+      <div class="empty">
+        Ainda não existem ações corretivas.
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML = acoes.map(a=>{
+
+    let classe = "badge-yellow";
+
+    if(a.status === "Resolvido"){
+      classe = "badge-green";
+    }
+
+    if(a.gravidade === "Alta" || a.gravidade === "Crítica"){
+      classe = "badge-red";
+    }
+
+    return `
+      <div class="est-card">
+
+        <strong>${escapar(a.estabelecimento)}</strong>
+
+        <p>
+          <strong>Problema:</strong>
+          ${escapar(a.problema)}
         </p>
 
         <p>
-          📅 ${escapar(item.data)}
+          <strong>Gravidade:</strong>
+          ${escapar(a.gravidade)}
         </p>
 
         <p>
-          👤 ${escapar(item.responsavel)}
+          <strong>Ação:</strong>
+          ${escapar(a.corretiva)}
         </p>
 
-        <div class="alert ${classe}">
+        <div class="small">
+          👤 ${escapar(a.responsavel)}<br>
+          📅 Prazo: ${formatarData(a.prazo)}
+        </div>
 
-          📊
-          <strong>
-            ${item.percentual}%
-          </strong>
+        <div style="margin-top:8px">
+          <span class="badge ${classe}">
+            ${escapar(a.status)}
+          </span>
+        </div>
 
-          <br>
+        <div class="actions">
 
-          ✅ ${item.conformes}
-          conformes
+          <button
+            class="btn btn-secondary btn-small"
+            onclick="alterarStatusAcao('${a.id}')"
+          >
+            🔄 Alterar estado
+          </button>
 
-          <br>
-
-          ❌ ${item.naoConformes}
-          não conformes
+          <button
+            class="btn btn-danger btn-small"
+            onclick="eliminarAcao('${a.id}')"
+          >
+            🗑️ Eliminar
+          </button>
 
         </div>
 
-        <button class="btn-primary"
-                onclick='abrirRelatorio(${JSON.stringify(item)})'>
-          📄 Abrir relatório
-        </button>
+      </div>
+    `;
+
+  }).join("");
+}
+
+
+/* =========================
+   TEMPERATURA
+========================= */
+
+function guardarTemperatura(){
+
+  const estabelecimentoId =
+    document.getElementById("tempEstabelecimento").value;
+
+  const alimento =
+    document.getElementById("tempAlimento").value.trim();
+
+  const valor =
+    document.getElementById("tempValor").value;
+
+  const obs =
+    document.getElementById("tempObs").value.trim();
+
+  if(!estabelecimentoId || !alimento || valor === ""){
+    alert("Preencha estabelecimento, alimento/equipamento e temperatura.");
+    return;
+  }
+
+  const estabs = ler(KEY_ESTAB);
+
+  const est = estabs.find(
+    e=>e.id === estabelecimentoId
+  );
+
+  const temperaturas = ler(KEY_TEMP);
+
+  temperaturas.unshift({
+    id:gerarId("TMP"),
+    estabelecimentoId,
+    estabelecimento:est ? est.nome : "",
+    alimento,
+    temperatura:Number(valor),
+    observacao:obs,
+    data:hoje(),
+    hora:new Date().toLocaleTimeString("pt-PT")
+  });
+
+  guardar(KEY_TEMP, temperaturas);
+
+  document.getElementById("tempAlimento").value = "";
+  document.getElementById("tempValor").value = "";
+  document.getElementById("tempObs").value = "";
+
+  renderTemperaturas();
+
+  alert("Temperatura registada com sucesso.");
+}
+
+
+function renderTemperaturas(){
+
+  const container =
+    document.getElementById("listaTemperaturas");
+
+  if(!container) return;
+
+  const temperaturas = ler(KEY_TEMP);
+
+  if(temperaturas.length === 0){
+
+    container.innerHTML = `
+      <div class="empty">
+        Ainda não existem registos de temperatura.
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML = temperaturas
+    .slice(0,30)
+    .map(t=>`
+
+      <div class="est-card">
+
+        <strong>${escapar(t.estabelecimento)}</strong>
+
+        <div style="font-size:22px;font-weight:800;color:#0f766e;margin-top:7px">
+          ${escapar(t.temperatura)} °C
+        </div>
+
+        <div class="small">
+          ${escapar(t.alimento)}<br>
+          ${formatarData(t.data)} ${escapar(t.hora || "")}
+        </div>
+
+        ${
+          t.observacao
+          ? `<p>${escapar(t.observacao)}</p>`
+          : ""
+        }
 
       </div>
 
-      `;
-
-    }).join("");
-
+    `).join("");
 }
 
 
-/* =====================================================
+/* =========================
+   HISTÓRICO
+========================= */
+
+function cardHistorico(i){
+
+  let classe = "badge-green";
+
+  if(Number(i.percentual) < 70){
+    classe = "badge-red";
+  }else if(Number(i.percentual) < 90){
+    classe = "badge-yellow";
+  }
+
+  return `
+    <div class="est-card">
+
+      <strong>${escapar(i.estabelecimento)}</strong>
+
+      <div class="small">
+        ID: ${escapar(i.id)}<br>
+        Responsável: ${escapar(i.responsavel)}<br>
+        Data: ${formatarData(i.data)}
+      </div>
+
+      <div style="margin-top:8px">
+        <span class="badge ${classe}">
+          ${Number(i.percentual || 0)}% de conformidade
+        </span>
+      </div>
+
+      <div class="small" style="margin-top:7px">
+        ✅ ${i.conformes || 0} conformes |
+        ❌ ${i.naoConformes || 0} não conformes
+      </div>
+
+      <button
+        class="btn btn-primary btn-small"
+        onclick='abrirRelatorio(${JSON.stringify(i)})'
+      >
+        📄 Ver relatório
+      </button>
+
+    </div>
+  `;
+}
+
+
+function renderHistorico(){
+
+  const container =
+    document.getElementById("listaHistorico");
+
+  if(!container) return;
+
+  const inspecoes = ler(KEY_INSP);
+
+  if(inspecoes.length === 0){
+
+    container.innerHTML = `
+      <div class="empty">
+        Ainda não existem inspeções realizadas.
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML =
+    inspecoes.map(i=>cardHistorico(i)).join("");
+}
+
+
+/* =========================
    DASHBOARD
-===================================================== */
+========================= */
 
 function atualizarDashboard(){
 
-  const inspecoes =
-    obterDados(KEY_INSPECOES);
-
-  const acoes =
-    obterDados(KEY_ACOES);
-
+  const estabelecimentos = ler(KEY_ESTAB);
+  const inspecoes = ler(KEY_INSP);
+  const acoes = ler(KEY_ACAO);
 
   const conformes =
-    inspecoes.filter(function(item){
-
-      return item.percentual>=70;
-
-    }).length;
-
+    inspecoes.filter(
+      i=>Number(i.percentual || 0) >= 70
+    ).length;
 
   const pendentes =
-    acoes.filter(function(item){
+    acoes.filter(
+      a=>a.status !== "Resolvido"
+    ).length;
 
-      return item.estado==="Pendente";
+  document.getElementById("dashEstabelecimentos").textContent =
+    estabelecimentos.length;
 
-    }).length;
-
-
-  const andamento =
-    acoes.filter(function(item){
-
-      return item.estado==="Em andamento";
-
-    }).length;
-
-
-  const resolvidas =
-    acoes.filter(function(item){
-
-      return item.estado==="Resolvido";
-
-    }).length;
-
-
-  document.getElementById(
-    "dashInspecoes"
-  ).textContent =
+  document.getElementById("dashInspecoes").textContent =
     inspecoes.length;
 
-
-  document.getElementById(
-    "dashConformes"
-  ).textContent =
+  document.getElementById("dashConformes").textContent =
     conformes;
 
-
-  document.getElementById(
-    "dashAcoes"
-  ).textContent =
+  document.getElementById("dashAcoes").textContent =
     acoes.length;
 
-
-  document.getElementById(
-    "dashPendentes"
-  ).textContent =
+  document.getElementById("dashPendentes").textContent =
     pendentes;
 
+  document.getElementById("inicioEstabelecimentos").textContent =
+    estabelecimentos.length;
 
-  document.getElementById(
-    "homeInspecoes"
-  ).textContent =
+  document.getElementById("inicioInspecoes").textContent =
     inspecoes.length;
 
-
-  document.getElementById(
-    "homeAcoes"
-  ).textContent =
+  document.getElementById("inicioAcoes").textContent =
     acoes.length;
 
+  document.getElementById("inicioPendentes").textContent =
+    pendentes;
 
-  document.getElementById(
-    "resumoAcoes"
-  ).innerHTML = `
+  const ultimas =
+    document.getElementById("dashUltimas");
 
-    <p>
-      🟡 <strong>${pendentes}</strong>
-      pendentes
-    </p>
+  if(ultimas){
 
-    <p>
-      🔵 <strong>${andamento}</strong>
-      em andamento
-    </p>
+    if(inspecoes.length === 0){
 
-    <p>
-      🟢 <strong>${resolvidas}</strong>
-      resolvidas
-    </p>
+      ultimas.innerHTML = `
+        <div class="empty">
+          Ainda não existem inspeções.
+        </div>
+      `;
 
-  `;
+    }else{
 
+      ultimas.innerHTML =
+        inspecoes
+          .slice(0,5)
+          .map(i=>cardHistorico(i))
+          .join("");
+    }
+  }
 }
 
 
-/* =====================================================
+/* =========================
    ATUALIZAÇÃO GERAL
-===================================================== */
+========================= */
 
 function atualizarTudo(){
 
-  colocarData();
-
-  mostrarTemperaturas();
-
-  mostrarAcoes();
-
-  mostrarHistorico();
-
+  renderEstabelecimentos();
+  renderSelectEstabelecimentos();
+  renderAcoes();
+  renderTemperaturas();
+  renderHistorico();
   atualizarDashboard();
 
 }
 
 
-/* =====================================================
+/* =========================
    INICIALIZAÇÃO
-===================================================== */
+========================= */
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function(){
+document.addEventListener("DOMContentLoaded",()=>{
 
-    colocarData();
+  document.getElementById("estData").value = hoje();
 
-    atualizarTudo();
+  document.getElementById("inspData").value = hoje();
 
-  }
-);
+  document.getElementById("acaoPrazo").value = hoje();
+
+  renderChecklist();
+
+  atualizarTudo();
+
+});
+
+
+/* Fecha modal ao tocar fora */
+document.getElementById("modalRelatorio")
+  .addEventListener("click",function(e){
+
+    if(e.target === this){
+      fecharRelatorio();
+    }
+
+  });
 
 </script>
 
