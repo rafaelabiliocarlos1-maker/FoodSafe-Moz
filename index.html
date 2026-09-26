@@ -1,1558 +1,410 @@
+Sim. Vamos corrigir a versão atual, sem recomeçar o projeto. Como o problema é a tela congelada, preparei um index.html completo e simples, sem bibliotecas externas, com os toques funcionando no iPhone.
+
+No GitHub, substitui todo o conteúdo do index.html por este código:
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
 <title>FoodSafe Moz</title>
-
 <style>
-*{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
-
-body{
-    margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-    background:#f4f7f6;
-    color:#17221d;
-    padding-bottom:90px;
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  font-family: Arial, sans-serif;
+  background: #f4f7f9;
+  color: #17202a;
 }
-
-header{
-    background:linear-gradient(135deg,#087f5b,#0b9b70);
-    color:white;
-    padding:22px 18px;
-    position:sticky;
-    top:0;
-    z-index:100;
-    box-shadow:0 3px 10px rgba(0,0,0,.15);
+body {
+  overflow-x: hidden;
 }
-
-.header-content{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.logo{
-    font-size:22px;
-    font-weight:800;
-}
-
-.logo span{
-    font-weight:400;
-}
-
-.header-sub{
-    font-size:12px;
-    opacity:.9;
-    margin-top:3px;
-}
-
-.container{
-    max-width:850px;
-    margin:auto;
-    padding:18px;
-}
-
-.page{
-    display:none;
-}
-
-.page.active{
-    display:block;
-}
-
-h1{
-    font-size:26px;
-    margin:5px 0 8px;
-}
-
-h2{
-    font-size:20px;
-    margin:5px 0 15px;
-}
-
-h3{
-    font-size:16px;
-    margin:0 0 10px;
-}
-
-.subtitle{
-    color:#68736e;
-    margin-bottom:20px;
-}
-
-.card{
-    background:white;
-    border-radius:16px;
-    padding:18px;
-    margin-bottom:15px;
-    box-shadow:0 2px 10px rgba(0,0,0,.07);
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-}
-
-.stat{
-    background:white;
-    border-radius:15px;
-    padding:17px;
-    box-shadow:0 2px 10px rgba(0,0,0,.06);
-}
-
-.stat-number{
-    font-size:27px;
-    font-weight:800;
-    color:#087f5b;
-}
-
-.stat-label{
-    color:#68736e;
-    font-size:13px;
-    margin-top:4px;
-}
-
-label{
-    display:block;
-    font-size:14px;
-    font-weight:700;
-    margin-bottom:6px;
-}
-
+button,
 input,
-select,
-textarea{
-    width:100%;
-    padding:13px;
-    border:1px solid #d8dfdc;
-    border-radius:10px;
-    font-size:15px;
-    background:white;
-    outline:none;
-    margin-bottom:14px;
+textarea,
+select {
+  font: inherit;
 }
-
-textarea{
-    min-height:90px;
-    resize:vertical;
+button {
+  cursor: pointer;
+  touch-action: manipulation;
 }
-
+.app {
+  min-height: 100vh;
+  padding-bottom: 85px;
+}
+/* CABEÇALHO */
+.header {
+  background: #0b7a45;
+  color: white;
+  padding: 22px 18px;
+  text-align: center;
+}
+.header h1 {
+  margin: 0;
+  font-size: 27px;
+}
+.header p {
+  margin: 7px 0 0;
+  font-size: 14px;
+}
+/* CONTEÚDO */
+.container {
+  width: 100%;
+  max-width: 700px;
+  margin: auto;
+  padding: 18px;
+}
+.page {
+  display: none;
+}
+.page.active {
+  display: block;
+}
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+.card h2 {
+  margin-top: 0;
+  color: #0b7a45;
+}
+.card h3 {
+  margin-bottom: 8px;
+}
+/* BOTÕES */
+.btn {
+  border: none;
+  border-radius: 12px;
+  padding: 14px 16px;
+  width: 100%;
+  margin-top: 10px;
+  font-weight: bold;
+  color: white;
+  background: #0b7a45;
+}
+.btn:active {
+  transform: scale(0.98);
+}
+.btn-secondary {
+  background: #1769aa;
+}
+.btn-danger {
+  background: #c0392b;
+}
+.btn-warning {
+  background: #d68910;
+}
+/* FORMULÁRIOS */
+label {
+  display: block;
+  font-weight: bold;
+  margin-top: 12px;
+  margin-bottom: 6px;
+}
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #ccd5d9;
+  border-radius: 10px;
+  background: white;
+  outline: none;
+}
 input:focus,
-select:focus,
-textarea:focus{
-    border-color:#087f5b;
+textarea:focus,
+select:focus {
+  border-color: #0b7a45;
 }
-
-button{
-    border:none;
-    border-radius:11px;
-    padding:13px 16px;
-    font-size:15px;
-    font-weight:700;
-    cursor:pointer;
-    touch-action:manipulation;
+textarea {
+  min-height: 100px;
+  resize: vertical;
 }
-
-.btn-primary{
-    background:#087f5b;
-    color:white;
+/* CHECKLIST */
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid #eee;
 }
-
-.btn-secondary{
-    background:#e8f3ef;
-    color:#087f5b;
+.check-item:last-child {
+  border-bottom: none;
 }
-
-.btn-danger{
-    background:#ffe9e9;
-    color:#b42318;
+.check-item input {
+  width: 23px;
+  height: 23px;
+  flex: 0 0 auto;
 }
-
-.btn-dark{
-    background:#17221d;
-    color:white;
+/* INDICADORES */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
 }
-
-.button-row{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
+.stat {
+  background: white;
+  border-radius: 14px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
 }
-
-.section-title{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    margin-bottom:15px;
+.stat strong {
+  display: block;
+  font-size: 28px;
+  color: #0b7a45;
 }
-
-.badge{
-    display:inline-block;
-    padding:5px 9px;
-    border-radius:20px;
-    font-size:11px;
-    font-weight:700;
+/* BARRA INFERIOR */
+.bottom-nav {
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  border-top: 1px solid #ddd;
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 3px calc(8px + env(safe-area-inset-bottom));
+  box-shadow: 0 -3px 12px rgba(0,0,0,0.10);
 }
-
-.badge-green{
-    background:#dff7ec;
-    color:#087f5b;
+.nav-btn {
+  border: none;
+  background: transparent;
+  color: #59636a;
+  padding: 7px 3px;
+  flex: 1;
+  font-size: 11px;
+  font-weight: bold;
+  touch-action: manipulation;
 }
-
-.badge-red{
-    background:#ffe2e2;
-    color:#b42318;
+.nav-icon {
+  display: block;
+  font-size: 20px;
+  margin-bottom: 3px;
 }
-
-.badge-gray{
-    background:#edf0ef;
-    color:#58635e;
+.nav-btn.active {
+  color: #0b7a45;
 }
-
-.inspection-item{
-    border:1px solid #e1e7e4;
-    border-radius:13px;
-    padding:14px;
-    margin-bottom:12px;
-    background:#fff;
+/* BADGES */
+.badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
 }
-
-.item-question{
-    font-weight:700;
-    font-size:14px;
-    line-height:1.4;
-    margin-bottom:12px;
+.badge-ok {
+  background: #d5f5e3;
+  color: #176b3a;
 }
-
-.options{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
+.badge-warning {
+  background: #fdebd0;
+  color: #9a6500;
 }
-
-.option-btn{
-    flex:1;
-    min-width:90px;
-    border:1px solid #d8dfdc;
-    background:#f8faf9;
-    color:#34413b;
+.badge-danger {
+  background: #fadbd8;
+  color: #922b21;
 }
-
-.option-btn.selected-conforme{
-    background:#dff7ec;
-    color:#087f5b;
-    border-color:#087f5b;
+.empty {
+  text-align: center;
+  color: #777;
+  padding: 25px 10px;
 }
-
-.option-btn.selected-nao{
-    background:#ffe2e2;
-    color:#b42318;
-    border-color:#b42318;
+/* TEMPERATURA */
+.temp-result {
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 12px;
+  display: none;
+  font-weight: bold;
 }
-
-.option-btn.selected-na{
-    background:#edf0ef;
-    color:#58635e;
-    border-color:#89938f;
-}
-
-.correction-box{
-    display:none;
-    margin-top:12px;
-    padding:12px;
-    border-radius:10px;
-    background:#fff7f7;
-    border:1px solid #ffd4d4;
-}
-
-.correction-box.show{
-    display:block;
-}
-
-.category-header{
-    background:#087f5b;
-    color:white;
-    padding:13px;
-    border-radius:11px;
-    margin:20px 0 12px;
-    font-weight:800;
-}
-
-.progress-wrap{
-    background:#e5ebe8;
-    height:12px;
-    border-radius:20px;
-    overflow:hidden;
-    margin:10px 0;
-}
-
-.progress-bar{
-    height:100%;
-    width:0%;
-    background:#087f5b;
-    transition:.3s;
-}
-
-.compliance-number{
-    font-size:35px;
-    font-weight:800;
-    color:#087f5b;
-}
-
-.temp-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
-}
-
-.history-item{
-    border-left:4px solid #087f5b;
-    background:white;
-    padding:14px;
-    border-radius:10px;
-    margin-bottom:10px;
-}
-
-.empty{
-    text-align:center;
-    color:#74807b;
-    padding:30px 10px;
-}
-
-.bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
-    height:76px;
-    background:white;
-    border-top:1px solid #dfe5e2;
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-    z-index:200;
-    box-shadow:0 -3px 12px rgba(0,0,0,.08);
-}
-
-.nav-btn{
-    background:transparent;
-    color:#718079;
-    padding:7px 5px;
-    min-width:58px;
-    font-size:10px;
-}
-
-.nav-icon{
-    display:block;
-    font-size:21px;
-    margin-bottom:3px;
-}
-
-.nav-btn.active{
-    color:#087f5b;
-    font-weight:800;
-}
-
-.alert{
-    padding:13px;
-    border-radius:11px;
-    margin-bottom:15px;
-    font-size:14px;
-}
-
-.alert-info{
-    background:#e8f3ff;
-    color:#155a8a;
-}
-
-.alert-success{
-    background:#dff7ec;
-    color:#087f5b;
-}
-
-.alert-warning{
-    background:#fff4d8;
-    color:#795b00;
-}
-
-@media(max-width:600px){
-    .grid{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .temp-grid{
-        grid-template-columns:1fr;
-    }
-
-    .options{
-        flex-direction:column;
-    }
-
-    .option-btn{
-        width:100%;
-    }
+/* RESPONSIVO */
+@media (min-width: 650px) {
+  .bottom-nav {
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 700px;
+  }
 }
 </style>
 </head>
-
 <body>
-
-<header>
-    <div class="header-content">
-        <div>
-            <div class="logo">FoodSafe <span>Moz</span></div>
-            <div class="header-sub">Alimentos seguros, famílias protegidas</div>
-        </div>
-        <div>🛡️</div>
-    </div>
-</header>
-
-<main class="container">
-
-<!-- INÍCIO -->
-<section id="inicio" class="page active">
-
-    <h1>Olá 👋</h1>
-    <p class="subtitle">Bem-vindo ao FoodSafe Moz</p>
-
-    <div class="alert alert-info">
-        Sistema digital para gestão, inspeção e controlo da segurança dos alimentos.
-    </div>
-
-    <div class="grid">
-
-        <div class="stat">
-            <div class="stat-number" id="totalInspecoes">0</div>
-            <div class="stat-label">Inspeções</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-number" id="totalProblemas">0</div>
-            <div class="stat-label">Problemas</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-number" id="totalConformidade">0%</div>
-            <div class="stat-label">Conformidade média</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-number" id="totalTemperaturas">0</div>
-            <div class="stat-label">Temperaturas</div>
-        </div>
-
-    </div>
-
-    <div class="card" style="margin-top:15px;">
-        <h3>Nova inspeção</h3>
-        <p class="subtitle">
-            Inicie uma inspeção profissional de um estabelecimento.
-        </p>
-
-        <button class="btn-primary" onclick="abrir('inspecao')">
-            📋 Iniciar inspeção
-        </button>
-    </div>
-
-</section>
-
-
-<!-- INSPEÇÃO -->
-<section id="inspecao" class="page">
-
-    <h1>Inspeção profissional</h1>
-    <p class="subtitle">Preencha os dados e avalie o estabelecimento.</p>
-
-    <div class="card">
-
-        <h2>🏢 Identificação</h2>
-
-        <label>Nome do estabelecimento *</label>
-        <input id="nomeEstabelecimento" type="text" placeholder="Ex.: Restaurante Central">
-
-        <label>Responsável *</label>
-        <input id="responsavel" type="text" placeholder="Nome do responsável">
-
-        <label>Data *</label>
-        <input id="dataInspecao" type="date">
-
-        <label>Hora</label>
-        <input id="horaInspecao" type="time">
-
-        <label>Tipo de estabelecimento</label>
-        <select id="tipoEstabelecimento">
-            <option value="">Selecionar</option>
-            <option>Restaurante</option>
-            <option>Hotel</option>
-            <option>Padaria</option>
-            <option>Talho</option>
-            <option>Mercado</option>
-            <option>Cantina</option>
-            <option>Indústria alimentar</option>
-            <option>Outro</option>
-        </select>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2>📊 Resultado</h2>
-
-        <div class="compliance-number" id="percentualInspecao">0%</div>
-
-        <div class="progress-wrap">
-            <div class="progress-bar" id="barraInspecao"></div>
-        </div>
-
-        <div id="resumoInspecao">
-            0 conformes · 0 não conformes · 0 N/A
-        </div>
-
-    </div>
-
-
-    <div id="checklistContainer"></div>
-
-
-    <div class="card">
-
-        <h2>🌡️ Temperaturas</h2>
-
-        <div class="temp-grid">
-
-            <div>
-                <label>Frigorífico (°C)</label>
-                <input id="tempFrigorifico" type="number" step="0.1" placeholder="Ex.: 4">
-            </div>
-
-            <div>
-                <label>Congelador (°C)</label>
-                <input id="tempCongelador" type="number" step="0.1" placeholder="Ex.: -18">
-            </div>
-
-            <div>
-                <label>Alimento quente (°C)</label>
-                <input id="tempQuente" type="number" step="0.1" placeholder="Ex.: 65">
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2>📝 Observações gerais</h2>
-
-        <textarea id="observacoes" placeholder="Escreva observações gerais da inspeção..."></textarea>
-
-    </div>
-
-
-    <div class="card">
-
-        <div class="button-row">
-
-            <button class="btn-primary" onclick="guardarInspecao()">
-                💾 Guardar inspeção
-            </button>
-
-            <button class="btn-secondary" onclick="limparInspecao()">
-                🧹 Limpar
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- PROBLEMAS -->
-<section id="problemas" class="page">
-
-    <h1>Problemas</h1>
-    <p class="subtitle">Registe não conformidades e ações corretivas.</p>
-
-    <div class="card">
-
-        <label>Estabelecimento</label>
-        <input id="problemaEstabelecimento" type="text" placeholder="Nome do estabelecimento">
-
-        <label>Problema identificado</label>
-        <textarea id="problemaDescricao" placeholder="Descreva o problema..."></textarea>
-
-        <label>Ação corretiva</label>
-        <textarea id="problemaAcao" placeholder="Descreva a ação corretiva..."></textarea>
-
-        <button class="btn-primary" onclick="guardarProblema()">
-            ➕ Guardar problema
-        </button>
-
-    </div>
-
-    <div id="listaProblemas"></div>
-
-</section>
-
-
-<!-- DASHBOARD -->
-<section id="dashboard" class="page">
-
-    <h1>Dashboard</h1>
-    <p class="subtitle">Visão geral da segurança alimentar.</p>
-
-    <div class="grid">
-
-        <div class="stat">
-            <div class="stat-number" id="dashInspecoes">0</div>
-            <div class="stat-label">Inspeções</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-number" id="dashProblemas">0</div>
-            <div class="stat-label">Problemas</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-number" id="dashConformidade">0%</div>
-            <div class="stat-label">Conformidade</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-number" id="dashTemperaturas">0</div>
-            <div class="stat-label">Registos de temperatura</div>
-        </div>
-
-    </div>
-
-    <div class="card" style="margin-top:15px;">
-
-        <h2>📈 Estado do sistema</h2>
-
-        <div class="alert alert-success" id="estadoSistema">
-            Sistema pronto para utilização.
-        </div>
-
+<div class="app">
+  <header class="header">
+    <h1>FoodSafe Moz</h1>
+    <p>Alimentos seguros, famílias protegidas</p>
+  </header>
+  <main class="container">
+    <!-- INÍCIO -->
+    <section id="inicio" class="page active">
+      <div class="card">
+        <h2>Bem-vindo ao FoodSafe Moz 👋</h2>
         <p>
-            O dashboard é atualizado automaticamente sempre que uma inspeção,
-            temperatura ou problema é guardado.
+          Sistema digital para apoiar o controlo da segurança e qualidade
+          dos alimentos.
         </p>
-
-    </div>
-
-</section>
-
-
-<!-- HISTÓRICO -->
-<section id="historico" class="page">
-
-    <h1>Histórico</h1>
-    <p class="subtitle">Inspeções realizadas anteriormente.</p>
-
-    <div id="listaHistorico"></div>
-
-</section>
-
-</main>
-
-
-<!-- NAVEGAÇÃO -->
-<nav class="bottom-nav">
-
-    <button class="nav-btn active" id="nav-inicio" onclick="abrir('inicio')">
-        <span class="nav-icon">🏠</span>
-        Início
-    </button>
-
-    <button class="nav-btn" id="nav-inspecao" onclick="abrir('inspecao')">
-        <span class="nav-icon">📋</span>
-        Inspeção
-    </button>
-
-    <button class="nav-btn" id="nav-problemas" onclick="abrir('problemas')">
-        <span class="nav-icon">⚠️</span>
-        Problemas
-    </button>
-
-    <button class="nav-btn" id="nav-dashboard" onclick="abrir('dashboard')">
-        <span class="nav-icon">📊</span>
-        Dashboard
-    </button>
-
-    <button class="nav-btn" id="nav-historico" onclick="abrir('historico')">
-        <span class="nav-icon">📜</span>
-        Histórico
-    </button>
-
-</nav>
-
-
-<script>
-
-/* ============================
-   DADOS
-============================ */
-
-var dados = {
-    inspecoes: [],
-    problemas: [],
-    temperaturas: []
-};
-
-var respostas = {};
-
-
-/* ============================
-   CHECKLIST PROFISSIONAL
-============================ */
-
-var categorias = [
-
-{
-    nome:"Higiene pessoal",
-    itens:[
-        "Os manipuladores apresentam higiene pessoal adequada?",
-        "Os manipuladores utilizam roupa de proteção adequada?",
-        "As mãos são lavadas corretamente antes da manipulação?",
-        "Os manipuladores mantêm unhas limpas e curtas?",
-        "Existem práticas adequadas para evitar contaminação cruzada?"
-    ]
-},
-
-{
-    nome:"Higiene das instalações",
-    itens:[
-        "As instalações encontram-se limpas e organizadas?",
-        "Os pisos encontram-se limpos e em boas condições?",
-        "As paredes e tetos encontram-se em condições adequadas?",
-        "As superfícies de contacto com alimentos estão limpas?",
-        "Existe disponibilidade adequada de água para higienização?",
-        "Os equipamentos de limpeza são mantidos de forma adequada?"
-    ]
-},
-
-{
-    nome:"Manipulação e armazenamento",
-    itens:[
-        "Os alimentos são armazenados de forma adequada?",
-        "Os alimentos crus estão separados dos alimentos prontos?",
-        "Os produtos estão devidamente identificados?",
-        "Os alimentos estão dentro do prazo de validade?",
-        "Os alimentos são protegidos contra contaminação?",
-        "É aplicado o princípio PEPS/FIFO quando aplicável?"
-    ]
-},
-
-{
-    nome:"Controlo de segurança e temperatura",
-    itens:[
-        "As temperaturas dos equipamentos de refrigeração são controladas?",
-        "Os alimentos congelados são mantidos adequadamente?",
-        "Os alimentos quentes são mantidos em temperatura segura?",
-        "Existe controlo ou registo das temperaturas?",
-        "Os equipamentos de frio funcionam adequadamente?"
-    ]
-}
-
-];
-
-
-/* ============================
-   CRIAR CHECKLIST
-============================ */
-
-function criarChecklist(){
-
-    var container = document.getElementById("checklistContainer");
-
-    container.innerHTML = "";
-
-    var numero = 0;
-
-    for(var c=0;c<categorias.length;c++){
-
-        var categoria = categorias[c];
-
-        var titulo = document.createElement("div");
-
-        titulo.className = "category-header";
-
-        titulo.innerHTML = categoria.nome;
-
-        container.appendChild(titulo);
-
-        for(var i=0;i<categoria.itens.length;i++){
-
-            numero++;
-
-            var id = "item" + numero;
-
-            respostas[id] = "";
-
-            var box = document.createElement("div");
-
-            box.className = "inspection-item";
-
-            box.id = id;
-
-            box.innerHTML =
-
-                '<div class="item-question">'+
-                numero+". "+categoria.itens[i]+
-                '</div>'+
-
-                '<div class="options">'+
-
-                '<button class="option-btn" onclick="responder(\''+
-                id+
-                '\',\'conforme\',this)">✅ Conforme</button>'+
-
-                '<button class="option-btn" onclick="responder(\''+
-                id+
-                '\',\'nao\',this)">❌ Não conforme</button>'+
-
-                '<button class="option-btn" onclick="responder(\''+
-                id+
-                '\',\'na\',this)">➖ N/A</button>'+
-
-                '</div>'+
-
-                '<div class="correction-box" id="correcao-'+id+'">'+
-
-                '<label>Problema identificado</label>'+
-
-                '<textarea id="problema-'+id+'" placeholder="Descreva o problema..."></textarea>'+
-
-                '<label>Ação corretiva</label>'+
-
-                '<textarea id="acao-'+id+'" placeholder="Descreva a ação corretiva..."></textarea>'+
-
-                '</div>';
-
-            container.appendChild(box);
-        }
-    }
-
-    calcular();
-}
-
-
-/* ============================
-   RESPONDER CHECKLIST
-============================ */
-
-function responder(id, resposta, botao){
-
-    respostas[id] = resposta;
-
-    var item = document.getElementById(id);
-
-    var botoes = item.getElementsByClassName("option-btn");
-
-    for(var i=0;i<botoes.length;i++){
-        botoes[i].classList.remove(
-            "selected-conforme",
-            "selected-nao",
-            "selected-na"
-        );
-    }
-
-    if(resposta === "conforme"){
-        botao.classList.add("selected-conforme");
-    }
-
-    if(resposta === "nao"){
-        botao.classList.add("selected-nao");
-    }
-
-    if(resposta === "na"){
-        botao.classList.add("selected-na");
-    }
-
-    var correcao = document.getElementById("correcao-"+id);
-
-    if(resposta === "nao"){
-        correcao.classList.add("show");
-    }else{
-        correcao.classList.remove("show");
-    }
-
-    calcular();
-}
-
-
-/* ============================
-   CALCULAR CONFORMIDADE
-============================ */
-
-function calcular(){
-
-    var conformes = 0;
-    var naoConformes = 0;
-    var na = 0;
-
-    for(var id in respostas){
-
-        if(respostas[id] === "conforme"){
-            conformes++;
-        }
-
-        if(respostas[id] === "nao"){
-            naoConformes++;
-        }
-
-        if(respostas[id] === "na"){
-            na++;
-        }
-    }
-
-    var avaliados = conformes + naoConformes;
-
-    var percentual = 0;
-
-    if(avaliados > 0){
-        percentual = Math.round((conformes / avaliados) * 100);
-    }
-
-    var numero = document.getElementById("percentualInspecao");
-
-    if(numero){
-        numero.innerText = percentual + "%";
-    }
-
-    var barra = document.getElementById("barraInspecao");
-
-    if(barra){
-        barra.style.width = percentual + "%";
-    }
-
-    var resumo = document.getElementById("resumoInspecao");
-
-    if(resumo){
-        resumo.innerText =
-            conformes+
-            " conformes · "+
-            naoConformes+
-            " não conformes · "+
-            na+
-            " N/A";
-    }
-
-    return {
-        conformes:conformes,
-        naoConformes:naoConformes,
-        na:na,
-        percentual:percentual
-    };
-}
-
-
-/* ============================
-   ABRIR PÁGINA
-============================ */
-
-function abrir(pagina){
-
-    var paginas = document.getElementsByClassName("page");
-
-    for(var i=0;i<paginas.length;i++){
-        paginas[i].classList.remove("active");
-    }
-
-    var alvo = document.getElementById(pagina);
-
-    if(alvo){
-        alvo.classList.add("active");
-    }
-
-    var botoes = document.getElementsByClassName("nav-btn");
-
-    for(var j=0;j<botoes.length;j++){
-        botoes[j].classList.remove("active");
-    }
-
-    var nav = document.getElementById("nav-"+pagina);
-
-    if(nav){
-        nav.classList.add("active");
-    }
-
-    window.scrollTo(0,0);
-
-    atualizar();
-
-    if(pagina === "problemas"){
-        mostrarProblemas();
-    }
-
-    if(pagina === "historico"){
-        mostrarHistorico();
-    }
-}
-
-
-/* ============================
-   GUARDAR INSPEÇÃO
-============================ */
-
-function guardarInspecao(){
-
-    var nome = document.getElementById("nomeEstabelecimento").value.trim();
-
-    var responsavel =
-        document.getElementById("responsavel").value.trim();
-
-    var data =
-        document.getElementById("dataInspecao").value;
-
-    if(nome === "" || responsavel === "" || data === ""){
-
-        alert("Preencha o nome do estabelecimento, responsável e data.");
-
-        return;
-    }
-
-    var resultado = calcular();
-
-    var temperaturas = {
-
-        frigorifico:
-            document.getElementById("tempFrigorifico").value,
-
-        congelador:
-            document.getElementById("tempCongelador").value,
-
-        quente:
-            document.getElementById("tempQuente").value
-    };
-
-    if(
-        temperaturas.frigorifico !== "" ||
-        temperaturas.congelador !== "" ||
-        temperaturas.quente !== ""
-    ){
-
-        dados.temperaturas.push({
-            data:data,
-            estabelecimento:nome,
-            temperaturas:temperaturas
-        });
-    }
-
-
-    var respostasCopia = {};
-
-    for(var id in respostas){
-
-        respostasCopia[id] = respostas[id];
-    }
-
-
-    var inspecao = {
-
-        id:Date.now(),
-
-        estabelecimento:nome,
-
-        responsavel:responsavel,
-
-        data:data,
-
-        hora:
-            document.getElementById("horaInspecao").value,
-
-        tipo:
-            document.getElementById("tipoEstabelecimento").value,
-
-        resultado:resultado,
-
-        respostas:respostasCopia,
-
-        temperaturas:temperaturas,
-
-        observacoes:
-            document.getElementById("observacoes").value,
-
-        problemas:[]
-
-    };
-
-
-    /* Recolher não conformidades */
-
-    for(var item in respostas){
-
-        if(respostas[item] === "nao"){
-
-            var problemaEl =
-                document.getElementById("problema-"+item);
-
-            var acaoEl =
-                document.getElementById("acao-"+item);
-
-            inspecao.problemas.push({
-
-                item:item,
-
-                problema:
-                    problemaEl ? problemaEl.value : "",
-
-                acao:
-                    acaoEl ? acaoEl.value : ""
-
-            });
-
-        }
-    }
-
-
-    dados.inspecoes.push(inspecao);
-
-
-    /* Adicionar problemas ao sistema */
-
-    for(var p=0;p<inspecao.problemas.length;p++){
-
-        dados.problemas.push({
-
-            id:Date.now()+p,
-
-            estabelecimento:nome,
-
-            problema:inspecao.problemas[p].problema,
-
-            acao:inspecao.problemas[p].acao,
-
-            data:data
-
-        });
-    }
-
-
-    salvar();
-
-    atualizar();
-
-    alert(
-        "Inspeção guardada com sucesso!\n\n"+
-        "Conformidade: "+
-        resultado.percentual+
-        "%"
-    );
-
-    abrir("historico");
-}
-
-
-/* ============================
-   LIMPAR INSPEÇÃO
-============================ */
-
-function limparInspecao(){
-
-    if(!confirm("Deseja limpar os dados desta inspeção?")){
-        return;
-    }
-
-    document.getElementById("nomeEstabelecimento").value = "";
-
-    document.getElementById("responsavel").value = "";
-
-    document.getElementById("dataInspecao").value = "";
-
-    document.getElementById("horaInspecao").value = "";
-
-    document.getElementById("tipoEstabelecimento").value = "";
-
-    document.getElementById("tempFrigorifico").value = "";
-
-    document.getElementById("tempCongelador").value = "";
-
-    document.getElementById("tempQuente").value = "";
-
-    document.getElementById("observacoes").value = "";
-
-    respostas = {};
-
-    criarChecklist();
-
-    window.scrollTo(0,0);
-}
-
-
-/* ============================
-   GUARDAR PROBLEMA
-============================ */
-
-function guardarProblema(){
-
-    var estabelecimento =
-        document.getElementById("problemaEstabelecimento").value.trim();
-
-    var problema =
-        document.getElementById("problemaDescricao").value.trim();
-
-    var acao =
-        document.getElementById("problemaAcao").value.trim();
-
-    if(estabelecimento === "" || problema === ""){
-
-        alert("Informe o estabelecimento e o problema.");
-
-        return;
-    }
-
-    dados.problemas.push({
-
-        id:Date.now(),
-
-        estabelecimento:estabelecimento,
-
-        problema:problema,
-
-        acao:acao,
-
-        data:new Date().toISOString().split("T")[0]
-
-    });
-
-    salvar();
-
-    document.getElementById("problemaEstabelecimento").value = "";
-
-    document.getElementById("problemaDescricao").value = "";
-
-    document.getElementById("problemaAcao").value = "";
-
-    mostrarProblemas();
-
-    atualizar();
-
-    alert("Problema guardado com sucesso.");
-}
-
-
-/* ============================
-   MOSTRAR PROBLEMAS
-============================ */
-
-function mostrarProblemas(){
-
-    var container =
-        document.getElementById("listaProblemas");
-
-    if(dados.problemas.length === 0){
-
-        container.innerHTML =
-            '<div class="card empty">'+
-            'Nenhum problema registado.'+
-            '</div>';
-
-        return;
-    }
-
-    container.innerHTML = "";
-
-    for(var i=dados.problemas.length-1;i>=0;i--){
-
-        var p = dados.problemas[i];
-
-        var box = document.createElement("div");
-
-        box.className = "card";
-
-        box.innerHTML =
-
-            '<span class="badge badge-red">NÃO CONFORMIDADE</span>'+
-
-            '<h3 style="margin-top:10px;">'+
-            escapeHTML(p.estabelecimento)+
-            '</h3>'+
-
-            '<p><strong>Problema:</strong><br>'+
-            escapeHTML(p.problema)+
-            '</p>'+
-
-            '<p><strong>Ação corretiva:</strong><br>'+
-            escapeHTML(p.acao || "Não registada")+
-            '</p>'+
-
-            '<small>Data: '+
-            escapeHTML(p.data)+
-            '</small>';
-
-        container.appendChild(box);
-    }
-}
-
-
-/* ============================
-   MOSTRAR HISTÓRICO
-============================ */
-
-function mostrarHistorico(){
-
-    var container =
-        document.getElementById("listaHistorico");
-
-    if(dados.inspecoes.length === 0){
-
-        container.innerHTML =
-            '<div class="card empty">'+
-            'Nenhuma inspeção realizada ainda.'+
-            '</div>';
-
-        return;
-    }
-
-    container.innerHTML = "";
-
-    for(var i=dados.inspecoes.length-1;i>=0;i--){
-
-        var item = dados.inspecoes[i];
-
-        var box = document.createElement("div");
-
-        box.className = "history-item";
-
-        box.innerHTML =
-
-            '<span class="badge badge-green">'+
-            item.resultado.percentual+
-            '% CONFORMIDADE</span>'+
-
-            '<h3 style="margin-top:10px;">'+
-            escapeHTML(item.estabelecimento)+
-            '</h3>'+
-
-            '<div>👤 '+
-            escapeHTML(item.responsavel)+
-            '</div>'+
-
-            '<div>📅 '+
-            escapeHTML(item.data)+
-            '</div>'+
-
-            '<div style="margin-top:7px;font-size:13px;color:#68736e;">'+
-
-            item.resultado.conformes+
-            ' conformes · '+
-
-            item.resultado.naoConformes+
-            ' não conformes · '+
-
-            item.resultado.na+
-            ' N/A'+
-
-            '</div>';
-
-        container.appendChild(box);
-    }
-}
-
-
-/* ============================
-   ESCAPAR TEXTO
-============================ */
-
-function escapeHTML(text){
-
-    if(text === null || text === undefined){
-        return "";
-    }
-
-    return String(text)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-}
-
-
-/* ============================
-   LOCAL STORAGE
-============================ */
-
-function salvar(){
-
-    localStorage.setItem(
-        "foodsafemoz_profissional_v1",
-        JSON.stringify(dados)
-    );
-}
-
-
-function carregar(){
-
-    var guardado =
-        localStorage.getItem(
-            "foodsafemoz_profissional_v1"
-        );
-
-    if(guardado){
-
-        try{
-
-            var convertido =
-                JSON.parse(guardado);
-
-            if(convertido.inspecoes){
-                dados.inspecoes = convertido.inspecoes;
-            }
-
-            if(convertido.problemas){
-                dados.problemas = convertido.problemas;
-            }
-
-            if(convertido.temperaturas){
-                dados.temperaturas = convertido.temperaturas;
-            }
-
-        }catch(e){
-
-            console.log("Erro ao carregar dados.");
-        }
-    }
-}
-
-
-/* ============================
-   ATUALIZAR DASHBOARD
-============================ */
-
-function atualizar(){
-
-    var total =
-        dados.inspecoes.length;
-
-    var problemas =
-        dados.problemas.length;
-
-    var temperaturas =
-        dados.temperaturas.length;
-
-    var media = 0;
-
-    if(total > 0){
-
-        var soma = 0;
-
-        for(var i=0;i<dados.inspecoes.length;i++){
-
-            soma +=
-                Number(
-                    dados.inspecoes[i].resultado.percentual
-                );
-        }
-
-        media =
-            Math.round(soma / total);
-    }
-
-
-    document.getElementById("totalInspecoes").innerText =
-        total;
-
-    document.getElementById("totalProblemas").innerText =
-        problemas;
-
-    document.getElementById("totalConformidade").innerText =
-        media+"%";
-
-    document.getElementById("totalTemperaturas").innerText =
-        temperaturas;
-
-
-    document.getElementById("dashInspecoes").innerText =
-        total;
-
-    document.getElementById("dashProblemas").innerText =
-        problemas;
-
-    document.getElementById("dashConformidade").innerText =
-        media+"%";
-
-    document.getElementById("dashTemperaturas").innerText =
-        temperaturas;
-
-
-    var estado =
-        document.getElementById("estadoSistema");
-
-    if(total === 0){
-
-        estado.innerText =
-            "Sistema pronto. Ainda não existem inspeções registadas.";
-
-    }else{
-
-        estado.innerText =
-            total+
-            " inspeção(ões) registada(s) no sistema.";
-    }
-}
-
-
-/* ============================
-   INICIALIZAÇÃO
-============================ */
-
-function iniciar(){
-
-    carregar();
-
-    /* Data atual */
-
-    var agora = new Date();
-
-    var ano = agora.getFullYear();
-
-    var mes =
-        String(agora.getMonth()+1).padStart(2,"0");
-
-    var dia =
-        String(agora.getDate()).padStart(2,"0");
-
-    document.getElementById("dataInspecao").value =
-        ano+"-"+mes+"-"+dia;
-
-
-    /* Hora atual */
-
-    var horas =
-        String(agora.getHours()).padStart(2,"0");
-
-    var minutos =
-        String(agora.getMinutes()).padStart(2,"0");
-
-    document.getElementById("horaInspecao").value =
-        horas+":"+minutos;
-
-
-    criarChecklist();
-
-    atualizar();
-
-    mostrarProblemas();
-
-    mostrarHistorico();
-}
-
-
-/* Iniciar aplicação */
-
-window.addEventListener("load", iniciar);
-
-</script>
-
-</body>
-</html>
+        <button class="btn" onclick="mostrarPagina('temperatura')">
+          🌡️ Registar temperatura
+        </button>
+        <button class="btn btn-secondary" onclick="mostrarPagina('checklist')">
+          ✅ Fazer inspeção
+        </button>
+      </div>
+      <div class="stat-grid">
+        <div class="stat">
+          <strong id="inicioInspecoes">0</strong>
+          Inspeções
+        </div>
+        <div class="stat">
+          <strong id="inicioProblemas">0</strong>
+          Problemas
+        </div>
+      </div>
+    </section>
+    <!-- TEMPERATURA -->
+    <section id="temperatura" class="page">
+      <div class="card">
+        <h2>🌡️ Controlo de Temperatura</h2>
+        <label for="tempProduto">Produto / equipamento</label>
+        <input
+          id="tempProduto"
+          type="text"
+          placeholder="Ex.: Frigorífico"
+        >
+        <label for="temperaturaValor">Temperatura (°C)</label>
+        <input
+          id="temperaturaValor"
+          type="number"
+          step="0.1"
+          placeholder="Ex.: 4"
+        >
+        <button class="btn" onclick="guardarTemperatura()">
+          Guardar temperatura
+        </button>
+        <div id="tempResult" class="temp-result"></div>
+      </div>
+      <div class="card">
+        <h3>Últimos registos</h3>
+        <div id="listaTemperaturas"></div>
+      </div>
+    </section>
+    <!-- CHECKLIST -->
+    <section id="checklist" class="page">
+      <div class="card">
+        <h2>✅ Inspeção de Segurança Alimentar</h2>
+        <label for="nomeEstabelecimento">
+          Nome do estabelecimento
+        </label>
+        <input
+          id="nomeEstabelecimento"
+          type="text"
+          placeholder="Nome do estabelecimento"
+        >
+        <label for="responsavel">
+          Responsável
+        </label>
+        <input
+          id="responsavel"
+          type="text"
+          placeholder="Nome do responsável"
+        >
+        <label for="dataInspecao">
+          Data
+        </label>
+        <input id="dataInspecao" type="date">
+      </div>
+      <div class="card">
+        <h3>Condições de higiene</h3>
+        <div class="check-item">
+          <input type="checkbox" class="check">
+          <span>Instalações limpas e organizadas</span>
+        </div>
+        <div class="check-item">
+          <input type="checkbox" class="check">
+          <span>Manipuladores com higiene adequada</span>
+        </div>
+        <div class="check-item">
+          <input type="checkbox" class="check">
+          <span>Água potável disponível</span>
+        </div>
+        <div class="check-item">
+          <input type="checkbox" class="check">
+          <span>Equipamentos limpos e em bom estado</span>
+        </div>
+        <div class="check-item">
+          <input type="checkbox" class="check">
+          <span>Alimentos armazenados corretamente</span>
+        </div>
+        <div class="check-item">
+          <input type="checkbox" class="check">
+          <span>Temperaturas controladas</span>
+        </div>
+        <div class="check-item">
+          <input type="checkbox" class="check">
+          <span>Produtos dentro do prazo de validade</span>
+        </div>
+        <div class="check-item">
+          <input type="checkbox" class="check">
+          <span>Ausência de sinais de pragas</span>
+        </div>
+        <div class="check-item">
+          <input type="checkbox" class="check">
+          <span>Resíduos descartados adequadamente</span>
+        </div>
+        <button class="btn" onclick="guardarInspecao()">
+          Guardar inspeção
+        </button>
+      </div>
+    </section>
+    <!-- PROBLEMAS -->
+    <section id="problemas" class="page">
+      <div class="card">
+        <h2>⚠️ Registar Problema</h2>
+        <label for="problemaDescricao">
+          Descrição do problema
+        </label>
+        <textarea
+          id="problemaDescricao"
+          placeholder="Descreva o problema encontrado..."
+        ></textarea>
+        <label for="problemaGravidade">
+          Gravidade
+        </label>
+        <select id="problemaGravidade">
+          <option value="Baixa">Baixa</option>
+          <option value="Média">Média</option>
+          <option value="Alta">Alta</option>
+        </select>
+        <button class="btn btn-danger" onclick="guardarProblema()">
+          Guardar problema
+        </button>
+      </div>
+      <div class="card">
+        <h3>Problemas registados</h3>
+        <div id="listaProblemas"></div>
+      </div>
+    </section>
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="page">
+      <div class="card">
+        <h2>📊 Dashboard</h2>
+        <p>Resumo do sistema FoodSafe Moz.</p>
+      </div>
+      <div class="stat-grid">
+        <div class="stat">
+          <strong id="totalInspecoes">0</strong>
+          Inspeções
+        </div>
+        <div class="stat">
+          <strong id="totalProblemas">0</
