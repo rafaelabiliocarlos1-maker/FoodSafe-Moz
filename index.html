@@ -1,3117 +1,1438 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-
-<title>FoodSafe Moz</title>
-
-<style>
-
-*{
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#f4f7f9;
-  color:#17212b;
-  -webkit-tap-highlight-color:transparent;
-}
-
-button,
-input,
-select,
-textarea{
-  font:inherit;
-}
-
-button,
-select,
-input[type="checkbox"]{
-  touch-action:manipulation;
-}
-
-header{
-  background:#0b6e4f;
-  color:white;
-  padding:18px 15px;
-  position:sticky;
-  top:0;
-  z-index:1000;
-  box-shadow:0 2px 8px rgba(0,0,0,.15);
-}
-
-.header-inner{
-  max-width:1100px;
-  margin:auto;
-}
-
-header h1{
-  margin:0;
-  font-size:24px;
-}
-
-header p{
-  margin:5px 0 0;
-  font-size:13px;
-  opacity:.9;
-}
-
-nav{
-  max-width:1100px;
-  margin:12px auto 0;
-  display:flex;
-  gap:7px;
-  overflow-x:auto;
-  scrollbar-width:none;
-  padding-bottom:3px;
-}
-
-nav::-webkit-scrollbar{
-  display:none;
-}
-
-nav button{
-  border:0;
-  background:white;
-  color:#0b6e4f;
-  padding:10px 13px;
-  border-radius:10px;
-  white-space:nowrap;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:18px 14px 50px;
-}
-
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
-
-.card{
-  background:white;
-  border-radius:15px;
-  padding:17px;
-  margin-bottom:15px;
-  box-shadow:0 2px 9px rgba(0,0,0,.07);
-}
-
-.card h2,
-.card h3{
-  margin-top:0;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:13px;
-}
-
-@media(max-width:700px){
-  .grid{
-    grid-template-columns:1fr;
-  }
-}
-
-label{
-  display:block;
-  font-weight:bold;
-  margin-bottom:6px;
-  font-size:14px;
-}
-
-input,
-select,
-textarea{
-  width:100%;
-  border:1px solid #ccd5da;
-  border-radius:10px;
-  padding:12px;
-  background:white;
-  color:#17212b;
-  outline:none;
-}
-
-input:focus,
-select:focus,
-textarea:focus{
-  border-color:#0b6e4f;
-  box-shadow:0 0 0 2px rgba(11,110,79,.1);
-}
-
-textarea{
-  min-height:95px;
-  resize:vertical;
-}
-
-.form-group{
-  margin-bottom:13px;
-}
-
-.btn{
-  border:0;
-  border-radius:10px;
-  padding:12px 16px;
-  cursor:pointer;
-  font-weight:bold;
-  min-height:44px;
-}
-
-.btn-primary{
-  background:#0b6e4f;
-  color:white;
-}
-
-.btn-secondary{
-  background:#e9eef0;
-  color:#17212b;
-}
-
-.btn-danger{
-  background:#c62828;
-  color:white;
-}
-
-.btn-warning{
-  background:#f0a202;
-  color:white;
-}
-
-.btn-small{
-  padding:8px 11px;
-  min-height:38px;
-  font-size:13px;
-}
-
-.actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:9px;
-  margin-top:12px;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-}
-
-@media(max-width:700px){
-  .stats{
-    grid-template-columns:repeat(2,1fr);
-  }
-}
-
-.stat{
-  background:white;
-  border-radius:14px;
-  padding:16px;
-  box-shadow:0 2px 8px rgba(0,0,0,.06);
-}
-
-.stat strong{
-  display:block;
-  font-size:27px;
-  color:#0b6e4f;
-}
-
-.stat span{
-  font-size:13px;
-  color:#64727a;
-}
-
-.info{
-  background:#eef8f4;
-  border-left:4px solid #0b6e4f;
-  padding:11px 12px;
-  border-radius:8px;
-  margin-bottom:14px;
-  font-size:14px;
-}
-
-.notice-select{
-  background:#fff8df;
-  border-left:4px solid #f0a202;
-  padding:10px 12px;
-  border-radius:8px;
-  font-size:13px;
-  margin-bottom:13px;
-}
-
-.empty{
-  text-align:center;
-  color:#68757d;
-  padding:25px 10px;
-}
-
-.check-item{
-  display:flex;
-  align-items:flex-start;
-  gap:10px;
-  padding:13px 0;
-  border-bottom:1px solid #edf0f2;
-}
-
-.check-item input{
-  width:23px;
-  height:23px;
-  margin:0;
-  flex:none;
-}
-
-.check-item label{
-  margin:0;
-  font-weight:normal;
-  line-height:1.4;
-  cursor:pointer;
-}
-
-.check-number{
-  font-weight:bold;
-  color:#0b6e4f;
-}
-
-.progress{
-  height:14px;
-  background:#e7ecee;
-  border-radius:20px;
-  overflow:hidden;
-  margin:8px 0;
-}
-
-.progress-bar{
-  height:100%;
-  background:#0b6e4f;
-  width:0%;
-  transition:width .2s;
-}
-
-.result{
-  padding:12px;
-  border-radius:10px;
-  font-weight:bold;
-  background:#eef8f4;
-}
-
-.result.excellent{
-  background:#dff4e9;
-  color:#17633f;
-}
-
-.result.good{
-  background:#e9f5df;
-  color:#3d681e;
-}
-
-.result.attention{
-  background:#fff0c9;
-  color:#795700;
-}
-
-.result.bad{
-  background:#ffe0e0;
-  color:#8a2020;
-}
-
-.list-item{
-  border:1px solid #e0e6e9;
-  border-radius:12px;
-  padding:13px;
-  margin-bottom:10px;
-}
-
-.list-item strong{
-  color:#0b6e4f;
-}
-
-.badge{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:20px;
-  font-size:12px;
-  font-weight:bold;
-  background:#e8eef0;
-}
-
-.badge-ok{
-  background:#dff4e9;
-  color:#17633f;
-}
-
-.badge-warning{
-  background:#fff0c9;
-  color:#795700;
-}
-
-.badge-danger{
-  background:#ffe0e0;
-  color:#8a2020;
-}
-
-.photo-preview{
-  max-width:220px;
-  max-height:180px;
-  display:none;
-  border-radius:10px;
-  margin-top:10px;
-  object-fit:cover;
-}
-
-.profile-box{
-  background:#f7fafb;
-  border-radius:12px;
-  padding:13px;
-  margin-bottom:12px;
-}
-
-.profile-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-}
-
-@media(max-width:600px){
-  .profile-grid{
-    grid-template-columns:1fr;
-  }
-}
-
-.profile-field{
-  background:white;
-  border:1px solid #e3e8ea;
-  border-radius:9px;
-  padding:10px;
-}
-
-.profile-field small{
-  display:block;
-  color:#718087;
-  margin-bottom:3px;
-}
-
-.profile-field strong{
-  color:#17212b;
-}
-
-.inspection-summary{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin:14px 0;
-}
-
-@media(max-width:600px){
-  .inspection-summary{
-    grid-template-columns:1fr;
-  }
-}
-
-.summary-box{
-  background:#f7fafb;
-  border-radius:10px;
-  padding:12px;
-  text-align:center;
-}
-
-.summary-box strong{
-  display:block;
-  font-size:23px;
-  color:#0b6e4f;
-}
-
-.summary-box span{
-  font-size:12px;
-  color:#64727a;
-}
-
-.nonconformities{
-  background:#fff4f4;
-  border-left:4px solid #c62828;
-  border-radius:8px;
-  padding:12px;
-  margin-top:14px;
-}
-
-.nonconformities h4{
-  margin:0 0 8px;
-  color:#8a2020;
-}
-
-.nonconformities ol{
-  margin:8px 0 0;
-  padding-left:22px;
-}
-
-.nonconformities li{
-  margin-bottom:7px;
-  font-size:14px;
-}
-
-.inspection-id{
-  font-family:monospace;
-  background:#eef8f4;
-  color:#0b6e4f;
-  padding:5px 8px;
-  border-radius:6px;
-  display:inline-block;
-  font-size:12px;
-}
-
-.section-title{
-  margin:25px 0 12px;
-}
-
-footer{
-  text-align:center;
-  color:#718087;
-  font-size:12px;
-  padding:20px;
-}
-
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0f766e">
+  <title>FoodSafe Moz</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    html,body{
+      margin:0;
+      padding:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:#f4f7f7;
+      color:#18312f;
+    }
+
+    body{
+      min-height:100vh;
+    }
+
+    button,
+    select,
+    input,
+    textarea{
+      font:inherit;
+    }
+
+    button,
+    select,
+    input[type="date"],
+    input[type="time"],
+    input[type="file"]{
+      touch-action:manipulation;
+    }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:#0f766e;
+      color:#fff;
+      padding:14px 12px 10px;
+      box-shadow:0 2px 10px rgba(0,0,0,.12);
+    }
+
+    .header-title{
+      text-align:center;
+      font-size:22px;
+      font-weight:800;
+      margin-bottom:10px;
+    }
+
+    nav{
+      display:flex;
+      gap:7px;
+      overflow-x:auto;
+      padding-bottom:2px;
+      scrollbar-width:none;
+    }
+
+    nav::-webkit-scrollbar{
+      display:none;
+    }
+
+    nav button{
+      flex:0 0 auto;
+      border:0;
+      border-radius:9px;
+      background:rgba(255,255,255,.14);
+      color:#fff;
+      padding:10px 13px;
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    nav button.active{
+      background:#fff;
+      color:#0f766e;
+    }
+
+    main{
+      max-width:1100px;
+      margin:0 auto;
+      padding:16px;
+    }
+
+    .page{
+      display:none;
+    }
+
+    .page.active{
+      display:block;
+    }
+
+    .card{
+      background:#fff;
+      border-radius:14px;
+      padding:16px;
+      margin-bottom:16px;
+      box-shadow:0 2px 10px rgba(0,0,0,.06);
+      border:1px solid #e4eceb;
+    }
+
+    h1,h2,h3,h4{
+      margin-top:0;
+    }
+
+    h2{
+      color:#0f766e;
+      margin-bottom:14px;
+    }
+
+    h3{
+      color:#164e49;
+    }
+
+    .form-group{
+      margin-bottom:14px;
+    }
+
+    label{
+      display:block;
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    input,
+    select,
+    textarea{
+      width:100%;
+      border:1px solid #cbd8d7;
+      border-radius:9px;
+      padding:12px;
+      background:#fff;
+      color:#18312f;
+      outline:none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus{
+      border-color:#0f766e;
+      box-shadow:0 0 0 2px rgba(15,118,110,.12);
+    }
+
+    textarea{
+      min-height:100px;
+      resize:vertical;
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:14px;
+    }
+
+    .btn{
+      border:0;
+      border-radius:9px;
+      padding:11px 15px;
+      cursor:pointer;
+      font-weight:700;
+      touch-action:manipulation;
+    }
+
+    .btn-primary{
+      background:#0f766e;
+      color:#fff;
+    }
+
+    .btn-secondary{
+      background:#e6eeee;
+      color:#164e49;
+    }
+
+    .btn-danger{
+      background:#dc3545;
+      color:#fff;
+    }
+
+    .btn-warning{
+      background:#f0ad4e;
+      color:#fff;
+    }
+
+    .btn-small{
+      padding:8px 10px;
+      font-size:13px;
+    }
+
+    .notice-select{
+      background:#eef8f4;
+      color:#245c55;
+      padding:11px;
+      border-radius:9px;
+      margin-bottom:14px;
+      font-size:14px;
+      line-height:1.45;
+    }
+
+    .notice{
+      padding:12px;
+      border-radius:9px;
+      margin-bottom:12px;
+    }
+
+    .notice.info{
+      background:#eef6ff;
+      color:#24527a;
+    }
+
+    .notice.success{
+      background:#eaf8ef;
+      color:#21613a;
+    }
+
+    .notice.warning{
+      background:#fff7e6;
+      color:#7a5a17;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .dashboard-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+    }
+
+    .stat{
+      background:#fff;
+      border:1px solid #e1e9e8;
+      border-radius:13px;
+      padding:15px;
+      text-align:center;
+    }
+
+    .stat-number{
+      font-size:27px;
+      font-weight:800;
+      color:#0f766e;
+      margin-bottom:4px;
+    }
+
+    .stat-label{
+      font-size:13px;
+      color:#667;
+    }
+
+    .checklist-item{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:11px 8px;
+      border-bottom:1px solid #edf1f1;
+    }
+
+    .checklist-item:last-child{
+      border-bottom:0;
+    }
+
+    .checklist-item input{
+      width:22px;
+      height:22px;
+      flex:0 0 22px;
+      margin-top:1px;
+      padding:0;
+    }
+
+    .checklist-item label{
+      margin:0;
+      font-weight:500;
+      line-height:1.4;
+      cursor:pointer;
+    }
+
+    .progress{
+      height:12px;
+      background:#e7eeee;
+      border-radius:999px;
+      overflow:hidden;
+      margin:10px 0 15px;
+    }
+
+    .progress-bar{
+      height:100%;
+      width:0;
+      background:#0f766e;
+      transition:width .2s ease;
+    }
+
+    .summary-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:10px;
+      margin:12px 0;
+    }
+
+    .summary-box{
+      background:#f7faf9;
+      border-radius:10px;
+      padding:11px;
+      text-align:center;
+    }
+
+    .summary-box strong{
+      display:block;
+      font-size:21px;
+      color:#0f766e;
+    }
+
+    .list-item{
+      border:1px solid #e1e9e8;
+      border-radius:11px;
+      padding:13px;
+      margin-bottom:10px;
+      background:#fff;
+    }
+
+    .list-item:last-child{
+      margin-bottom:0;
+    }
+
+    .badge{
+      display:inline-block;
+      padding:5px 8px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      background:#e8f4f2;
+      color:#0f766e;
+    }
+
+    .badge-danger{
+      background:#fdebed;
+      color:#a51f2d;
+    }
+
+    .badge-warning{
+      background:#fff3d9;
+      color:#8a6112;
+    }
+
+    .badge-success{
+      background:#e8f7ed;
+      color:#21743c;
+    }
+
+    .empty{
+      color:#778;
+      text-align:center;
+      padding:20px 10px;
+      background:#fafcfc;
+      border-radius:10px;
+    }
+
+    .photo-preview{
+      display:none;
+      width:100%;
+      max-height:300px;
+      object-fit:contain;
+      margin-top:10px;
+      border-radius:10px;
+      border:1px solid #dfe7e6;
+      background:#f6f8f8;
+    }
+
+    .inspection-id{
+      display:inline-block;
+      background:#e7f5f2;
+      color:#0f766e;
+      padding:4px 7px;
+      border-radius:6px;
+      font-weight:700;
+    }
+
+    .home-hero{
+      background:linear-gradient(135deg,#0f766e,#155e75);
+      color:#fff;
+      border-radius:16px;
+      padding:22px;
+      margin-bottom:16px;
+    }
+
+    .home-hero h2{
+      color:#fff;
+      margin-bottom:8px;
+    }
+
+    .home-hero p{
+      margin:0;
+      line-height:1.5;
+    }
+
+    .home-actions{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px;
+      margin-top:15px;
+    }
+
+    .home-actions button{
+      border:0;
+      border-radius:10px;
+      padding:13px;
+      background:#fff;
+      color:#0f766e;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .profile-header{
+      background:#eef8f4;
+      border-radius:12px;
+      padding:15px;
+      margin-bottom:14px;
+    }
+
+    .profile-row{
+      padding:7px 0;
+      border-bottom:1px solid #dce9e6;
+    }
+
+    .profile-row:last-child{
+      border-bottom:0;
+    }
+
+    .small-muted{
+      color:#718087;
+      font-size:13px;
+    }
+
+    @media(max-width:750px){
+      .grid,
+      .dashboard-grid{
+        grid-template-columns:1fr;
+      }
+
+      .summary-grid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+      }
+
+      main{
+        padding:12px;
+      }
+    }
+
+    @media(max-width:450px){
+      .summary-grid{
+        gap:6px;
+      }
+
+      .summary-box{
+        padding:9px 5px;
+      }
+
+      .summary-box strong{
+        font-size:18px;
+      }
+
+      .home-actions{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
-
-  <div class="header-inner">
-
-    <h1>FoodSafe Moz</h1>
-
-    <p>
-      Sistema de gestão e segurança alimentar
-    </p>
-
-  </div>
+  <div class="header-title">🛡️ FoodSafe Moz</div>
 
   <nav>
-
-    <button data-go="home">🏠 Início</button>
-
-    <button data-go="temperatura">🌡️ Temperatura</button>
-
-    <button data-go="inspecao">✅ Inspeção</button>
-
-    <button data-go="problemas">⚠️ Problemas</button>
-
-    <button data-go="evidencias">📸 Evidências</button>
-
-    <button data-go="dashboard">📊 Dashboard</button>
-
-    <button data-go="historico">🕘 Histórico</button>
-
-    <button data-go="estabelecimentos">🏢 Estabelecimentos</button>
-
+    <button data-go="home">Início</button>
+    <button data-go="temperatura">Temperatura</button>
+    <button data-go="inspecao">Inspeção</button>
+    <button data-go="problemas">Problemas</button>
+    <button data-go="evidencias">Evidências</button>
+    <button data-go="dashboard">Dashboard</button>
+    <button data-go="historico">Histórico</button>
+    <button data-go="estabelecimentos">Estabelecimentos</button>
   </nav>
-
 </header>
 
+<main>
 
-<div class="container">
+  <!-- INÍCIO -->
+  <section id="home" class="page">
 
+    <div class="home-hero">
+      <h2>FoodSafe Moz</h2>
+      <p>
+        Plataforma digital para apoiar o controlo da segurança alimentar,
+        inspeções, temperaturas, problemas e evidências dos estabelecimentos.
+      </p>
 
-<!-- ================= HOME ================= -->
-
-<section id="home" class="page active">
-
-  <div class="card">
-
-    <h2>Bem-vindo ao FoodSafe Moz</h2>
-
-    <p>
-      Plataforma digital para apoiar o controlo,
-      inspeção e gestão da segurança alimentar.
-    </p>
-
-  </div>
-
-
-  <div class="stats">
-
-    <div class="stat">
-      <strong id="homeInspections">0</strong>
-      <span>Inspeções</span>
+      <div class="home-actions">
+        <button data-go="inspecao">📋 Nova inspeção</button>
+        <button data-go="evidencias">📸 Nova evidência</button>
+        <button data-go="temperatura">🌡️ Registar temperatura</button>
+        <button data-go="estabelecimentos">🏪 Estabelecimentos</button>
+      </div>
     </div>
 
-    <div class="stat">
-      <strong id="homeTemps">0</strong>
-      <span>Temperaturas</span>
-    </div>
-
-    <div class="stat">
-      <strong id="homeProblems">0</strong>
-      <span>Problemas</span>
-    </div>
-
-    <div class="stat">
-      <strong id="homeEstablishments">0</strong>
-      <span>Estabelecimentos</span>
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <h3>Acesso rápido</h3>
-
-    <div class="actions">
-
-      <button class="btn btn-primary"
-              data-go="estabelecimentos">
-        🏢 Gerir estabelecimentos
-      </button>
-
-      <button class="btn btn-primary"
-              data-go="inspecao">
-        ✅ Nova inspeção
-      </button>
-
-      <button class="btn btn-secondary"
-              data-go="temperatura">
-        🌡️ Registar temperatura
-      </button>
-
-      <button class="btn btn-secondary"
-              data-go="problemas">
-        ⚠️ Registar problema
-      </button>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= TEMPERATURA ================= -->
-
-<section id="temperatura" class="page">
-
-  <div class="card">
-
-    <h2>🌡️ Registo de Temperatura</h2>
-
-    <div class="notice-select">
-
-      Selecione um estabelecimento cadastrado
-      para ligar este registo diretamente ao
-      seu perfil.
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label>Estabelecimento *</label>
-
-      <select id="tempEstabelecimento">
-
-        <option value="">
-          Selecione o estabelecimento
-        </option>
-
-      </select>
-
-    </div>
-
-
-    <div class="grid">
-
-      <div class="form-group">
-
-        <label>Data *</label>
-
-        <input type="date"
-               id="tempDate">
-
+    <div class="dashboard-grid">
+      <div class="stat">
+        <div class="stat-number" id="homeEstablishments">0</div>
+        <div class="stat-label">Estabelecimentos</div>
       </div>
 
-
-      <div class="form-group">
-
-        <label>Equipamento</label>
-
-        <input type="text"
-               id="tempEquipment"
-               placeholder="Ex.: Câmara frigorífica">
-
+      <div class="stat">
+        <div class="stat-number" id="homeInspections">0</div>
+        <div class="stat-label">Inspeções</div>
       </div>
 
-
-      <div class="form-group">
-
-        <label>Temperatura (°C) *</label>
-
-        <input type="number"
-               id="tempValue"
-               step="0.1"
-               placeholder="Ex.: 4">
-
+      <div class="stat">
+        <div class="stat-number" id="homeProblems">0</div>
+        <div class="stat-label">Problemas</div>
       </div>
 
-
-      <div class="form-group">
-
-        <label>Observação</label>
-
-        <input type="text"
-               id="tempNotes"
-               placeholder="Observação">
-
+      <div class="stat">
+        <div class="stat-number" id="homeEvidences">0</div>
+        <div class="stat-label">Evidências</div>
       </div>
-
     </div>
 
-
-    <div class="actions">
-
-      <button class="btn btn-primary"
-              id="saveTemp">
-
-        💾 Guardar temperatura
-
-      </button>
-
-    </div>
-
-  </div>
+  </section>
 
 
-  <div class="card">
+  <!-- TEMPERATURA -->
+  <section id="temperatura" class="page">
 
-    <h3>Registos recentes</h3>
+    <div class="card">
+      <h2>🌡️ Registo de temperatura</h2>
 
-    <div id="temperatureList"></div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= INSPEÇÃO ================= -->
-
-<section id="inspecao" class="page">
-
-  <div class="card">
-
-    <h2>✅ Nova Inspeção</h2>
-
-    <div class="notice-select">
-
-      A inspeção será identificada automaticamente
-      e ficará ligada ao estabelecimento selecionado.
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label>Estabelecimento *</label>
-
-      <select id="inspectionEstabelecimento">
-
-        <option value="">
-          Selecione o estabelecimento
-        </option>
-
-      </select>
-
-    </div>
-
-
-    <div class="grid">
-
-      <div class="form-group">
-
-        <label>Responsável</label>
-
-        <input type="text"
-               id="inspectionResponsavel"
-               placeholder="Responsável do estabelecimento">
-
+      <div class="notice-select">
+        Registe a temperatura dos alimentos/equipamentos para manter o controlo da cadeia de segurança alimentar.
       </div>
 
-
       <div class="form-group">
-
-        <label>Inspetor *</label>
-
-        <input type="text"
-               id="inspectionInspector"
-               placeholder="Nome do inspetor">
-
+        <label>Estabelecimento *</label>
+        <select id="tempEstabelecimento">
+          <option value="">Selecione o estabelecimento</option>
+        </select>
       </div>
 
+      <div class="grid">
 
-      <div class="form-group">
+        <div class="form-group">
+          <label>Tipo de alimento/equipamento</label>
+          <input id="tempItem" type="text" placeholder="Ex.: Frigorífico, carne, leite...">
+        </div>
 
-        <label>Data *</label>
+        <div class="form-group">
+          <label>Temperatura (°C)</label>
+          <input id="tempValue" type="number" step="0.1" placeholder="Ex.: 4">
+        </div>
 
-        <input type="date"
-               id="inspectionDate">
+        <div class="form-group">
+          <label>Data</label>
+          <input id="tempDate" type="date">
+        </div>
 
-      </div>
-
-
-      <div class="form-group">
-
-        <label>Hora</label>
-
-        <input type="time"
-               id="inspectionTime">
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <h3>Checklist de Segurança Alimentar</h3>
-
-    <p style="font-size:13px;color:#66747b;">
-      Marque cada requisito que estiver conforme.
-      Os itens não marcados serão considerados
-      não conformes.
-    </p>
-
-
-    <div id="checklist"></div>
-
-
-    <div style="margin-top:16px;">
-
-      <strong>Pontuação da inspeção</strong>
-
-      <div class="progress">
-
-        <div class="progress-bar"
-             id="checkProgress">
+        <div class="form-group">
+          <label>Hora</label>
+          <input id="tempTime" type="time">
         </div>
 
       </div>
 
-
-      <div id="checkPercentage">
-        0%
+      <div class="form-group">
+        <label>Observação</label>
+        <textarea id="tempNotes" placeholder="Observações sobre a medição"></textarea>
       </div>
 
+      <div class="actions">
+        <button class="btn btn-primary" id="saveTemp">
+          💾 Guardar temperatura
+        </button>
+      </div>
+    </div>
 
-      <div class="result"
-           id="checkResult">
+    <div class="card">
+      <h3>Registos de temperatura</h3>
+      <div id="temperatureList"></div>
+    </div>
 
-        Ainda não avaliado
+  </section>
+
+
+  <!-- INSPEÇÃO -->
+  <section id="inspecao" class="page">
+
+    <div class="card">
+      <h2>📋 Inspeção de segurança alimentar</h2>
+
+      <div class="notice-select">
+        Preencha os dados da inspeção e responda à checklist. As evidências
+        podem ser associadas posteriormente diretamente a esta inspeção.
+      </div>
+
+      <div class="grid">
+
+        <div class="form-group">
+          <label>Estabelecimento *</label>
+          <select id="inspectionEstabelecimento">
+            <option value="">Selecione o estabelecimento</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Responsável</label>
+          <input id="inspectionResponsavel" type="text" placeholder="Nome do responsável">
+        </div>
+
+        <div class="form-group">
+          <label>Inspetor</label>
+          <input id="inspectionInspector" type="text" placeholder="Nome do inspetor">
+        </div>
+
+        <div class="form-group">
+          <label>Data</label>
+          <input id="inspectionDate" type="date">
+        </div>
+
+        <div class="form-group">
+          <label>Hora</label>
+          <input id="inspectionTime" type="time">
+        </div>
 
       </div>
 
-    </div>
+      <h3>Checklist</h3>
 
+      <div id="checklist"></div>
 
-    <div class="inspection-summary">
+      <div class="progress">
+        <div id="checkProgress" class="progress-bar"></div>
+      </div>
 
-      <div class="summary-box">
+      <div class="summary-grid">
 
-        <strong id="summaryYes">
-          0
-        </strong>
+        <div class="summary-box">
+          <strong id="checkYes">0</strong>
+          <span>Conformes</span>
+        </div>
 
-        <span>
-          Conformes
-        </span>
+        <div class="summary-box">
+          <strong id="checkNo">0</strong>
+          <span>Não conformes</span>
+        </div>
+
+        <div class="summary-box">
+          <strong id="checkTotal">0</strong>
+          <span>Total</span>
+        </div>
 
       </div>
 
-
-      <div class="summary-box">
-
-        <strong id="summaryNo">
-          15
-        </strong>
-
-        <span>
-          Não conformes
-        </span>
-
+      <div class="notice info">
+        Resultado atual:
+        <strong id="checkResult">0%</strong>
       </div>
 
-
-      <div class="summary-box">
-
-        <strong id="summaryTotal">
-          15
-        </strong>
-
-        <span>
-          Total
-        </span>
-
+      <div class="card" style="background:#fafcfc;margin-top:14px;">
+        <h4>Não conformidades identificadas</h4>
+        <div id="nonConformitiesPreview" class="small-muted">
+          Nenhuma não conformidade identificada.
+        </div>
       </div>
-
-    </div>
-
-
-    <div id="nonConformitiesPreview"></div>
-
-
-    <div class="form-group"
-         style="margin-top:15px;">
-
-      <label>
-        Observações da inspeção
-      </label>
-
-      <textarea id="inspectionNotes"
-                placeholder="Observações gerais da inspeção"></textarea>
-
-    </div>
-
-
-    <div class="actions">
-
-      <button class="btn btn-primary"
-              id="saveInspection">
-
-        💾 Finalizar e guardar inspeção
-
-      </button>
-
-      <button class="btn btn-secondary"
-              id="clearInspection">
-
-        🧹 Limpar checklist
-
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <h3>Inspeções registadas</h3>
-
-    <div id="inspectionList"></div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= PROBLEMAS ================= -->
-
-<section id="problemas" class="page">
-
-  <div class="card">
-
-    <h2>⚠️ Registo de Problema</h2>
-
-    <div class="notice-select">
-
-      Selecione o estabelecimento para associar
-      o problema ao respetivo perfil.
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label>Estabelecimento *</label>
-
-      <select id="problemEstabelecimento">
-
-        <option value="">
-          Selecione o estabelecimento
-        </option>
-
-      </select>
-
-    </div>
-
-
-    <div class="grid">
 
       <div class="form-group">
-
-        <label>Responsável</label>
-
-        <input type="text"
-               id="problemResponsavel"
-               placeholder="Responsável">
-
+        <label>Observações da inspeção</label>
+        <textarea
+          id="inspectionNotes"
+          placeholder="Observações gerais da inspeção"></textarea>
       </div>
 
+      <div class="actions">
+        <button class="btn btn-primary" id="saveInspection">
+          💾 Guardar inspeção
+        </button>
 
-      <div class="form-group">
-
-        <label>Prazo</label>
-
-        <input type="date"
-               id="problemPrazo">
-
+        <button class="btn btn-secondary" id="clearInspection">
+          🧹 Limpar
+        </button>
       </div>
+    </div>
 
+    <div class="card">
+      <h3>Inspeções registadas</h3>
+      <div id="inspectionList"></div>
+    </div>
+
+  </section>
+
+
+  <!-- PROBLEMAS -->
+  <section id="problemas" class="page">
+
+    <div class="card">
+      <h2>⚠️ Problemas / Não conformidades</h2>
 
       <div class="form-group">
-
-        <label>Data *</label>
-
-        <input type="date"
-               id="problemDate">
-
-      </div>
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label>Descrição do problema *</label>
-
-      <textarea id="problemDesc"
-                placeholder="Descreva o problema identificado"></textarea>
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label>Ação corretiva</label>
-
-      <textarea id="problemCorrective"
-                placeholder="Descreva a ação corretiva"></textarea>
-
-    </div>
-
-
-    <div class="actions">
-
-      <button class="btn btn-primary"
-              id="saveProblem">
-
-        💾 Guardar problema
-
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <h3>Problemas registados</h3>
-
-    <div id="problemList"></div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= EVIDÊNCIAS ================= -->
-
-<section id="evidencias" class="page">
-
-  <div class="card">
-
-    <h2>📸 Evidências</h2>
-
-    <div class="notice-select">
-
-      A evidência será associada ao estabelecimento
-      selecionado.
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label>Estabelecimento *</label>
-
-      <select id="evidenceEstabelecimento">
-
-        <option value="">
-          Selecione o estabelecimento
-        </option>
-
-      </select>
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label>Descrição</label>
-
-      <textarea id="evidenceDescription"
-                placeholder="Descrição da evidência"></textarea>
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label>Data</label>
-
-      <input type="date"
-             id="evidenceDate">
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label>Fotografia</label>
-
-      <input type="file"
-             id="evidencePhoto"
-             accept="image/*"
-             capture="environment">
-
-      <img id="evidencePreview"
-           class="photo-preview"
-           alt="Pré-visualização">
-
-    </div>
-
-
-    <div class="actions">
-
-      <button class="btn btn-primary"
-              id="saveEvidence">
-
-        💾 Guardar evidência
-
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <h3>Evidências registadas</h3>
-
-    <div id="evidenceList"></div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= DASHBOARD ================= -->
-
-<section id="dashboard" class="page">
-
-  <div class="card">
-
-    <h2>📊 Dashboard</h2>
-
-    <p>
-      Resumo geral dos dados registados no FoodSafe Moz.
-    </p>
-
-  </div>
-
-
-  <div class="stats">
-
-    <div class="stat">
-      <strong id="dashInspections">0</strong>
-      <span>Inspeções</span>
-    </div>
-
-    <div class="stat">
-      <strong id="dashTemps">0</strong>
-      <span>Temperaturas</span>
-    </div>
-
-    <div class="stat">
-      <strong id="dashProblems">0</strong>
-      <span>Problemas</span>
-    </div>
-
-    <div class="stat">
-      <strong id="dashEvidence">0</strong>
-      <span>Evidências</span>
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <h3>Estabelecimentos</h3>
-
-    <div id="dashboardEstablishments"></div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= HISTÓRICO ================= -->
-
-<section id="historico" class="page">
-
-  <div class="card">
-
-    <h2>🕘 Histórico</h2>
-
-    <p>
-      Atividades registadas no FoodSafe Moz.
-    </p>
-
-  </div>
-
-
-  <div class="card">
-
-    <div id="historyList"></div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= ESTABELECIMENTOS ================= -->
-
-<section id="estabelecimentos" class="page">
-
-  <div class="card">
-
-    <h2>🏢 Estabelecimentos</h2>
-
-    <div class="info">
-
-      Cadastre aqui os estabelecimentos.
-      Depois eles aparecerão automaticamente
-      nos formulários de inspeção, temperatura,
-      problemas e evidências.
-
-    </div>
-
-
-    <div class="grid">
-
-      <div class="form-group">
-
-        <label>Nome do estabelecimento *</label>
-
-        <input type="text"
-               id="establishmentName"
-               placeholder="Nome do estabelecimento">
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label>Tipo</label>
-
-        <input type="text"
-               id="establishmentType"
-               placeholder="Ex.: Restaurante">
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label>Endereço</label>
-
-        <input type="text"
-               id="establishmentAddress"
-               placeholder="Endereço">
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label>Bairro</label>
-
-        <input type="text"
-               id="establishmentBairro"
-               placeholder="Bairro">
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label>Distrito</label>
-
-        <input type="text"
-               id="establishmentDistrito"
-               placeholder="Distrito">
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label>Telefone</label>
-
-        <input type="tel"
-               id="establishmentPhone"
-               placeholder="Telefone">
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label>Responsável</label>
-
-        <input type="text"
-               id="establishmentResponsible"
-               placeholder="Responsável">
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label>Data de cadastro</label>
-
-        <input type="date"
-               id="establishmentDate">
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label>Estado</label>
-
-        <select id="establishmentStatus">
-
-          <option value="ativo">
-            Ativo
-          </option>
-
-          <option value="inativo">
-            Inativo
-          </option>
-
+        <label>Estabelecimento *</label>
+        <select id="problemEstabelecimento">
+          <option value="">Selecione o estabelecimento</option>
         </select>
+      </div>
+
+      <div class="grid">
+
+        <div class="form-group">
+          <label>Problema</label>
+          <input id="problemTitle" type="text" placeholder="Ex.: Temperatura inadequada">
+        </div>
+
+        <div class="form-group">
+          <label>Data</label>
+          <input id="problemDate" type="date">
+        </div>
 
       </div>
 
-    </div>
-
-
-    <div class="actions">
-
-      <button class="btn btn-primary"
-              id="saveEstablishment">
-
-        💾 Guardar estabelecimento
-
-      </button>
-
-
-      <button class="btn btn-secondary"
-              id="clearEstablishment">
-
-        🧹 Limpar
-
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <h3>Pesquisar estabelecimento</h3>
-
-    <input type="search"
-           id="establishmentSearch"
-           placeholder="Pesquisar pelo nome...">
-
-  </div>
-
-
-  <div class="card">
-
-    <h3>Estabelecimentos cadastrados</h3>
-
-    <div id="establishmentList"></div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= PERFIL ================= -->
-
-<section id="perfilEstabelecimento" class="page">
-
-  <div class="card">
-
-    <div class="actions">
-
-      <button class="btn btn-secondary"
-              data-go="estabelecimentos">
-
-        ← Voltar aos estabelecimentos
-
-      </button>
-
-    </div>
-
-
-    <h2 id="profileTitle">
-      Perfil do estabelecimento
-    </h2>
-
-
-    <div id="profileContent"></div>
-
-  </div>
-
-</section>
-
-
-</div>
-
-
-<footer>
-
-FoodSafe Moz — Gestão e Segurança Alimentar
-
-</footer>
-
-
-<script>
-
-const KEY = "foodsafemoz_v2";
-
-
-let data = {
-
-  inspections: [],
-
-  temps: [],
-
-  problems: [],
-
-  evidences: [],
-
-  establishments: []
-
-};
-
-
-/* =========================
-   FUNÇÕES BÁSICAS
-========================= */
-
-function $(id){
-
-  return document.getElementById(id);
-
-}
-
-
-function generateId(prefix){
-
-  return prefix + "-" +
-    Math.random()
-      .toString(36)
-      .substring(2,10)
-      .toUpperCase();
-
-}
-
-
-function todayISO(){
-
-  const d = new Date();
-
-  const y = d.getFullYear();
-
-  const m =
-    String(d.getMonth()+1)
-      .padStart(2,"0");
-
-  const day =
-    String(d.getDate())
-      .padStart(2,"0");
-
-  return `${y}-${m}-${day}`;
-
-}
-
-
-function nowTime(){
-
-  const d = new Date();
-
-  return String(d.getHours())
-    .padStart(2,"0")
-    + ":" +
-    String(d.getMinutes())
-    .padStart(2,"0");
-
-}
-
-
-function formatDate(value){
-
-  if(!value) return "-";
-
-  const parts =
-    String(value).split("-");
-
-  if(parts.length === 3){
-
-    return `${parts[2]}/${parts[1]}/${parts[0]}`;
-
-  }
-
-  return value;
-
-}
-
-
-function escapeHTML(value){
-
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-function normalizeName(value){
-
-  return String(value || "")
-    .trim()
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g,"");
-
-}
-
-
-/* =========================
-   STORAGE
-========================= */
-
-function saveData(){
-
-  localStorage.setItem(
-    KEY,
-    JSON.stringify(data)
-  );
-
-}
-
-
-function load(){
-
-  try{
-
-    const raw =
-      localStorage.getItem(KEY);
-
-    if(!raw) return;
-
-    const parsed =
-      JSON.parse(raw);
-
-    data = {
-
-      inspections:
-        Array.isArray(parsed.inspections)
-          ? parsed.inspections
-          : [],
-
-      temps:
-        Array.isArray(parsed.temps)
-          ? parsed.temps
-          : [],
-
-      problems:
-        Array.isArray(parsed.problems)
-          ? parsed.problems
-          : [],
-
-      evidences:
-        Array.isArray(parsed.evidences)
-          ? parsed.evidences
-          : [],
-
-      establishments:
-        Array.isArray(parsed.establishments)
-          ? parsed.establishments
-          : []
-
-    };
-
-  }catch(error){
-
-    console.error(
-      "Erro ao carregar dados:",
-      error
-    );
-
-  }
-
-}
-
-
-/* =========================
-   ESTABELECIMENTOS
-========================= */
-
-function findEstablishmentById(id){
-
-  if(!id) return null;
-
-  return data.establishments.find(
-    function(item){
-
-      return item &&
-        item.id === id;
-
-    }
-  ) || null;
-
-}
-
-
-function findEstablishmentByName(name){
-
-  const normalized =
-    normalizeName(name);
-
-  if(!normalized) return null;
-
-  return data.establishments.find(
-    function(item){
-
-      return item &&
-        normalizeName(item.nome) ===
-        normalized;
-
-    }
-  ) || null;
-
-}
-
-
-function getSelectedEstablishment(selectId){
-
-  const select =
-    $(selectId);
-
-  if(!select) return null;
-
-  return findEstablishmentById(
-    select.value
-  );
-
-}
-
-
-function populateEstablishmentSelects(){
-
-  const ids = [
-
-    "inspectionEstabelecimento",
-
-    "tempEstabelecimento",
-
-    "problemEstabelecimento",
-
-    "evidenceEstabelecimento"
-
-  ];
-
-
-  ids.forEach(function(selectId){
-
-    const select =
-      $(selectId);
-
-    if(!select) return;
-
-    const oldValue =
-      select.value;
-
-    select.innerHTML =
-      '<option value="">Selecione o estabelecimento</option>';
-
-
-    data.establishments
-      .filter(function(item){
-
-        return item && item.nome;
-
-      })
-      .sort(function(a,b){
-
-        return a.nome.localeCompare(
-          b.nome,
-          "pt"
-        );
-
-      })
-      .forEach(function(item){
-
-        const option =
-          document.createElement("option");
-
-        option.value =
-          item.id;
-
-        option.textContent =
-          item.nome +
-          (
-            item.tipo &&
-            item.tipo !== "Não definido"
-              ? " — " + item.tipo
-              : ""
-          );
-
-        select.appendChild(option);
-
-      });
-
-
-    if(
-      oldValue &&
-      data.establishments.some(
-        function(item){
-
-          return item.id === oldValue;
-
-        }
-      )
-    ){
-
-      select.value =
-        oldValue;
-
-    }
-
-  });
-
-}
-
-
-function getEstablishmentNames(){
-
-  const names = [];
-
-
-  function addName(value){
-
-    const name =
-      String(value || "").trim();
-
-    if(!name) return;
-
-    const exists =
-      names.some(function(item){
-
-        return normalizeName(item) ===
-          normalizeName(name);
-
-      });
-
-    if(!exists){
-
-      names.push(name);
-
-    }
-
-  }
-
-
-  data.inspections.forEach(
-    function(item){
-
-      addName(item.estabelecimento);
-
-    }
-  );
-
-
-  data.temps.forEach(
-    function(item){
-
-      addName(item.estabelecimento);
-
-    }
-  );
-
-
-  data.problems.forEach(
-    function(item){
-
-      addName(item.estabelecimento);
-
-    }
-  );
-
-
-  data.evidences.forEach(
-    function(item){
-
-      addName(item.estabelecimento);
-
-    }
-  );
-
-
-  return names;
-
-}
-
-
-function migrateEstablishments(){
-
-  const existing =
-    new Set(
-
-      data.establishments
-        .map(function(item){
-
-          return normalizeName(
-            item.nome
-          );
-
-        })
-        .filter(Boolean)
-
-    );
-
-
-  const oldNames =
-    getEstablishmentNames();
-
-
-  oldNames.forEach(
-    function(name){
-
-      const normalized =
-        normalizeName(name);
-
-      if(
-        !normalized ||
-        existing.has(normalized)
-      ){
-
-        return;
-
-      }
-
-
-      data.establishments.push({
-
-        id:generateId("EST"),
-
-        nome:name,
-
-        tipo:"Não definido",
-
-        endereco:"",
-
-        bairro:"",
-
-        distrito:"",
-
-        telefone:"",
-
-        responsavel:"",
-
-        dataCadastro:todayISO(),
-
-        estado:"ativo",
-
-        createdAt:
-          new Date().toISOString()
-
-      });
-
-
-      existing.add(
-        normalized
-      );
-
-    }
-  );
-
-
-  saveData();
-
-}
-
-
-function clearEstablishmentForm(){
-
-  $("establishmentName").value = "";
-
-  $("establishmentType").value = "";
-
-  $("establishmentAddress").value = "";
-
-  $("establishmentBairro").value = "";
-
-  $("establishmentDistrito").value = "";
-
-  $("establishmentPhone").value = "";
-
-  $("establishmentResponsible").value = "";
-
-  $("establishmentDate").value =
-    todayISO();
-
-  $("establishmentStatus").value =
-    "ativo";
-
-}
-
-
-function saveEstablishment(){
-
-  const nome =
-    $("establishmentName")
-      .value
-      .trim();
-
-
-  if(!nome){
-
-    alert(
-      "Digite o nome do estabelecimento."
-    );
-
-    return;
-
-  }
-
-
-  const alreadyExists =
-    data.establishments.some(
-      function(item){
-
-        return normalizeName(item.nome) ===
-          normalizeName(nome);
-
-      }
-    );
-
-
-  if(alreadyExists){
-
-    alert(
-      "Este estabelecimento já está cadastrado."
-    );
-
-    return;
-
-  }
-
-
-  data.establishments.push({
-
-    id:
-      generateId("EST"),
-
-    nome:
-
-      nome,
-
-    tipo:
-
-      $("establishmentType")
-        .value
-        .trim() ||
-      "Não definido",
-
-    endereco:
-
-      $("establishmentAddress")
-        .value
-        .trim(),
-
-    bairro:
-
-      $("establishmentBairro")
-        .value
-        .trim(),
-
-    distrito:
-
-      $("establishmentDistrito")
-        .value
-        .trim(),
-
-    telefone:
-
-      $("establishmentPhone")
-        .value
-        .trim(),
-
-    responsavel:
-
-      $("establishmentResponsible")
-        .value
-        .trim(),
-
-    dataCadastro:
-
-      $("establishmentDate")
-        .value ||
-      todayISO(),
-
-    estado:
-
-      $("establishmentStatus")
-        .value ||
-      "ativo",
-
-    createdAt:
-      new Date().toISOString()
-
-  });
-
-
-  saveData();
-
-  populateEstablishmentSelects();
-
-  renderEstablishments();
-
-  updateAll();
-
-  clearEstablishmentForm();
-
-
-  alert(
-    "Estabelecimento cadastrado com sucesso."
-  );
-
-}
-
-
-function renderEstablishments(){
-
-  const box =
-    $("establishmentList");
-
-  if(!box) return;
-
-
-  const search =
-    ($("establishmentSearch")?.value || "")
-      .trim()
-      .toLowerCase();
-
-
-  let list =
-    data.establishments.filter(
-      function(item){
-
-        if(!search) return true;
-
-        return (
-
-          String(item.nome || "")
-            .toLowerCase()
-            .includes(search)
-
-          ||
-
-          String(item.tipo || "")
-            .toLowerCase()
-            .includes(search)
-
-          ||
-
-          String(item.bairro || "")
-            .toLowerCase()
-            .includes(search)
-
-        );
-
-      }
-    );
-
-
-  if(!list.length){
-
-    box.innerHTML =
-      '<div class="empty">Nenhum estabelecimento encontrado.</div>';
-
-    return;
-
-  }
-
-
-  list.sort(function(a,b){
-
-    return a.nome.localeCompare(
-      b.nome,
-      "pt"
-    );
-
-  });
-
-
-  box.innerHTML = "";
-
-
-  list.forEach(function(item){
-
-    const originalIndex =
-      data.establishments
-        .indexOf(item);
-
-
-    const div =
-      document.createElement("div");
-
-    div.className =
-      "list-item";
-
-
-    div.innerHTML = `
-
-      <strong>
-        ${escapeHTML(item.nome)}
-      </strong>
-
-      <div style="margin-top:6px;">
-        ${escapeHTML(item.tipo || "Não definido")}
+      <div class="form-group">
+        <label>Descrição</label>
+        <textarea id="problemDescription" placeholder="Descreva o problema encontrado"></textarea>
       </div>
 
-      <div style="margin-top:6px;color:#66747b;font-size:13px;">
-
-        ${escapeHTML(item.bairro || "")}
-
-        ${
-          item.distrito
-            ? " — " +
-              escapeHTML(item.distrito)
-            : ""
-        }
-
+      <div class="form-group">
+        <label>Ação corretiva recomendada</label>
+        <textarea id="problemAction" placeholder="Indique a ação corretiva"></textarea>
       </div>
 
-      <div style="margin-top:8px;">
+      <div class="actions">
+        <button class="btn btn-primary" id="saveProblem">
+          💾 Guardar problema
+        </button>
+      </div>
+    </div>
 
-        <span class="badge ${
-          item.estado === "ativo"
-            ? "badge-ok"
-            : "badge-warning"
-        }">
+    <div class="card">
+      <h3>Problemas registados</h3>
+      <div id="problemList"></div>
+    </div>
 
-          ${escapeHTML(
-            item.estado || "ativo"
-          )}
+  </section>
 
-        </span>
+
+  <!-- EVIDÊNCIAS -->
+  <section id="evidencias" class="page">
+
+    <div class="card">
+      <h2>📸 Evidências</h2>
+
+      <div class="notice-select">
+        A evidência pode ser geral do estabelecimento ou ficar
+        <strong>diretamente associada a uma inspeção específica</strong>.
+        Primeiro selecione o estabelecimento; depois escolha a inspeção.
+      </div>
+
+      <div class="form-group">
+        <label>Estabelecimento *</label>
+        <select id="evidenceEstabelecimento">
+          <option value="">Selecione o estabelecimento</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Inspeção associada</label>
+        <select id="evidenceInspection">
+          <option value="">Nenhuma — evidência geral</option>
+        </select>
+      </div>
+
+      <div class="notice info" style="font-size:13px;">
+        💡 Ao escolher uma inspeção, esta evidência ficará vinculada a ela
+        e aparecerá no respetivo registo de inspeção.
+      </div>
+
+      <div class="form-group">
+        <label>Descrição</label>
+        <textarea
+          id="evidenceDescription"
+          placeholder="Descreva o que a fotografia/evidência demonstra"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Data</label>
+        <input type="date" id="evidenceDate">
+      </div>
+
+      <div class="form-group">
+        <label>Fotografia</label>
+        <input
+          type="file"
+          id="evidencePhoto"
+          accept="image/*"
+          capture="environment">
+
+        <img
+          id="evidencePreview"
+          class="photo-preview"
+          alt="Pré-visualização da evidência">
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="saveEvidence">
+          💾 Guardar evidência
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Evidências registadas</h3>
+      <div id="evidenceList"></div>
+    </div>
+
+  </section>
+
+
+  <!-- DASHBOARD -->
+  <section id="dashboard" class="page">
+
+    <div class="card">
+      <h2>📊 Dashboard</h2>
+
+      <div class="dashboard-grid">
+
+        <div class="stat">
+          <div class="stat-number" id="dashEstablishments">0</div>
+          <div class="stat-label">Estabelecimentos</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-number" id="dashInspections">0</div>
+          <div class="stat-label">Inspeções</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-number" id="dashProblems">0</div>
+          <div class="stat-label">Problemas</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-number" id="dashEvidences">0</div>
+          <div class="stat-label">Evidências</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Resultados das inspeções</h3>
+      <div id="dashboardResults"></div>
+    </div>
+
+  </section>
+
+
+  <!-- HISTÓRICO -->
+  <section id="historico" class="page">
+
+    <div class="card">
+      <h2>🕘 Histórico</h2>
+
+      <div id="historyList"></div>
+    </div>
+
+  </section>
+
+
+  <!-- ESTABELECIMENTOS -->
+  <section id="estabelecimentos" class="page">
+
+    <div class="card">
+      <h2>🏪 Estabelecimentos</h2>
+
+      <div class="grid">
+
+        <div class="form-group">
+          <label>Nome do estabelecimento *</label>
+          <input id="establishmentName" type="text" placeholder="Nome do estabelecimento">
+        </div>
+
+        <div class="form-group">
+          <label>Tipo de estabelecimento</label>
+          <input id="establishmentType" type="text" placeholder="Ex.: Restaurante">
+        </div>
+
+        <div class="form-group">
+          <label>Responsável</label>
+          <input id="establishmentResponsible" type="text" placeholder="Nome do responsável">
+        </div>
+
+        <div class="form-group">
+          <label>Telefone</label>
+          <input id="establishmentPhone" type="tel" placeholder="Contacto">
+        </div>
+
+        <div class="form-group">
+          <label>Localização</label>
+          <input id="establishmentLocation" type="text" placeholder="Localização">
+        </div>
+
+        <div class="form-group">
+          <label>Data de registo</label>
+          <input id="establishmentDate" type="date">
+        </div>
+
+        <div class="form-group">
+          <label>Estado</label>
+          <select id="establishmentStatus">
+            <option value="ativo">Ativo</option>
+            <option value="inativo">Inativo</option>
+          </select>
+        </div>
 
       </div>
 
       <div class="actions">
 
-        <button
-          class="btn btn-secondary btn-small"
-          data-open-profile="${originalIndex}">
+        <button class="btn btn-primary" id="saveEstablishment">
+          💾 Guardar estabelecimento
+        </button>
 
-          👁️ Ver perfil
-
+        <button class="btn btn-secondary" id="clearEstablishment">
+          🧹 Limpar
         </button>
 
       </div>
+    </div>
 
-    `;
+    <div class="card">
+      <h3>Estabelecimentos registados</h3>
+      <div id="establishmentList"></div>
+    </div>
+
+  </section>
 
 
-    box.appendChild(div);
+  <!-- PERFIL DO ESTABELECIMENTO -->
+  <section id="perfilEstabelecimento" class="page">
 
+    <div class="card">
+      <div id="establishmentProfile"></div>
+
+      <div class="actions">
+        <button class="btn btn-secondary" data-go="estabelecimentos">
+          ← Voltar
+        </button>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+
+<script>
+/* ============================================================
+   FOODSAFE MOZ
+   Versão com Evidências associadas diretamente às Inspeções
+   ============================================================ */
+
+const KEY = "foodsafemoz_v2";
+
+let data = {
+  inspections: [],
+  temps: [],
+  problems: [],
+  evidences: [],
+  establishments: []
+};
+
+let evidenceImageData = "";
+
+
+/* ============================================================
+   UTILITÁRIOS
+   ============================================================ */
+
+function $(id){
+  return document.getElementById(id);
+}
+
+
+function generateId(prefix){
+  return (
+    prefix +
+    "_" +
+    Date.now().toString(36) +
+    "_" +
+    Math.random().toString(36).slice(2,8)
+  );
+}
+
+
+function todayISO(){
+  const d = new Date();
+
+  const year = d.getFullYear();
+  const month = String(d.getMonth()+1).padStart(2,"0");
+  const day = String(d.getDate()).padStart(2,"0");
+
+  return year + "-" + month + "-" + day;
+}
+
+
+function nowTime(){
+  const d = new Date();
+
+  const hours = String(d.getHours()).padStart(2,"0");
+  const minutes = String(d.getMinutes()).padStart(2,"0");
+
+  return hours + ":" + minutes;
+}
+
+
+function formatDate(value){
+  if(!value) return "-";
+
+  const parts = String(value).split("-");
+
+  if(parts.length === 3){
+    return parts[2] + "/" + parts[1] + "/" + parts[0];
+  }
+
+  const date = new Date(value);
+
+  if(isNaN(date.getTime())) return value;
+
+  return date.toLocaleDateString("pt-PT");
+}
+
+
+function formatDateTime(value){
+  if(!value) return "-";
+
+  const date = new Date(value);
+
+  if(isNaN(date.getTime())) return value;
+
+  return date.toLocaleString("pt-PT");
+}
+
+
+function normalizeName(value){
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"");
+}
+
+
+function escapeHTML(value){
+  return String(value == null ? "" : value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+function saveData(){
+  localStorage.setItem(KEY, JSON.stringify(data));
+}
+
+
+function load(){
+  try{
+    const saved = localStorage.getItem(KEY);
+
+    if(saved){
+      const parsed = JSON.parse(saved);
+
+      data = {
+        inspections: Array.isArray(parsed.inspections)
+          ? parsed.inspections
+          : [],
+
+        temps: Array.isArray(parsed.temps)
+          ? parsed.temps
+          : [],
+
+        problems: Array.isArray(parsed.problems)
+          ? parsed.problems
+          : [],
+
+        evidences: Array.isArray(parsed.evidences)
+          ? parsed.evidences
+          : [],
+
+        establishments: Array.isArray(parsed.establishments)
+          ? parsed.establishments
+          : []
+      };
+    }
+  }catch(error){
+    console.error("Erro ao carregar dados:",error);
+  }
+}
+
+
+function findEstablishmentById(id){
+  return data.establishments.find(function(item){
+    return item && item.id === id;
+  }) || null;
+}
+
+
+function getSelectedEstablishment(selectId){
+  const select = $(selectId);
+
+  if(!select) return null;
+
+  return findEstablishmentById(select.value);
+}
+
+
+/* ============================================================
+   NAVEGAÇÃO
+   ============================================================ */
+
+function showPage(pageId){
+
+  document.querySelectorAll(".page").forEach(function(page){
+    page.classList.remove("active");
   });
 
-}
+  const page = $(pageId);
 
-
-function openProfile(index){
-
-  const establishment =
-    data.establishments[index];
-
-
-  if(!establishment){
-
-    alert(
-      "Estabelecimento não encontrado."
-    );
-
-    return;
-
+  if(page){
+    page.classList.add("active");
   }
 
-
-  renderProfile(
-    establishment.nome
-  );
-
-  showPage(
-    "perfilEstabelecimento"
-  );
-
-}
-
-
-function recordBelongsToEstablishment(
-  record,
-  establishment
-){
-
-  if(
-    !record ||
-    !establishment
-  ){
-
-    return false;
-
-  }
-
-
-  if(
-    record.estabelecimentoId &&
-    establishment.id
-  ){
-
-    return (
-      record.estabelecimentoId ===
-      establishment.id
-    );
-
-  }
-
-
-  return (
-    normalizeName(
-      record.estabelecimento
-    ) ===
-    normalizeName(
-      establishment.nome
-    )
-  );
-
-}
-
-
-function renderProfile(name){
-
-  const establishment =
-    findEstablishmentByName(name);
-
-
-  if(!establishment){
-
-    $("profileTitle").textContent =
-      "Estabelecimento não encontrado";
-
-    $("profileContent").innerHTML =
-      '<div class="empty">Estabelecimento não encontrado.</div>';
-
-    return;
-
-  }
-
-
-  $("profileTitle").textContent =
-    "🏢 " +
-    establishment.nome;
-
-
-  const inspections =
-    data.inspections.filter(
-      function(item){
-
-        return recordBelongsToEstablishment(
-          item,
-          establishment
-        );
-
-      }
-    );
-
-
-  const temps =
-    data.temps.filter(
-      function(item){
-
-        return recordBelongsToEstablishment(
-          item,
-          establishment
-        );
-
-      }
-    );
-
-
-  const problems =
-    data.problems.filter(
-      function(item){
-
-        return recordBelongsToEstablishment(
-          item,
-          establishment
-        );
-
-      }
-    );
-
-
-  const evidences =
-    data.evidences.filter(
-      function(item){
-
-        return recordBelongsToEstablishment(
-          item,
-          establishment
-        );
-
-      }
-    );
-
-
-  $("profileContent").innerHTML = `
-
-    <div class="profile-box">
-
-      <div class="profile-grid">
-
-        <div class="profile-field">
-          <small>Nome</small>
-          <strong>
-            ${escapeHTML(establishment.nome)}
-          </strong>
-        </div>
-
-        <div class="profile-field">
-          <small>Tipo</small>
-          <strong>
-            ${escapeHTML(
-              establishment.tipo || "-"
-            )}
-          </strong>
-        </div>
-
-        <div class="profile-field">
-          <small>Endereço</small>
-          <strong>
-            ${escapeHTML(
-              establishment.endereco || "-"
-            )}
-          </strong>
-        </div>
-
-        <div class="profile-field">
-          <small>Bairro</small>
-          <strong>
-            ${escapeHTML(
-              establishment.bairro || "-"
-            )}
-          </strong>
-        </div>
-
-        <div class="profile-field">
-          <small>Distrito</small>
-          <strong>
-            ${escapeHTML(
-              establishment.distrito || "-"
-            )}
-          </strong>
-        </div>
-
-        <div class="profile-field">
-          <small>Telefone</small>
-          <strong>
-            ${escapeHTML(
-              establishment.telefone || "-"
-            )}
-          </strong>
-        </div>
-
-        <div class="profile-field">
-          <small>Responsável</small>
-          <strong>
-            ${escapeHTML(
-              establishment.responsavel || "-"
-            )}
-          </strong>
-        </div>
-
-        <div class="profile-field">
-          <small>Estado</small>
-          <strong>
-            ${escapeHTML(
-              establishment.estado || "-"
-            )}
-          </strong>
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="stats">
-
-      <div class="stat">
-        <strong>
-          ${inspections.length}
-        </strong>
-        <span>Inspeções</span>
-      </div>
-
-      <div class="stat">
-        <strong>
-          ${temps.length}
-        </strong>
-        <span>Temperaturas</span>
-      </div>
-
-      <div class="stat">
-        <strong>
-          ${problems.length}
-        </strong>
-        <span>Problemas</span>
-      </div>
-
-      <div class="stat">
-        <strong>
-          ${evidences.length}
-        </strong>
-        <span>Evidências</span>
-      </div>
-
-    </div>
-
-
-    <h3 class="section-title">
-      Últimas inspeções
-    </h3>
-
-
-    ${
-      inspections.length
-
-      ?
-
-      inspections
-        .slice()
-        .reverse()
-        .slice(0,5)
-        .map(function(item){
-
-          return `
-
-            <div class="list-item">
-
-              <div>
-                <span class="inspection-id">
-                  ${escapeHTML(item.id)}
-                </span>
-              </div>
-
-              <div style="margin-top:7px;">
-                ${formatDate(item.date)}
-                ${
-                  item.time
-                    ? " — " +
-                      escapeHTML(item.time)
-                    : ""
-                }
-              </div>
-
-              <div style="margin-top:5px;">
-                Resultado:
-                <strong>
-                  ${escapeHTML(
-                    item.resultado || "-"
-                  )}
-                </strong>
-              </div>
-
-              <div>
-                Pontuação:
-                ${escapeHTML(
-                  item.percentage ?? 0
-                )}%
-              </div>
-
-            </div>
-
-          `;
-
-        })
-        .join("")
-
-      :
-
-      '<div class="empty">Nenhuma inspeção registada.</div>'
-
+  document.querySelectorAll("nav button").forEach(function(button){
+    button.classList.remove("active");
+
+    if(button.getAttribute("data-go") === pageId){
+      button.classList.add("active");
     }
+  });
 
-
-    <h3 class="section-title">
-      Problemas
-    </h3>
-
-
-    ${
-      problems.length
-
-      ?
-
-      problems
-        .slice()
-        .reverse()
-        .slice(0,5)
-        .map(function(item){
-
-          return `
-
-            <div class="list-item">
-
-              <strong>
-                ${escapeHTML(
-                  item.desc ||
-                  "Problema"
-                )}
-              </strong>
-
-              <div style="margin-top:5px;">
-                Estado:
-                ${escapeHTML(
-                  item.status ||
-                  "pendente"
-                )}
-              </div>
-
-              <div>
-                Data:
-                ${formatDate(item.date)}
-              </div>
-
-            </div>
-
-          `;
-
-        })
-        .join("")
-
-      :
-
-      '<div class="empty">Nenhum problema registado.</div>'
-
-    }
-
-  `;
-
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 }
 
 
-/* =========================
+/* ============================================================
    CHECKLIST
-========================= */
+   ============================================================ */
 
 const checklistItems = [
-
   "O estabelecimento apresenta boas condições de higiene?",
-
   "As superfícies de contacto com alimentos estão limpas?",
-
   "Os equipamentos estão em boas condições?",
-
   "Os alimentos estão devidamente armazenados?",
-
   "Os alimentos estão protegidos contra contaminação?",
-
   "As temperaturas de conservação são controladas?",
-
   "Existe controlo de pragas?",
-
   "Os trabalhadores mantêm higiene pessoal adequada?",
-
   "Os trabalhadores utilizam roupa de proteção adequada?",
-
   "Existe disponibilidade de água potável?",
-
   "As instalações sanitárias estão limpas?",
-
   "Os resíduos são corretamente armazenados?",
-
   "Os produtos químicos estão separados dos alimentos?",
-
   "Existe documentação/registo de controlo alimentar?",
-
   "Existe aplicação de boas práticas de higiene?"
-
 ];
 
 
 function renderChecklist(){
 
-  const box =
-    $("checklist");
+  const box = $("checklist");
 
   if(!box) return;
 
-
   box.innerHTML = "";
 
+  checklistItems.forEach(function(text,index){
 
-  checklistItems.forEach(
-    function(text,index){
+    const div = document.createElement("div");
 
-      const div =
-        document.createElement("div");
+    div.className = "checklist-item";
 
-      div.className =
-        "check-item";
+    div.innerHTML = `
+      <input
+        type="checkbox"
+        class="check"
+        id="check_${index}"
+        data-index="${index}"
+      >
 
+      <label for="check_${index}">
+        ${index + 1}. ${escapeHTML(text)}
+      </label>
+    `;
 
-      div.innerHTML = `
-
-        <input
-          type="checkbox"
-          class="check"
-          id="check_${index}">
-
-        <label for="check_${index}">
-
-          <span class="check-number">
-            ${index + 1}.
-          </span>
-
-          ${escapeHTML(text)}
-
-        </label>
-
-      `;
-
-
-      box.appendChild(div);
-
-    }
-  );
-
-}
-
-
-function getResult(percentage){
-
-  if(percentage >= 90){
-
-    return "Excelente";
-
-  }
-
-  if(percentage >= 75){
-
-    return "Bom";
-
-  }
-
-  if(percentage >= 50){
-
-    return "Atenção necessária";
-
-  }
-
-  return "Não conforme";
-
-}
-
-
-function getResultClass(percentage){
-
-  if(percentage >= 90){
-
-    return "excellent";
-
-  }
-
-  if(percentage >= 75){
-
-    return "good";
-
-  }
-
-  if(percentage >= 50){
-
-    return "attention";
-
-  }
-
-  return "bad";
-
-}
-
-
-function getNonConformities(){
-
-  const result = [];
-
-
-  checklistItems.forEach(
-    function(text,index){
-
-      const checkbox =
-        $("check_" + index);
-
-      if(
-        checkbox &&
-        !checkbox.checked
-      ){
-
-        result.push({
-
-          number:index + 1,
-
-          text:text
-
-        });
-
-      }
-
-    }
-  );
-
-
-  return result;
-
+    box.appendChild(div);
+  });
 }
 
 
 function calculateChecklist(){
 
   const checks =
-    Array.from(
-      document.querySelectorAll(
-        ".check"
-      )
-    );
+    Array.from(document.querySelectorAll(".check"));
 
-
-  const total =
-    checks.length;
-
-
-  if(!total){
-
-    return {
-
-      yes:0,
-
-      no:0,
-
-      total:0,
-
-      percentage:0,
-
-      resultado:"Ainda não avaliado",
-
-      nonConformities:[]
-
-    };
-
-  }
-
+  const total = checks.length;
 
   const yes =
-    checks.filter(
-      function(item){
+    checks.filter(function(check){
+      return check.checked;
+    }).length;
 
-        return item.checked;
-
-      }
-    ).length;
-
-
-  const no =
-    total - yes;
-
+  const no = total - yes;
 
   const percentage =
-    Math.round(
-      (yes / total) * 100
-    );
+    total
+      ? Math.round((yes / total) * 100)
+      : 0;
 
+  if($("checkYes"))
+    $("checkYes").textContent = yes;
 
-  const resultado =
-    getResult(percentage);
+  if($("checkNo"))
+    $("checkNo").textContent = no;
 
+  if($("checkTotal"))
+    $("checkTotal").textContent = total;
 
-  const nonConformities =
-    getNonConformities();
+  if($("checkProgress"))
+    $("checkProgress").style.width = percentage + "%";
 
-
-  if($("checkProgress")){
-
-    $("checkProgress").style.width =
-      percentage + "%";
-
-  }
-
-
-  if($("checkPercentage")){
-
-    $("checkPercentage").textContent =
-      percentage + "%";
-
-  }
-
-
-  if($("checkResult")){
-
+  if($("checkResult"))
     $("checkResult").textContent =
-      resultado;
+      percentage + "% — " + getResult(percentage);
 
-    $("checkResult").className =
-      "result " +
-      getResultClass(
-        percentage
-      );
+  const preview = $("nonConformitiesPreview");
 
+  if(preview){
+
+    const problems = [];
+
+    checks.forEach(function(check,index){
+
+      if(!check.checked){
+
+        problems.push(
+          (index + 1) + ". " + checklistItems[index]
+        );
+
+      }
+
+    });
+
+    if(!problems.length){
+
+      preview.innerHTML =
+        '<span class="small-muted">Nenhuma não conformidade identificada.</span>';
+
+    }else{
+
+      preview.innerHTML =
+        "<ul style='margin:0;padding-left:20px;'>" +
+        problems.map(function(item){
+          return "<li style='margin-bottom:5px;'>" +
+            escapeHTML(item) +
+            "</li>";
+        }).join("") +
+        "</ul>";
+    }
   }
-
-
-  if($("summaryYes")){
-
-    $("summaryYes").textContent =
-      yes;
-
-  }
-
-
-  if($("summaryNo")){
-
-    $("summaryNo").textContent =
-      no;
-
-  }
-
-
-  if($("summaryTotal")){
-
-    $("summaryTotal").textContent =
-      total;
-
-  }
-
-
-  renderNonConformities(
-    nonConformities
-  );
-
 
   return {
-
-    yes:yes,
-
-    no:no,
-
-    total:total,
-
-    percentage:percentage,
-
-    resultado:resultado,
-
-    nonConformities:
-      nonConformities
-
+    yes: yes,
+    no: no,
+    total: total,
+    percentage: percentage
   };
-
 }
 
 
-function renderNonConformities(items){
+function getResult(percentage){
 
-  const box =
-    $("nonConformitiesPreview");
+  if(percentage >= 90) return "Excelente";
 
-  if(!box) return;
+  if(percentage >= 75) return "Bom";
 
+  if(percentage >= 50) return "Atenção necessária";
 
-  if(!items.length){
-
-    box.innerHTML = `
-
-      <div class="info">
-
-        ✓ Todos os requisitos foram
-        marcados como conformes.
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  box.innerHTML = `
-
-    <div class="nonconformities">
-
-      <h4>
-        ⚠️ Itens não conformes:
-      </h4>
-
-      <ol>
-
-        ${
-          items.map(function(item){
-
-            return `
-              <li>
-                <strong>
-                  Item ${item.number}:
-                </strong>
-                ${escapeHTML(item.text)}
-              </li>
-            `;
-
-          }).join("")
-        }
-
-      </ol>
-
-    </div>
-
-  `;
-
+  return "Não conforme";
 }
 
 
-/* =========================
-   GUARDAR INSPEÇÃO
-========================= */
+/* ============================================================
+   INSPEÇÕES
+   ============================================================ */
 
 function saveInspection(){
 
   const establishment =
-    getSelectedEstablishment(
-      "inspectionEstabelecimento"
-    );
-
+    getSelectedEstablishment("inspectionEstabelecimento");
 
   if(!establishment){
 
-    alert(
-      "Selecione um estabelecimento."
-    );
+    alert("Selecione um estabelecimento.");
 
     return;
-
   }
 
+  const result = calculateChecklist();
 
-  const inspector =
-    $("inspectionInspector")
-      .value
-      .trim();
+  const nonConformities = [];
 
+  document.querySelectorAll(".check").forEach(function(check,index){
 
-  if(!inspector){
+    if(!check.checked){
 
-    alert(
-      "Digite o nome do inspetor."
-    );
+      nonConformities.push({
+        number:index + 1,
+        text:checklistItems[index]
+      });
 
-    return;
+    }
 
-  }
-
-
-  const result =
-    calculateChecklist();
-
-
-  if(result.total === 0){
-
-    alert(
-      "O checklist não foi carregado corretamente."
-    );
-
-    return;
-
-  }
-
+  });
 
   const item = {
 
-    id:
-      generateId("FSM"),
+    id:generateId("FSM"),
 
-    estabelecimentoId:
-      establishment.id,
+    estabelecimentoId:establishment.id,
 
-    estabelecimento:
-      establishment.nome,
+    estabelecimento:establishment.nome,
 
     responsavel:
-      $("inspectionResponsavel")
-        .value
-        .trim(),
+      $("inspectionResponsavel").value.trim(),
 
     inspetor:
-      inspector,
+      $("inspectionInspector").value.trim(),
 
     date:
-      $("inspectionDate")
-        .value ||
-      todayISO(),
+      $("inspectionDate").value || todayISO(),
 
     time:
-      $("inspectionTime")
-        .value ||
-      nowTime(),
+      $("inspectionTime").value || nowTime(),
 
     notes:
-      $("inspectionNotes")
-        .value
-        .trim(),
+      $("inspectionNotes").value.trim(),
 
-    yes:
-      result.yes,
+    yes:result.yes,
 
-    no:
-      result.no,
+    no:result.no,
 
-    total:
-      result.total,
+    total:result.total,
 
-    percentage:
-      result.percentage,
+    percentage:result.percentage,
 
-    resultado:
-      result.resultado,
+    resultado:getResult(result.percentage),
 
-    status:
-      "concluida",
+    status:"concluida",
 
-    nonConformities:
-      result.nonConformities,
+    nonConformities:nonConformities,
 
-    createdAt:
-      new Date().toISOString()
-
+    createdAt:new Date().toISOString()
   };
 
-
   data.inspections.push(item);
-
 
   saveData();
 
   renderInspectionList();
 
+  populateEvidenceInspectionSelect();
+
   updateAll();
 
-
   alert(
-    "Inspeção concluída e guardada com sucesso.\n\n" +
-    "Número: " + item.id +
-    "\nResultado: " + item.resultado +
-    "\nPontuação: " + item.percentage + "%"
+    "Inspeção guardada com sucesso."
   );
 
-
   clearInspectionForm();
-
 }
 
 
 function clearInspectionForm(){
 
+  if($("inspectionEstabelecimento"))
+    $("inspectionEstabelecimento").value = "";
+
   if($("inspectionResponsavel"))
     $("inspectionResponsavel").value = "";
-
 
   if($("inspectionInspector"))
     $("inspectionInspector").value = "";
 
+  if($("inspectionDate"))
+    $("inspectionDate").value = todayISO();
+
+  if($("inspectionTime"))
+    $("inspectionTime").value = nowTime();
 
   if($("inspectionNotes"))
     $("inspectionNotes").value = "";
 
-
-  if($("inspectionEstabelecimento"))
-    $("inspectionEstabelecimento").value = "";
-
-
-  if($("inspectionDate"))
-    $("inspectionDate").value =
-      todayISO();
-
-
-  if($("inspectionTime"))
-    $("inspectionTime").value =
-      nowTime();
-
-
-  document
-    .querySelectorAll(".check")
-    .forEach(function(item){
-
-      item.checked = false;
-
-    });
-
+  document.querySelectorAll(".check").forEach(function(check){
+    check.checked = false;
+  });
 
   calculateChecklist();
-
 }
 
 
 function renderInspectionList(){
 
-  const box =
-    $("inspectionList");
+  const box = $("inspectionList");
 
   if(!box) return;
-
 
   if(!data.inspections.length){
 
@@ -3119,317 +1440,260 @@ function renderInspectionList(){
       '<div class="empty">Nenhuma inspeção registada.</div>';
 
     return;
-
   }
 
-
   box.innerHTML = "";
-
 
   data.inspections
     .slice()
     .reverse()
     .forEach(function(item){
 
-      const div =
-        document.createElement("div");
+      const linkedEvidences =
+        data.evidences.filter(function(ev){
+          return ev &&
+            ev.inspectionId === item.id;
+        });
 
-      div.className =
-        "list-item";
+      const div = document.createElement("div");
 
+      div.className = "list-item";
 
-      const nonConformities =
-        Array.isArray(
-          item.nonConformities
-        )
-          ? item.nonConformities
-          : [];
-
+      const resultClass =
+        item.resultado === "Excelente" ||
+        item.resultado === "Bom"
+          ? "badge-success"
+          : item.resultado === "Atenção necessária"
+            ? "badge-warning"
+            : "badge-danger";
 
       div.innerHTML = `
 
-        <div>
-
-          <span class="inspection-id">
-
-            ${escapeHTML(
-              item.id
-            )}
-
-          </span>
-
-        </div>
-
-
-        <strong style="display:block;margin-top:8px;">
-
-          ${escapeHTML(
-            item.estabelecimento || "-"
-          )}
-
+        <strong>
+          ${escapeHTML(item.estabelecimento || "-")}
         </strong>
 
-
-        <div style="margin-top:5px;">
-
-          Inspetor:
-          ${escapeHTML(
-            item.inspetor || "-"
-          )}
-
+        <div style="margin-top:6px;">
+          📅 ${formatDate(item.date)}
+          ${item.time ? " — " + escapeHTML(item.time) : ""}
         </div>
-
-
-        <div>
-
-          ${formatDate(item.date)}
-
-          ${
-            item.time
-              ? " — " +
-                escapeHTML(item.time)
-              : ""
-          }
-
-        </div>
-
 
         <div style="margin-top:7px;">
-
-          Resultado:
-
-          <span class="badge ${
-            item.percentage >= 75
-              ? "badge-ok"
-              : item.percentage >= 50
-                ? "badge-warning"
-                : "badge-danger"
-          }">
-
-            ${escapeHTML(
-              item.resultado || "-"
-            )}
-
+          <span class="badge ${resultClass}">
+            ${escapeHTML(item.resultado || "-")}
           </span>
 
+          <span class="badge" style="margin-left:5px;">
+            ${Number(item.percentage || 0)}%
+          </span>
         </div>
 
-
-        <div style="margin-top:5px;">
-
-          Pontuação:
-          <strong>
-            ${escapeHTML(
-              item.percentage ?? 0
-            )}%
-          </strong>
-
+        <div style="margin-top:7px;">
+          Conformes:
+          <strong>${Number(item.yes || 0)}</strong>
+          &nbsp;|&nbsp;
+          Não conformes:
+          <strong>${Number(item.no || 0)}</strong>
         </div>
 
-
-        <div style="margin-top:5px;">
-
-          Não conformidades:
-          ${nonConformities.length}
-
+        <div style="margin-top:7px;">
+          Responsável:
+          ${escapeHTML(item.responsavel || "-")}
         </div>
 
-
-        ${
-          nonConformities.length
-
-          ?
-
-          `
-
-          <div class="nonconformities">
-
-            <h4>
-              ⚠️ Itens não conformes
-            </h4>
-
-            <ol>
-
-              ${
-                nonConformities
-                  .map(function(nc){
-
-                    return `
-                      <li>
-                        ${escapeHTML(
-                          nc.text ||
-                          ""
-                        )}
-                      </li>
-                    `;
-
-                  })
-                  .join("")
-              }
-
-            </ol>
-
-          </div>
-
-          `
-
-          :
-
-          ""
-
-        }
-
+        <div style="margin-top:7px;">
+          Inspetor:
+          ${escapeHTML(item.inspetor || "-")}
+        </div>
 
         ${
           item.notes
-
-            ?
-
+            ? `
+              <div style="margin-top:8px;">
+                <strong>Observações:</strong><br>
+                ${escapeHTML(item.notes)}
+              </div>
             `
+            : ""
+        }
 
-            <div style="
-              margin-top:9px;
-              background:#f7fafb;
-              padding:9px;
-              border-radius:8px;
-              font-size:13px;
-            ">
+        ${
+          Array.isArray(item.nonConformities) &&
+          item.nonConformities.length
+            ? `
+              <div style="
+                margin-top:9px;
+                background:#fff7e6;
+                padding:9px;
+                border-radius:8px;
+                font-size:13px;
+              ">
+                <strong>⚠️ Não conformidades</strong>
 
-              <strong>
-                Observações:
-              </strong>
-
-              ${escapeHTML(
-                item.notes
-              )}
-
-            </div>
-
+                <ul style="margin:7px 0 0;padding-left:20px;">
+                  ${item.nonConformities.map(function(nc){
+                    return `
+                      <li style="margin-bottom:5px;">
+                        ${escapeHTML(nc.text || "")}
+                      </li>
+                    `;
+                  }).join("")}
+                </ul>
+              </div>
             `
+            : ""
+        }
 
-            :
+        <div style="margin-top:8px;">
+          📸 Evidências associadas:
+          <strong>${linkedEvidences.length}</strong>
+        </div>
 
-            ""
+        ${
+          linkedEvidences.length
+            ? `
+              <div style="
+                margin-top:8px;
+                background:#eef8f4;
+                padding:10px;
+                border-radius:8px;
+                font-size:13px;
+              ">
 
+                <strong>📸 Evidências desta inspeção</strong>
+
+                <ul style="
+                  margin:7px 0 0;
+                  padding-left:20px;
+                ">
+
+                  ${linkedEvidences.map(function(ev){
+
+                    return `
+                      <li style="margin-bottom:8px;">
+
+                        <div>
+                          ${escapeHTML(
+                            ev.description ||
+                            "Evidência sem descrição"
+                          )}
+                        </div>
+
+                        <div class="small-muted">
+                          ${formatDate(ev.date)}
+                        </div>
+
+                        ${
+                          ev.image
+                            ? `
+                              <img
+                                src="${ev.image}"
+                                style="
+                                  width:90px;
+                                  height:70px;
+                                  object-fit:cover;
+                                  border-radius:7px;
+                                  margin-top:5px;
+                                "
+                                alt="Evidência"
+                              >
+                            `
+                            : ""
+                        }
+
+                      </li>
+                    `;
+
+                  }).join("")}
+
+                </ul>
+
+              </div>
+            `
+            : ""
         }
 
       `;
 
-
       box.appendChild(div);
-
     });
-
 }
 
 
-/* =========================
-   TEMPERATURA
-========================= */
+/* ============================================================
+   TEMPERATURAS
+   ============================================================ */
 
 function saveTemperature(){
 
   const establishment =
-    getSelectedEstablishment(
-      "tempEstabelecimento"
-    );
-
+    getSelectedEstablishment("tempEstabelecimento");
 
   if(!establishment){
 
-    alert(
-      "Selecione um estabelecimento."
-    );
+    alert("Selecione um estabelecimento.");
 
     return;
-
   }
-
 
   const value =
     $("tempValue").value;
 
-
   if(value === ""){
 
-    alert(
-      "Digite a temperatura."
-    );
+    alert("Introduza a temperatura.");
 
     return;
-
   }
-
 
   const item = {
 
-    id:
-      generateId("TMP"),
+    id:generateId("TMP"),
 
-    estabelecimentoId:
-      establishment.id,
+    estabelecimentoId:establishment.id,
 
-    estabelecimento:
-      establishment.nome,
+    estabelecimento:establishment.nome,
+
+    item:
+      $("tempItem").value.trim(),
+
+    value:Number(value),
 
     date:
-      $("tempDate").value ||
-      todayISO(),
+      $("tempDate").value || todayISO(),
 
-    equipment:
-      $("tempEquipment")
-        .value
-        .trim(),
-
-    value:
-      Number(value),
+    time:
+      $("tempTime").value || nowTime(),
 
     notes:
-      $("tempNotes")
-        .value
-        .trim(),
+      $("tempNotes").value.trim(),
 
-    createdAt:
-      new Date().toISOString()
-
+    createdAt:new Date().toISOString()
   };
-
 
   data.temps.push(item);
 
   saveData();
 
-  renderTemperatures();
+  renderTemperatureList();
 
   updateAll();
 
+  alert("Temperatura guardada com sucesso.");
 
-  alert(
-    "Temperatura guardada com sucesso."
-  );
-
-
-  $("tempEstabelecimento").value = "";
-
-  $("tempEquipment").value = "";
-
+  $("tempItem").value = "";
   $("tempValue").value = "";
-
+  $("tempDate").value = todayISO();
+  $("tempTime").value = nowTime();
   $("tempNotes").value = "";
-
-  $("tempDate").value =
-    todayISO();
-
 }
 
 
-function renderTemperatures(){
+function renderTemperatureList(){
 
-  const box =
-    $("temperatureList");
+  const box = $("temperatureList");
 
   if(!box) return;
-
 
   if(!data.temps.length){
 
@@ -3437,222 +1701,128 @@ function renderTemperatures(){
       '<div class="empty">Nenhuma temperatura registada.</div>';
 
     return;
-
   }
-
 
   box.innerHTML = "";
 
+  data.temps.slice().reverse().forEach(function(item){
 
-  data.temps
-    .slice()
-    .reverse()
-    .forEach(function(item){
+    const div = document.createElement("div");
 
-      const div =
-        document.createElement("div");
+    div.className = "list-item";
 
-      div.className =
-        "list-item";
+    div.innerHTML = `
 
+      <strong>
+        ${escapeHTML(item.estabelecimento || "-")}
+      </strong>
 
-      div.innerHTML = `
-
+      <div style="margin-top:6px;">
+        🌡️
         <strong>
-          ${escapeHTML(
-            item.estabelecimento || "-"
-          )}
+          ${escapeHTML(String(item.value))} °C
         </strong>
+      </div>
 
-        <div style="margin-top:5px;">
+      <div style="margin-top:5px;">
+        ${escapeHTML(item.item || "Sem identificação")}
+      </div>
 
-          ${escapeHTML(
-            item.equipment ||
-            "Equipamento não indicado"
-          )}
+      <div style="margin-top:5px;">
+        ${formatDate(item.date)}
+        ${item.time ? " — " + escapeHTML(item.time) : ""}
+      </div>
 
-        </div>
-
-        <div style="margin-top:5px;">
-
-          Temperatura:
-
-          <strong>
-            ${escapeHTML(item.value)} °C
-          </strong>
-
-        </div>
-
-        <div>
-
-          Data:
-          ${formatDate(item.date)}
-
-        </div>
-
-        ${
-          item.notes
-
-            ?
-
-            `<div style="margin-top:5px;">
+      ${
+        item.notes
+          ? `
+            <div style="margin-top:6px;">
               ${escapeHTML(item.notes)}
-            </div>`
+            </div>
+          `
+          : ""
+      }
 
-            :
+    `;
 
-            ""
-        }
-
-      `;
-
-
-      box.appendChild(div);
-
-    });
-
+    box.appendChild(div);
+  });
 }
 
 
-/* =========================
+/* ============================================================
    PROBLEMAS
-========================= */
+   ============================================================ */
 
 function saveProblem(){
 
   const establishment =
-    getSelectedEstablishment(
-      "problemEstabelecimento"
-    );
-
+    getSelectedEstablishment("problemEstabelecimento");
 
   if(!establishment){
 
-    alert(
-      "Selecione um estabelecimento."
-    );
+    alert("Selecione um estabelecimento.");
 
     return;
-
   }
 
+  const title =
+    $("problemTitle").value.trim();
 
-  const desc =
-    $("problemDesc")
-      .value
-      .trim();
+  if(!title){
 
-
-  if(!desc){
-
-    alert(
-      "Descreva o problema."
-    );
+    alert("Introduza o problema.");
 
     return;
-
   }
-
 
   const item = {
 
-    id:
-      generateId("PR"),
+    id:generateId("PRB"),
 
-    estabelecimentoId:
-      establishment.id,
+    estabelecimentoId:establishment.id,
 
-    estabelecimento:
-      establishment.nome,
+    estabelecimento:establishment.nome,
 
-    desc:
-      desc,
+    title:title,
 
-    corrective:
-      $("problemCorrective")
-        .value
-        .trim(),
+    description:
+      $("problemDescription").value.trim(),
 
-    responsavel:
-      $("problemResponsavel")
-        .value
-        .trim(),
-
-    prazo:
-      $("problemPrazo").value,
-
-    status:
-      "pendente",
+    action:
+      $("problemAction").value.trim(),
 
     date:
-      $("problemDate").value ||
-      todayISO(),
+      $("problemDate").value || todayISO(),
 
-    createdAt:
-      new Date().toISOString()
+    status:"aberto",
 
+    createdAt:new Date().toISOString()
   };
-
 
   data.problems.push(item);
 
   saveData();
 
-  renderProblems();
+  renderProblemList();
 
   updateAll();
 
-
-  alert(
-    "Problema guardado com sucesso."
-  );
-
+  alert("Problema guardado com sucesso.");
 
   $("problemEstabelecimento").value = "";
-
-  $("problemDesc").value = "";
-
-  $("problemCorrective").value = "";
-
-  $("problemResponsavel").value = "";
-
-  $("problemPrazo").value = "";
-
-  $("problemDate").value =
-    todayISO();
-
+  $("problemTitle").value = "";
+  $("problemDescription").value = "";
+  $("problemAction").value = "";
+  $("problemDate").value = todayISO();
 }
 
 
-function setProblemStatus(
-  index,
-  status
-){
+function renderProblemList(){
 
-  if(!data.problems[index])
-    return;
-
-
-  data.problems[index].status =
-    status;
-
-
-  saveData();
-
-  renderProblems();
-
-  updateAll();
-
-}
-
-
-function renderProblems(){
-
-  const box =
-    $("problemList");
+  const box = $("problemList");
 
   if(!box) return;
-
 
   if(!data.problems.length){
 
@@ -3660,230 +1830,270 @@ function renderProblems(){
       '<div class="empty">Nenhum problema registado.</div>';
 
     return;
-
   }
-
 
   box.innerHTML = "";
 
+  data.problems.slice().reverse().forEach(function(item){
 
-  data.problems
-    .slice()
-    .reverse()
-    .forEach(function(item){
+    const originalIndex =
+      data.problems.indexOf(item);
 
-      const originalIndex =
-        data.problems.indexOf(item);
+    const div =
+      document.createElement("div");
 
+    div.className = "list-item";
 
-      const div =
-        document.createElement("div");
+    const statusClass =
+      item.status === "resolvido"
+        ? "badge-success"
+        : item.status === "em tratamento"
+          ? "badge-warning"
+          : "badge-danger";
 
-      div.className =
-        "list-item";
+    div.innerHTML = `
 
+      <strong>
+        ${escapeHTML(item.estabelecimento || "-")}
+      </strong>
 
-      div.innerHTML = `
-
+      <div style="margin-top:6px;">
         <strong>
-
-          ${escapeHTML(
-            item.estabelecimento || "-"
-          )}
-
+          ${escapeHTML(item.title || "Problema")}
         </strong>
+      </div>
 
+      <div style="margin-top:5px;">
+        ${formatDate(item.date)}
+      </div>
 
-        <div style="margin-top:6px;">
+      ${
+        item.description
+          ? `
+            <div style="margin-top:7px;">
+              ${escapeHTML(item.description)}
+            </div>
+          `
+          : ""
+      }
 
-          ${escapeHTML(
-            item.desc || "-"
-          )}
+      ${
+        item.action
+          ? `
+            <div style="margin-top:7px;">
+              <strong>Ação:</strong>
+              ${escapeHTML(item.action)}
+            </div>
+          `
+          : ""
+      }
 
-        </div>
+      <div style="margin-top:8px;">
+        <span class="badge ${statusClass}">
+          ${escapeHTML(item.status || "aberto")}
+        </span>
+      </div>
 
+      <div class="actions">
 
-        <div style="margin-top:6px;">
+        <button
+          class="btn btn-small btn-warning"
+          data-problem-status="${originalIndex}"
+          data-status-value="em tratamento">
+          🟡 Em tratamento
+        </button>
 
-          Data:
-          ${formatDate(item.date)}
+        <button
+          class="btn btn-small btn-primary"
+          data-problem-status="${originalIndex}"
+          data-status-value="resolvido">
+          🟢 Resolvido
+        </button>
 
-        </div>
+        <button
+          class="btn btn-small btn-danger"
+          data-problem-status="${originalIndex}"
+          data-status-value="aberto">
+          🔴 Aberto
+        </button>
 
+      </div>
+    `;
 
-        ${
-          item.prazo
-
-            ?
-
-            `<div>
-              Prazo:
-              ${formatDate(item.prazo)}
-            </div>`
-
-            :
-
-            ""
-        }
-
-
-        <div style="margin-top:7px;">
-
-          Estado:
-
-          <span class="badge ${
-            item.status === "resolvido"
-              ? "badge-ok"
-              : "badge-warning"
-          }">
-
-            ${escapeHTML(
-              item.status ||
-              "pendente"
-            )}
-
-          </span>
-
-        </div>
-
-
-        <div class="actions">
-
-          ${
-            item.status !== "resolvido"
-
-              ?
-
-              `
-
-              <button
-                class="btn btn-primary btn-small"
-                data-problem-status="${originalIndex}"
-                data-status-value="resolvido">
-
-                ✓ Marcar resolvido
-
-              </button>
-
-              `
-
-              :
-
-              `
-
-              <button
-                class="btn btn-warning btn-small"
-                data-problem-status="${originalIndex}"
-                data-status-value="pendente">
-
-                ↩ Voltar para pendente
-
-              </button>
-
-              `
-
-          }
-
-        </div>
-
-      `;
-
-
-      box.appendChild(div);
-
-    });
-
+    box.appendChild(div);
+  });
 }
 
 
-/* =========================
+function setProblemStatus(index,status){
+
+  if(!data.problems[index]) return;
+
+  data.problems[index].status = status;
+
+  saveData();
+
+  renderProblemList();
+
+  updateAll();
+}
+
+
+/* ============================================================
    EVIDÊNCIAS
-========================= */
-
-let evidenceImageData = "";
-
+   ============================================================ */
 
 function previewEvidenceImage(){
 
-  const input =
-    $("evidencePhoto");
+  const input = $("evidencePhoto");
+  const preview = $("evidencePreview");
 
-  const preview =
-    $("evidencePreview");
-
-
-  if(!input || !preview)
-    return;
-
+  if(!input || !preview) return;
 
   const file =
     input.files &&
     input.files[0];
 
-
   if(!file){
 
     evidenceImageData = "";
 
-    preview.style.display =
-      "none";
+    preview.style.display = "none";
 
-    preview.removeAttribute(
-      "src"
-    );
+    preview.removeAttribute("src");
 
     return;
-
   }
-
 
   const reader =
     new FileReader();
 
+  reader.onload = function(event){
 
-  reader.onload =
-    function(event){
+    evidenceImageData =
+      event.target.result;
 
-      evidenceImageData =
-        event.target.result;
+    preview.src =
+      evidenceImageData;
 
-      preview.src =
-        evidenceImageData;
-
-      preview.style.display =
-        "block";
-
-    };
-
+    preview.style.display =
+      "block";
+  };
 
   reader.readAsDataURL(file);
+}
 
+
+/* ============================================================
+   NOVO: POPULAR INSPEÇÕES PARA A EVIDÊNCIA
+   ============================================================ */
+
+function populateEvidenceInspectionSelect(){
+
+  const select =
+    $("evidenceInspection");
+
+  const establishmentSelect =
+    $("evidenceEstabelecimento");
+
+  if(!select || !establishmentSelect)
+    return;
+
+  const oldValue =
+    select.value;
+
+  const establishmentId =
+    establishmentSelect.value;
+
+  select.innerHTML =
+    '<option value="">Nenhuma — evidência geral</option>';
+
+  if(!establishmentId)
+    return;
+
+  const establishment =
+    findEstablishmentById(establishmentId);
+
+  data.inspections
+
+    .filter(function(item){
+
+      if(!item) return false;
+
+      if(item.estabelecimentoId === establishmentId)
+        return true;
+
+      if(
+        !item.estabelecimentoId &&
+        establishment
+      ){
+
+        return normalizeName(item.estabelecimento) ===
+          normalizeName(establishment.nome);
+      }
+
+      return false;
+    })
+
+    .slice()
+    .reverse()
+
+    .forEach(function(item){
+
+      const option =
+        document.createElement("option");
+
+      option.value =
+        item.id;
+
+      const number =
+        item.numeroInspecao ||
+        item.id ||
+        "Inspeção";
+
+      option.textContent =
+        number +
+        " — " +
+        formatDate(item.date) +
+        " — " +
+        (item.resultado || "Sem classificação");
+
+      select.appendChild(option);
+    });
+
+  if(
+    oldValue &&
+    Array.from(select.options).some(function(option){
+      return option.value === oldValue;
+    })
+  ){
+
+    select.value =
+      oldValue;
+  }
 }
 
 
 function saveEvidence(){
 
   const establishment =
-    getSelectedEstablishment(
-      "evidenceEstabelecimento"
-    );
-
+    getSelectedEstablishment("evidenceEstabelecimento");
 
   if(!establishment){
 
-    alert(
-      "Selecione um estabelecimento."
-    );
+    alert("Selecione um estabelecimento.");
 
     return;
-
   }
 
+  const inspectionId =
+    $("evidenceInspection")
+      ? $("evidenceInspection").value
+      : "";
 
   const item = {
 
-    id:
-      generateId("EV"),
+    id:generateId("EV"),
 
     estabelecimentoId:
       establishment.id,
@@ -3903,14 +2113,18 @@ function saveEvidence(){
       $("evidenceDate").value ||
       todayISO(),
 
+    /*
+      NOVO:
+      Guarda a ligação direta com a inspeção.
+      Se estiver vazio, a evidência continua sendo
+      uma evidência geral do estabelecimento.
+    */
     inspectionId:
-      "",
+      inspectionId || "",
 
     createdAt:
       new Date().toISOString()
-
   };
-
 
   data.evidences.push(item);
 
@@ -3918,36 +2132,40 @@ function saveEvidence(){
 
   renderEvidenceList();
 
+  renderInspectionList();
+
   updateAll();
 
-
   alert(
-    "Evidência guardada com sucesso."
+    inspectionId
+      ? "Evidência associada à inspeção e guardada com sucesso."
+      : "Evidência guardada com sucesso."
   );
 
+  $("evidenceEstabelecimento").value = "";
 
-  $("evidenceEstabelecimento").value =
-    "";
+  if($("evidenceInspection")){
 
-  $("evidenceDescription").value =
-    "";
+    $("evidenceInspection").innerHTML =
+      '<option value="">Nenhuma — evidência geral</option>';
+
+    $("evidenceInspection").value = "";
+  }
+
+  $("evidenceDescription").value = "";
 
   $("evidenceDate").value =
     todayISO();
 
-  $("evidencePhoto").value =
-    "";
+  $("evidencePhoto").value = "";
 
-  evidenceImageData =
-    "";
+  evidenceImageData = "";
 
   $("evidencePreview")
-    .style.display =
-    "none";
+    .style.display = "none";
 
   $("evidencePreview")
     .removeAttribute("src");
-
 }
 
 
@@ -3958,19 +2176,15 @@ function renderEvidenceList(){
 
   if(!box) return;
 
-
   if(!data.evidences.length){
 
     box.innerHTML =
       '<div class="empty">Nenhuma evidência registada.</div>';
 
     return;
-
   }
 
-
   box.innerHTML = "";
-
 
   data.evidences
     .slice()
@@ -3980,6 +2194,20 @@ function renderEvidenceList(){
       const originalIndex =
         data.evidences.indexOf(item);
 
+      const linkedInspection =
+        item.inspectionId
+          ? data.inspections.find(function(inspection){
+              return inspection.id === item.inspectionId;
+            })
+          : null;
+
+      const inspectionLabel =
+        linkedInspection
+          ? (
+              linkedInspection.numeroInspecao ||
+              linkedInspection.id
+            )
+          : "";
 
       const div =
         document.createElement("div");
@@ -3987,83 +2215,101 @@ function renderEvidenceList(){
       div.className =
         "list-item";
 
-
       div.innerHTML = `
 
         <strong>
-
           ${escapeHTML(
             item.estabelecimento || "-"
           )}
-
         </strong>
 
-
         <div style="margin-top:5px;">
-
           ${escapeHTML(
             item.description ||
             "Sem descrição"
           )}
-
         </div>
-
 
         <div style="margin-top:5px;">
-
-          Data:
-          ${formatDate(item.date)}
-
+          Data: ${formatDate(item.date)}
         </div>
 
+        ${
+          linkedInspection
+            ? `
+              <div style="margin-top:7px;">
+                📋 Inspeção:
+
+                <span class="inspection-id">
+                  ${escapeHTML(
+                    inspectionLabel
+                  )}
+                </span>
+
+                <div class="small-muted" style="margin-top:4px;">
+                  Resultado:
+                  ${escapeHTML(
+                    linkedInspection.resultado ||
+                    "Sem classificação"
+                  )}
+
+                  ${
+                    linkedInspection.percentage != null
+                      ? " — " +
+                        Number(
+                          linkedInspection.percentage
+                        ) +
+                        "%"
+                      : ""
+                  }
+                </div>
+              </div>
+            `
+            : `
+              <div style="
+                margin-top:7px;
+                color:#718087;
+                font-size:13px;
+              ">
+                📋 Sem inspeção associada
+              </div>
+            `
+        }
 
         ${
           item.image
+            ? `
+              <div style="margin-top:9px;">
 
-            ?
+                <img
+                  src="${item.image}"
+                  style="
+                    max-width:180px;
+                    max-height:150px;
+                    border-radius:9px;
+                    object-fit:cover;
+                  "
+                  alt="Evidência"
+                >
 
+              </div>
             `
-
-            <div style="margin-top:9px;">
-
-              <img
-                src="${item.image}"
-                style="
-                  max-width:180px;
-                  max-height:150px;
-                  border-radius:9px;
-                  object-fit:cover;
-                ">
-
-            </div>
-
-            `
-
-            :
-
-            ""
+            : ""
         }
-
 
         <div class="actions">
 
           <button
             class="btn btn-danger btn-small"
             data-delete-evidence="${originalIndex}">
-
             🗑️ Eliminar
-
           </button>
 
         </div>
-
       `;
 
-
       box.appendChild(div);
-
     });
-
 }
 
 
@@ -4072,106 +2318,255 @@ function deleteEvidence(index){
   if(!data.evidences[index])
     return;
 
-
   const confirmDelete =
     confirm(
       "Deseja eliminar esta evidência?"
     );
 
-
   if(!confirmDelete)
     return;
 
-
-  data.evidences.splice(
-    index,
-    1
-  );
-
+  data.evidences.splice(index,1);
 
   saveData();
 
   renderEvidenceList();
 
-  updateAll();
+  renderInspectionList();
 
+  updateAll();
 }
 
 
-/* =========================
-   DASHBOARD
-========================= */
+/* ============================================================
+   ESTABELECIMENTOS
+   ============================================================ */
 
-function renderDashboard(){
+function migrateEstablishments(){
 
-  if($("dashInspections"))
-    $("dashInspections").textContent =
-      data.inspections.length;
+  let changed = false;
+
+  data.establishments =
+    data.establishments
+      .filter(function(item){
+        return item && typeof item === "object";
+      })
+      .map(function(item){
+
+        const updated = Object.assign({},item);
+
+        if(!updated.id){
+          updated.id =
+            generateId("EST");
+          changed = true;
+        }
+
+        if(!updated.nome){
+          updated.nome =
+            updated.name ||
+            "Estabelecimento";
+          changed = true;
+        }
+
+        if(!updated.tipo){
+          updated.tipo =
+            updated.type ||
+            "Não definido";
+          changed = true;
+        }
+
+        if(!updated.status){
+          updated.status =
+            "ativo";
+          changed = true;
+        }
+
+        return updated;
+      });
+
+  if(changed)
+    saveData();
+}
 
 
-  if($("dashTemps"))
-    $("dashTemps").textContent =
-      data.temps.length;
+function saveEstablishment(){
+
+  const name =
+    $("establishmentName")
+      .value
+      .trim();
+
+  if(!name){
+
+    alert(
+      "Introduza o nome do estabelecimento."
+    );
+
+    return;
+  }
+
+  const item = {
+
+    id:generateId("EST"),
+
+    nome:name,
+
+    tipo:
+      $("establishmentType")
+        .value
+        .trim() ||
+      "Não definido",
+
+    responsavel:
+      $("establishmentResponsible")
+        .value
+        .trim(),
+
+    telefone:
+      $("establishmentPhone")
+        .value
+        .trim(),
+
+    localizacao:
+      $("establishmentLocation")
+        .value
+        .trim(),
+
+    data:
+      $("establishmentDate").value ||
+      todayISO(),
+
+    status:
+      $("establishmentStatus").value ||
+      "ativo",
+
+    createdAt:
+      new Date().toISOString()
+  };
+
+  data.establishments.push(item);
+
+  saveData();
+
+  populateEstablishmentSelects();
+
+  renderEstablishmentList();
+
+  updateAll();
+
+  alert(
+    "Estabelecimento registado com sucesso."
+  );
+
+  clearEstablishmentForm();
+}
 
 
-  if($("dashProblems"))
-    $("dashProblems").textContent =
-      data.problems.length;
+function clearEstablishmentForm(){
+
+  if($("establishmentName"))
+    $("establishmentName").value = "";
+
+  if($("establishmentType"))
+    $("establishmentType").value = "";
+
+  if($("establishmentResponsible"))
+    $("establishmentResponsible").value = "";
+
+  if($("establishmentPhone"))
+    $("establishmentPhone").value = "";
+
+  if($("establishmentLocation"))
+    $("establishmentLocation").value = "";
+
+  if($("establishmentDate"))
+    $("establishmentDate").value =
+      todayISO();
+
+  if($("establishmentStatus"))
+    $("establishmentStatus").value =
+      "ativo";
+}
 
 
-  if($("dashEvidence"))
-    $("dashEvidence").textContent =
-      data.evidences.length;
-
+function renderEstablishmentList(){
 
   const box =
-    $("dashboardEstablishments");
-
+    $("establishmentList");
 
   if(!box) return;
-
 
   if(!data.establishments.length){
 
     box.innerHTML =
-      '<div class="empty">Nenhum estabelecimento cadastrado.</div>';
+      '<div class="empty">Nenhum estabelecimento registado.</div>';
 
     return;
-
   }
-
 
   box.innerHTML = "";
 
+  data.establishments
+    .slice()
+    .reverse()
+    .forEach(function(item){
 
-  data.establishments.forEach(
-    function(establishment){
+      const originalIndex =
+        data.establishments.indexOf(item);
 
       const inspections =
-        data.inspections.filter(
-          function(item){
+        data.inspections.filter(function(inspection){
 
-            return recordBelongsToEstablishment(
-              item,
-              establishment
+          return inspection &&
+            (
+              inspection.estabelecimentoId ===
+              item.id
+              ||
+              (
+                !inspection.estabelecimentoId &&
+                normalizeName(
+                  inspection.estabelecimento
+                ) ===
+                normalizeName(item.nome)
+              )
             );
-
-          }
-        ).length;
-
+        }).length;
 
       const problems =
-        data.problems.filter(
-          function(item){
+        data.problems.filter(function(problem){
 
-            return recordBelongsToEstablishment(
-              item,
-              establishment
+          return problem &&
+            (
+              problem.estabelecimentoId ===
+              item.id
+              ||
+              (
+                !problem.estabelecimentoId &&
+                normalizeName(
+                  problem.estabelecimento
+                ) ===
+                normalizeName(item.nome)
+              )
             );
+        }).length;
 
-          }
-        ).length;
+      const evidences =
+        data.evidences.filter(function(ev){
 
+          return ev &&
+            (
+              ev.estabelecimentoId ===
+              item.id
+              ||
+              (
+                !ev.estabelecimentoId &&
+                normalizeName(
+                  ev.estabelecimento
+                ) ===
+                normalizeName(item.nome)
+              )
+            );
+        }).length;
 
       const div =
         document.createElement("div");
@@ -4179,60 +2574,487 @@ function renderDashboard(){
       div.className =
         "list-item";
 
-
       div.innerHTML = `
 
         <strong>
-
-          ${escapeHTML(
-            establishment.nome
-          )}
-
+          ${escapeHTML(item.nome || "-")}
         </strong>
 
+        <div style="margin-top:6px;">
+          ${escapeHTML(item.tipo || "Não definido")}
+        </div>
 
         <div style="margin-top:6px;">
+          Responsável:
+          ${escapeHTML(item.responsavel || "-")}
+        </div>
+
+        <div style="margin-top:6px;">
+          Localização:
+          ${escapeHTML(item.localizacao || "-")}
+        </div>
+
+        <div style="margin-top:8px;">
+
+          <span class="badge">
+            ${escapeHTML(item.status || "ativo")}
+          </span>
+
+        </div>
+
+        <div style="
+          margin-top:9px;
+          font-size:13px;
+          color:#566;
+        ">
 
           Inspeções:
-          ${inspections}
-
-        </div>
-
-
-        <div>
+          <strong>${inspections}</strong>
+          &nbsp;|&nbsp;
 
           Problemas:
-          ${problems}
+          <strong>${problems}</strong>
+          &nbsp;|&nbsp;
+
+          Evidências:
+          <strong>${evidences}</strong>
 
         </div>
-
 
         <div class="actions">
 
           <button
-            class="btn btn-secondary btn-small"
-            data-open-profile="${data.establishments.indexOf(establishment)}">
-
+            class="btn btn-primary btn-small"
+            data-open-profile="${originalIndex}">
             👁️ Ver perfil
-
           </button>
 
         </div>
-
       `;
 
-
       box.appendChild(div);
-
-    }
-  );
-
+    });
 }
 
 
-/* =========================
+function openProfile(index){
+
+  const establishment =
+    data.establishments[index];
+
+  if(!establishment)
+    return;
+
+  const box =
+    $("establishmentProfile");
+
+  if(!box)
+    return;
+
+  const inspections =
+    data.inspections.filter(function(item){
+
+      return item &&
+        (
+          item.estabelecimentoId ===
+          establishment.id
+          ||
+          (
+            !item.estabelecimentoId &&
+            normalizeName(item.estabelecimento) ===
+            normalizeName(establishment.nome)
+          )
+        );
+    });
+
+  const problems =
+    data.problems.filter(function(item){
+
+      return item &&
+        (
+          item.estabelecimentoId ===
+          establishment.id
+          ||
+          (
+            !item.estabelecimentoId &&
+            normalizeName(item.estabelecimento) ===
+            normalizeName(establishment.nome)
+          )
+        );
+    });
+
+  const evidences =
+    data.evidences.filter(function(item){
+
+      return item &&
+        (
+          item.estabelecimentoId ===
+          establishment.id
+          ||
+          (
+            !item.estabelecimentoId &&
+            normalizeName(item.estabelecimento) ===
+            normalizeName(establishment.nome)
+          )
+        );
+    });
+
+  box.innerHTML = `
+
+    <div class="profile-header">
+
+      <h2>
+        🏪 ${escapeHTML(establishment.nome)}
+      </h2>
+
+      <div class="profile-row">
+        <strong>Tipo:</strong>
+        ${escapeHTML(establishment.tipo || "-")}
+      </div>
+
+      <div class="profile-row">
+        <strong>Responsável:</strong>
+        ${escapeHTML(establishment.responsavel || "-")}
+      </div>
+
+      <div class="profile-row">
+        <strong>Telefone:</strong>
+        ${escapeHTML(establishment.telefone || "-")}
+      </div>
+
+      <div class="profile-row">
+        <strong>Localização:</strong>
+        ${escapeHTML(establishment.localizacao || "-")}
+      </div>
+
+      <div class="profile-row">
+        <strong>Data de registo:</strong>
+        ${formatDate(establishment.data)}
+      </div>
+
+      <div class="profile-row">
+        <strong>Estado:</strong>
+        ${escapeHTML(establishment.status || "-")}
+      </div>
+
+    </div>
+
+    <div class="dashboard-grid">
+
+      <div class="stat">
+        <div class="stat-number">
+          ${inspections.length}
+        </div>
+        <div class="stat-label">
+          Inspeções
+        </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number">
+          ${problems.length}
+        </div>
+        <div class="stat-label">
+          Problemas
+        </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number">
+          ${evidences.length}
+        </div>
+        <div class="stat-label">
+          Evidências
+        </div>
+      </div>
+
+    </div>
+
+    <h3 style="margin-top:18px;">
+      Últimas inspeções
+    </h3>
+
+    ${
+      inspections.length
+        ? inspections
+            .slice()
+            .reverse()
+            .slice(0,5)
+            .map(function(item){
+
+              const linked =
+                data.evidences.filter(function(ev){
+                  return ev &&
+                    ev.inspectionId === item.id;
+                });
+
+              return `
+                <div class="list-item">
+
+                  <strong>
+                    ${formatDate(item.date)}
+                  </strong>
+
+                  <div style="margin-top:5px;">
+                    Resultado:
+                    <strong>
+                      ${escapeHTML(
+                        item.resultado || "-"
+                      )}
+                    </strong>
+                    — ${Number(
+                      item.percentage || 0
+                    )}%
+                  </div>
+
+                  <div style="margin-top:5px;">
+                    📸 Evidências:
+                    <strong>${linked.length}</strong>
+                  </div>
+
+                </div>
+              `;
+
+            }).join("")
+        : '<div class="empty">Nenhuma inspeção registada.</div>'
+    }
+
+    <h3 style="margin-top:18px;">
+      Evidências do estabelecimento
+    </h3>
+
+    ${
+      evidences.length
+        ? evidences
+            .slice()
+            .reverse()
+            .slice(0,10)
+            .map(function(ev){
+
+              const inspection =
+                ev.inspectionId
+                  ? data.inspections.find(function(item){
+                      return item.id ===
+                        ev.inspectionId;
+                    })
+                  : null;
+
+              return `
+                <div class="list-item">
+
+                  <strong>
+                    ${escapeHTML(
+                      ev.description ||
+                      "Evidência"
+                    )}
+                  </strong>
+
+                  <div style="margin-top:5px;">
+                    ${formatDate(ev.date)}
+                  </div>
+
+                  ${
+                    inspection
+                      ? `
+                        <div style="margin-top:6px;">
+                          📋 Inspeção:
+                          <span class="inspection-id">
+                            ${escapeHTML(
+                              inspection.numeroInspecao ||
+                              inspection.id
+                            )}
+                          </span>
+                        </div>
+                      `
+                      : `
+                        <div class="small-muted" style="margin-top:6px;">
+                          📋 Evidência geral
+                        </div>
+                      `
+                  }
+
+                  ${
+                    ev.image
+                      ? `
+                        <img
+                          src="${ev.image}"
+                          style="
+                            width:130px;
+                            height:100px;
+                            object-fit:cover;
+                            border-radius:8px;
+                            margin-top:8px;
+                          "
+                          alt="Evidência"
+                        >
+                      `
+                      : ""
+                  }
+
+                </div>
+              `;
+
+            }).join("")
+        : '<div class="empty">Nenhuma evidência registada.</div>'
+    }
+
+  `;
+
+  showPage("perfilEstabelecimento");
+}
+
+
+/* ============================================================
+   SELECTS DE ESTABELECIMENTOS
+   ============================================================ */
+
+function populateEstablishmentSelects(){
+
+  const ids = [
+    "inspectionEstabelecimento",
+    "tempEstabelecimento",
+    "problemEstabelecimento",
+    "evidenceEstabelecimento"
+  ];
+
+  ids.forEach(function(selectId){
+
+    const select =
+      $(selectId);
+
+    if(!select) return;
+
+    const oldValue =
+      select.value;
+
+    select.innerHTML =
+      '<option value="">Selecione o estabelecimento</option>';
+
+    data.establishments
+
+      .filter(function(item){
+        return item &&
+          item.nome;
+      })
+
+      .sort(function(a,b){
+
+        return a.nome.localeCompare(
+          b.nome,
+          "pt"
+        );
+
+      })
+
+      .forEach(function(item){
+
+        const option =
+          document.createElement("option");
+
+        option.value =
+          item.id;
+
+        option.textContent =
+          item.nome +
+          (
+            item.tipo &&
+            item.tipo !== "Não definido"
+              ? " — " + item.tipo
+              : ""
+          );
+
+        select.appendChild(option);
+      });
+
+    if(
+      oldValue &&
+      data.establishments.some(function(item){
+        return item.id === oldValue;
+      })
+    ){
+
+      select.value =
+        oldValue;
+    }
+
+  });
+
+  populateEvidenceInspectionSelect();
+}
+
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+
+function renderDashboard(){
+
+  if($("dashEstablishments"))
+    $("dashEstablishments").textContent =
+      data.establishments.length;
+
+  if($("dashInspections"))
+    $("dashInspections").textContent =
+      data.inspections.length;
+
+  if($("dashProblems"))
+    $("dashProblems").textContent =
+      data.problems.length;
+
+  if($("dashEvidences"))
+    $("dashEvidences").textContent =
+      data.evidences.length;
+
+  const box =
+    $("dashboardResults");
+
+  if(!box) return;
+
+  if(!data.inspections.length){
+
+    box.innerHTML =
+      '<div class="empty">Nenhuma inspeção disponível.</div>';
+
+    return;
+  }
+
+  const results = {};
+
+  data.inspections.forEach(function(item){
+
+    const result =
+      item.resultado ||
+      "Sem classificação";
+
+    results[result] =
+      (results[result] || 0) + 1;
+  });
+
+  box.innerHTML =
+    Object.keys(results)
+      .map(function(result){
+
+        return `
+          <div class="list-item">
+
+            <strong>
+              ${escapeHTML(result)}
+            </strong>
+
+            <div style="margin-top:5px;">
+              ${results[result]} inspeção(ões)
+            </div>
+
+          </div>
+        `;
+
+      }).join("");
+}
+
+
+/* ============================================================
    HISTÓRICO
-========================= */
+   ============================================================ */
 
 function renderHistory(){
 
@@ -4241,346 +3063,190 @@ function renderHistory(){
 
   if(!box) return;
 
+  const history = [];
 
-  const events = [];
+  data.inspections.forEach(function(item){
 
-
-  data.inspections.forEach(
-    function(item){
-
-      events.push({
-
-        date:
-          item.createdAt ||
-          item.date,
-
-        html:`
-
-          <strong>
-            ✅ Inspeção
-          </strong>
-
-          — ${escapeHTML(
-            item.estabelecimento || "-"
-          )}
-
-          — ${formatDate(
-            item.date
-          )}
-
-          — ${escapeHTML(
-            item.resultado || ""
-          )}
-
-        `
-
-      });
-
-    }
-  );
-
-
-  data.temps.forEach(
-    function(item){
-
-      events.push({
-
-        date:
-          item.createdAt ||
-          item.date,
-
-        html:`
-
-          <strong>
-            🌡️ Temperatura
-          </strong>
-
-          — ${escapeHTML(
-            item.estabelecimento || "-"
-          )}
-
-          — ${escapeHTML(
-            item.value
-          )} °C
-
-        `
-
-      });
-
-    }
-  );
-
-
-  data.problems.forEach(
-    function(item){
-
-      events.push({
-
-        date:
-          item.createdAt ||
-          item.date,
-
-        html:`
-
-          <strong>
-            ⚠️ Problema
-          </strong>
-
-          — ${escapeHTML(
-            item.estabelecimento || "-"
-          )}
-
-          — ${escapeHTML(
-            item.desc || "-"
-          )}
-
-        `
-
-      });
-
-    }
-  );
-
-
-  data.evidences.forEach(
-    function(item){
-
-      events.push({
-
-        date:
-          item.createdAt ||
-          item.date,
-
-        html:`
-
-          <strong>
-            📸 Evidência
-          </strong>
-
-          — ${escapeHTML(
-            item.estabelecimento || "-"
-          )}
-
-          — ${formatDate(
-            item.date
-          )}
-
-        `
-
-      });
-
-    }
-  );
-
-
-  data.establishments.forEach(
-    function(item){
-
-      events.push({
-
-        date:
-          item.createdAt ||
-          item.dataCadastro,
-
-        html:`
-
-          <strong>
-            🏢 Estabelecimento
-          </strong>
-
-          — ${escapeHTML(
-            item.nome
-          )}
-
-          — cadastrado
-
-        `
-
-      });
-
-    }
-  );
-
-
-  events.sort(function(a,b){
-
-    return String(b.date || "")
-      .localeCompare(
-        String(a.date || "")
-      );
+    history.push({
+      type:"Inspeção",
+      date:item.createdAt || item.date,
+      title:item.estabelecimento,
+      description:
+        "Resultado: " +
+        (item.resultado || "-")
+    });
 
   });
 
+  data.temps.forEach(function(item){
 
-  if(!events.length){
+    history.push({
+      type:"Temperatura",
+      date:item.createdAt || item.date,
+      title:item.estabelecimento,
+      description:
+        String(item.value) + " °C"
+    });
+
+  });
+
+  data.problems.forEach(function(item){
+
+    history.push({
+      type:"Problema",
+      date:item.createdAt || item.date,
+      title:item.estabelecimento,
+      description:item.title
+    });
+
+  });
+
+  data.evidences.forEach(function(item){
+
+    const inspection =
+      item.inspectionId
+        ? data.inspections.find(function(inspection){
+            return inspection.id ===
+              item.inspectionId;
+          })
+        : null;
+
+    history.push({
+      type:"Evidência",
+      date:item.createdAt || item.date,
+      title:item.estabelecimento,
+      description:
+        item.description ||
+        "Evidência registada",
+      inspection:inspection
+    });
+
+  });
+
+  history.sort(function(a,b){
+
+    return new Date(b.date || 0) -
+      new Date(a.date || 0);
+
+  });
+
+  if(!history.length){
 
     box.innerHTML =
-      '<div class="empty">Nenhuma atividade registada.</div>';
+      '<div class="empty">Nenhum registo no histórico.</div>';
 
     return;
-
   }
 
-
   box.innerHTML =
-    events
-      .slice(0,100)
-      .map(function(event){
+    history.slice(0,50)
+      .map(function(item){
 
         return `
-
           <div class="list-item">
 
-            ${event.html}
+            <span class="badge">
+              ${escapeHTML(item.type)}
+            </span>
+
+            <div style="margin-top:7px;">
+              <strong>
+                ${escapeHTML(item.title || "-")}
+              </strong>
+            </div>
+
+            <div style="margin-top:5px;">
+              ${escapeHTML(item.description || "-")}
+            </div>
+
+            ${
+              item.inspection
+                ? `
+                  <div style="margin-top:6px;">
+                    📋 Inspeção:
+                    <span class="inspection-id">
+                      ${escapeHTML(
+                        item.inspection.numeroInspecao ||
+                        item.inspection.id
+                      )}
+                    </span>
+                  </div>
+                `
+                : ""
+            }
+
+            <div class="small-muted" style="margin-top:6px;">
+              ${formatDateTime(item.date)}
+            </div>
 
           </div>
-
         `;
 
-      })
-      .join("");
-
+      }).join("");
 }
 
 
-/* =========================
-   HOME
-========================= */
+/* ============================================================
+   UPDATE GERAL
+   ============================================================ */
 
 function updateHome(){
-
-  if($("homeInspections"))
-    $("homeInspections").textContent =
-      data.inspections.length;
-
-
-  if($("homeTemps"))
-    $("homeTemps").textContent =
-      data.temps.length;
-
-
-  if($("homeProblems"))
-    $("homeProblems").textContent =
-      data.problems.length;
-
 
   if($("homeEstablishments"))
     $("homeEstablishments").textContent =
       data.establishments.length;
 
+  if($("homeInspections"))
+    $("homeInspections").textContent =
+      data.inspections.length;
+
+  if($("homeProblems"))
+    $("homeProblems").textContent =
+      data.problems.length;
+
+  if($("homeEvidences"))
+    $("homeEvidences").textContent =
+      data.evidences.length;
 }
 
-
-/* =========================
-   NAVEGAÇÃO
-========================= */
-
-function showPage(id){
-
-  document
-    .querySelectorAll(".page")
-    .forEach(function(page){
-
-      page.classList.remove(
-        "active"
-      );
-
-    });
-
-
-  const page =
-    $(id);
-
-
-  if(page){
-
-    page.classList.add(
-      "active"
-    );
-
-    window.scrollTo({
-
-      top:0,
-
-      behavior:"smooth"
-
-    });
-
-  }
-
-
-  if(id === "estabelecimentos"){
-
-    renderEstablishments();
-
-  }
-
-
-  if(id === "dashboard"){
-
-    renderDashboard();
-
-  }
-
-
-  if(id === "historico"){
-
-    renderHistory();
-
-  }
-
-}
-
-
-/* =========================
-   UPDATE GERAL
-========================= */
 
 function updateAll(){
 
   populateEstablishmentSelects();
 
-  renderEstablishments();
+  renderTemperatureList();
+
+  renderProblemList();
+
+  renderEvidenceList();
 
   renderInspectionList();
 
-  renderTemperatures();
-
-  renderProblems();
-
-  renderEvidenceList();
+  renderEstablishmentList();
 
   renderDashboard();
 
   renderHistory();
 
   updateHome();
-
 }
 
 
-/* =========================
-   EVENTOS DE CLIQUE
-========================= */
+/* ============================================================
+   EVENTOS
+   ============================================================ */
 
 document.addEventListener(
   "click",
   function(event){
 
     const button =
-      event.target.closest(
-        "button"
-      );
-
+      event.target.closest("button");
 
     if(!button) return;
 
-
     const go =
-      button.getAttribute(
-        "data-go"
-      );
-
+      button.getAttribute("data-go");
 
     if(go){
 
@@ -4589,15 +3255,12 @@ document.addEventListener(
       showPage(go);
 
       return;
-
     }
-
 
     const profile =
       button.getAttribute(
         "data-open-profile"
       );
-
 
     if(profile !== null){
 
@@ -4608,15 +3271,12 @@ document.addEventListener(
       );
 
       return;
-
     }
-
 
     const problemIndex =
       button.getAttribute(
         "data-problem-status"
       );
-
 
     if(problemIndex !== null){
 
@@ -4627,22 +3287,18 @@ document.addEventListener(
           "data-status-value"
         );
 
-
       setProblemStatus(
         Number(problemIndex),
         status
       );
 
       return;
-
     }
-
 
     const evidenceIndex =
       button.getAttribute(
         "data-delete-evidence"
       );
-
 
     if(evidenceIndex !== null){
 
@@ -4653,9 +3309,7 @@ document.addEventListener(
       );
 
       return;
-
     }
-
 
     if(button.id === "saveInspection"){
 
@@ -4664,9 +3318,7 @@ document.addEventListener(
       saveInspection();
 
       return;
-
     }
-
 
     if(button.id === "clearInspection"){
 
@@ -4675,9 +3327,7 @@ document.addEventListener(
       clearInspectionForm();
 
       return;
-
     }
-
 
     if(button.id === "saveProblem"){
 
@@ -4686,9 +3336,7 @@ document.addEventListener(
       saveProblem();
 
       return;
-
     }
-
 
     if(button.id === "saveTemp"){
 
@@ -4697,9 +3345,7 @@ document.addEventListener(
       saveTemperature();
 
       return;
-
     }
-
 
     if(button.id === "saveEvidence"){
 
@@ -4708,9 +3354,7 @@ document.addEventListener(
       saveEvidence();
 
       return;
-
     }
-
 
     if(button.id === "saveEstablishment"){
 
@@ -4719,9 +3363,7 @@ document.addEventListener(
       saveEstablishment();
 
       return;
-
     }
-
 
     if(button.id === "clearEstablishment"){
 
@@ -4730,16 +3372,15 @@ document.addEventListener(
       clearEstablishmentForm();
 
       return;
-
     }
 
   }
 );
 
 
-/* =========================
-   EVENTOS CHANGE
-========================= */
+/* ============================================================
+   EVENTOS DE ALTERAÇÃO
+   ============================================================ */
 
 document.addEventListener(
   "change",
@@ -4747,15 +3388,11 @@ document.addEventListener(
 
     if(
       event.target.classList &&
-      event.target.classList.contains(
-        "check"
-      )
+      event.target.classList.contains("check")
     ){
 
       calculateChecklist();
-
     }
-
 
     if(
       event.target.id ===
@@ -4763,37 +3400,29 @@ document.addEventListener(
     ){
 
       previewEvidenceImage();
-
     }
 
-  }
-);
-
-
-/* =========================
-   PESQUISA
-========================= */
-
-document.addEventListener(
-  "input",
-  function(event){
-
+    /*
+      NOVO:
+      Quando o estabelecimento muda,
+      atualizamos imediatamente a lista
+      de inspeções disponíveis.
+    */
     if(
       event.target.id ===
-      "establishmentSearch"
+      "evidenceEstabelecimento"
     ){
 
-      renderEstablishments();
-
+      populateEvidenceInspectionSelect();
     }
 
   }
 );
 
 
-/* =========================
+/* ============================================================
    INICIALIZAÇÃO
-========================= */
+   ============================================================ */
 
 function init(){
 
@@ -4803,41 +3432,37 @@ function init(){
 
   renderChecklist();
 
-
   if($("inspectionDate"))
     $("inspectionDate").value =
       todayISO();
-
 
   if($("inspectionTime"))
     $("inspectionTime").value =
       nowTime();
 
-
   if($("tempDate"))
     $("tempDate").value =
       todayISO();
 
+  if($("tempTime"))
+    $("tempTime").value =
+      nowTime();
 
   if($("problemDate"))
     $("problemDate").value =
       todayISO();
 
-
   if($("evidenceDate"))
     $("evidenceDate").value =
       todayISO();
-
 
   if($("establishmentDate"))
     $("establishmentDate").value =
       todayISO();
 
-
   if($("establishmentStatus"))
     $("establishmentStatus").value =
       "ativo";
-
 
   populateEstablishmentSelects();
 
@@ -4846,7 +3471,6 @@ function init(){
   calculateChecklist();
 
   showPage("home");
-
 }
 
 
