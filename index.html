@@ -6,395 +6,74 @@
 <title>FoodSafe Moz</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
-
-body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#f4f7f6;
-  color:#17201d;
-}
-
-header{
-  background:linear-gradient(135deg,#0b7a4b,#075c39);
-  color:white;
-  padding:22px 18px;
-  text-align:center;
-  box-shadow:0 3px 12px rgba(0,0,0,.15);
-}
-
-header h1{
-  margin:0;
-  font-size:27px;
-}
-
-header p{
-  margin:7px 0 0;
-  opacity:.9;
-}
-
-nav{
-  display:flex;
-  overflow-x:auto;
-  gap:8px;
-  padding:10px;
-  background:white;
-  position:sticky;
-  top:0;
-  z-index:20;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
-}
-
-nav button{
-  border:0;
-  background:#eef3f1;
-  padding:11px 14px;
-  border-radius:10px;
-  font-weight:700;
-  white-space:nowrap;
-  cursor:pointer;
-}
-
-nav button.active{
-  background:#0b7a4b;
-  color:white;
-}
-
-main{
-  max-width:1100px;
-  margin:auto;
-  padding:18px;
-}
-
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
-
-.section-title{
-  margin:5px 0 18px;
-  color:#075c39;
-}
-
-.card{
-  background:white;
-  border-radius:16px;
-  padding:18px;
-  margin-bottom:18px;
-  box-shadow:0 3px 12px rgba(0,0,0,.07);
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:14px;
-}
-
-.stat{
-  background:white;
-  padding:18px;
-  border-radius:15px;
-  box-shadow:0 3px 10px rgba(0,0,0,.06);
-}
-
-.stat strong{
-  display:block;
-  font-size:27px;
-  color:#075c39;
-  margin-top:7px;
-}
-
-label{
-  display:block;
-  font-weight:700;
-  margin:13px 0 6px;
-}
-
-input,textarea,select{
-  width:100%;
-  padding:12px;
-  border:1px solid #ccd6d1;
-  border-radius:10px;
-  font-size:15px;
-  background:white;
-}
-
-textarea{
-  min-height:100px;
-  resize:vertical;
-}
-
-button{
-  font-family:inherit;
-}
-
-.primary{
-  border:0;
-  background:#0b7a4b;
-  color:white;
-  padding:13px 18px;
-  border-radius:10px;
-  font-weight:800;
-  cursor:pointer;
-  margin-top:14px;
-}
-
-.primary:hover{
-  background:#075c39;
-}
-
-.secondary{
-  border:0;
-  background:#e9f1ee;
-  color:#075c39;
-  padding:10px 14px;
-  border-radius:9px;
-  font-weight:700;
-  cursor:pointer;
-}
-
-.danger{
-  background:#fde9e8;
-  color:#a92720;
-}
-
-.check-item{
-  display:flex;
-  align-items:flex-start;
-  gap:12px;
-  padding:13px;
-  border-bottom:1px solid #edf0ef;
-}
-
-.check-item input{
-  width:auto;
-  margin-top:3px;
-}
-
-.progress{
-  height:14px;
-  background:#e7ecea;
-  border-radius:20px;
-  overflow:hidden;
-  margin:10px 0;
-}
-
-.progress-bar{
-  height:100%;
-  background:#0b7a4b;
-  transition:.3s;
-}
-
-.badge{
-  display:inline-block;
-  padding:7px 11px;
-  border-radius:999px;
-  font-size:13px;
-  font-weight:800;
-}
-
-.low{
-  background:#e8f7ed;
-  color:#19713b;
-}
-
-.medium{
-  background:#fff6d9;
-  color:#8a6500;
-}
-
-.high{
-  background:#fde9e8;
-  color:#a92720;
-}
-
-.problem{
-  border-left:5px solid #d9534f;
-  background:#fff;
-  border-radius:12px;
-  padding:15px;
-  margin-bottom:12px;
-  box-shadow:0 2px 8px rgba(0,0,0,.05);
-}
-
-.establishment-card{
-  background:white;
-  border-radius:15px;
-  padding:17px;
-  margin-bottom:12px;
-  box-shadow:0 3px 10px rgba(0,0,0,.06);
-}
-
-.establishment-card h3{
-  margin-top:0;
-  color:#075c39;
-}
-
-.timeline{
-  border-left:3px solid #0b7a4b;
-  padding-left:17px;
-  margin-left:5px;
-}
-
-.timeline-item{
-  position:relative;
-  margin-bottom:17px;
-}
-
-.timeline-item:before{
-  content:"";
-  position:absolute;
-  left:-25px;
-  top:4px;
-  width:11px;
-  height:11px;
-  border-radius:50%;
-  background:#0b7a4b;
-}
-
-.action-card{
-  border:1px solid #e1e7e4;
-  border-radius:14px;
-  padding:15px;
-  margin:12px 0;
-  background:#fbfcfc;
-}
-
-.action-controls{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:8px;
-  margin-top:12px;
-}
-
-.action-controls button{
-  border:0;
-  padding:10px 7px;
-  border-radius:9px;
-  font-weight:800;
-  cursor:pointer;
-  font-size:12px;
-}
-
-.btn-pendente{
-  background:#fde9e8;
-  color:#a92720;
-}
-
-.btn-andamento{
-  background:#fff6d9;
-  color:#8a6500;
-}
-
-.btn-resolvido{
-  background:#e8f7ed;
-  color:#19713b;
-}
-
-.action-status{
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:999px;
-  font-weight:800;
-  font-size:13px;
-  margin-top:8px;
-}
-
-.action-pendente{
-  background:#fde9e8;
-  color:#a92720;
-}
-
-.action-andamento{
-  background:#fff6d9;
-  color:#8a6500;
-}
-
-.action-resolvido{
-  background:#e8f7ed;
-  color:#19713b;
-}
-
-.overdue{
-  color:#b3261e;
-  font-weight:900;
-  margin-top:7px;
-}
-
-.empty{
-  padding:20px;
-  text-align:center;
-  color:#69756f;
-  background:#f8faf9;
-  border-radius:12px;
-}
-
-.profile-header{
-  background:linear-gradient(135deg,#0b7a4b,#064f31);
-  color:white;
-  padding:22px;
-  border-radius:18px;
-  margin-bottom:18px;
-}
-
-.profile-header h2{
-  margin:0 0 8px;
-}
-
-.profile-header p{
-  margin:4px 0;
-  opacity:.92;
-}
-
-.back{
-  margin-bottom:15px;
-}
-
-.report-button{
-  margin-top:10px;
-}
-
-.small{
-  font-size:13px;
-  color:#68736e;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-}
-
-th,td{
-  padding:10px;
-  border-bottom:1px solid #e6ebe8;
-  text-align:left;
-}
-
-th{
-  color:#075c39;
-}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f7f6;color:#17201d}
+header{background:linear-gradient(135deg,#0b7a4b,#075c39);color:#fff;padding:22px 18px;text-align:center;box-shadow:0 3px 12px rgba(0,0,0,.15)}
+header h1{margin:0;font-size:27px}
+header p{margin:7px 0 0;opacity:.9}
+nav{display:flex;overflow-x:auto;gap:8px;padding:10px;background:#fff;position:sticky;top:0;z-index:20;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+nav button{border:0;background:#eef3f1;padding:11px 14px;border-radius:10px;font-weight:700;white-space:nowrap;cursor:pointer}
+nav button.active{background:#0b7a4b;color:#fff}
+main{max-width:1100px;margin:auto;padding:18px}
+.page{display:none}
+.page.active{display:block}
+.section-title{margin:5px 0 18px;color:#075c39}
+.card{background:#fff;border-radius:16px;padding:18px;margin-bottom:18px;box-shadow:0 3px 12px rgba(0,0,0,.07)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.stat{background:#fff;padding:18px;border-radius:15px;box-shadow:0 3px 10px rgba(0,0,0,.06)}
+.stat strong{display:block;font-size:27px;color:#075c39;margin-top:7px}
+label{display:block;font-weight:700;margin:13px 0 6px}
+input,textarea,select{width:100%;padding:12px;border:1px solid #ccd6d1;border-radius:10px;font-size:15px;background:#fff}
+textarea{min-height:100px;resize:vertical}
+button{font-family:inherit}
+.primary{border:0;background:#0b7a4b;color:#fff;padding:13px 18px;border-radius:10px;font-weight:800;cursor:pointer;margin-top:14px}
+.primary:hover{background:#075c39}
+.secondary{border:0;background:#e9f1ee;color:#075c39;padding:10px 14px;border-radius:9px;font-weight:700;cursor:pointer}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:13px;border-bottom:1px solid #edf0ef}
+.check-item input{width:auto;margin-top:3px}
+.progress{height:14px;background:#e7ecea;border-radius:20px;overflow:hidden;margin:10px 0}
+.progress-bar{height:100%;background:#0b7a4b;transition:.3s}
+.badge{display:inline-block;padding:7px 11px;border-radius:999px;font-size:13px;font-weight:800}
+.low{background:#e8f7ed;color:#19713b}
+.medium{background:#fff6d9;color:#8a6500}
+.high{background:#fde9e8;color:#a92720}
+.problem{border-left:5px solid #d9534f;background:#fff;border-radius:12px;padding:15px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.establishment-card{background:#fff;border-radius:15px;padding:17px;margin-bottom:12px;box-shadow:0 3px 10px rgba(0,0,0,.06)}
+.establishment-card h3{margin-top:0;color:#075c39}
+.timeline{border-left:3px solid #0b7a4b;padding-left:17px;margin-left:5px}
+.timeline-item{position:relative;margin-bottom:17px}
+.timeline-item:before{content:"";position:absolute;left:-25px;top:4px;width:11px;height:11px;border-radius:50%;background:#0b7a4b}
+.action-card{border:1px solid #e1e7e4;border-radius:14px;padding:15px;margin:12px 0;background:#fbfcfc}
+.action-controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}
+.action-controls button{border:0;padding:10px 7px;border-radius:9px;font-weight:800;cursor:pointer;font-size:12px}
+.btn-pendente{background:#fde9e8;color:#a92720}
+.btn-andamento{background:#fff6d9;color:#8a6500}
+.btn-resolvido{background:#e8f7ed;color:#19713b}
+.action-status{display:inline-block;padding:6px 10px;border-radius:999px;font-weight:800;font-size:13px;margin-top:8px}
+.action-pendente{background:#fde9e8;color:#a92720}
+.action-andamento{background:#fff6d9;color:#8a6500}
+.action-resolvido{background:#e8f7ed;color:#19713b}
+.overdue{color:#b3261e;font-weight:900;margin-top:7px}
+.empty{padding:20px;text-align:center;color:#69756f;background:#f8faf9;border-radius:12px}
+.profile-header{background:linear-gradient(135deg,#0b7a4b,#064f31);color:#fff;padding:22px;border-radius:18px;margin-bottom:18px}
+.profile-header h2{margin:0 0 8px}
+.profile-header p{margin:4px 0;opacity:.92}
+.back{margin-bottom:15px}
+.report-button{margin-top:10px}
+.small{font-size:13px;color:#68736e}
+.info-box{padding:13px;border-radius:10px;background:#f1f6f3;margin-top:10px}
+.result-conforme{background:#e8f7ed;color:#19713b}
+.result-parcial{background:#fff6d9;color:#8a6500}
+.result-nao{background:#fde9e8;color:#a92720}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px;border-bottom:1px solid #e6ebe8;text-align:left}
+th{color:#075c39}
 
 @media(max-width:600px){
-  main{
-    padding:12px;
-  }
-
-  .action-controls{
-    grid-template-columns:1fr;
-  }
-
-  .grid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .stat strong{
-    font-size:22px;
-  }
+main{padding:12px}
+.action-controls{grid-template-columns:1fr}
+.grid{grid-template-columns:1fr 1fr}
+.stat strong{font-size:22px}
 }
 </style>
 </head>
@@ -402,2413 +81,1603 @@ th{
 <body>
 
 <header>
-  <h1>🛡️ FoodSafe Moz</h1>
-  <p>Alimentos seguros, famílias protegidas</p>
+<h1>🛡️ FoodSafe Moz</h1>
+<p>Alimentos seguros, famílias protegidas</p>
 </header>
 
 <nav>
-  <button data-go="inicio" class="active">🏠 Início</button>
-  <button data-go="temperatura">🌡️ Temperatura</button>
-  <button data-go="checklist">✅ Checklist</button>
-  <button data-go="problemas">⚠️ Problemas</button>
-  <button data-go="dashboard">📊 Dashboard</button>
-  <button data-go="historico">📜 Histórico</button>
-  <button data-go="estabelecimentos">🏢 Estabelecimentos</button>
+<button data-go="inicio" class="active">🏠 Início</button>
+<button data-go="temperatura">🌡️ Temperatura</button>
+<button data-go="checklist">✅ Checklist</button>
+<button data-go="problemas">⚠️ Problemas</button>
+<button data-go="dashboard">📊 Dashboard</button>
+<button data-go="historico">📜 Histórico</button>
+<button data-go="estabelecimentos">🏢 Estabelecimentos</button>
 </nav>
 
 <main>
 
-<!-- INÍCIO -->
 <section id="inicio" class="page active">
-  <h2 class="section-title">🏠 Início</h2>
+<h2 class="section-title">🏠 Início</h2>
 
-  <div class="card">
-    <h2>Bem-vindo ao FoodSafe Moz</h2>
-    <p>
-      Plataforma digital para apoiar a inspeção, monitorização e melhoria
-      da segurança dos alimentos.
-    </p>
-    <p>
-      Registe temperaturas, realize checklists, acompanhe problemas,
-      ações corretivas e evolução dos estabelecimentos.
-    </p>
-  </div>
+<div class="card">
+<h2>Bem-vindo ao FoodSafe Moz</h2>
+<p>Plataforma digital para apoiar a inspeção, monitorização e melhoria da segurança dos alimentos.</p>
+<p>Registe temperaturas, realize checklists, acompanhe problemas, ações corretivas e evolução dos estabelecimentos.</p>
+</div>
 
-  <div class="grid">
-    <div class="stat">
-      Inspeções
-      <strong id="homeInspections">0</strong>
-    </div>
-
-    <div class="stat">
-      Estabelecimentos
-      <strong id="homeEstablishments">0</strong>
-    </div>
-
-    <div class="stat">
-      Problemas
-      <strong id="homeProblems">0</strong>
-    </div>
-
-    <div class="stat">
-      Ações pendentes
-      <strong id="homePendingActions">0</strong>
-    </div>
-  </div>
+<div class="grid">
+<div class="stat">Inspeções<strong id="homeInspections">0</strong></div>
+<div class="stat">Estabelecimentos<strong id="homeEstablishments">0</strong></div>
+<div class="stat">Problemas<strong id="homeProblems">0</strong></div>
+<div class="stat">Ações pendentes<strong id="homePendingActions">0</strong></div>
+</div>
 </section>
 
 
-<!-- TEMPERATURA -->
 <section id="temperatura" class="page">
-  <h2 class="section-title">🌡️ Registo de Temperatura</h2>
+<h2 class="section-title">🌡️ Registo de Temperatura</h2>
 
-  <div class="card">
-    <label for="tempEquip">Equipamento / local</label>
-    <input id="tempEquip" placeholder="Ex.: Câmara frigorífica">
+<div class="card">
+<label for="tempEquip">Equipamento / local</label>
+<input id="tempEquip" placeholder="Ex.: Câmara frigorífica">
 
-    <label for="tempValue">Temperatura (°C)</label>
-    <input id="tempValue" type="number" step="0.1" placeholder="Ex.: 4">
+<label for="tempValue">Temperatura (°C)</label>
+<input id="tempValue" type="number" step="0.1" placeholder="Ex.: 4">
 
-    <button class="primary" id="saveTemp">Guardar temperatura</button>
-  </div>
+<button class="primary" id="saveTemp">Guardar temperatura</button>
+</div>
 
-  <div class="card">
-    <h3>Registos recentes</h3>
-    <div id="tempList"></div>
-  </div>
+<div class="card">
+<h3>Registos recentes</h3>
+<div id="tempList"></div>
+</div>
 </section>
 
 
-<!-- CHECKLIST -->
 <section id="checklist" class="page">
-  <h2 class="section-title">✅ Checklist de Inspeção</h2>
+<h2 class="section-title">✅ Checklist de Inspeção</h2>
 
-  <div class="card">
+<div class="card">
 
-    <label for="estabelecimento">Nome do estabelecimento</label>
-    <input id="estabelecimento" placeholder="Nome do estabelecimento">
+<label for="estabelecimento">Nome do estabelecimento *</label>
+<input id="estabelecimento" placeholder="Nome do estabelecimento">
 
-    <label for="responsavel">Responsável</label>
-    <input id="responsavel" placeholder="Nome do responsável">
+<label for="responsavel">Responsável do estabelecimento *</label>
+<input id="responsavel" placeholder="Nome do responsável">
 
-    <label for="inspectionDate">Data</label>
-    <input id="inspectionDate" type="date">
+<label for="inspetor">👮 Inspetor responsável *</label>
+<input id="inspetor" placeholder="Nome do inspetor">
 
-  </div>
+<label for="inspectionDate">📅 Data da inspeção *</label>
+<input id="inspectionDate" type="date">
 
-  <div class="card">
+<label for="inspectionTime">🕐 Hora da inspeção</label>
+<input id="inspectionTime" type="time">
 
-    <h3>Itens de verificação</h3>
+<label for="inspectionNotes">📝 Observações gerais</label>
+<textarea id="inspectionNotes" placeholder="Observações gerais da inspeção..."></textarea>
 
-    <div class="check-item">
-      <input type="checkbox" data-check>
-      <span>Os alimentos estão armazenados adequadamente?</span>
-    </div>
+</div>
 
-    <div class="check-item">
-      <input type="checkbox" data-check>
-      <span>As temperaturas dos alimentos são controladas?</span>
-    </div>
+<div class="card">
+<h3>Itens de verificação</h3>
 
-    <div class="check-item">
-      <input type="checkbox" data-check>
-      <span>Os equipamentos estão limpos?</span>
-    </div>
+<div class="check-item"><input type="checkbox" data-check><span>Os alimentos estão armazenados adequadamente?</span></div>
+<div class="check-item"><input type="checkbox" data-check><span>As temperaturas dos alimentos são controladas?</span></div>
+<div class="check-item"><input type="checkbox" data-check><span>Os equipamentos estão limpos?</span></div>
+<div class="check-item"><input type="checkbox" data-check><span>As superfícies de trabalho estão higienizadas?</span></div>
+<div class="check-item"><input type="checkbox" data-check><span>Os trabalhadores utilizam higiene adequada?</span></div>
+<div class="check-item"><input type="checkbox" data-check><span>Existe controlo de pragas?</span></div>
+<div class="check-item"><input type="checkbox" data-check><span>A água utilizada é segura?</span></div>
+<div class="check-item"><input type="checkbox" data-check><span>Os resíduos são corretamente eliminados?</span></div>
+<div class="check-item"><input type="checkbox" data-check><span>Existe prevenção de contaminação cruzada?</span></div>
+<div class="check-item"><input type="checkbox" data-check><span>Os produtos estão dentro do prazo de validade?</span></div>
 
-    <div class="check-item">
-      <input type="checkbox" data-check>
-      <span>As superfícies de trabalho estão higienizadas?</span>
-    </div>
-
-    <div class="check-item">
-      <input type="checkbox" data-check>
-      <span>Os trabalhadores utilizam higiene adequada?</span>
-    </div>
-
-    <div class="check-item">
-      <input type="checkbox" data-check>
-      <span>Existe controlo de pragas?</span>
-    </div>
-
-    <div class="check-item">
-      <input type="checkbox" data-check>
-      <span>A água utilizada é segura?</span>
-    </div>
-
-    <div class="check-item">
-      <input type="checkbox" data-check>
-      <span>Os resíduos são corretamente eliminados?</span>
-    </div>
-
-    <div class="check-item">
-      <input type="checkbox" data-check>
-      <span>Existe prevenção de contaminação cruzada?</span>
-    </div>
-
-    <div class="check-item">
-      <input type="checkbox" data-check>
-      <span>Os produtos estão dentro do prazo de validade?</span>
-    </div>
-
-    <button class="primary" id="saveInspection">
-      Guardar inspeção
-    </button>
-
-  </div>
+<button class="primary" id="saveInspection">💾 Guardar inspeção</button>
+</div>
 </section>
 
 
-<!-- PROBLEMAS -->
 <section id="problemas" class="page">
-  <h2 class="section-title">⚠️ Problemas e Ações Corretivas</h2>
+<h2 class="section-title">⚠️ Problemas e Ações Corretivas</h2>
 
-  <div class="card">
+<div class="card">
 
-    <label for="problemEstabelecimento">
-      Estabelecimento
-    </label>
+<label for="problemEstabelecimento">Estabelecimento</label>
+<input id="problemEstabelecimento" placeholder="Nome do estabelecimento">
 
-    <input
-      id="problemEstabelecimento"
-      placeholder="Nome do estabelecimento"
-    >
+<label for="problemDesc">Problema encontrado</label>
+<textarea id="problemDesc" placeholder="Descreva o problema encontrado..."></textarea>
 
-    <label for="problemDesc">
-      Problema encontrado
-    </label>
+<label for="corrective">Ação corretiva</label>
+<textarea id="corrective" placeholder="O que deve ser feito para corrigir?"></textarea>
 
-    <textarea
-      id="problemDesc"
-      placeholder="Descreva o problema encontrado..."
-    ></textarea>
+<label for="actionResponsible">Responsável pela ação</label>
+<input id="actionResponsible" placeholder="Nome do responsável">
 
-    <label for="corrective">
-      Ação corretiva
-    </label>
+<label for="actionDeadline">Prazo da ação</label>
+<input id="actionDeadline" type="date">
 
-    <textarea
-      id="corrective"
-      placeholder="O que deve ser feito para corrigir?"
-    ></textarea>
+<button class="primary" id="saveProblem">Guardar problema e ação</button>
+</div>
 
-    <label for="actionResponsible">
-      Responsável pela ação
-    </label>
-
-    <input
-      id="actionResponsible"
-      placeholder="Nome do responsável"
-    >
-
-    <label for="actionDeadline">
-      Prazo da ação
-    </label>
-
-    <input
-      id="actionDeadline"
-      type="date"
-    >
-
-    <button class="primary" id="saveProblem">
-      Guardar problema e ação
-    </button>
-
-  </div>
-
-  <div class="card">
-    <h3>Problemas registados</h3>
-    <div id="problemList"></div>
-  </div>
+<div class="card">
+<h3>Problemas registados</h3>
+<div id="problemList"></div>
+</div>
 </section>
 
 
-<!-- DASHBOARD -->
 <section id="dashboard" class="page">
-  <h2 class="section-title">📊 Dashboard</h2>
+<h2 class="section-title">📊 Dashboard</h2>
 
-  <div class="grid">
-
-    <div class="stat">
-      Total de inspeções
-      <strong id="dashInspections">0</strong>
-    </div>
-
-    <div class="stat">
-      Total de estabelecimentos
-      <strong id="dashEstablishments">0</strong>
-    </div>
-
-    <div class="stat">
-      Problemas
-      <strong id="dashProblems">0</strong>
-    </div>
-
-    <div class="stat">
-      Ações pendentes
-      <strong id="dashPending">0</strong>
-    </div>
-
-    <div class="stat">
-      Em andamento
-      <strong id="dashProgress">0</strong>
-    </div>
-
-    <div class="stat">
-      Resolvidas
-      <strong id="dashResolved">0</strong>
-    </div>
-
-    <div class="stat">
-      Ações atrasadas
-      <strong id="dashOverdue">0</strong>
-    </div>
-
-  </div>
+<div class="grid">
+<div class="stat">Total de inspeções<strong id="dashInspections">0</strong></div>
+<div class="stat">Total de estabelecimentos<strong id="dashEstablishments">0</strong></div>
+<div class="stat">Problemas<strong id="dashProblems">0</strong></div>
+<div class="stat">Ações pendentes<strong id="dashPending">0</strong></div>
+<div class="stat">Em andamento<strong id="dashProgress">0</strong></div>
+<div class="stat">Resolvidas<strong id="dashResolved">0</strong></div>
+<div class="stat">Ações atrasadas<strong id="dashOverdue">0</strong></div>
+</div>
 </section>
 
 
-<!-- HISTÓRICO -->
 <section id="historico" class="page">
-  <h2 class="section-title">📜 Histórico de Inspeções</h2>
-
-  <div class="card">
-    <div id="historyList"></div>
-  </div>
+<h2 class="section-title">📜 Histórico de Inspeções</h2>
+<div class="card">
+<div id="historyList"></div>
+</div>
 </section>
 
 
-<!-- ESTABELECIMENTOS -->
 <section id="estabelecimentos" class="page">
-  <h2 class="section-title">🏢 Estabelecimentos</h2>
-
-  <div id="establishmentList"></div>
+<h2 class="section-title">🏢 Estabelecimentos</h2>
+<div id="establishmentList"></div>
 </section>
 
 
-<!-- PERFIL -->
 <section id="perfil" class="page">
-  <div class="back">
-    <button class="secondary" data-go="estabelecimentos">
-      ← Voltar aos estabelecimentos
-    </button>
-  </div>
-
-  <div id="profileContent"></div>
+<div class="back">
+<button class="secondary" data-go="estabelecimentos">← Voltar aos estabelecimentos</button>
+</div>
+<div id="profileContent"></div>
 </section>
 
 </main>
 
-
 <script>
 
-const KEY = "foodsafemoz_v2";
+const KEY="foodsafemoz_v2";
 
-let data = {
-  inspections: [],
-  temps: [],
-  problems: []
+let data={
+inspections:[],
+temps:[],
+problems:[]
 };
 
-
-/* =========================
-   UTILIDADES
-========================= */
-
 function $(id){
-  return document.getElementById(id);
+return document.getElementById(id);
 }
 
 function normalizeName(name){
-  return String(name || "")
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g," ");
+return String(name||"").trim().toLowerCase().replace(/\s+/g," ");
 }
 
 function save(){
-  localStorage.setItem(KEY, JSON.stringify(data));
+localStorage.setItem(KEY,JSON.stringify(data));
 }
 
 function load(){
 
-  try{
+try{
 
-    const saved = localStorage.getItem(KEY);
+const saved=localStorage.getItem(KEY);
 
-    if(saved){
+if(saved){
 
-      const parsed = JSON.parse(saved);
+const parsed=JSON.parse(saved);
 
-      data = {
-        inspections: Array.isArray(parsed.inspections)
-          ? parsed.inspections
-          : [],
+data={
+inspections:Array.isArray(parsed.inspections)?parsed.inspections:[],
+temps:Array.isArray(parsed.temps)?parsed.temps:[],
+problems:Array.isArray(parsed.problems)?parsed.problems:[]
+};
 
-        temps: Array.isArray(parsed.temps)
-          ? parsed.temps
-          : [],
-
-        problems: Array.isArray(parsed.problems)
-          ? parsed.problems
-          : []
-      };
-
-    }
-
-  }catch(error){
-
-    console.error(error);
-
-  }
 }
 
-function formatDate(date){
-
-  if(!date) return "Não informado";
-
-  const d = new Date(date);
-
-  if(isNaN(d.getTime())) return date;
-
-  return d.toLocaleDateString("pt-MZ");
+}catch(error){
+console.error(error);
+}
 
 }
 
 function todayISO(){
 
-  const d = new Date();
+const d=new Date();
 
-  const month = String(d.getMonth()+1).padStart(2,"0");
-  const day = String(d.getDate()).padStart(2,"0");
-
-  return `${d.getFullYear()}-${month}-${day}`;
-
-}
-
-function isOverdue(action){
-
-  if(!action.prazo) return false;
-
-  if((action.status || "pendente") === "resolvido"){
-    return false;
-  }
-
-  return action.prazo < todayISO();
+return d.getFullYear()+"-"+
+String(d.getMonth()+1).padStart(2,"0")+"-"+
+String(d.getDate()).padStart(2,"0");
 
 }
 
-function getStatus(action){
+function formatDate(value){
 
-  return action.status || "pendente";
+if(!value)return"Não informado";
 
-}
+const d=new Date(value);
 
-function statusText(status){
+if(isNaN(d.getTime()))return value;
 
-  if(status === "andamento"){
-    return "Em andamento";
-  }
-
-  if(status === "resolvido"){
-    return "Resolvido";
-  }
-
-  return "Pendente";
+return d.toLocaleDateString("pt-MZ");
 
 }
 
-function statusClass(status){
+function escapeHTML(value){
 
-  if(status === "andamento"){
-    return "action-andamento";
-  }
-
-  if(status === "resolvido"){
-    return "action-resolvido";
-  }
-
-  return "action-pendente";
+return String(value??"")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
 
 }
 
+function getEstablishments(){
 
-/* =========================
-   NAVEGAÇÃO
-========================= */
+const map={};
+
+data.inspections.forEach(function(ins){
+
+const name=String(ins.estabelecimento||"").trim();
+
+if(!name)return;
+
+const key=normalizeName(name);
+
+if(!map[key]){
+map[key]={name:name,inspections:[]};
+}
+
+map[key].inspections.push(ins);
+
+});
+
+return Object.values(map);
+}
+
+
+/* NAVEGAÇÃO */
 
 function showPage(id){
 
-  document.querySelectorAll(".page").forEach(function(page){
+document.querySelectorAll(".page").forEach(function(page){
+page.classList.remove("active");
+});
 
-    page.classList.remove("active");
+const page=$(id);
 
-  });
+if(page)page.classList.add("active");
 
-  const page = $(id);
+document.querySelectorAll("nav button").forEach(function(button){
 
-  if(page){
-    page.classList.add("active");
-  }
+button.classList.remove("active");
 
-  document.querySelectorAll("nav button").forEach(function(button){
+if(button.dataset.go===id){
+button.classList.add("active");
+}
 
-    button.classList.remove("active");
+});
 
-    if(button.dataset.go === id){
-      button.classList.add("active");
-    }
+window.scrollTo({top:0,behavior:"smooth"});
 
-  });
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-  updateAll();
+updateAll();
 
 }
 
 document.addEventListener("click",function(event){
 
-  const button = event.target.closest("[data-go]");
+const button=event.target.closest("[data-go]");
 
-  if(button){
-
-    showPage(button.dataset.go);
-
-  }
+if(button){
+showPage(button.dataset.go);
+}
 
 });
 
 
-/* =========================
-   ESTABELECIMENTOS
-========================= */
-
-function getEstablishments(){
-
-  const map = {};
-
-  data.inspections.forEach(function(ins){
-
-    const name = String(
-      ins.estabelecimento || ""
-    ).trim();
-
-    if(!name) return;
-
-    const key = normalizeName(name);
-
-    if(!map[key]){
-
-      map[key] = {
-        name:name,
-        inspections:[]
-      };
-
-    }
-
-    map[key].inspections.push(ins);
-
-  });
-
-  return Object.values(map);
-
-}
-
-
-/* =========================
-   SALVAR TEMPERATURA
-========================= */
+/* TEMPERATURA */
 
 $("saveTemp").addEventListener("click",function(){
 
-  const equip = $("tempEquip").value.trim();
-  const value = $("tempValue").value.trim();
+const equip=$("tempEquip").value.trim();
+const value=$("tempValue").value.trim();
 
-  if(!equip || value === ""){
+if(!equip||value===""){
+alert("Preencha o equipamento e a temperatura.");
+return;
+}
 
-    alert("Preencha o equipamento e a temperatura.");
+data.temps.push({
+equip:equip,
+value:Number(value),
+date:new Date().toLocaleString("pt-MZ")
+});
 
-    return;
+save();
 
-  }
+$("tempEquip").value="";
+$("tempValue").value="";
 
-  data.temps.push({
+updateAll();
 
-    equip:equip,
-    value:Number(value),
-    date:new Date().toLocaleString("pt-MZ")
-
-  });
-
-  save();
-
-  $("tempEquip").value = "";
-  $("tempValue").value = "";
-
-  updateAll();
-
-  alert("Temperatura guardada com sucesso.");
+alert("Temperatura guardada com sucesso.");
 
 });
 
 
-/* =========================
-   CHECKLIST
-========================= */
+/* NOVA INSPEÇÃO PROFISSIONAL */
 
 $("saveInspection").addEventListener("click",function(){
 
-  const estabelecimento =
-    $("estabelecimento").value.trim();
+const estabelecimento=$("estabelecimento").value.trim();
+const responsavel=$("responsavel").value.trim();
+const inspetor=$("inspetor").value.trim();
+const date=$("inspectionDate").value||todayISO();
+const time=$("inspectionTime").value||"";
+const notes=$("inspectionNotes").value.trim();
 
-  const responsavel =
-    $("responsavel").value.trim();
+if(!estabelecimento){
+alert("Informe o nome do estabelecimento.");
+return;
+}
 
-  const date =
-    $("inspectionDate").value || todayISO();
+if(!responsavel){
+alert("Informe o responsável do estabelecimento.");
+return;
+}
 
-  if(!estabelecimento){
+if(!inspetor){
+alert("Informe o inspetor responsável.");
+return;
+}
 
-    alert("Informe o nome do estabelecimento.");
+const checks=Array.from(
+document.querySelectorAll("[data-check]")
+);
 
-    return;
+const yes=checks.filter(function(check){
+return check.checked;
+}).length;
 
-  }
+const total=checks.length;
 
-  if(!responsavel){
+const percentage=total?
+Math.round((yes/total)*100):0;
 
-    alert("Informe o responsável.");
+let resultado="Não conforme";
 
-    return;
+if(percentage>=80){
+resultado="Conforme";
+}else if(percentage>=60){
+resultado="Parcialmente conforme";
+}
 
-  }
+const inspectionId=
+"FSM-"+Date.now().toString().slice(-8);
 
-  const checks =
-    Array.from(
-      document.querySelectorAll("[data-check]")
-    );
+data.inspections.push({
 
-  const yes =
-    checks.filter(function(check){
-      return check.checked;
-    }).length;
+id:inspectionId,
 
-  data.inspections.push({
+estabelecimento:estabelecimento,
 
-    estabelecimento:estabelecimento,
+responsavel:responsavel,
 
-    responsavel:responsavel,
+inspetor:inspetor,
 
-    date:date,
+date:date,
 
-    yes:yes,
+time:time,
 
-    total:checks.length
+notes:notes,
 
-  });
+yes:yes,
 
-  save();
+total:total,
 
-  $("estabelecimento").value = "";
-  $("responsavel").value = "";
-  $("inspectionDate").value = "";
+percentage:percentage,
 
-  checks.forEach(function(check){
-    check.checked = false;
-  });
+resultado:resultado,
 
-  updateAll();
+createdAt:new Date().toISOString()
 
-  alert("Inspeção guardada com sucesso.");
+});
+
+save();
+
+$("estabelecimento").value="";
+$("responsavel").value="";
+$("inspetor").value="";
+$("inspectionDate").value=todayISO();
+$("inspectionTime").value="";
+$("inspectionNotes").value="";
+
+checks.forEach(function(check){
+check.checked=false;
+});
+
+updateAll();
+
+alert(
+"Inspeção "+inspectionId+
+" guardada com sucesso!\n\n"+
+"Resultado: "+resultado+
+"\nConformidade: "+percentage+"%"
+);
 
 });
 
 
-/* =========================
-   GUARDAR PROBLEMA
-========================= */
+/* PROBLEMAS */
 
 $("saveProblem").addEventListener("click",function(){
 
-  const estabelecimento =
-    $("problemEstabelecimento").value.trim();
+const estabelecimento=$("problemEstabelecimento").value.trim();
+const desc=$("problemDesc").value.trim();
+const corrective=$("corrective").value.trim();
+const responsavel=$("actionResponsible").value.trim();
+const prazo=$("actionDeadline").value;
 
-  const desc =
-    $("problemDesc").value.trim();
+if(!desc){
+alert("Descreva o problema.");
+return;
+}
 
-  const corrective =
-    $("corrective").value.trim();
+data.problems.push({
 
-  const responsavel =
-    $("actionResponsible").value.trim();
+estabelecimento:estabelecimento||"Estabelecimento não associado",
 
-  const prazo =
-    $("actionDeadline").value;
+desc:desc,
 
-  if(!desc){
+corrective:corrective||"Não informada",
 
-    alert("Descreva o problema.");
+responsavel:responsavel||"Não informado",
 
-    return;
+prazo:prazo||"",
 
-  }
+status:"pendente",
 
-  data.problems.push({
+date:new Date().toLocaleString("pt-MZ")
 
-    estabelecimento:
-      estabelecimento ||
-      "Estabelecimento não associado",
+});
 
-    desc:desc,
+save();
 
-    corrective:
-      corrective ||
-      "Não informada",
+$("problemEstabelecimento").value="";
+$("problemDesc").value="";
+$("corrective").value="";
+$("actionResponsible").value="";
+$("actionDeadline").value="";
 
-    responsavel:
-      responsavel ||
-      "Não informado",
+updateAll();
 
-    prazo:
-      prazo ||
-      "",
-
-    status:"pendente",
-
-    date:
-      new Date().toLocaleString("pt-MZ")
-
-  });
-
-  save();
-
-  $("problemEstabelecimento").value = "";
-  $("problemDesc").value = "";
-  $("corrective").value = "";
-  $("actionResponsible").value = "";
-  $("actionDeadline").value = "";
-
-  updateAll();
-
-  alert(
-    "Problema e ação corretiva registados com sucesso."
-  );
+alert("Problema e ação corretiva registados com sucesso.");
 
 });
 
 
-/* =========================
-   ATUALIZAÇÃO GERAL
-========================= */
-
-function updateAll(){
-
-  renderTemps();
-
-  renderProblems();
-
-  renderDashboard();
-
-  renderHistory();
-
-  renderEstablishments();
-
-  renderHome();
-
-  if($("perfil").classList.contains("active")){
-
-    renderProfile();
-
-  }
-
-}
-
-
-/* =========================
-   TEMPERATURAS
-========================= */
-
-function renderTemps(){
-
-  const container = $("tempList");
-
-  if(!data.temps.length){
-
-    container.innerHTML =
-      '<div class="empty">Nenhum registo de temperatura.</div>';
-
-    return;
-
-  }
-
-  container.innerHTML =
-    data.temps
-      .slice()
-      .reverse()
-      .map(function(temp){
-
-        return `
-          <div class="problem" style="border-left-color:#0b7a4b">
-            <strong>${escapeHTML(temp.equip)}</strong>
-            <div>
-              Temperatura:
-              <strong>${escapeHTML(temp.value)} °C</strong>
-            </div>
-            <div class="small">
-              ${escapeHTML(temp.date)}
-            </div>
-          </div>
-        `;
-
-      })
-      .join("");
-
-}
-
-
-/* =========================
-   PROBLEMAS
-========================= */
-
-function renderProblems(){
-
-  const container = $("problemList");
-
-  if(!data.problems.length){
-
-    container.innerHTML =
-      '<div class="empty">Nenhum problema registado.</div>';
-
-    return;
-
-  }
-
-  container.innerHTML =
-    data.problems
-      .slice()
-      .reverse()
-      .map(function(problem){
-
-        const status =
-          getStatus(problem);
-
-        const overdue =
-          isOverdue(problem);
-
-        return `
-          <div class="problem">
-
-            <strong>
-              ${escapeHTML(problem.estabelecimento || "Sem estabelecimento")}
-            </strong>
-
-            <p>
-              <b>Problema:</b>
-              ${escapeHTML(problem.desc || "")}
-            </p>
-
-            <p>
-              <b>Ação corretiva:</b>
-              ${escapeHTML(problem.corrective || "Não informada")}
-            </p>
-
-            <p>
-              <b>Responsável:</b>
-              ${escapeHTML(problem.responsavel || "Não informado")}
-            </p>
-
-            <p>
-              <b>Prazo:</b>
-              ${problem.prazo
-                ? formatDate(problem.prazo)
-                : "Não definido"}
-            </p>
-
-            <span class="action-status ${statusClass(status)}">
-              ${statusText(status)}
-            </span>
-
-            ${
-              overdue
-              ?
-              `<div class="overdue">
-                ⚠️ PRAZO ULTRAPASSADO
-              </div>`
-              :
-              ""
-            }
-
-            <div class="small" style="margin-top:8px">
-              Registado em:
-              ${escapeHTML(problem.date || "")}
-            </div>
-
-          </div>
-        `;
-
-      })
-      .join("");
-
-}
-
-
-/* =========================
-   DASHBOARD
-========================= */
+/* ESTATÍSTICAS */
 
 function getActionStats(){
 
-  const actions =
-    data.problems.filter(function(problem){
+const actions=data.problems.filter(function(p){
+return String(p.corrective||"").trim()!=="Não informada";
+});
 
-      return String(
-        problem.corrective || ""
-      ).trim() !== "Não informada";
+return{
 
-    });
+total:actions.length,
 
-  const pending =
-    actions.filter(function(action){
+pending:actions.filter(p=>(p.status||"pendente")==="pendente").length,
 
-      return getStatus(action) === "pendente";
+progress:actions.filter(p=>p.status==="andamento").length,
 
-    });
+resolved:actions.filter(p=>p.status==="resolvido").length,
 
-  const progress =
-    actions.filter(function(action){
+overdue:actions.filter(function(p){
 
-      return getStatus(action) === "andamento";
+return p.prazo&&
+p.prazo<todayISO()&&
+(p.status||"pendente")!=="resolvido";
 
-    });
+}).length
 
-  const resolved =
-    actions.filter(function(action){
-
-      return getStatus(action) === "resolvido";
-
-    });
-
-  const overdue =
-    actions.filter(function(action){
-
-      return isOverdue(action);
-
-    });
-
-  return {
-    total:actions.length,
-    pending:pending.length,
-    progress:progress.length,
-    resolved:resolved.length,
-    overdue:overdue.length
-  };
+};
 
 }
+
+
+/* UPDATE */
+
+function updateAll(){
+
+renderTemps();
+renderProblems();
+renderDashboard();
+renderHistory();
+renderEstablishments();
+renderHome();
+
+if($("perfil").classList.contains("active")){
+renderProfile();
+}
+
+}
+
+
+/* TEMPERATURAS */
+
+function renderTemps(){
+
+const container=$("tempList");
+
+if(!data.temps.length){
+
+container.innerHTML=
+'<div class="empty">Nenhum registo de temperatura.</div>';
+
+return;
+}
+
+container.innerHTML=data.temps.slice().reverse().map(function(temp){
+
+return`
+<div class="problem" style="border-left-color:#0b7a4b">
+<strong>${escapeHTML(temp.equip)}</strong>
+<div>Temperatura: <strong>${escapeHTML(temp.value)} °C</strong></div>
+<div class="small">${escapeHTML(temp.date)}</div>
+</div>
+`;
+
+}).join("");
+
+}
+
+
+/* PROBLEMAS */
+
+function renderProblems(){
+
+const container=$("problemList");
+
+if(!data.problems.length){
+
+container.innerHTML=
+'<div class="empty">Nenhum problema registado.</div>';
+
+return;
+}
+
+container.innerHTML=data.problems.slice().reverse().map(function(problem){
+
+const status=problem.status||"pendente";
+
+const overdue=
+problem.prazo&&
+problem.prazo<todayISO()&&
+status!=="resolvido";
+
+return`
+<div class="problem">
+
+<strong>${escapeHTML(problem.estabelecimento||"Sem estabelecimento")}</strong>
+
+<p><b>Problema:</b><br>
+${escapeHTML(problem.desc||"")}</p>
+
+<p><b>Ação corretiva:</b><br>
+${escapeHTML(problem.corrective||"Não informada")}</p>
+
+<p><b>Responsável:</b><br>
+${escapeHTML(problem.responsavel||"Não informado")}</p>
+
+<p><b>Prazo:</b>
+${problem.prazo?escapeHTML(formatDate(problem.prazo)):"Não definido"}
+</p>
+
+<span class="action-status ${
+status==="resolvido"
+?"action-resolvido"
+:status==="andamento"
+?"action-andamento"
+:"action-pendente"
+}">
+${
+status==="resolvido"
+?"Resolvido"
+:status==="andamento"
+?"Em andamento"
+:"Pendente"
+}
+</span>
+
+${overdue?'<div class="overdue">⚠️ PRAZO ULTRAPASSADO</div>':""}
+
+</div>
+`;
+
+}).join("");
+
+}
+
+
+/* DASHBOARD */
 
 function renderDashboard(){
 
-  const stats =
-    getActionStats();
+const stats=getActionStats();
 
-  $("dashInspections").textContent =
-    data.inspections.length;
-
-  $("dashEstablishments").textContent =
-    getEstablishments().length;
-
-  $("dashProblems").textContent =
-    data.problems.length;
-
-  $("dashPending").textContent =
-    stats.pending;
-
-  $("dashProgress").textContent =
-    stats.progress;
-
-  $("dashResolved").textContent =
-    stats.resolved;
-
-  $("dashOverdue").textContent =
-    stats.overdue;
+$("dashInspections").textContent=data.inspections.length;
+$("dashEstablishments").textContent=getEstablishments().length;
+$("dashProblems").textContent=data.problems.length;
+$("dashPending").textContent=stats.pending;
+$("dashProgress").textContent=stats.progress;
+$("dashResolved").textContent=stats.resolved;
+$("dashOverdue").textContent=stats.overdue;
 
 }
 
 
-/* =========================
-   HOME
-========================= */
+/* HOME */
 
 function renderHome(){
 
-  const stats =
-    getActionStats();
+const stats=getActionStats();
 
-  $("homeInspections").textContent =
-    data.inspections.length;
-
-  $("homeEstablishments").textContent =
-    getEstablishments().length;
-
-  $("homeProblems").textContent =
-    data.problems.length;
-
-  $("homePendingActions").textContent =
-    stats.pending;
+$("homeInspections").textContent=data.inspections.length;
+$("homeEstablishments").textContent=getEstablishments().length;
+$("homeProblems").textContent=data.problems.length;
+$("homePendingActions").textContent=stats.pending;
 
 }
 
 
-/* =========================
-   HISTÓRICO
-========================= */
+/* HISTÓRICO */
 
 function renderHistory(){
 
-  const container =
-    $("historyList");
+const container=$("historyList");
 
-  if(!data.inspections.length){
+if(!data.inspections.length){
 
-    container.innerHTML =
-      '<div class="empty">Nenhuma inspeção realizada.</div>';
+container.innerHTML=
+'<div class="empty">Nenhuma inspeção realizada.</div>';
 
-    return;
+return;
+}
 
-  }
+container.innerHTML=data.inspections.slice().reverse().map(function(ins){
 
-  container.innerHTML =
-    data.inspections
-      .slice()
-      .reverse()
-      .map(function(ins){
+const percentage=
+ins.percentage!==undefined
+?ins.percentage
+:(ins.total?Math.round((ins.yes/ins.total)*100):0);
 
-        const total =
-          Number(ins.total) || 0;
+const resultado=
+ins.resultado||
+(percentage>=80?"Conforme":percentage>=60?"Parcialmente conforme":"Não conforme");
 
-        const yes =
-          Number(ins.yes) || 0;
+const resultClass=
+resultado==="Conforme"
+?"result-conforme"
+:resultado==="Parcialmente conforme"
+?"result-parcial"
+:"result-nao";
 
-        const percentage =
-          total
-          ? Math.round((yes / total) * 100)
-          : 0;
+return`
+<div class="establishment-card">
 
-        return `
-          <div class="establishment-card">
+<h3>🆔 ${escapeHTML(ins.id||"Inspeção antiga")}</h3>
 
-            <h3>
-              ${escapeHTML(
-                ins.estabelecimento ||
-                "Sem estabelecimento"
-              )}
-            </h3>
+<h3>🏢 ${escapeHTML(ins.estabelecimento||"Sem estabelecimento")}</h3>
 
-            <p>
-              <b>Responsável:</b>
-              ${escapeHTML(
-                ins.responsavel ||
-                "Não informado"
-              )}
-            </p>
+<div class="grid">
 
-            <p>
-              <b>Data:</b>
-              ${escapeHTML(
-                formatDate(ins.date)
-              )}
-            </p>
+<div>
+<b>Data</b>
+<div>${escapeHTML(formatDate(ins.date))}</div>
+</div>
 
-            <p>
-              <b>Conformidade:</b>
-              ${percentage}%
-            </p>
+<div>
+<b>Hora</b>
+<div>${escapeHTML(ins.time||"Não informada")}</div>
+</div>
 
-            <div class="progress">
-              <div
-                class="progress-bar"
-                style="width:${percentage}%"
-              ></div>
-            </div>
+<div>
+<b>Inspetor</b>
+<div>${escapeHTML(ins.inspetor||"Não informado")}</div>
+</div>
 
-          </div>
-        `;
+<div>
+<b>Responsável</b>
+<div>${escapeHTML(ins.responsavel||"Não informado")}</div>
+</div>
 
-      })
-      .join("");
+</div>
+
+<p>
+<b>Conformidade:</b> ${percentage}%
+</p>
+
+<span class="badge ${resultClass}">
+${escapeHTML(resultado)}
+</span>
+
+<div class="progress">
+<div class="progress-bar" style="width:${percentage}%"></div>
+</div>
+
+${
+ins.notes
+?
+`<div class="info-box">
+<b>📝 Observações:</b><br>
+${escapeHTML(ins.notes)}
+</div>`
+:""
+}
+
+</div>
+`;
+
+}).join("");
 
 }
 
 
-/* =========================
-   LISTA DE ESTABELECIMENTOS
-========================= */
+/* ESTABELECIMENTOS */
 
 function renderEstablishments(){
 
-  const container =
-    $("establishmentList");
+const container=$("establishmentList");
 
-  const establishments =
-    getEstablishments();
+const establishments=getEstablishments();
 
-  if(!establishments.length){
+if(!establishments.length){
 
-    container.innerHTML =
-      '<div class="empty">Ainda não existem estabelecimentos registados.</div>';
+container.innerHTML=
+'<div class="empty">Ainda não existem estabelecimentos registados.</div>';
 
-    return;
+return;
+}
 
-  }
+container.innerHTML=establishments.map(function(est){
 
-  container.innerHTML =
-    establishments
-      .map(function(establishment){
+const inspections=est.inspections;
 
-        const inspections =
-          establishment.inspections;
+const percentages=inspections.map(function(ins){
 
-        const total =
-          inspections.reduce(
-            function(sum,inspection){
+if(ins.percentage!==undefined)return Number(ins.percentage);
 
-              const total =
-                Number(inspection.total) || 0;
+return ins.total
+?Math.round((Number(ins.yes||0)/Number(ins.total))*100)
+:0;
 
-              const yes =
-                Number(inspection.yes) || 0;
+});
 
-              return sum +
-                (total
-                  ? (yes / total) * 100
-                  : 0);
+const average=percentages.length
+?Math.round(percentages.reduce((a,b)=>a+b,0)/percentages.length)
+:0;
 
-            },
-            0
-          );
+const problems=data.problems.filter(function(p){
 
-        const average =
-          inspections.length
-          ? Math.round(total / inspections.length)
-          : 0;
+return normalizeName(p.estabelecimento)===
+normalizeName(est.name);
 
-        const problems =
-          data.problems.filter(function(problem){
+});
 
-            return normalizeName(
-              problem.estabelecimento
-            ) ===
-            normalizeName(
-              establishment.name
-            );
+const actions=problems.filter(function(p){
+return String(p.corrective||"").trim()!=="Não informada";
+});
 
-          });
+const pending=actions.filter(function(a){
+return(a.status||"pendente")==="pendente";
+}).length;
 
-        const actions =
-          problems.filter(function(problem){
+return`
+<div class="establishment-card">
 
-            return String(
-              problem.corrective || ""
-            ).trim() !== "Não informada";
+<h3>🏢 ${escapeHTML(est.name)}</h3>
 
-          });
+<div class="grid">
 
-        const pending =
-          actions.filter(function(action){
+<div>
+<b>Inspeções</b>
+<div>${inspections.length}</div>
+</div>
 
-            return getStatus(action) === "pendente";
+<div>
+<b>Conformidade</b>
+<div>${average}%</div>
+</div>
 
-          }).length;
+<div>
+<b>Problemas</b>
+<div>${problems.length}</div>
+</div>
 
-        return `
-          <div class="establishment-card">
+<div>
+<b>Ações pendentes</b>
+<div>${pending}</div>
+</div>
 
-            <h3>
-              🏢 ${escapeHTML(establishment.name)}
-            </h3>
+</div>
 
-            <div class="grid">
+<button class="primary" data-profile="${escapeHTML(est.name)}">
+👁️ Ver perfil
+</button>
 
-              <div>
-                <b>Inspeções</b>
-                <div>${inspections.length}</div>
-              </div>
+</div>
+`;
 
-              <div>
-                <b>Conformidade</b>
-                <div>${average}%</div>
-              </div>
+}).join("");
 
-              <div>
-                <b>Problemas</b>
-                <div>${problems.length}</div>
-              </div>
+document.querySelectorAll("[data-profile]").forEach(function(button){
 
-              <div>
-                <b>Ações pendentes</b>
-                <div>${pending}</div>
-              </div>
+button.onclick=function(){
+openProfile(button.dataset.profile);
+};
 
-            </div>
-
-            <button
-              class="primary"
-              data-profile="${escapeAttribute(establishment.name)}"
-            >
-              👁️ Ver perfil
-            </button>
-
-          </div>
-        `;
-
-      })
-      .join("");
-
-  document
-    .querySelectorAll("[data-profile]")
-    .forEach(function(button){
-
-      button.onclick = function(){
-
-        openProfile(
-          button.dataset.profile
-        );
-
-      };
-
-    });
+});
 
 }
 
 
-/* =========================
-   ABRIR PERFIL
-========================= */
+/* PERFIL */
 
-let currentProfileName = "";
+let currentProfileName="";
 
 function openProfile(name){
 
-  currentProfileName = name;
-
-  showPage("perfil");
-
-  renderProfile();
+currentProfileName=name;
+showPage("perfil");
+renderProfile();
 
 }
-
-
-/* =========================
-   PERFIL DO ESTABELECIMENTO
-========================= */
 
 function renderProfile(){
 
-  const container =
-    $("profileContent");
+const container=$("profileContent");
 
-  if(!currentProfileName){
+const establishment=getEstablishments().find(function(est){
 
-    container.innerHTML =
-      '<div class="empty">Estabelecimento não selecionado.</div>';
+return normalizeName(est.name)===normalizeName(currentProfileName);
 
-    return;
+});
 
-  }
+if(!establishment){
 
-  const establishment =
-    getEstablishments()
-      .find(function(item){
+container.innerHTML=
+'<div class="empty">Estabelecimento não encontrado.</div>';
 
-        return normalizeName(item.name) ===
-          normalizeName(currentProfileName);
+return;
+}
 
-      });
+const inspections=establishment.inspections;
 
-  if(!establishment){
+const latest=inspections[inspections.length-1];
 
-    container.innerHTML =
-      '<div class="empty">Estabelecimento não encontrado.</div>';
+const percentages=inspections.map(function(ins){
 
-    return;
+if(ins.percentage!==undefined)return Number(ins.percentage);
 
-  }
+return ins.total
+?Math.round((Number(ins.yes||0)/Number(ins.total))*100)
+:0;
 
-  const inspections =
-    establishment.inspections;
+});
 
-  const latest =
-    inspections
-      .slice()
-      .sort(function(a,b){
+const average=percentages.length
+?Math.round(percentages.reduce((a,b)=>a+b,0)/percentages.length)
+:0;
 
-        return new Date(b.date) -
-               new Date(a.date);
+let risk="Baixo";
+let riskClass="low";
 
-      })[0];
+if(average<60){
+risk="Alto";
+riskClass="high";
+}else if(average<80){
+risk="Moderado";
+riskClass="medium";
+}
 
-  let average = 0;
+const problems=data.problems.filter(function(p){
 
-  if(inspections.length){
+return normalizeName(p.estabelecimento)===
+normalizeName(establishment.name);
 
-    const sum =
-      inspections.reduce(
-        function(total,inspection){
+});
 
-          const max =
-            Number(inspection.total) || 0;
+const actions=problems.filter(function(p){
 
-          const yes =
-            Number(inspection.yes) || 0;
+return String(p.corrective||"").trim()!=="Não informada";
 
-          return total +
-            (max
-              ? (yes / max) * 100
-              : 0);
+});
 
-        },
-        0
-      );
+const pending=actions.filter(p=>(p.status||"pendente")==="pendente");
+const progress=actions.filter(p=>p.status==="andamento");
+const resolved=actions.filter(p=>p.status==="resolvido");
 
-    average =
-      Math.round(
-        sum / inspections.length
-      );
+const overdue=actions.filter(function(p){
 
-  }
+return p.prazo&&
+p.prazo<todayISO()&&
+(p.status||"pendente")!=="resolvido";
 
-  let riskText = "Baixo";
-  let riskClass = "low";
+});
 
-  if(average < 60){
 
-    riskText = "Alto";
-    riskClass = "high";
+const evolution=inspections.slice().reverse().map(function(ins){
 
-  }else if(average < 80){
+const percentage=
+ins.percentage!==undefined
+?ins.percentage
+:(ins.total?Math.round((ins.yes/ins.total)*100):0);
 
-    riskText = "Moderado";
-    riskClass = "medium";
+return`
+<div style="margin-bottom:12px">
+<div style="display:flex;justify-content:space-between">
+<span>${escapeHTML(formatDate(ins.date))}</span>
+<strong>${percentage}%</strong>
+</div>
+<div class="progress">
+<div class="progress-bar" style="width:${percentage}%"></div>
+</div>
+</div>
+`;
 
-  }
+}).join("");
 
-  const problems =
-    data.problems.filter(function(problem){
 
-      return normalizeName(
-        problem.estabelecimento
-      ) ===
-      normalizeName(
-        establishment.name
-      );
+const actionHTML=actions.length?actions.slice().reverse().map(function(action){
 
-    });
+const index=data.problems.indexOf(action);
+const status=action.status||"pendente";
 
-  const actions =
-    problems.filter(function(problem){
+const overdueAction=
+action.prazo&&
+action.prazo<todayISO()&&
+status!=="resolvido";
 
-      return String(
-        problem.corrective || ""
-      ).trim() !== "Não informada";
+return`
+<div class="action-card">
+
+<strong>🛠️ ${escapeHTML(action.corrective||"Ação")}</strong>
 
-    });
+<p>
+<b>Problema:</b><br>
+${escapeHTML(action.desc||"")}
+</p>
 
-  const pendingActions =
-    actions.filter(function(action){
+<p>
+<b>Responsável:</b><br>
+${escapeHTML(action.responsavel||"Não informado")}
+</p>
+
+<p>
+<b>Prazo:</b>
+${action.prazo?escapeHTML(formatDate(action.prazo)):"Não definido"}
+</p>
+
+<span class="action-status ${
+status==="resolvido"
+?"action-resolvido"
+:status==="andamento"
+?"action-andamento"
+:"action-pendente"
+}">
+${
+status==="resolvido"
+?"Resolvido"
+:status==="andamento"
+?"Em andamento"
+:"Pendente"
+}
+</span>
+
+${overdueAction?'<div class="overdue">⚠️ PRAZO ULTRAPASSADO</div>':""}
+
+<div class="action-controls">
+
+<button class="btn-pendente"
+data-action-index="${index}"
+data-action-status="pendente">
+🔴 Pendente
+</button>
 
-      return getStatus(action) === "pendente";
+<button class="btn-andamento"
+data-action-index="${index}"
+data-action-status="andamento">
+🟡 Em andamento
+</button>
 
-    });
+<button class="btn-resolvido"
+data-action-index="${index}"
+data-action-status="resolvido">
+🟢 Resolvido
+</button>
 
-  const inProgressActions =
-    actions.filter(function(action){
+</div>
 
-      return getStatus(action) === "andamento";
+</div>
+`;
 
-    });
+}).join()
+:
+'<div class="empty">Nenhuma ação corretiva registada.</div>';
 
-  const resolvedActions =
-    actions.filter(function(action){
 
-      return getStatus(action) === "resolvido";
+container.innerHTML=`
 
-    });
+<div class="profile-header">
 
-  const overdueActions =
-    actions.filter(function(action){
+<h2>🏢 ${escapeHTML(establishment.name)}</h2>
 
-      return isOverdue(action);
+<p>
+Último inspetor:
+<b>${escapeHTML(latest?.inspetor||"Não informado")}</b>
+</p>
 
-    });
+<p>
+Última inspeção:
+<b>${latest?escapeHTML(formatDate(latest.date)):"Nenhuma"}</b>
+</p>
 
+<p>
+Situação:
+<span class="badge ${riskClass}">${risk}</span>
+</p>
 
-  let evolutionHTML = "";
+<button class="primary" id="generateReport">
+📄 Gerar relatório
+</button>
 
-  if(inspections.length){
+</div>
 
-    evolutionHTML = inspections
-      .slice()
-      .reverse()
-      .map(function(ins){
 
-        const total =
-          Number(ins.total) || 0;
+<div class="grid">
 
-        const yes =
-          Number(ins.yes) || 0;
+<div class="stat">
+Inspeções
+<strong>${inspections.length}</strong>
+</div>
 
-        const percent =
-          total
-          ? Math.round(
-              (yes / total) * 100
-            )
-          : 0;
+<div class="stat">
+Conformidade média
+<strong>${average}%</strong>
+</div>
 
-        return `
-          <div style="margin-bottom:12px">
+<div class="stat">
+Não conformidades
+<strong>${problems.length}</strong>
+</div>
 
-            <div style="
-              display:flex;
-              justify-content:space-between;
-              font-size:13px;
-            ">
-              <span>
-                ${escapeHTML(
-                  formatDate(ins.date)
-                )}
-              </span>
+<div class="stat">
+Ações
+<strong>${actions.length}</strong>
+</div>
 
-              <strong>${percent}%</strong>
-            </div>
+<div class="stat">
+🔴 Pendentes
+<strong>${pending.length}</strong>
+</div>
 
-            <div class="progress">
-              <div
-                class="progress-bar"
-                style="width:${percent}%"
-              ></div>
-            </div>
+<div class="stat">
+🟡 Em andamento
+<strong>${progress.length}</strong>
+</div>
 
-          </div>
-        `;
+<div class="stat">
+🟢 Resolvidas
+<strong>${resolved.length}</strong>
+</div>
 
-      })
-      .join("");
+<div class="stat">
+⚠️ Atrasadas
+<strong>${overdue.length}</strong>
+</div>
 
-  }else{
+</div>
 
-    evolutionHTML =
-      '<div class="empty">Sem dados de evolução.</div>';
 
-  }
+<div class="card">
 
+<h3>📈 Evolução da conformidade</h3>
 
-  let problemsHTML = "";
+${evolution||'<div class="empty">Sem dados.</div>'}
 
-  if(problems.length){
+</div>
 
-    problemsHTML =
-      problems
-        .slice()
-        .reverse()
-        .map(function(problem){
 
-          const status =
-            getStatus(problem);
+<div class="card">
 
-          return `
-            <div class="problem">
+<h3>🛠️ Plano de ações corretivas</h3>
 
-              <b>Problema:</b>
-              <p>
-                ${escapeHTML(problem.desc || "")}
-              </p>
+${actionHTML}
 
-              <b>Ação corretiva:</b>
-              <p>
-                ${escapeHTML(
-                  problem.corrective ||
-                  "Não informada"
-                )}
-              </p>
+</div>
 
-              <span class="action-status ${statusClass(status)}">
-                ${statusText(status)}
-              </span>
+<div class="card">
 
-            </div>
-          `;
+<h3>📋 Informações das inspeções</h3>
 
-        })
-        .join("");
+${inspections.slice().reverse().map(function(ins){
 
-  }else{
+return`
+<div class="info-box">
 
-    problemsHTML =
-      '<div class="empty">Nenhuma não conformidade registada.</div>';
+<b>🆔 ID:</b> ${escapeHTML(ins.id||"Antiga")}<br>
 
-  }
+<b>📅 Data:</b> ${escapeHTML(formatDate(ins.date))}<br>
 
+<b>🕐 Hora:</b> ${escapeHTML(ins.time||"Não informada")}<br>
 
-  let actionsHTML = "";
+<b>👮 Inspetor:</b> ${escapeHTML(ins.inspetor||"Não informado")}<br>
 
-  if(actions.length){
+<b>👤 Responsável:</b> ${escapeHTML(ins.responsavel||"Não informado")}<br>
 
-    actionsHTML =
-      actions
-        .slice()
-        .reverse()
-        .map(function(action){
+<b>📊 Resultado:</b> ${escapeHTML(ins.resultado||"Não informado")}<br>
 
-          const realIndex =
-            data.problems.indexOf(action);
+<b>📝 Observações:</b> ${escapeHTML(ins.notes||"Sem observações")}
 
-          const status =
-            getStatus(action);
+</div>
+`;
 
-          const overdue =
-            isOverdue(action);
+}).join("")}
 
-          return `
-            <div class="action-card">
+</div>
 
-              <strong>
-                🛠️ ${escapeHTML(
-                  action.corrective ||
-                  "Ação não informada"
-                )}
-              </strong>
+`;
 
-              <p>
-                <b>Problema relacionado:</b><br>
-                ${escapeHTML(
-                  action.desc ||
-                  "Não informado"
-                )}
-              </p>
+bindActionButtons();
 
-              <p>
-                <b>Responsável:</b><br>
-                ${escapeHTML(
-                  action.responsavel ||
-                  "Não informado"
-                )}
-              </p>
+$("generateReport").onclick=function(){
 
-              <p>
-                <b>Prazo:</b><br>
-                ${
-                  action.prazo
-                  ? escapeHTML(
-                      formatDate(action.prazo)
-                    )
-                  : "Não definido"
-                }
-              </p>
+generateReport(
+establishment,
+inspections,
+problems,
+actions,
+average,
+risk
+);
 
-              <span class="action-status ${statusClass(status)}">
-                ${statusText(status)}
-              </span>
-
-              ${
-                overdue
-                ?
-                `<div class="overdue">
-                  ⚠️ PRAZO ULTRAPASSADO
-                </div>`
-                :
-                ""
-              }
-
-              <div class="action-controls">
-
-                <button
-                  class="btn-pendente"
-                  data-action-index="${realIndex}"
-                  data-action-status="pendente"
-                >
-                  🔴 Pendente
-                </button>
-
-                <button
-                  class="btn-andamento"
-                  data-action-index="${realIndex}"
-                  data-action-status="andamento"
-                >
-                  🟡 Em andamento
-                </button>
-
-                <button
-                  class="btn-resolvido"
-                  data-action-index="${realIndex}"
-                  data-action-status="resolvido"
-                >
-                  🟢 Resolvido
-                </button>
-
-              </div>
-
-            </div>
-          `;
-
-        })
-        .join("");
-
-  }else{
-
-    actionsHTML =
-      '<div class="empty">Nenhuma ação corretiva registada.</div>';
-
-  }
-
-
-  let timelineHTML = "";
-
-  if(inspections.length){
-
-    timelineHTML =
-      inspections
-        .slice()
-        .reverse()
-        .map(function(ins){
-
-          const total =
-            Number(ins.total) || 0;
-
-          const yes =
-            Number(ins.yes) || 0;
-
-          const percent =
-            total
-            ? Math.round(
-                (yes / total) * 100
-              )
-            : 0;
-
-          return `
-            <div class="timeline-item">
-
-              <strong>
-                ${escapeHTML(
-                  formatDate(ins.date)
-                )}
-              </strong>
-
-              <div>
-                Conformidade:
-                <b>${percent}%</b>
-              </div>
-
-              <div class="small">
-                Responsável:
-                ${escapeHTML(
-                  ins.responsavel ||
-                  "Não informado"
-                )}
-              </div>
-
-            </div>
-          `;
-
-        })
-        .join("");
-
-  }else{
-
-    timelineHTML =
-      '<div class="empty">Sem inspeções.</div>';
-
-  }
-
-
-  container.innerHTML = `
-
-    <div class="profile-header">
-
-      <h2>
-        🏢 ${escapeHTML(
-          establishment.name
-        )}
-      </h2>
-
-      <p>
-        Responsável da última inspeção:
-        <b>
-          ${escapeHTML(
-            latest
-              ? latest.responsavel
-              : "Não informado"
-          )}
-        </b>
-      </p>
-
-      <p>
-        Última inspeção:
-        <b>
-          ${
-            latest
-            ? escapeHTML(
-                formatDate(latest.date)
-              )
-            : "Nenhuma"
-          }
-        </b>
-      </p>
-
-      <div style="margin-top:12px">
-        Situação:
-        <span class="badge ${riskClass}">
-          ${riskText}
-        </span>
-      </div>
-
-      <button
-        class="primary report-button"
-        id="generateReport"
-      >
-        📄 Gerar relatório
-      </button>
-
-    </div>
-
-
-    <div class="grid">
-
-      <div class="stat">
-        Inspeções
-        <strong>
-          ${inspections.length}
-        </strong>
-      </div>
-
-      <div class="stat">
-        Conformidade média
-        <strong>
-          ${average}%
-        </strong>
-      </div>
-
-      <div class="stat">
-        Não conformidades
-        <strong>
-          ${problems.length}
-        </strong>
-      </div>
-
-      <div class="stat">
-        Ações
-        <strong>
-          ${actions.length}
-        </strong>
-      </div>
-
-      <div class="stat">
-        🔴 Pendentes
-        <strong>
-          ${pendingActions.length}
-        </strong>
-      </div>
-
-      <div class="stat">
-        🟡 Em andamento
-        <strong>
-          ${inProgressActions.length}
-        </strong>
-      </div>
-
-      <div class="stat">
-        🟢 Resolvidas
-        <strong>
-          ${resolvedActions.length}
-        </strong>
-      </div>
-
-      <div class="stat">
-        ⚠️ Atrasadas
-        <strong>
-          ${overdueActions.length}
-        </strong>
-      </div>
-
-    </div>
-
-
-    <div class="card">
-
-      <h3>📈 Evolução da conformidade</h3>
-
-      ${evolutionHTML}
-
-    </div>
-
-
-    <div class="card">
-
-      <h3>📋 Linha do tempo das inspeções</h3>
-
-      <div class="timeline">
-        ${timelineHTML}
-      </div>
-
-    </div>
-
-
-    <div class="card">
-
-      <h3>⚠️ Não conformidades</h3>
-
-      ${problemsHTML}
-
-    </div>
-
-
-    <div class="card">
-
-      <h3>🛠️ Plano de ações corretivas</h3>
-
-      <p class="small">
-        Acompanhe cada ação diretamente neste perfil.
-        Altere o estado conforme o progresso da correção.
-      </p>
-
-      ${actionsHTML}
-
-    </div>
-
-  `;
-
-
-  bindActionButtons();
-
-
-  const reportButton =
-    $("generateReport");
-
-  if(reportButton){
-
-    reportButton.onclick =
-      function(){
-
-        generateReport(
-          establishment,
-          inspections,
-          problems,
-          actions,
-          average,
-          riskText
-        );
-
-      };
-
-  }
+};
 
 }
 
 
-/* =========================
-   BOTÕES DAS AÇÕES
-========================= */
+/* BOTÕES DAS AÇÕES */
 
 function bindActionButtons(){
 
-  document
-    .querySelectorAll("[data-action-status]")
-    .forEach(function(button){
+document.querySelectorAll("[data-action-status]").forEach(function(button){
 
-      button.onclick =
-        function(){
+button.onclick=function(){
 
-          const index =
-            Number(
-              button.dataset.actionIndex
-            );
+const index=Number(button.dataset.actionIndex);
+const status=button.dataset.actionStatus;
 
-          const status =
-            button.dataset.actionStatus;
+if(!data.problems[index])return;
 
-          if(!data.problems[index]){
-            return;
-          }
+data.problems[index].status=status;
+data.problems[index].updatedAt=new Date().toLocaleString("pt-MZ");
 
-          data.problems[index].status =
-            status;
+save();
+updateAll();
+renderProfile();
 
-          data.problems[index].updatedAt =
-            new Date().toLocaleString(
-              "pt-MZ"
-            );
+};
 
-          save();
-
-          updateAll();
-
-          renderProfile();
-
-        };
-
-    });
+});
 
 }
 
 
-/* =========================
-   RELATÓRIO
-========================= */
+/* RELATÓRIO */
 
-function generateReport(
-  establishment,
-  inspections,
-  problems,
-  actions,
-  average,
-  riskText
-){
+function generateReport(establishment,inspections,problems,actions,average,risk){
 
-  const pending =
-    actions.filter(function(action){
+const pending=actions.filter(p=>(p.status||"pendente")==="pendente").length;
+const progress=actions.filter(p=>p.status==="andamento").length;
+const resolved=actions.filter(p=>p.status==="resolvido").length;
 
-      return getStatus(action) === "pendente";
-
-    }).length;
+const overdue=actions.filter(function(p){
 
-  const progress =
-    actions.filter(function(action){
-
-      return getStatus(action) === "andamento";
-
-    }).length;
-
-  const resolved =
-    actions.filter(function(action){
-
-      return getStatus(action) === "resolvido";
-
-    }).length;
-
-  const overdue =
-    actions.filter(function(action){
-
-      return isOverdue(action);
-
-    }).length;
-
-
-  const inspectionRows =
-    inspections
-      .slice()
-      .reverse()
-      .map(function(ins){
-
-        const total =
-          Number(ins.total) || 0;
-
-        const yes =
-          Number(ins.yes) || 0;
-
-        const percentage =
-          total
-          ? Math.round(
-              (yes / total) * 100
-            )
-          : 0;
+return p.prazo&&
+p.prazo<todayISO()&&
+(p.status||"pendente")!=="resolvido";
 
-        return `
-          <tr>
-            <td>
-              ${escapeHTML(
-                formatDate(ins.date)
-              )}
-            </td>
+}).length;
 
-            <td>
-              ${escapeHTML(
-                ins.responsavel ||
-                "Não informado"
-              )}
-            </td>
+const win=window.open("","_blank");
 
-            <td>
-              ${percentage}%
-            </td>
-          </tr>
-        `;
+if(!win){
 
-      })
-      .join("");
+alert("Permita pop-ups para gerar o relatório.");
+return;
 
+}
 
-  const actionRows =
-    actions
-      .slice()
-      .reverse()
-      .map(function(action){
+win.document.write(`
 
-        const status =
-          getStatus(action);
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
 
-        return `
-          <tr>
+<title>Relatório FoodSafe Moz</title>
 
-            <td>
-              ${escapeHTML(
-                action.desc || ""
-              )}
-            </td>
+<style>
 
-            <td>
-              ${escapeHTML(
-                action.corrective ||
-                "Não informada"
-              )}
-            </td>
+body{
+font-family:Arial,sans-serif;
+padding:30px;
+color:#17201d;
+}
 
-            <td>
-              ${escapeHTML(
-                action.responsavel ||
-                "Não informado"
-              )}
-            </td>
-
-            <td>
-              ${
-                action.prazo
-                ? escapeHTML(
-                    formatDate(action.prazo)
-                  )
-                : "Não definido"
-              }
-            </td>
-
-            <td>
-              ${statusText(status)}
-
-              ${
-                isOverdue(action)
-                ?
-                "<br><b style='color:#b3261e'>PRAZO ULTRAPASSADO</b>"
-                :
-                ""
-              }
-
-            </td>
-
-          </tr>
-        `;
-
-      })
-      .join("");
-
-
-  const reportWindow =
-    window.open(
-      "",
-      "_blank"
-    );
-
-  if(!reportWindow){
-
-    alert(
-      "O navegador bloqueou a abertura do relatório. Permita pop-ups e tente novamente."
-    );
-
-    return;
-
-  }
-
+h1,h2{
+color:#075c39;
+}
 
-  reportWindow.document.write(`
+.header{
+border-bottom:3px solid #0b7a4b;
+padding-bottom:15px;
+}
 
-    <!DOCTYPE html>
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+margin:20px 0;
+}
 
-    <html lang="pt">
+.stat{
+border:1px solid #ddd;
+padding:12px;
+border-radius:8px;
+}
 
-    <head>
+.stat strong{
+display:block;
+font-size:22px;
+margin-top:5px;
+}
 
-      <meta charset="UTF-8">
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+}
 
-      <title>
-        Relatório FoodSafe Moz
-      </title>
-
-      <style>
+th,td{
+border:1px solid #ddd;
+padding:8px;
+vertical-align:top;
+text-align:left;
+}
 
-        body{
-          font-family:Arial,sans-serif;
-          padding:35px;
-          color:#17201d;
-        }
-
-        h1{
-          color:#075c39;
-        }
-
-        h2{
-          color:#075c39;
-          margin-top:30px;
-        }
+th{
+background:#eef5f1;
+}
 
-        .header{
-          border-bottom:3px solid #0b7a4b;
-          padding-bottom:15px;
-        }
+.footer{
+margin-top:35px;
+padding-top:15px;
+border-top:1px solid #ddd;
+font-size:12px;
+}
 
-        .box{
-          display:grid;
-          grid-template-columns:
-            repeat(4,1fr);
-          gap:12px;
-          margin:20px 0;
-        }
+@media print{
+body{padding:10px}
+}
 
-        .stat{
-          border:1px solid #ddd;
-          padding:15px;
-          border-radius:8px;
-        }
-
-        .stat strong{
-          display:block;
-          font-size:22px;
-          margin-top:6px;
-        }
-
-        table{
-          width:100%;
-          border-collapse:collapse;
-          margin-top:12px;
-        }
-
-        th,td{
-          border:1px solid #ddd;
-          padding:9px;
-          text-align:left;
-          vertical-align:top;
-        }
-
-        th{
-          background:#eef5f1;
-        }
-
-        .risk{
-          font-weight:bold;
-        }
-
-        .footer{
-          margin-top:40px;
-          border-top:1px solid #ddd;
-          padding-top:15px;
-          font-size:12px;
-          color:#666;
-        }
-
-        @media print{
-
-          body{
-            padding:10px;
-          }
-
-        }
-
-      </style>
-
-    </head>
-
-    <body>
-
-      <div class="header">
-
-        <h1>
-          🛡️ FoodSafe Moz
-        </h1>
-
-        <h2>
-          Relatório de Segurança Alimentar
-        </h2>
-
-        <p>
-          <b>Estabelecimento:</b>
-          ${escapeHTML(establishment.name)}
-        </p>
-
-        <p>
-          <b>Data do relatório:</b>
-          ${new Date().toLocaleString("pt-MZ")}
-        </p>
-
-        <p class="risk">
-          <b>Classificação de risco:</b>
-          ${riskText}
-        </p>
-
-      </div>
-
-
-      <div class="box">
-
-        <div class="stat">
-          Inspeções
-          <strong>
-            ${inspections.length}
-          </strong>
-        </div>
-
-        <div class="stat">
-          Conformidade média
-          <strong>
-            ${average}%
-          </strong>
-        </div>
-
-        <div class="stat">
-          Problemas
-          <strong>
-            ${problems.length}
-          </strong>
-        </div>
-
-        <div class="stat">
-          Ações
-          <strong>
-            ${actions.length}
-          </strong>
-        </div>
-
-        <div class="stat">
-          Pendentes
-          <strong>
-            ${pending}
-          </strong>
-        </div>
-
-        <div class="stat">
-          Em andamento
-          <strong>
-            ${progress}
-          </strong>
-        </div>
-
-        <div class="stat">
-          Resolvidas
-          <strong>
-            ${resolved}
-          </strong>
-        </div>
-
-        <div class="stat">
-          Atrasadas
-          <strong>
-            ${overdue}
-          </strong>
-        </div>
-
-      </div>
-
-
-      <h2>
-        📋 Histórico de inspeções
-      </h2>
-
-      <table>
-
-        <thead>
-
-          <tr>
-            <th>Data</th>
-            <th>Responsável</th>
-            <th>Conformidade</th>
-          </tr>
-
-        </thead>
-
-        <tbody>
-
-          ${
-            inspectionRows ||
-            `
-              <tr>
-                <td colspan="3">
-                  Nenhuma inspeção registada.
-                </td>
-              </tr>
-            `
-          }
-
-        </tbody>
-
-      </table>
-
-
-      <h2>
-        ⚠️ Não conformidades
-      </h2>
-
-      ${
-        problems.length
-        ?
-        `
-          <table>
-
-            <thead>
-
-              <tr>
-                <th>Problema</th>
-                <th>Ação corretiva</th>
-                <th>Estado</th>
-              </tr>
+</style>
+</head>
 
-            </thead>
+<body>
 
-            <tbody>
+<div class="header">
 
-              ${
-                problems
-                  .slice()
-                  .reverse()
-                  .map(function(problem){
+<h1>🛡️ FoodSafe Moz</h1>
 
-                    return `
-                      <tr>
+<h2>Relatório de Inspeção de Segurança Alimentar</h2>
 
-                        <td>
-                          ${escapeHTML(
-                            problem.desc ||
-                            ""
-                          )}
-                        </td>
+<p>
+<b>Estabelecimento:</b>
+${escapeHTML(establishment.name)}
+</p>
 
-                        <td>
-                          ${escapeHTML(
-                            problem.corrective ||
-                            "Não informada"
-                          )}
-                        </td>
+<p>
+<b>Data do relatório:</b>
+${new Date().toLocaleString("pt-MZ")}
+</p>
 
-                        <td>
-                          ${statusText(
-                            getStatus(problem)
-                          )}
-                        </td>
+<p>
+<b>Classificação geral:</b>
+${escapeHTML(risk)}
+</p>
 
-                      </tr>
-                    `;
+</div>
 
-                  })
-                  .join("")
-              }
 
-            </tbody>
+<div class="stats">
 
-          </table>
-        `
-        :
-        "<p>Nenhuma não conformidade registada.</p>"
-      }
+<div class="stat">
+Inspeções
+<strong>${inspections.length}</strong>
+</div>
 
+<div class="stat">
+Conformidade
+<strong>${average}%</strong>
+</div>
 
-      <h2>
-        🛠️ Plano de ações corretivas
-      </h2>
+<div class="stat">
+Problemas
+<strong>${problems.length}</strong>
+</div>
 
-      ${
-        actions.length
-        ?
-        `
-          <table>
+<div class="stat">
+Ações
+<strong>${actions.length}</strong>
+</div>
 
-            <thead>
+<div class="stat">
+Pendentes
+<strong>${pending}</strong>
+</div>
 
-              <tr>
-                <th>Problema</th>
-                <th>Ação corretiva</th>
-                <th>Responsável</th>
-                <th>Prazo</th>
-                <th>Estado</th>
-              </tr>
+<div class="stat">
+Em andamento
+<strong>${progress}</strong>
+</div>
 
-            </thead>
+<div class="stat">
+Resolvidas
+<strong>${resolved}</strong>
+</div>
 
-            <tbody>
+<div class="stat">
+Atrasadas
+<strong>${overdue}</strong>
+</div>
 
-              ${actionRows}
+</div>
 
-            </tbody>
 
-          </table>
-        `
-        :
-        "<p>Nenhuma ação corretiva registada.</p>"
-      }
+<h2>📋 Histórico das inspeções</h2>
 
+<table>
 
-      <div class="footer">
+<thead>
 
-        <p>
-          Relatório gerado pelo FoodSafe Moz.
-        </p>
+<tr>
+<th>ID</th>
+<th>Data</th>
+<th>Hora</th>
+<th>Inspetor</th>
+<th>Responsável</th>
+<th>Resultado</th>
+<th>Conformidade</th>
+</tr>
 
-        <p>
-          Sistema de apoio à gestão da segurança dos alimentos.
-        </p>
+</thead>
 
-      </div>
+<tbody>
 
+${inspections.slice().reverse().map(function(ins){
 
-      <script>
+const percentage=
+ins.percentage!==undefined
+?ins.percentage
+:(ins.total?Math.round((ins.yes/ins.total)*100):0);
 
-        window.onload = function(){
+return`
 
-          setTimeout(function(){
+<tr>
 
-            window.print();
+<td>${escapeHTML(ins.id||"Antiga")}</td>
 
-          },500);
+<td>${escapeHTML(formatDate(ins.date))}</td>
 
-        };
+<td>${escapeHTML(ins.time||"Não informada")}</td>
 
-      <\/script>
+<td>${escapeHTML(ins.inspetor||"Não informado")}</td>
 
-    </body>
+<td>${escapeHTML(ins.responsavel||"Não informado")}</td>
 
-    </html>
+<td>${escapeHTML(ins.resultado||"Não informado")}</td>
 
-  `);
+<td>${percentage}%</td>
 
-  reportWindow.document.close();
+</tr>
+
+`;
+
+}).join("")}
+
+</tbody>
+
+</table>
+
+
+<h2>⚠️ Não conformidades</h2>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Problema</th>
+<th>Ação corretiva</th>
+<th>Estado</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+${problems.length?problems.slice().reverse().map(function(p){
+
+return`
+
+<tr>
+
+<td>${escapeHTML(p.desc||"")}</td>
+
+<td>${escapeHTML(p.corrective||"Não informada")}</td>
+
+<td>
+${
+p.status==="resolvido"
+?"Resolvido"
+:p.status==="andamento"
+?"Em andamento"
+:"Pendente"
+}
+</td>
+
+</tr>
+
+`;
+
+}).join(""):`
+
+<tr>
+<td colspan="3">Nenhuma não conformidade registada.</td>
+</tr>
+
+`}
+
+</tbody>
+
+</table>
+
+
+<h2>🛠️ Plano de ações corretivas</h2>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Problema</th>
+<th>Ação</th>
+<th>Responsável</th>
+<th>Prazo</th>
+<th>Estado</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+${actions.length?actions.slice().reverse().map(function(action){
+
+const status=action.status||"pendente";
+
+return`
+
+<tr>
+
+<td>${escapeHTML(action.desc||"")}</td>
+
+<td>${escapeHTML(action.corrective||"")}</td>
+
+<td>${escapeHTML(action.responsavel||"Não informado")}</td>
+
+<td>
+${action.prazo?escapeHTML(formatDate(action.prazo)):"Não definido"}
+</td>
+
+<td>
+${
+status==="resolvido"
+?"Resolvido"
+:status==="andamento"
+?"Em andamento"
+:"Pendente"
+}
+
+${
+action.prazo&&
+action.prazo<todayISO()&&
+status!=="resolvido"
+?"<br><b style='color:#b3261e'>PRAZO ULTRAPASSADO</b>"
+:""
+}
+
+</td>
+
+</tr>
+
+`;
+
+}).join(""):`
+
+<tr>
+<td colspan="5">Nenhuma ação corretiva registada.</td>
+</tr>
+
+`}
+
+</tbody>
+
+</table>
+
+
+<div class="footer">
+
+<p>Relatório gerado pelo FoodSafe Moz.</p>
+
+<p>Sistema de apoio à gestão da segurança dos alimentos.</p>
+
+</div>
+
+
+<script>
+
+window.onload=function(){
+
+setTimeout(function(){
+window.print();
+},500);
+
+};
+
+<\/script>
+
+</body>
+</html>
+
+`);
+
+win.document.close();
 
 }
 
 
-/* =========================
-   SEGURANÇA DO HTML
-========================= */
-
-function escapeHTML(value){
-
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-function escapeAttribute(value){
-
-  return escapeHTML(value);
-
-}
-
-
-/* =========================
-   INICIALIZAÇÃO
-========================= */
+/* INICIALIZAÇÃO */
 
 load();
 
-$("inspectionDate").value =
-  todayISO();
+$("inspectionDate").value=todayISO();
 
 updateAll();
 
