@@ -2131,4 +2131,1650 @@ function renderProfile(name){
     data.inspections.filter(
       i=>
         normalizeName(
-          i.estabele
+          i.estabelecimento
+        )===
+        normalizeName(name)
+    );
+
+  const problems=
+    data.problems.filter(
+      p=>
+        normalizeName(
+          p.estabelecimento
+        )===
+        normalizeName(name)
+    );
+
+  const evidences=
+    data.evidences.filter(
+      e=>
+        normalizeName(
+          e.estabelecimento
+        )===
+        normalizeName(name)
+    );
+
+  const average=
+    getAverageCompliance(name);
+
+  const risk=
+    getRisk(average);
+
+  const latest=
+    getLatestInspection(name);
+
+  const resolved=
+    problems.filter(
+      p=>
+        (p.status||"pendente")===
+        "resolvido"
+    ).length;
+
+  const pending=
+    problems.filter(
+      p=>
+        (p.status||"pendente")===
+        "pendente"
+    ).length;
+
+  const progress=
+    problems.filter(
+      p=>
+        (p.status||"pendente")===
+        "andamento"
+    ).length;
+
+  const overdue=
+    problems.filter(
+      p=>
+        p.prazo &&
+        p.prazo<todayISO() &&
+        (p.status||"pendente")!=="resolvido"
+    ).length;
+
+
+  container.innerHTML=`
+
+    <div class="profile-head">
+
+      <h2>
+        🏢 ${escapeHTML(name)}
+      </h2>
+
+      <p>
+        Último inspetor:
+        ${
+          latest
+          ?
+          escapeHTML(
+            latest.inspetor ||
+            "Não informado"
+          )
+          :
+          "Não informado"
+        }
+      </p>
+
+      <p>
+        Última inspeção:
+        ${
+          latest
+          ?
+          formatDate(latest.date)
+          :
+          "Nenhuma"
+        }
+      </p>
+
+      <p>
+        Risco:
+        <span class="badge ${risk.class}">
+          ${risk.text}
+        </span>
+      </p>
+
+      <button
+        class="secondary"
+        onclick='generateReport(${JSON.stringify(name)})'
+      >
+        📄 Gerar relatório
+      </button>
+
+    </div>
+
+
+    <div class="grid">
+
+      <div class="stat">
+        📝 Inspeções
+        <strong>${inspections.length}</strong>
+      </div>
+
+      <div class="stat">
+        📊 Média
+        <strong>${average}%</strong>
+      </div>
+
+      <div class="stat">
+        ⚠️ Não conformidades
+        <strong>${problems.length}</strong>
+      </div>
+
+      <div class="stat">
+        🔴 Pendentes
+        <strong>${pending}</strong>
+      </div>
+
+      <div class="stat">
+        🟡 Em andamento
+        <strong>${progress}</strong>
+      </div>
+
+      <div class="stat">
+        🟢 Resolvidos
+        <strong>${resolved}</strong>
+      </div>
+
+      <div class="stat">
+        🚨 Atrasados
+        <strong>${overdue}</strong>
+      </div>
+
+      <div class="stat">
+        📸 Evidências
+        <strong>${evidences.length}</strong>
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h3>📈 Evolução das inspeções</h3>
+
+      ${
+        inspections.length
+        ?
+        inspections
+          .map(i=>{
+
+            const percentage=
+              i.percentage ??
+              (
+                i.total
+                  ?
+                  Math.round(
+                    i.yes/i.total*100
+                  )
+                  :
+                  0
+              );
+
+            return `
+
+              <div class="item">
+
+                <strong>
+                  ${formatDate(i.date)}
+                </strong>
+
+                <p>
+                  ${percentage}%
+                </p>
+
+                <div style="
+                  background:#e9eeec;
+                  height:12px;
+                  border-radius:10px;
+                  overflow:hidden;
+                ">
+
+                  <div style="
+                    width:${percentage}%;
+                    height:100%;
+                    background:#087f5b;
+                  "></div>
+
+                </div>
+
+              </div>
+            `;
+          })
+          .join("")
+        :
+        '<div class="empty">Sem dados.</div>'
+      }
+
+    </div>
+
+
+    <div class="card">
+
+      <h3>🔧 Plano de ações corretivas</h3>
+
+      ${
+        problems.length
+        ?
+        problems
+          .map((p)=>{
+
+            const originalIndex=
+              data.problems.indexOf(p);
+
+            const status=
+              p.status ||
+              "pendente";
+
+            return `
+
+              <div class="item">
+
+                <strong>
+                  ⚠️
+                  ${escapeHTML(p.desc)}
+                </strong>
+
+                <p>
+                  🔧
+                  ${escapeHTML(
+                    p.corrective ||
+                    "Não definida"
+                  )}
+                </p>
+
+                <p>
+                  👤
+                  ${escapeHTML(
+                    p.responsavel ||
+                    "Não informado"
+                  )}
+                </p>
+
+                <p>
+                  📅
+                  ${formatDate(p.prazo)}
+                </p>
+
+                <p>
+                  Estado:
+                  ${
+                    status==="resolvido"
+                    ?
+                    '<span class="badge green">Resolvido</span>'
+                    :
+                    status==="andamento"
+                    ?
+                    '<span class="badge yellow">Em andamento</span>'
+                    :
+                    '<span class="badge red">Pendente</span>'
+                  }
+                </p>
+
+                <div class="action-buttons">
+
+                  <button
+                    class="danger"
+                    onclick="setProblemStatus(${originalIndex},'pendente'); renderProfile(${JSON.stringify(name)})"
+                  >
+                    🔴 Pendente
+                  </button>
+
+                  <button
+                    class="warning"
+                    onclick="setProblemStatus(${originalIndex},'andamento'); renderProfile(${JSON.stringify(name)})"
+                  >
+                    🟡 Em andamento
+                  </button>
+
+                  <button
+                    class="success"
+                    onclick="setProblemStatus(${originalIndex},'resolvido'); renderProfile(${JSON.stringify(name)})"
+                  >
+                    🟢 Resolvido
+                  </button>
+
+                </div>
+
+              </div>
+            `;
+          })
+          .join("")
+        :
+        '<div class="empty">Nenhuma ação corretiva.</div>'
+      }
+
+    </div>
+
+
+    <div class="card">
+
+      <h3>📸 Evidências fotográficas</h3>
+
+      ${
+        evidences.length
+        ?
+        evidences
+          .slice()
+          .reverse()
+          .map(e=>`
+
+            <div class="item">
+
+              <strong>
+                ${escapeHTML(
+                  e.id ||
+                  "Evidência"
+                )}
+              </strong>
+
+              <p>
+                📝
+                ${escapeHTML(
+                  e.description ||
+                  ""
+                )}
+              </p>
+
+              <p class="muted">
+                ${e.date
+                  ?
+                  new Date(
+                    e.date
+                  ).toLocaleString("pt-MZ")
+                  :
+                  ""}
+              </p>
+
+              <img
+                src="${e.image}"
+                alt="Evidência"
+                style="
+                  width:100%;
+                  max-height:350px;
+                  object-fit:contain;
+                  border-radius:12px;
+                  background:#f2f2f2;
+                "
+              >
+
+            </div>
+
+          `)
+          .join("")
+        :
+        '<div class="empty">Nenhuma evidência registada.</div>'
+      }
+
+    </div>
+
+
+    <div class="card">
+
+      <h3>📋 Informações das inspeções</h3>
+
+      ${
+        inspections.length
+        ?
+        inspections
+          .slice()
+          .reverse()
+          .map(i=>{
+
+            const percentage=
+              i.percentage ??
+              (
+                i.total
+                  ?
+                  Math.round(
+                    i.yes/i.total*100
+                  )
+                  :
+                  0
+              );
+
+            return `
+
+              <div class="item">
+
+                <p>
+                  🆔
+                  <strong>
+                    ${escapeHTML(
+                      i.id ||
+                      "Inspeção antiga"
+                    )}
+                  </strong>
+                </p>
+
+                <p>
+                  📅
+                  ${formatDate(i.date)}
+                </p>
+
+                <p>
+                  🕐
+                  ${escapeHTML(
+                    i.time ||
+                    "Não informada"
+                  )}
+                </p>
+
+                <p>
+                  👮
+                  ${escapeHTML(
+                    i.inspetor ||
+                    "Não informado"
+                  )}
+                </p>
+
+                <p>
+                  👤
+                  ${escapeHTML(
+                    i.responsavel ||
+                    "Não informado"
+                  )}
+                </p>
+
+                <p>
+                  📊
+                  ${percentage}%
+                </p>
+
+                <p>
+                  ${
+                    resultBadge(
+                      i.resultado ||
+                      calculateResult(
+                        percentage
+                      )
+                    )
+                  }
+                </p>
+
+              </div>
+            `;
+          })
+          .join("")
+        :
+        '<div class="empty">Nenhuma inspeção.</div>'
+      }
+
+    </div>
+
+
+    <button
+      class="primary"
+      onclick="showPage('estabelecimentos')"
+    >
+      ← Voltar aos estabelecimentos
+    </button>
+  `;
+}
+
+
+/* =====================================================
+   EVIDÊNCIAS
+===================================================== */
+
+function renderEvidenceEstablishments(){
+
+  const select=
+    $("evidenceEstablishment");
+
+  if(!select) return;
+
+  const current=
+    select.value;
+
+  const establishments=
+    getEstablishments();
+
+  select.innerHTML=
+    '<option value="">Selecione o estabelecimento</option>';
+
+  establishments.forEach(name=>{
+
+    const option=
+      document.createElement(
+        "option"
+      );
+
+    option.value=name;
+
+    option.textContent=name;
+
+    select.appendChild(
+      option
+    );
+  });
+
+  if(current){
+    select.value=current;
+  }
+}
+
+
+function renderEvidenceInspections(){
+
+  const establishment=
+    $("evidenceEstablishment");
+
+  const inspectionSelect=
+    $("evidenceInspection");
+
+  if(
+    !establishment ||
+    !inspectionSelect
+  ){
+    return;
+  }
+
+  const name=
+    establishment.value;
+
+  inspectionSelect.innerHTML=
+    '<option value="">Selecione a inspeção</option>';
+
+  if(!name) return;
+
+  data.inspections
+    .filter(
+      i=>
+        normalizeName(
+          i.estabelecimento
+        )===
+        normalizeName(name)
+    )
+    .slice()
+    .reverse()
+    .forEach(i=>{
+
+      const option=
+        document.createElement(
+          "option"
+        );
+
+      option.value=
+        i.id ||
+        "";
+
+      option.textContent=
+        `${i.id || "Inspeção"} — ${formatDate(i.date)}`;
+
+      inspectionSelect.appendChild(
+        option
+      );
+    });
+}
+
+
+function renderEvidenceProblems(){
+
+  const establishment=
+    $("evidenceEstablishment");
+
+  const problemSelect=
+    $("evidenceProblem");
+
+  if(
+    !establishment ||
+    !problemSelect
+  ){
+    return;
+  }
+
+  const name=
+    establishment.value;
+
+  problemSelect.innerHTML=
+    '<option value="">Sem problema específico</option>';
+
+  if(!name) return;
+
+  data.problems
+    .map(
+      (p,index)=>({
+        p,
+        index
+      })
+    )
+    .filter(
+      item=>
+        normalizeName(
+          item.p.estabelecimento
+        )===
+        normalizeName(name)
+    )
+    .forEach(item=>{
+
+      const option=
+        document.createElement(
+          "option"
+        );
+
+      option.value=
+        String(item.index);
+
+      option.textContent=
+        item.p.desc ||
+        "Problema sem descrição";
+
+      problemSelect.appendChild(
+        option
+      );
+    });
+}
+
+
+function previewEvidenceImage(){
+
+  const input=
+    $("evidencePhoto");
+
+  const preview=
+    $("evidencePreview");
+
+  if(!input || !preview) return;
+
+  preview.innerHTML="";
+
+  const file=
+    input.files &&
+    input.files[0];
+
+  if(!file) return;
+
+  const reader=
+    new FileReader();
+
+  reader.onload=function(e){
+
+    preview.innerHTML=`
+
+      <img
+        src="${e.target.result}"
+        alt="Pré-visualização"
+      >
+
+    `;
+  };
+
+  reader.readAsDataURL(file);
+}
+
+
+function compressEvidenceImage(
+  file
+){
+
+  return new Promise(
+    (resolve,reject)=>{
+
+      const reader=
+        new FileReader();
+
+      reader.onload=function(e){
+
+        const img=
+          new Image();
+
+        img.onload=function(){
+
+          let width=
+            img.width;
+
+          let height=
+            img.height;
+
+          const maxSize=
+            1000;
+
+          if(
+            width>maxSize ||
+            height>maxSize
+          ){
+
+            const scale=
+              Math.min(
+                maxSize/width,
+                maxSize/height
+              );
+
+            width=
+              Math.round(
+                width*scale
+              );
+
+            height=
+              Math.round(
+                height*scale
+              );
+          }
+
+          const canvas=
+            document.createElement(
+              "canvas"
+            );
+
+          canvas.width=
+            width;
+
+          canvas.height=
+            height;
+
+          const ctx=
+            canvas.getContext(
+              "2d"
+            );
+
+          ctx.drawImage(
+            img,
+            0,
+            0,
+            width,
+            height
+          );
+
+          const compressed=
+            canvas.toDataURL(
+              "image/jpeg",
+              0.55
+            );
+
+          resolve(
+            compressed
+          );
+        };
+
+        img.onerror=
+          reject;
+
+        img.src=
+          e.target.result;
+      };
+
+      reader.onerror=
+        reject;
+
+      reader.readAsDataURL(
+        file
+      );
+    }
+  );
+}
+
+
+async function saveEvidence(){
+
+  ensureEvidenceData();
+
+  const establishment=
+    $("evidenceEstablishment")
+      .value
+      .trim();
+
+  const inspectionId=
+    $("evidenceInspection")
+      .value;
+
+  const problemIndex=
+    $("evidenceProblem")
+      .value;
+
+  const description=
+    $("evidenceDescription")
+      .value
+      .trim();
+
+  const file=
+    $("evidencePhoto")
+      .files[0];
+
+  if(!establishment){
+
+    alert(
+      "Selecione o estabelecimento."
+    );
+
+    return;
+  }
+
+  if(!inspectionId){
+
+    alert(
+      "Selecione a inspeção."
+    );
+
+    return;
+  }
+
+  if(!file){
+
+    alert(
+      "Adicione uma fotografia."
+    );
+
+    return;
+  }
+
+  if(!description){
+
+    alert(
+      "Escreva uma descrição da evidência."
+    );
+
+    return;
+  }
+
+  try{
+
+    const image=
+      await compressEvidenceImage(
+        file
+      );
+
+    const evidence={
+
+      id:
+        "EV-" +
+        Date.now()
+          .toString()
+          .slice(-8),
+
+      inspectionId,
+
+      estabelecimento:
+        establishment,
+
+      problemIndex:
+        problemIndex===""
+          ? null
+          : Number(problemIndex),
+
+      description,
+
+      image,
+
+      date:
+        new Date().toISOString()
+    };
+
+    data.evidences.push(
+      evidence
+    );
+
+    save();
+
+    $("evidenceDescription")
+      .value="";
+
+    $("evidencePhoto")
+      .value="";
+
+    $("evidencePreview")
+      .innerHTML="";
+
+    renderEvidenceList();
+
+    updateAll();
+
+    alert(
+      "✅ Evidência guardada com sucesso."
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "❌ Não foi possível guardar a fotografia."
+    );
+  }
+}
+
+
+function renderEvidenceList(){
+
+  ensureEvidenceData();
+
+  const container=
+    $("evidenceList");
+
+  if(!container) return;
+
+  if(
+    data.evidences.length===0
+  ){
+
+    container.innerHTML=
+      '<div class="empty">Ainda não existem evidências registadas.</div>';
+
+    return;
+  }
+
+  container.innerHTML=
+    data.evidences
+      .slice()
+      .reverse()
+      .map(
+        (e,index)=>{
+
+          const originalIndex=
+            data.evidences.length -
+            1 -
+            index;
+
+          let problemText=
+            "Sem problema específico";
+
+          if(
+            e.problemIndex!==null &&
+            e.problemIndex!==undefined &&
+            data.problems[
+              e.problemIndex
+            ]
+          ){
+
+            problemText=
+              data.problems[
+                e.problemIndex
+              ].desc ||
+              "Problema registado";
+          }
+
+          const date=
+            e.date
+            ?
+            new Date(
+              e.date
+            ).toLocaleString(
+              "pt-MZ"
+            )
+            :
+            "Data não disponível";
+
+          return `
+
+            <div class="item">
+
+              <strong>
+                📸
+                ${escapeHTML(
+                  e.id ||
+                  "Evidência"
+                )}
+              </strong>
+
+              <p>
+                🏢
+                ${escapeHTML(
+                  e.estabelecimento ||
+                  "Não informado"
+                )}
+              </p>
+
+              <p>
+                🔎
+                ${escapeHTML(
+                  e.inspectionId ||
+                  "Não informada"
+                )}
+              </p>
+
+              <p>
+                ⚠️
+                ${escapeHTML(
+                  problemText
+                )}
+              </p>
+
+              <p>
+                📝
+                ${escapeHTML(
+                  e.description ||
+                  ""
+                )}
+              </p>
+
+              <p class="muted">
+                ${escapeHTML(date)}
+              </p>
+
+              <img
+                src="${e.image}"
+                alt="Evidência"
+                style="
+                  width:100%;
+                  max-height:360px;
+                  object-fit:contain;
+                  border-radius:12px;
+                  background:#f2f2f2;
+                "
+              >
+
+              <button
+                class="danger"
+                onclick="deleteEvidence(${originalIndex})"
+                style="margin-top:10px"
+              >
+                🗑️ Eliminar
+              </button>
+
+            </div>
+          `;
+        }
+      )
+      .join("");
+}
+
+
+function deleteEvidence(index){
+
+  if(
+    !confirm(
+      "Tem certeza que deseja eliminar esta evidência?"
+    )
+  ){
+    return;
+  }
+
+  data.evidences.splice(
+    index,
+    1
+  );
+
+  save();
+
+  renderEvidenceList();
+
+  updateAll();
+}
+
+
+/* =====================================================
+   RELATÓRIO
+===================================================== */
+
+function generateReport(name){
+
+  const inspections=
+    data.inspections.filter(
+      i=>
+        normalizeName(
+          i.estabelecimento
+        )===
+        normalizeName(name)
+    );
+
+  const problems=
+    data.problems.filter(
+      p=>
+        normalizeName(
+          p.estabelecimento
+        )===
+        normalizeName(name)
+    );
+
+  const evidences=
+    data.evidences.filter(
+      e=>
+        normalizeName(
+          e.estabelecimento
+        )===
+        normalizeName(name)
+    );
+
+  const average=
+    getAverageCompliance(name);
+
+  const risk=
+    getRisk(average);
+
+  const stats=
+    getActionStats();
+
+  const win=
+    window.open(
+      "",
+      "_blank"
+    );
+
+  if(!win){
+
+    alert(
+      "Permita a abertura de novas janelas para gerar o relatório."
+    );
+
+    return;
+  }
+
+  const inspectionRows=
+    inspections
+      .map(i=>{
+
+        const percentage=
+          i.percentage ??
+          (
+            i.total
+              ?
+              Math.round(
+                i.yes/i.total*100
+              )
+              :
+              0
+          );
+
+        const result=
+          i.resultado ||
+          calculateResult(
+            percentage
+          );
+
+        return `
+
+          <tr>
+
+            <td>
+              ${escapeHTML(
+                i.id ||
+                "Antiga"
+              )}
+            </td>
+
+            <td>
+              ${formatDate(i.date)}
+            </td>
+
+            <td>
+              ${escapeHTML(
+                i.time ||
+                ""
+              )}
+            </td>
+
+            <td>
+              ${escapeHTML(
+                i.inspetor ||
+                ""
+              )}
+            </td>
+
+            <td>
+              ${escapeHTML(
+                i.responsavel ||
+                ""
+              )}
+            </td>
+
+            <td>
+              ${escapeHTML(result)}
+            </td>
+
+            <td>
+              ${percentage}%
+            </td>
+
+          </tr>
+        `;
+      })
+      .join("");
+
+
+  const problemRows=
+    problems
+      .map(p=>{
+
+        const status=
+          p.status ||
+          "pendente";
+
+        return `
+
+          <tr>
+
+            <td>
+              ${escapeHTML(
+                p.desc
+              )}
+            </td>
+
+            <td>
+              ${escapeHTML(
+                p.corrective ||
+                ""
+              )}
+            </td>
+
+            <td>
+              ${escapeHTML(
+                p.responsavel ||
+                ""
+              )}
+            </td>
+
+            <td>
+              ${formatDate(
+                p.prazo
+              )}
+            </td>
+
+            <td>
+              ${escapeHTML(
+                status
+              )}
+            </td>
+
+          </tr>
+        `;
+      })
+      .join("");
+
+
+  const evidenceRows=
+    evidences
+      .map(e=>`
+
+        <div style="
+          display:inline-block;
+          width:220px;
+          vertical-align:top;
+          margin:8px;
+          border:1px solid #ddd;
+          padding:8px;
+          border-radius:8px;
+        ">
+
+          <img
+            src="${e.image}"
+            style="
+              width:100%;
+              height:150px;
+              object-fit:contain;
+            "
+          >
+
+          <p>
+            <strong>
+              ${escapeHTML(
+                e.id ||
+                ""
+              )}
+            </strong>
+          </p>
+
+          <p>
+            ${escapeHTML(
+              e.description ||
+              ""
+            )}
+          </p>
+
+        </div>
+
+      `)
+      .join("");
+
+
+  win.document.write(`
+
+    <!DOCTYPE html>
+
+    <html lang="pt">
+
+    <head>
+
+      <meta charset="UTF-8">
+
+      <title>
+        Relatório FoodSafe Moz
+      </title>
+
+      <style>
+
+        body{
+          font-family:Arial;
+          margin:30px;
+          color:#222;
+        }
+
+        h1{
+          color:#087f5b;
+        }
+
+        h2{
+          color:#075b42;
+          border-bottom:1px solid #ddd;
+          padding-bottom:6px;
+        }
+
+        .box{
+          border:1px solid #ddd;
+          padding:15px;
+          margin-bottom:20px;
+          border-radius:8px;
+        }
+
+        table{
+          width:100%;
+          border-collapse:collapse;
+          margin-top:10px;
+        }
+
+        th,td{
+          border:1px solid #ddd;
+          padding:8px;
+          text-align:left;
+          font-size:12px;
+        }
+
+        th{
+          background:#eef5f2;
+        }
+
+        @media print{
+
+          body{
+            margin:15mm;
+          }
+
+          button{
+            display:none;
+          }
+
+        }
+
+      </style>
+
+    </head>
+
+    <body>
+
+      <h1>
+        🛡️ FoodSafe Moz
+      </h1>
+
+      <p>
+        Relatório de Segurança Alimentar
+      </p>
+
+      <div class="box">
+
+        <h2>
+          🏢 Estabelecimento
+        </h2>
+
+        <p>
+          <strong>
+            ${escapeHTML(name)}
+          </strong>
+        </p>
+
+        <p>
+          📅 Relatório:
+          ${new Date().toLocaleDateString("pt-MZ")}
+        </p>
+
+        <p>
+          📊 Conformidade média:
+          <strong>
+            ${average}%
+          </strong>
+        </p>
+
+        <p>
+          🛡️ Classificação de risco:
+          <strong>
+            ${risk.text}
+          </strong>
+        </p>
+
+      </div>
+
+
+      <div class="box">
+
+        <h2>
+          📊 Resumo
+        </h2>
+
+        <p>
+          Inspeções:
+          ${inspections.length}
+        </p>
+
+        <p>
+          Não conformidades:
+          ${problems.length}
+        </p>
+
+        <p>
+          Ações pendentes:
+          ${stats.pending}
+        </p>
+
+        <p>
+          Ações em andamento:
+          ${stats.progress}
+        </p>
+
+        <p>
+          Ações resolvidas:
+          ${stats.resolved}
+        </p>
+
+        <p>
+          Evidências fotográficas:
+          ${evidences.length}
+        </p>
+
+      </div>
+
+
+      <div class="box">
+
+        <h2>
+          📋 Histórico de Inspeções
+        </h2>
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>ID</th>
+              <th>Data</th>
+              <th>Hora</th>
+              <th>Inspetor</th>
+              <th>Responsável</th>
+              <th>Resultado</th>
+              <th>Conformidade</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            ${inspectionRows}
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <div class="box">
+
+        <h2>
+          ⚠️ Não conformidades e ações corretivas
+        </h2>
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>Problema</th>
+              <th>Ação</th>
+              <th>Responsável</th>
+              <th>Prazo</th>
+              <th>Estado</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            ${problemRows}
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <div class="box">
+
+        <h2>
+          📸 Evidências fotográficas
+        </h2>
+
+        ${
+          evidenceRows ||
+          "<p>Nenhuma evidência registada.</p>"
+        }
+
+      </div>
+
+
+      <p style="
+        margin-top:40px;
+        color:#777;
+        font-size:12px;
+      ">
+
+        Relatório gerado pelo FoodSafe Moz.
+
+      </p>
+
+
+      <button
+        onclick="window.print()"
+        style="
+          padding:12px 20px;
+          background:#087f5b;
+          color:white;
+          border:0;
+          border-radius:6px;
+        "
+      >
+        🖨️ Imprimir / Guardar PDF
+      </button>
+
+    </body>
+
+    </html>
+
+  `);
+
+  win.document.close();
+}
+
+
+/* =====================================================
+   ATUALIZAÇÃO GERAL
+===================================================== */
+
+function updateAll(){
+
+  ensureEvidenceData();
+
+  renderHome();
+
+  renderTemps();
+
+  renderProblems();
+
+  renderDashboard();
+
+  renderHistory();
+
+  renderEstablishments();
+
+  renderEvidenceEstablishments();
+
+  renderEvidenceInspections();
+
+  renderEvidenceProblems();
+
+  renderEvidenceList();
+}
+
+
+/* =====================================================
+   EVENTOS DAS EVIDÊNCIAS
+===================================================== */
+
+$("evidenceEstablishment")
+  .addEventListener(
+    "change",
+    ()=>{
+
+      renderEvidenceInspections();
+
+      renderEvidenceProblems();
+    }
+  );
+
+
+$("evidenceInspection")
+  .addEventListener(
+    "change",
+    ()=>{
+
+      renderEvidenceProblems();
+    }
+  );
+
+
+$("evidencePhoto")
+  .addEventListener(
+    "change",
+    previewEvidenceImage
+  );
+
+
+$("saveEvidence")
+  .addEventListener(
+    "click",
+    saveEvidence
+  );
+
+
+/* =====================================================
+   INICIALIZAÇÃO
+===================================================== */
+
+load();
+
+ensureEvidenceData();
+
+if($("inspectionDate")){
+
+  $("inspectionDate").value=
+    todayISO();
+}
+
+updateAll();
+
+showPage("home");
+
+</script>
+
+</body>
+</html>
