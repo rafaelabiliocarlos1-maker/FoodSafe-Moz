@@ -2,37 +2,57 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#087f5b">
 <title>FoodSafe Moz</title>
 
 <style>
-
 *{
   box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html{
+  scroll-behavior:smooth;
 }
 
 body{
   margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#f4f7f6;
-  color:#17201d;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  background:#f3f7f5;
+  color:#17352c;
+  min-height:100vh;
+  touch-action:manipulation;
+}
+
+button,
+input,
+textarea,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+  touch-action:manipulation;
+  -webkit-user-select:none;
+  user-select:none;
 }
 
 header{
-  background:#087f5b;
+  background:linear-gradient(135deg,#075b42,#087f5b);
   color:white;
-  padding:18px 16px;
+  padding:24px 16px;
   text-align:center;
   position:sticky;
   top:0;
   z-index:1000;
-  box-shadow:0 2px 8px rgba(0,0,0,.15);
+  box-shadow:0 3px 12px rgba(0,0,0,.15);
 }
 
 header h1{
   margin:0;
-  font-size:25px;
+  font-size:26px;
 }
 
 header p{
@@ -43,28 +63,30 @@ header p{
 
 nav{
   display:flex;
+  gap:8px;
   overflow-x:auto;
-  gap:7px;
-  padding:9px;
+  padding:10px;
   background:white;
+  border-bottom:1px solid #dce8e3;
   position:sticky;
-  top:82px;
+  top:86px;
   z-index:999;
-  box-shadow:0 2px 6px rgba(0,0,0,.08);
+  -webkit-overflow-scrolling:touch;
 }
 
 nav button{
+  flex:0 0 auto;
   border:0;
-  background:#e9f5f1;
+  background:#edf5f1;
   color:#075b42;
-  padding:10px 13px;
-  border-radius:20px;
-  white-space:nowrap;
-  font-weight:bold;
-  cursor:pointer;
+  padding:11px 14px;
+  border-radius:10px;
+  font-weight:700;
+  min-height:44px;
 }
 
-nav button.active{
+nav button.active,
+nav button:active{
   background:#087f5b;
   color:white;
 }
@@ -77,266 +99,330 @@ main{
 
 .page{
   display:none;
+  animation:fade .18s ease;
 }
 
 .page.active{
   display:block;
 }
 
-.card{
-  background:white;
-  border-radius:15px;
-  padding:18px;
-  margin-bottom:16px;
-  box-shadow:0 2px 9px rgba(0,0,0,.08);
+@keyframes fade{
+  from{opacity:.3;transform:translateY(4px)}
+  to{opacity:1;transform:translateY(0)}
 }
 
-h2{
+.card{
+  background:white;
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 3px 14px rgba(0,0,0,.07);
+  border:1px solid #e2ece8;
+}
+
+.card h2,
+.card h3{
   margin-top:0;
   color:#075b42;
 }
 
-h3{
-  color:#075b42;
-}
-
-label{
-  display:block;
-  margin-top:13px;
-  margin-bottom:6px;
-  font-weight:bold;
-}
-
-input,
-select,
-textarea{
-  width:100%;
-  padding:12px;
-  border:1px solid #ccd6d2;
-  border-radius:9px;
-  font-size:15px;
-  background:white;
-}
-
-textarea{
-  min-height:90px;
-  resize:vertical;
-}
-
-button{
-  cursor:pointer;
-  font-family:inherit;
-}
-
-.primary{
-  width:100%;
-  margin-top:16px;
-  padding:13px;
-  border:0;
-  border-radius:10px;
-  background:#087f5b;
-  color:white;
-  font-size:16px;
-  font-weight:bold;
-}
-
-.secondary{
-  padding:10px 13px;
-  border:0;
-  border-radius:9px;
-  background:#e8f1ee;
-  color:#075b42;
-  font-weight:bold;
-}
-
-.danger{
-  padding:10px 13px;
-  border:0;
-  border-radius:9px;
-  background:#ffe8e8;
-  color:#a40000;
-  font-weight:bold;
-}
-
-.warning{
-  padding:10px 13px;
-  border:0;
-  border-radius:9px;
-  background:#fff4d6;
-  color:#825900;
-  font-weight:bold;
-}
-
-.success{
-  padding:10px 13px;
-  border:0;
-  border-radius:9px;
-  background:#dff7e9;
-  color:#087f5b;
-  font-weight:bold;
-}
-
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-  gap:14px;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
 }
 
 .stat{
-  background:white;
-  padding:18px;
+  background:#f1f8f5;
+  padding:16px;
   border-radius:14px;
-  box-shadow:0 2px 8px rgba(0,0,0,.07);
+  border:1px solid #dbece5;
 }
 
 .stat strong{
   display:block;
   font-size:28px;
-  margin-top:8px;
   color:#087f5b;
+}
+
+.stat span{
+  font-size:13px;
+  color:#557269;
+}
+
+label{
+  display:block;
+  font-weight:700;
+  margin:13px 0 6px;
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  border:1px solid #cbdcd5;
+  border-radius:10px;
+  padding:13px;
+  background:white;
+  color:#17352c;
+  outline:none;
+  font-size:16px;
+  min-height:46px;
+}
+
+textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  border-color:#087f5b;
+  box-shadow:0 0 0 3px rgba(8,127,91,.1);
+}
+
+.btn{
+  border:0;
+  background:#087f5b;
+  color:white;
+  padding:13px 16px;
+  border-radius:10px;
+  font-weight:800;
+  min-height:46px;
+  margin-top:14px;
+}
+
+.btn:active{
+  transform:scale(.98);
+}
+
+.btn.secondary{
+  background:#e8f2ee;
+  color:#075b42;
+}
+
+.btn.danger{
+  background:#b42318;
+}
+
+.btn.warning{
+  background:#d97706;
+}
+
+.btn.success{
+  background:#087f5b;
+}
+
+.btn.full{
+  width:100%;
 }
 
 .check-item{
   display:flex;
-  gap:10px;
   align-items:flex-start;
-  padding:12px;
+  gap:12px;
+  padding:13px;
   margin:8px 0;
-  background:#f7faf9;
-  border-radius:10px;
+  border:1px solid #dce8e3;
+  border-radius:12px;
+  background:#fafdfb;
+  cursor:pointer;
 }
 
 .check-item input{
-  width:20px;
-  height:20px;
-  flex-shrink:0;
+  width:24px;
+  height:24px;
+  min-height:24px;
+  flex:0 0 24px;
+  margin:0;
+  accent-color:#087f5b;
 }
 
 .badge{
   display:inline-block;
   padding:5px 9px;
-  border-radius:20px;
+  border-radius:999px;
   font-size:12px;
-  font-weight:bold;
+  font-weight:800;
 }
 
 .badge.green{
-  background:#dff7e9;
+  background:#d9f5e9;
   color:#087f5b;
 }
 
 .badge.yellow{
-  background:#fff2c9;
-  color:#856404;
+  background:#fff1c7;
+  color:#9a6700;
 }
 
 .badge.red{
-  background:#ffe0e0;
-  color:#a40000;
+  background:#fde2e0;
+  color:#b42318;
 }
 
 .badge.gray{
-  background:#e9eceb;
-  color:#56615d;
+  background:#e9eeee;
+  color:#52635d;
+}
+
+.list-item{
+  border:1px solid #dfe9e5;
+  border-radius:13px;
+  padding:14px;
+  margin:10px 0;
+  background:#fff;
+}
+
+.list-item h3{
+  margin:0 0 8px;
 }
 
 .muted{
-  color:#68736f;
-  font-size:14px;
+  color:#647871;
+  font-size:13px;
 }
 
-.item{
-  border:1px solid #e1e7e4;
-  border-radius:12px;
-  padding:14px;
-  margin-bottom:10px;
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
 }
 
-.item img{
-  max-width:100%;
+.actions button{
+  margin-top:8px;
 }
 
 .profile-head{
-  background:#087f5b;
-  color:white;
-  border-radius:15px;
-  padding:20px;
-  margin-bottom:15px;
-}
-
-.profile-head h2{
-  color:white;
-  margin-bottom:5px;
-}
-
-.action-buttons{
   display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
   flex-wrap:wrap;
-  gap:7px;
+}
+
+.evolution{
+  display:flex;
+  align-items:flex-end;
+  gap:8px;
+  height:180px;
+  padding:15px 5px 0;
+  border-bottom:1px solid #dce8e3;
+}
+
+.bar-wrap{
+  flex:1;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  align-items:center;
+  min-width:35px;
+}
+
+.bar{
+  width:100%;
+  max-width:42px;
+  background:#087f5b;
+  border-radius:7px 7px 0 0;
+  min-height:3px;
+}
+
+.bar-label{
+  font-size:10px;
+  margin-top:5px;
+  color:#65756f;
+}
+
+.photo-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.photo-card{
+  border:1px solid #dce8e3;
+  border-radius:12px;
+  overflow:hidden;
+  background:white;
+}
+
+.photo-card img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  display:block;
+}
+
+.photo-card div{
+  padding:10px;
+  font-size:13px;
+}
+
+.preview{
   margin-top:10px;
 }
 
-.action-buttons button{
-  border:0;
-  border-radius:8px;
-  padding:8px 10px;
-  font-size:12px;
-  font-weight:bold;
-}
-
-.photo-preview{
-  margin-top:12px;
+.preview img{
+  max-width:100%;
+  max-height:260px;
   border-radius:12px;
-  overflow:hidden;
-  background:#f1f3f2;
-}
-
-.photo-preview img{
-  width:100%;
-  max-height:350px;
-  object-fit:contain;
   display:block;
 }
 
 .empty{
   text-align:center;
-  padding:25px 10px;
-  color:#68736f;
+  padding:25px;
+  color:#6a7b75;
+}
+
+.welcome{
+  background:linear-gradient(135deg,#e4f7ef,#fff);
+  border:1px solid #cfe9dd;
+}
+
+.small{
+  font-size:12px;
 }
 
 hr{
   border:0;
-  border-top:1px solid #e1e7e4;
+  border-top:1px solid #e1eae6;
   margin:18px 0;
 }
 
-footer{
-  text-align:center;
-  padding:30px 15px;
-  color:#6c7773;
-  font-size:13px;
-}
+@media(max-width:650px){
+  header{
+    position:relative;
+  }
 
-@media(max-width:600px){
+  nav{
+    position:sticky;
+    top:0;
+  }
 
   main{
     padding:10px;
   }
 
+  .grid{
+    grid-template-columns:1fr 1fr;
+  }
+
   .card{
     padding:14px;
+    border-radius:13px;
   }
 
-  nav{
-    top:82px;
+  .photo-grid{
+    grid-template-columns:1fr;
   }
 
-  header h1{
-    font-size:22px;
+  .photo-card img{
+    height:220px;
   }
-
 }
-
 </style>
 </head>
 
@@ -348,597 +434,370 @@ footer{
 </header>
 
 <nav id="mainNav">
-
-  <button data-go="home">🏠 Início</button>
-
-  <button data-go="temperatura">🌡️ Temperatura</button>
-
-  <button data-go="checklist">✅ Checklist</button>
-
-  <button data-go="problemas">⚠️ Problemas</button>
-
-  <button data-go="evidencias">📸 Evidências</button>
-
-  <button data-go="dashboard">📊 Dashboard</button>
-
-  <button data-go="historico">📜 Histórico</button>
-
-  <button data-go="estabelecimentos">🏢 Estabelecimentos</button>
-
+  <button type="button" data-go="home">🏠 Início</button>
+  <button type="button" data-go="temperatura">🌡️ Temperatura</button>
+  <button type="button" data-go="checklist">✅ Checklist</button>
+  <button type="button" data-go="problemas">⚠️ Problemas</button>
+  <button type="button" data-go="evidencias">📸 Evidências</button>
+  <button type="button" data-go="dashboard">📊 Dashboard</button>
+  <button type="button" data-go="historico">📜 Histórico</button>
+  <button type="button" data-go="estabelecimentos">🏢 Estabelecimentos</button>
 </nav>
 
 <main>
 
-<!-- =====================================================
-     INÍCIO
-===================================================== -->
+<section id="home" class="page active">
 
-<section id="home" class="page">
-
-  <div class="card">
-
+  <div class="card welcome">
     <h2>Bem-vindo ao FoodSafe Moz 👋</h2>
-
     <p>
-      Plataforma digital para apoiar o controlo da segurança
-      alimentar, inspeções, identificação de problemas,
-      ações corretivas e produção de relatórios.
+      Sistema digital para apoiar inspeções, controlo de segurança
+      alimentar, identificação de problemas e acompanhamento de ações corretivas.
     </p>
-
   </div>
 
   <div class="grid">
-
     <div class="stat">
-      📝
-      <div>Inspeções</div>
       <strong id="homeInspections">0</strong>
+      <span>Inspeções</span>
     </div>
 
     <div class="stat">
-      🏢
-      <div>Estabelecimentos</div>
       <strong id="homeEstablishments">0</strong>
+      <span>Estabelecimentos</span>
     </div>
 
     <div class="stat">
-      ⚠️
-      <div>Problemas</div>
       <strong id="homeProblems">0</strong>
+      <span>Problemas</span>
     </div>
 
     <div class="stat">
-      📸
-      <div>Evidências</div>
       <strong id="homeEvidences">0</strong>
+      <span>Evidências</span>
     </div>
-
   </div>
 
   <div class="card">
+    <h3>🚀 Acesso rápido</h3>
 
-    <h3>🚀 Ações rápidas</h3>
-
-    <div class="grid">
-
-      <button class="primary" onclick="showPage('checklist')">
-        ✅ Nova inspeção
-      </button>
-
-      <button class="primary" onclick="showPage('temperatura')">
-        🌡️ Registar temperatura
-      </button>
-
-      <button class="primary" onclick="showPage('problemas')">
-        ⚠️ Registar problema
-      </button>
-
-      <button class="primary" onclick="showPage('evidencias')">
-        📸 Adicionar evidência
-      </button>
-
+    <div class="actions">
+      <button type="button" class="btn" data-go="checklist">✅ Nova inspeção</button>
+      <button type="button" class="btn secondary" data-go="problemas">⚠️ Registar problema</button>
+      <button type="button" class="btn secondary" data-go="evidencias">📸 Adicionar evidência</button>
+      <button type="button" class="btn secondary" data-go="dashboard">📊 Ver dashboard</button>
     </div>
-
   </div>
 
 </section>
 
-
-<!-- =====================================================
-     TEMPERATURA
-===================================================== -->
 
 <section id="temperatura" class="page">
 
   <div class="card">
-
     <h2>🌡️ Controlo de Temperatura</h2>
 
-    <label for="tempEquip">
-      Equipamento / alimento
-    </label>
+    <label>Estabelecimento</label>
+    <input id="tempEstabelecimento" placeholder="Nome do estabelecimento">
 
-    <input
-      id="tempEquip"
-      placeholder="Ex.: Frigorífico de carnes"
-    >
+    <label>Tipo de alimento/equipamento</label>
+    <input id="tempAlimento" placeholder="Ex.: Frango, congelador, frigorífico">
 
-    <label for="tempValue">
-      Temperatura (°C)
-    </label>
+    <label>Temperatura (°C)</label>
+    <input id="tempValue" type="number" step="0.1" placeholder="Ex.: 4">
 
-    <input
-      id="tempValue"
-      type="number"
-      step="0.1"
-      placeholder="Ex.: 4"
-    >
+    <label>Data</label>
+    <input id="tempDate" type="date">
 
-    <button
-      class="primary"
-      id="saveTemp"
-    >
+    <button type="button" class="btn full" id="saveTemp">
       💾 Guardar temperatura
     </button>
-
   </div>
 
   <div class="card">
-
-    <h3>📋 Registos</h3>
-
+    <h3>📋 Registos recentes</h3>
     <div id="tempList"></div>
-
   </div>
 
 </section>
 
-
-<!-- =====================================================
-     CHECKLIST
-===================================================== -->
 
 <section id="checklist" class="page">
 
   <div class="card">
-
     <h2>✅ Nova Inspeção</h2>
 
-    <label for="estabelecimento">
-      Nome do estabelecimento *
-    </label>
+    <label>Nome do estabelecimento *</label>
+    <input id="estabelecimento" placeholder="Ex.: Restaurante Central">
 
-    <input
-      id="estabelecimento"
-      placeholder="Nome do estabelecimento"
-    >
+    <label>Responsável *</label>
+    <input id="responsavel" placeholder="Nome do responsável">
 
-    <label for="responsavel">
-      Responsável do estabelecimento *
-    </label>
+    <label>Inspetor *</label>
+    <input id="inspetor" placeholder="Nome do inspetor">
 
-    <input
-      id="responsavel"
-      placeholder="Nome do responsável"
-    >
+    <label>Data</label>
+    <input id="inspectionDate" type="date">
 
-    <label for="inspetor">
-      👮 Inspetor responsável *
-    </label>
+    <label>Hora</label>
+    <input id="inspectionTime" type="time">
 
-    <input
-      id="inspetor"
-      placeholder="Nome do inspetor"
-    >
-
-    <label for="inspectionDate">
-      📅 Data da inspeção *
-    </label>
-
-    <input
-      id="inspectionDate"
-      type="date"
-    >
-
-    <label for="inspectionTime">
-      🕐 Hora da inspeção
-    </label>
-
-    <input
-      id="inspectionTime"
-      type="time"
-    >
-
-    <label for="inspectionNotes">
-      📝 Observações gerais
-    </label>
-
-    <textarea
-      id="inspectionNotes"
-      placeholder="Observações gerais da inspeção..."
-    ></textarea>
-
+    <label>Observações gerais</label>
+    <textarea id="inspectionNotes" placeholder="Observações da inspeção"></textarea>
   </div>
 
-
   <div class="card">
-
     <h3>Checklist de Segurança Alimentar</h3>
 
-    <div class="check-item">
+    <label class="check-item">
       <input type="checkbox" data-check>
-      <span>Os alimentos estão armazenados adequadamente?</span>
-    </div>
+      <span>Higiene adequada das mãos dos manipuladores</span>
+    </label>
 
-    <div class="check-item">
+    <label class="check-item">
       <input type="checkbox" data-check>
-      <span>As temperaturas dos alimentos são controladas?</span>
-    </div>
+      <span>Uso adequado de equipamentos de proteção</span>
+    </label>
 
-    <div class="check-item">
+    <label class="check-item">
       <input type="checkbox" data-check>
-      <span>Os equipamentos estão limpos?</span>
-    </div>
+      <span>Superfícies de trabalho limpas e higienizadas</span>
+    </label>
 
-    <div class="check-item">
+    <label class="check-item">
       <input type="checkbox" data-check>
-      <span>As superfícies de trabalho estão higienizadas?</span>
-    </div>
+      <span>Alimentos armazenados corretamente</span>
+    </label>
 
-    <div class="check-item">
+    <label class="check-item">
       <input type="checkbox" data-check>
-      <span>Os trabalhadores utilizam higiene adequada?</span>
-    </div>
+      <span>Temperaturas controladas adequadamente</span>
+    </label>
 
-    <div class="check-item">
+    <label class="check-item">
       <input type="checkbox" data-check>
-      <span>Existe controlo de pragas?</span>
-    </div>
+      <span>Ausência de sinais de pragas</span>
+    </label>
 
-    <div class="check-item">
+    <label class="check-item">
       <input type="checkbox" data-check>
-      <span>A água utilizada é segura?</span>
-    </div>
+      <span>Água utilizada é adequada para consumo</span>
+    </label>
 
-    <div class="check-item">
+    <label class="check-item">
       <input type="checkbox" data-check>
-      <span>Os resíduos são corretamente eliminados?</span>
-    </div>
+      <span>Resíduos são armazenados corretamente</span>
+    </label>
 
-    <div class="check-item">
+    <label class="check-item">
       <input type="checkbox" data-check>
-      <span>Existe prevenção de contaminação cruzada?</span>
-    </div>
+      <span>Produtos possuem identificação adequada</span>
+    </label>
 
-    <div class="check-item">
+    <label class="check-item">
       <input type="checkbox" data-check>
-      <span>Os produtos estão dentro do prazo de validade?</span>
-    </div>
+      <span>Instalações apresentam condições adequadas</span>
+    </label>
 
-    <button
-      class="primary"
-      id="saveInspection"
-    >
+    <button type="button" class="btn full" id="saveInspection">
       💾 Guardar inspeção
     </button>
-
   </div>
 
 </section>
 
-
-<!-- =====================================================
-     PROBLEMAS
-===================================================== -->
 
 <section id="problemas" class="page">
 
   <div class="card">
-
     <h2>⚠️ Registar Problema</h2>
 
-    <label for="problemEstabelecimento">
-      🏢 Estabelecimento
-    </label>
+    <label>Estabelecimento *</label>
+    <input id="problemEstabelecimento" placeholder="Nome do estabelecimento">
 
-    <input
-      id="problemEstabelecimento"
-      placeholder="Nome do estabelecimento"
-    >
+    <label>Descrição do problema *</label>
+    <textarea id="problemDesc" placeholder="Descreva a não conformidade"></textarea>
 
-    <label for="problemDesc">
-      ⚠️ Problema encontrado
-    </label>
+    <label>Ação corretiva</label>
+    <textarea id="corrective" placeholder="O que deve ser feito para corrigir?"></textarea>
 
-    <textarea
-      id="problemDesc"
-      placeholder="Descreva o problema..."
-    ></textarea>
+    <label>Responsável pela ação</label>
+    <input id="actionResponsible" placeholder="Nome do responsável">
 
-    <label for="corrective">
-      🔧 Ação corretiva
-    </label>
+    <label>Prazo</label>
+    <input id="actionDeadline" type="date">
 
-    <textarea
-      id="corrective"
-      placeholder="O que deve ser feito para corrigir?"
-    ></textarea>
-
-    <label for="actionResponsible">
-      👤 Responsável pela ação
-    </label>
-
-    <input
-      id="actionResponsible"
-      placeholder="Nome do responsável"
-    >
-
-    <label for="actionDeadline">
-      📅 Prazo
-    </label>
-
-    <input
-      id="actionDeadline"
-      type="date"
-    >
-
-    <button
-      class="primary"
-      id="saveProblem"
-    >
-      💾 Guardar problema
+    <button type="button" class="btn full" id="saveProblem">
+      ⚠️ Guardar problema
     </button>
-
   </div>
 
-
   <div class="card">
-
-    <h3>📋 Problemas registados</h3>
-
+    <h3>Problemas registados</h3>
     <div id="problemList"></div>
-
   </div>
 
 </section>
 
-
-<!-- =====================================================
-     EVIDÊNCIAS
-===================================================== -->
 
 <section id="evidencias" class="page">
 
   <div class="card">
+    <h2>📸 Evidências</h2>
 
-    <h2>📸 Evidências da Inspeção</h2>
-
-    <p class="muted">
-      Registe fotografias que comprovem problemas ou situações
-      observadas durante uma inspeção.
-    </p>
-
-    <label for="evidenceEstablishment">
-      🏢 Estabelecimento
-    </label>
-
+    <label>Estabelecimento *</label>
     <select id="evidenceEstablishment">
-      <option value="">
-        Selecione o estabelecimento
-      </option>
+      <option value="">Selecionar estabelecimento</option>
     </select>
 
-    <label for="evidenceInspection">
-      🔎 Inspeção
-    </label>
-
+    <label>Inspeção relacionada</label>
     <select id="evidenceInspection">
-      <option value="">
-        Selecione a inspeção
-      </option>
+      <option value="">Selecionar inspeção</option>
     </select>
 
-    <label for="evidenceProblem">
-      ⚠️ Problema relacionado
-    </label>
-
+    <label>Problema relacionado</label>
     <select id="evidenceProblem">
-      <option value="">
-        Sem problema específico
-      </option>
+      <option value="">Nenhum problema específico</option>
     </select>
 
-    <label for="evidenceDescription">
-      📝 Descrição da evidência
-    </label>
+    <label>Descrição da evidência *</label>
+    <textarea id="evidenceDescription" placeholder="Descreva o que aparece na fotografia"></textarea>
 
-    <textarea
-      id="evidenceDescription"
-      placeholder="Descreva o que aparece na fotografia..."
-    ></textarea>
+    <label>Fotografia *</label>
+    <input id="evidencePhoto" type="file" accept="image/*" capture="environment">
 
-    <label for="evidencePhoto">
-      📷 Fotografia
-    </label>
+    <div id="evidencePreview" class="preview"></div>
 
-    <input
-      id="evidencePhoto"
-      type="file"
-      accept="image/*"
-      capture="environment"
-    >
-
-    <div
-      id="evidencePreview"
-      class="photo-preview"
-    ></div>
-
-    <button
-      class="primary"
-      id="saveEvidence"
-    >
+    <button type="button" class="btn full" id="saveEvidence">
       📸 Guardar evidência
     </button>
-
   </div>
 
-
   <div class="card">
-
-    <h2>📂 Evidências registadas</h2>
-
+    <h3>📷 Evidências registadas</h3>
     <div id="evidenceList"></div>
-
   </div>
 
 </section>
 
 
-<!-- =====================================================
-     DASHBOARD
-===================================================== -->
-
 <section id="dashboard" class="page">
 
   <div class="card">
-
     <h2>📊 Dashboard</h2>
 
     <div class="grid">
 
       <div class="stat">
-        📝 Inspeções
         <strong id="dashInspections">0</strong>
+        <span>Inspeções</span>
       </div>
 
       <div class="stat">
-        🏢 Estabelecimentos
         <strong id="dashEstablishments">0</strong>
+        <span>Estabelecimentos</span>
       </div>
 
       <div class="stat">
-        ⚠️ Problemas
         <strong id="dashProblems">0</strong>
+        <span>Problemas</span>
       </div>
 
       <div class="stat">
-        🔴 Pendentes
         <strong id="dashPending">0</strong>
+        <span>Pendentes</span>
       </div>
 
       <div class="stat">
-        🟡 Em andamento
         <strong id="dashProgress">0</strong>
+        <span>Em andamento</span>
       </div>
 
       <div class="stat">
-        🟢 Resolvidos
         <strong id="dashResolved">0</strong>
+        <span>Resolvidos</span>
       </div>
 
       <div class="stat">
-        🚨 Atrasados
         <strong id="dashOverdue">0</strong>
+        <span>Atrasados</span>
       </div>
 
       <div class="stat">
-        📸 Evidências
         <strong id="dashEvidences">0</strong>
+        <span>Evidências</span>
       </div>
 
     </div>
-
   </div>
 
 </section>
 
-
-<!-- =====================================================
-     HISTÓRICO
-===================================================== -->
 
 <section id="historico" class="page">
 
   <div class="card">
-
     <h2>📜 Histórico de Inspeções</h2>
-
     <div id="historyList"></div>
-
   </div>
 
 </section>
 
-
-<!-- =====================================================
-     ESTABELECIMENTOS
-===================================================== -->
 
 <section id="estabelecimentos" class="page">
 
   <div class="card">
-
     <h2>🏢 Estabelecimentos</h2>
-
     <div id="establishmentList"></div>
-
   </div>
 
 </section>
 
 
-<!-- =====================================================
-     PERFIL
-===================================================== -->
-
 <section id="perfil" class="page">
 
-  <div id="profileContent"></div>
+  <div class="card">
+    <div id="profileContent"></div>
+  </div>
 
 </section>
 
 </main>
 
-<footer>
-  FoodSafe Moz © 2026<br>
-  Alimentos seguros, famílias protegidas.
-</footer>
-
 
 <script>
+/* =========================================================
+   FOODSAFE MOZ
+   JavaScript integrado no próprio index.html
+   ========================================================= */
 
-/* =====================================================
-   CONFIGURAÇÃO
-===================================================== */
+"use strict";
 
-const KEY="foodsafemoz_v2";
+const KEY = "foodsafemoz_v2";
 
-let data={
-  inspections:[],
-  temps:[],
-  problems:[],
-  evidences:[]
+let data = {
+  inspections: [],
+  temps: [],
+  problems: [],
+  evidences: []
 };
 
+let currentProfile = "";
 
-/* =====================================================
-   UTILITÁRIOS
-===================================================== */
+
+/* =========================
+   FUNÇÕES BÁSICAS
+   ========================= */
 
 function $(id){
   return document.getElementById(id);
 }
 
-
 function normalizeName(value){
-  return String(value || "")
-    .trim()
-    .toLowerCase();
+  return String(value || "").trim().replace(/\s+/g," ");
 }
 
-
 function escapeHTML(value){
-
   return String(value ?? "")
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
@@ -947,157 +806,135 @@ function escapeHTML(value){
     .replace(/'/g,"&#039;");
 }
 
-
 function todayISO(){
-
-  const d=new Date();
-
-  const year=d.getFullYear();
-
-  const month=String(
-    d.getMonth()+1
-  ).padStart(2,"0");
-
-  const day=String(
-    d.getDate()
-  ).padStart(2,"0");
-
-  return `${year}-${month}-${day}`;
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,"0");
+  const day = String(d.getDate()).padStart(2,"0");
+  return y+"-"+m+"-"+day;
 }
 
+function formatDate(value){
+  if(!value) return "Não informada";
 
-function formatDate(date){
-
-  if(!date) return "Não informada";
-
-  try{
-
-    return new Date(
-      date+"T00:00:00"
-    ).toLocaleDateString("pt-MZ");
-
-  }catch(e){
-
-    return date;
+  const parts = String(value).split("-");
+  if(parts.length === 3){
+    return parts[2]+"/"+parts[1]+"/"+parts[0];
   }
+
+  const d = new Date(value);
+
+  if(isNaN(d.getTime())) return String(value);
+
+  return d.toLocaleDateString("pt-PT");
 }
 
+function generateId(prefix){
+  return prefix+"-"+Date.now().toString().slice(-8);
+}
 
 function save(){
-
   try{
-
-    localStorage.setItem(
-      KEY,
-      JSON.stringify(data)
-    );
-
+    localStorage.setItem(KEY, JSON.stringify(data));
   }catch(error){
-
-    console.error(error);
-
-    alert(
-      "⚠️ O armazenamento do navegador está cheio. " +
-      "Tente eliminar algumas evidências fotográficas."
-    );
+    console.error("Erro ao guardar:",error);
   }
 }
 
-
 function load(){
-
   try{
 
-    const raw=
-      localStorage.getItem(KEY);
+    const raw = localStorage.getItem(KEY);
 
     if(!raw) return;
 
-    const parsed=
-      JSON.parse(raw);
+    const parsed = JSON.parse(raw);
 
-    data={
-      inspections:
-        Array.isArray(parsed.inspections)
-          ? parsed.inspections
-          : [],
+    data = {
+      inspections: Array.isArray(parsed.inspections)
+        ? parsed.inspections
+        : [],
 
-      temps:
-        Array.isArray(parsed.temps)
-          ? parsed.temps
-          : [],
+      temps: Array.isArray(parsed.temps)
+        ? parsed.temps
+        : [],
 
-      problems:
-        Array.isArray(parsed.problems)
-          ? parsed.problems
-          : [],
+      problems: Array.isArray(parsed.problems)
+        ? parsed.problems
+        : [],
 
-      evidences:
-        Array.isArray(parsed.evidences)
-          ? parsed.evidences
-          : []
+      evidences: Array.isArray(parsed.evidences)
+        ? parsed.evidences
+        : []
     };
 
   }catch(error){
 
-    console.error(error);
+    console.error("Erro ao carregar dados:",error);
+
   }
 }
-
 
 function ensureEvidenceData(){
 
   if(!Array.isArray(data.evidences)){
-    data.evidences=[];
+    data.evidences = [];
   }
+
 }
 
 
-/* =====================================================
+/* =========================
    NAVEGAÇÃO
-===================================================== */
+   ========================= */
 
 function showPage(id){
 
-  document
-    .querySelectorAll(".page")
-    .forEach(page=>{
-      page.classList.remove("active");
-    });
+  const pages = document.querySelectorAll(".page");
 
-  const target=$(id);
+  pages.forEach(function(page){
+    page.classList.remove("active");
+  });
 
-  if(target){
-    target.classList.add("active");
+  const target = $(id);
+
+  if(!target){
+    console.error("Página não encontrada:",id);
+    return;
   }
 
-  document
-    .querySelectorAll("#mainNav button")
-    .forEach(button=>{
-      button.classList.toggle(
-        "active",
-        button.dataset.go===id
-      );
-    });
+  target.classList.add("active");
 
-  if(id==="evidencias"){
+  document.querySelectorAll("#mainNav button").forEach(function(button){
 
+    button.classList.toggle(
+      "active",
+      button.getAttribute("data-go") === id
+    );
+
+  });
+
+  if(id === "dashboard"){
+    renderDashboard();
+  }
+
+  if(id === "historico"){
+    renderHistory();
+  }
+
+  if(id === "estabelecimentos"){
+    renderEstablishments();
+  }
+
+  if(id === "evidencias"){
     renderEvidenceEstablishments();
     renderEvidenceInspections();
     renderEvidenceProblems();
     renderEvidenceList();
   }
 
-  if(id==="estabelecimentos"){
-    renderEstablishments();
-  }
-
-  if(id==="dashboard"){
-    renderDashboard();
-  }
-
-  if(id==="historico"){
-    renderHistory();
+  if(id === "problemas"){
+    renderProblems();
   }
 
   window.scrollTo({
@@ -1107,2672 +944,2108 @@ function showPage(id){
 }
 
 
-document
-  .querySelectorAll("[data-go]")
-  .forEach(button=>{
-
-    button.addEventListener(
-      "click",
-      ()=>{
-        showPage(
-          button.dataset.go
-        );
-      }
-    );
-  });
-
-
-/* =====================================================
+/* =========================
    ESTABELECIMENTOS
-===================================================== */
+   ========================= */
 
 function getEstablishments(){
 
-  const names=[];
+  const names = [];
 
-  data.inspections.forEach(i=>{
-
-    if(i.estabelecimento &&
-       !names.some(
-         n=>normalizeName(n)===
-         normalizeName(i.estabelecimento)
-       )){
-
-      names.push(
-        i.estabelecimento.trim()
-      );
-    }
+  data.inspections.forEach(function(item){
+    const n = normalizeName(item.estabelecimento);
+    if(n) names.push(n);
   });
 
-
-  data.problems.forEach(p=>{
-
-    if(p.estabelecimento &&
-       !names.some(
-         n=>normalizeName(n)===
-         normalizeName(p.estabelecimento)
-       )){
-
-      names.push(
-        p.estabelecimento.trim()
-      );
-    }
+  data.problems.forEach(function(item){
+    const n = normalizeName(item.estabelecimento);
+    if(n) names.push(n);
   });
 
-
-  data.evidences.forEach(e=>{
-
-    if(e.estabelecimento &&
-       !names.some(
-         n=>normalizeName(n)===
-         normalizeName(e.estabelecimento)
-       )){
-
-      names.push(
-        e.estabelecimento.trim()
-      );
-    }
+  data.evidences.forEach(function(item){
+    const n = normalizeName(item.estabelecimento);
+    if(n) names.push(n);
   });
 
-
-  return names.sort();
+  return [...new Set(names)].sort(function(a,b){
+    return a.localeCompare(b,"pt");
+  });
 }
 
 
-/* =====================================================
+/* =========================
    AÇÕES CORRETIVAS
-===================================================== */
+   ========================= */
 
 function getActionStats(){
 
-  const stats={
-    pending:0,
-    progress:0,
-    resolved:0,
-    overdue:0
-  };
+  const today = todayISO();
 
-  const today=todayISO();
+  let pending = 0;
+  let progress = 0;
+  let resolved = 0;
+  let overdue = 0;
 
-  data.problems.forEach(p=>{
+  data.problems.forEach(function(p){
 
-    const status=
-      p.status || "pendente";
+    const status = p.status || "pendente";
 
-    if(status==="pendente"){
-      stats.pending++;
-    }
+    if(status === "pendente") pending++;
 
-    if(status==="andamento"){
-      stats.progress++;
-    }
+    if(status === "andamento") progress++;
 
-    if(status==="resolvido"){
-      stats.resolved++;
-    }
+    if(status === "resolvido") resolved++;
 
     if(
       p.prazo &&
-      p.prazo<today &&
-      status!=="resolvido"
+      p.prazo < today &&
+      status !== "resolvido"
     ){
-      stats.overdue++;
+      overdue++;
     }
 
   });
 
-  return stats;
+  return {
+    pending,
+    progress,
+    resolved,
+    overdue
+  };
+}
+
+function statusBadge(status,prazo){
+
+  const s = status || "pendente";
+
+  if(
+    prazo &&
+    prazo < todayISO() &&
+    s !== "resolvido"
+  ){
+    return '<span class="badge red">⏰ Atrasado</span>';
+  }
+
+  if(s === "resolvido"){
+    return '<span class="badge green">✓ Resolvido</span>';
+  }
+
+  if(s === "andamento"){
+    return '<span class="badge yellow">↻ Em andamento</span>';
+  }
+
+  return '<span class="badge gray">○ Pendente</span>';
 }
 
 
-/* =====================================================
+/* =========================
    HOME
-===================================================== */
+   ========================= */
 
 function renderHome(){
 
-  $("homeInspections").textContent=
-    data.inspections.length;
+  if($("homeInspections")){
+    $("homeInspections").textContent = data.inspections.length;
+  }
 
-  $("homeEstablishments").textContent=
-    getEstablishments().length;
+  if($("homeEstablishments")){
+    $("homeEstablishments").textContent = getEstablishments().length;
+  }
 
-  $("homeProblems").textContent=
-    data.problems.length;
+  if($("homeProblems")){
+    $("homeProblems").textContent = data.problems.length;
+  }
 
-  $("homeEvidences").textContent=
-    data.evidences.length;
+  if($("homeEvidences")){
+    $("homeEvidences").textContent = data.evidences.length;
+  }
+
 }
 
 
-/* =====================================================
+/* =========================
    TEMPERATURAS
-===================================================== */
+   ========================= */
 
 function renderTemps(){
 
-  const container=$("tempList");
+  const container = $("tempList");
 
   if(!container) return;
 
-  if(data.temps.length===0){
+  if(data.temps.length === 0){
 
-    container.innerHTML=
+    container.innerHTML =
       '<div class="empty">Nenhum registo de temperatura.</div>';
 
     return;
   }
 
-  container.innerHTML=
-    data.temps
-      .slice()
-      .reverse()
-      .map(t=>`
+  const list = data.temps.slice().reverse();
 
-        <div class="item">
+  container.innerHTML = list.map(function(t){
 
-          <strong>
-            🌡️ ${escapeHTML(t.equip)}
-          </strong>
+    return `
+      <div class="list-item">
+        <h3>🌡️ ${escapeHTML(t.alimento || "Registo")}</h3>
+        <p><strong>${escapeHTML(t.temperatura)} °C</strong></p>
+        <p>${escapeHTML(t.estabelecimento || "Sem estabelecimento")}</p>
+        <p class="muted">${formatDate(t.date)}</p>
+      </div>
+    `;
 
-          <p>
-            Temperatura:
-            <strong>${escapeHTML(t.value)} °C</strong>
-          </p>
+  }).join("");
 
-          <span class="muted">
-            ${escapeHTML(t.date)}
-          </span>
+}
 
-        </div>
+function saveTemperature(){
 
-      `)
-      .join("");
+  const estabelecimento = normalizeName(
+    $("tempEstabelecimento").value
+  );
+
+  const alimento = normalizeName(
+    $("tempAlimento").value
+  );
+
+  const temperatura = $("tempValue").value;
+
+  const date = $("tempDate").value || todayISO();
+
+  if(!estabelecimento){
+    alert("Informe o estabelecimento.");
+    $("tempEstabelecimento").focus();
+    return;
+  }
+
+  if(temperatura === ""){
+    alert("Informe a temperatura.");
+    $("tempValue").focus();
+    return;
+  }
+
+  data.temps.push({
+    id:generateId("TMP"),
+    estabelecimento,
+    alimento,
+    temperatura,
+    date,
+    createdAt:new Date().toISOString()
+  });
+
+  save();
+  renderTemps();
+  renderHome();
+
+  $("tempAlimento").value = "";
+  $("tempValue").value = "";
+
+  alert("Temperatura guardada com sucesso.");
 }
 
 
-$("saveTemp").addEventListener(
-  "click",
-  ()=>{
-
-    const equip=
-      $("tempEquip").value.trim();
-
-    const value=
-      $("tempValue").value.trim();
-
-    if(!equip || !value){
-
-      alert(
-        "Preencha o equipamento e a temperatura."
-      );
-
-      return;
-    }
-
-    data.temps.push({
-
-      equip,
-
-      value,
-
-      date:
-        new Date().toLocaleString(
-          "pt-MZ"
-        )
-    });
-
-    save();
-
-    $("tempEquip").value="";
-    $("tempValue").value="";
-
-    renderTemps();
-    updateAll();
-
-    alert(
-      "✅ Temperatura guardada."
-    );
-  }
-);
-
-
-/* =====================================================
-   INSPEÇÃO
-===================================================== */
+/* =========================
+   CHECKLIST
+   ========================= */
 
 function calculateResult(percentage){
 
-  if(percentage>=80){
+  if(percentage >= 80){
     return "Conforme";
   }
 
-  if(percentage>=60){
+  if(percentage >= 60){
     return "Parcialmente conforme";
   }
 
   return "Não conforme";
 }
 
-
 function resultBadge(result){
 
-  if(result==="Conforme"){
-    return '<span class="badge green">Conforme</span>';
+  if(result === "Conforme"){
+    return '<span class="badge green">✓ Conforme</span>';
   }
 
-  if(result==="Parcialmente conforme"){
-    return '<span class="badge yellow">Parcialmente conforme</span>';
+  if(result === "Parcialmente conforme"){
+    return '<span class="badge yellow">⚠ Parcialmente conforme</span>';
   }
 
-  return '<span class="badge red">Não conforme</span>';
+  return '<span class="badge red">✕ Não conforme</span>';
+}
+
+function saveInspection(){
+
+  const estabelecimento = normalizeName(
+    $("estabelecimento").value
+  );
+
+  const responsavel = normalizeName(
+    $("responsavel").value
+  );
+
+  const inspetor = normalizeName(
+    $("inspetor").value
+  );
+
+  const date =
+    $("inspectionDate").value || todayISO();
+
+  const time =
+    $("inspectionTime").value ||
+    new Date().toTimeString().slice(0,5);
+
+  const notes = normalizeName(
+    $("inspectionNotes").value
+  );
+
+  if(!estabelecimento){
+    alert("Informe o nome do estabelecimento.");
+    $("estabelecimento").focus();
+    return;
+  }
+
+  if(!responsavel){
+    alert("Informe o responsável.");
+    $("responsavel").focus();
+    return;
+  }
+
+  if(!inspetor){
+    alert("Informe o inspetor.");
+    $("inspetor").focus();
+    return;
+  }
+
+  const checks = Array.from(
+    document.querySelectorAll("[data-check]")
+  );
+
+  const total = checks.length;
+
+  const yes = checks.filter(function(c){
+    return c.checked;
+  }).length;
+
+  const percentage =
+    total > 0
+      ? Math.round((yes / total) * 100)
+      : 0;
+
+  const resultado = calculateResult(percentage);
+
+  const inspection = {
+    id:generateId("FSM"),
+    estabelecimento,
+    responsavel,
+    inspetor,
+    date,
+    time,
+    notes,
+    yes,
+    total,
+    percentage,
+    resultado,
+    createdAt:new Date().toISOString()
+  };
+
+  data.inspections.push(inspection);
+
+  save();
+
+  renderHome();
+  renderHistory();
+  renderEstablishments();
+
+  document.querySelectorAll("[data-check]").forEach(function(c){
+    c.checked = false;
+  });
+
+  $("estabelecimento").value = "";
+  $("responsavel").value = "";
+  $("inspetor").value = "";
+  $("inspectionNotes").value = "";
+  $("inspectionDate").value = todayISO();
+
+  alert(
+    "Inspeção guardada!\n\n" +
+    "ID: "+inspection.id+"\n" +
+    "Resultado: "+resultado+"\n" +
+    "Conformidade: "+percentage+"%"
+  );
+
+  showPage("historico");
 }
 
 
-$("saveInspection").addEventListener(
-  "click",
-  ()=>{
-
-    const estabelecimento=
-      $("estabelecimento")
-        .value
-        .trim();
-
-    const responsavel=
-      $("responsavel")
-        .value
-        .trim();
-
-    const inspetor=
-      $("inspetor")
-        .value
-        .trim();
-
-    const date=
-      $("inspectionDate")
-        .value ||
-      todayISO();
-
-    const time=
-      $("inspectionTime")
-        .value;
-
-    const notes=
-      $("inspectionNotes")
-        .value
-        .trim();
-
-    const checks=[
-      ...document.querySelectorAll(
-        "[data-check]"
-      )
-    ];
-
-    if(!estabelecimento){
-
-      alert(
-        "Informe o nome do estabelecimento."
-      );
-
-      return;
-    }
-
-    if(!responsavel){
-
-      alert(
-        "Informe o responsável do estabelecimento."
-      );
-
-      return;
-    }
-
-    if(!inspetor){
-
-      alert(
-        "Informe o inspetor responsável."
-      );
-
-      return;
-    }
-
-    const yes=
-      checks.filter(
-        c=>c.checked
-      ).length;
-
-    const total=
-      checks.length;
-
-    const percentage=
-      total
-        ? Math.round(
-            yes/total*100
-          )
-        : 0;
-
-    const resultado=
-      calculateResult(
-        percentage
-      );
-
-    const id=
-      "FSM-" +
-      Date.now()
-        .toString()
-        .slice(-8);
-
-    data.inspections.push({
-
-      id,
-
-      estabelecimento,
-
-      responsavel,
-
-      inspetor,
-
-      date,
-
-      time,
-
-      notes,
-
-      yes,
-
-      total,
-
-      percentage,
-
-      resultado,
-
-      createdAt:
-        new Date().toISOString()
-    });
-
-    save();
-
-    $("estabelecimento").value="";
-    $("responsavel").value="";
-    $("inspetor").value="";
-    $("inspectionDate").value=
-      todayISO();
-    $("inspectionTime").value="";
-    $("inspectionNotes").value="";
-
-    checks.forEach(
-      c=>c.checked=false
-    );
-
-    updateAll();
-
-    alert(
-      `✅ Inspeção ${id} guardada!\n\n` +
-      `Conformidade: ${percentage}%\n` +
-      `Resultado: ${resultado}`
-    );
-
-    showPage("historico");
-  }
-);
-
-
-/* =====================================================
+/* =========================
    PROBLEMAS
-===================================================== */
-
-$("saveProblem").addEventListener(
-  "click",
-  ()=>{
-
-    const estabelecimento=
-      $("problemEstabelecimento")
-        .value
-        .trim();
-
-    const desc=
-      $("problemDesc")
-        .value
-        .trim();
-
-    const corrective=
-      $("corrective")
-        .value
-        .trim();
-
-    const responsavel=
-      $("actionResponsible")
-        .value
-        .trim();
-
-    const prazo=
-      $("actionDeadline")
-        .value;
-
-    if(!estabelecimento){
-
-      alert(
-        "Informe o estabelecimento."
-      );
-
-      return;
-    }
-
-    if(!desc){
-
-      alert(
-        "Descreva o problema."
-      );
-
-      return;
-    }
-
-    data.problems.push({
-
-      id:
-        "PR-" +
-        Date.now()
-          .toString()
-          .slice(-8),
-
-      estabelecimento,
-
-      desc,
-
-      corrective,
-
-      responsavel,
-
-      prazo,
-
-      status:"pendente",
-
-      date:todayISO(),
-
-      createdAt:
-        new Date().toISOString()
-    });
-
-    save();
-
-    $("problemEstabelecimento").value="";
-    $("problemDesc").value="";
-    $("corrective").value="";
-    $("actionResponsible").value="";
-    $("actionDeadline").value="";
-
-    updateAll();
-
-    alert(
-      "✅ Problema registado."
-    );
-  }
-);
-
+   ========================= */
 
 function renderProblems(){
 
-  const container=$("problemList");
+  const container = $("problemList");
 
   if(!container) return;
 
-  if(data.problems.length===0){
+  if(data.problems.length === 0){
 
-    container.innerHTML=
+    container.innerHTML =
       '<div class="empty">Nenhum problema registado.</div>';
 
     return;
   }
 
-  const today=
-    todayISO();
+  const items = data.problems.slice().reverse();
 
-  container.innerHTML=
-    data.problems
-      .map((p,index)=>{
+  container.innerHTML = items.map(function(p){
 
-        const status=
-          p.status || "pendente";
+    const originalIndex = data.problems.indexOf(p);
 
-        let statusText=
-          "🔴 Pendente";
+    return `
+      <div class="list-item">
 
-        let statusClass=
-          "red";
+        <h3>⚠️ ${escapeHTML(p.estabelecimento)}</h3>
 
-        if(status==="andamento"){
+        <p>
+          <strong>Problema:</strong><br>
+          ${escapeHTML(p.desc)}
+        </p>
 
-          statusText=
-            "🟡 Em andamento";
+        <p>
+          <strong>Ação corretiva:</strong><br>
+          ${escapeHTML(p.corrective || "Não definida")}
+        </p>
 
-          statusClass=
-            "yellow";
-        }
+        <p>
+          <strong>Responsável:</strong>
+          ${escapeHTML(p.responsavel || "Não definido")}
+        </p>
 
-        if(status==="resolvido"){
+        <p>
+          <strong>Prazo:</strong>
+          ${formatDate(p.prazo)}
+        </p>
 
-          statusText=
-            "🟢 Resolvido";
+        <p>
+          ${statusBadge(p.status,p.prazo)}
+        </p>
 
-          statusClass=
-            "green";
-        }
+        <div class="actions">
 
-        const overdue=
-          p.prazo &&
-          p.prazo<today &&
-          status!=="resolvido";
+          <button type="button"
+            class="btn secondary"
+            data-problem-status="${originalIndex}"
+            data-status-value="pendente">
+            Pendente
+          </button>
 
-        return `
+          <button type="button"
+            class="btn warning"
+            data-problem-status="${originalIndex}"
+            data-status-value="andamento">
+            Em andamento
+          </button>
 
-          <div class="item">
+          <button type="button"
+            class="btn success"
+            data-problem-status="${originalIndex}"
+            data-status-value="resolvido">
+            Resolvido
+          </button>
 
-            <strong>
-              ⚠️ ${escapeHTML(p.desc)}
-            </strong>
+        </div>
 
-            <p>
-              🏢
-              ${escapeHTML(
-                p.estabelecimento
-              )}
-            </p>
+      </div>
+    `;
 
-            <p>
-              🔧
-              ${escapeHTML(
-                p.corrective ||
-                "Não definida"
-              )}
-            </p>
+  }).join("");
 
-            <p>
-              👤
-              ${escapeHTML(
-                p.responsavel ||
-                "Não informado"
-              )}
-            </p>
-
-            <p>
-              📅
-              ${formatDate(p.prazo)}
-            </p>
-
-            ${
-              overdue
-              ?
-              '<span class="badge red">🚨 ATRASADO</span>'
-              :
-              ''
-            }
-
-            <p>
-              <span class="badge ${statusClass}">
-                ${statusText}
-              </span>
-            </p>
-
-            <div class="action-buttons">
-
-              <button
-                class="danger"
-                onclick="setProblemStatus(${index},'pendente')"
-              >
-                🔴 Pendente
-              </button>
-
-              <button
-                class="warning"
-                onclick="setProblemStatus(${index},'andamento')"
-              >
-                🟡 Em andamento
-              </button>
-
-              <button
-                class="success"
-                onclick="setProblemStatus(${index},'resolvido')"
-              >
-                🟢 Resolvido
-              </button>
-
-            </div>
-
-          </div>
-        `;
-      })
-      .join("");
 }
 
+function saveProblem(){
 
-function setProblemStatus(
-  index,
-  status
-){
+  const estabelecimento = normalizeName(
+    $("problemEstabelecimento").value
+  );
 
-  if(!data.problems[index]) return;
+  const desc = normalizeName(
+    $("problemDesc").value
+  );
 
-  data.problems[index].status=
-    status;
+  const corrective = normalizeName(
+    $("corrective").value
+  );
 
-  data.problems[index].updatedAt=
+  const responsavel = normalizeName(
+    $("actionResponsible").value
+  );
+
+  const prazo = $("actionDeadline").value;
+
+  if(!estabelecimento){
+    alert("Informe o estabelecimento.");
+    $("problemEstabelecimento").focus();
+    return;
+  }
+
+  if(!desc){
+    alert("Descreva o problema.");
+    $("problemDesc").focus();
+    return;
+  }
+
+  data.problems.push({
+    id:generateId("PR"),
+    estabelecimento,
+    desc,
+    corrective,
+    responsavel,
+    prazo,
+    status:"pendente",
+    date:todayISO(),
+    createdAt:new Date().toISOString()
+  });
+
+  save();
+
+  renderProblems();
+  renderDashboard();
+  renderEstablishments();
+  renderHome();
+
+  $("problemEstabelecimento").value = "";
+  $("problemDesc").value = "";
+  $("corrective").value = "";
+  $("actionResponsible").value = "";
+  $("actionDeadline").value = "";
+
+  alert("Problema registado com sucesso.");
+}
+
+function setProblemStatus(index,status){
+
+  if(
+    index < 0 ||
+    index >= data.problems.length
+  ){
+    return;
+  }
+
+  data.problems[index].status = status;
+  data.problems[index].updatedAt =
     new Date().toISOString();
 
   save();
 
-  updateAll();
+  renderProblems();
+  renderDashboard();
+  renderEstablishments();
+
 }
 
 
-/* =====================================================
+/* =========================
    DASHBOARD
-===================================================== */
+   ========================= */
 
 function renderDashboard(){
 
-  const stats=
-    getActionStats();
+  const stats = getActionStats();
 
-  $("dashInspections").textContent=
-    data.inspections.length;
+  if($("dashInspections")){
+    $("dashInspections").textContent =
+      data.inspections.length;
+  }
 
-  $("dashEstablishments").textContent=
-    getEstablishments().length;
+  if($("dashEstablishments")){
+    $("dashEstablishments").textContent =
+      getEstablishments().length;
+  }
 
-  $("dashProblems").textContent=
-    data.problems.length;
+  if($("dashProblems")){
+    $("dashProblems").textContent =
+      data.problems.length;
+  }
 
-  $("dashPending").textContent=
-    stats.pending;
+  if($("dashPending")){
+    $("dashPending").textContent =
+      stats.pending;
+  }
 
-  $("dashProgress").textContent=
-    stats.progress;
+  if($("dashProgress")){
+    $("dashProgress").textContent =
+      stats.progress;
+  }
 
-  $("dashResolved").textContent=
-    stats.resolved;
+  if($("dashResolved")){
+    $("dashResolved").textContent =
+      stats.resolved;
+  }
 
-  $("dashOverdue").textContent=
-    stats.overdue;
+  if($("dashOverdue")){
+    $("dashOverdue").textContent =
+      stats.overdue;
+  }
 
-  $("dashEvidences").textContent=
-    data.evidences.length;
+  if($("dashEvidences")){
+    $("dashEvidences").textContent =
+      data.evidences.length;
+  }
+
 }
 
 
-/* =====================================================
+/* =========================
    HISTÓRICO
-===================================================== */
+   ========================= */
 
 function renderHistory(){
 
-  const container=
-    $("historyList");
+  const container = $("historyList");
 
   if(!container) return;
 
-  if(data.inspections.length===0){
+  if(data.inspections.length === 0){
 
-    container.innerHTML=
-      '<div class="empty">Nenhuma inspeção realizada.</div>';
+    container.innerHTML =
+      '<div class="empty">Nenhuma inspeção registada.</div>';
 
     return;
   }
 
-  container.innerHTML=
-    data.inspections
-      .slice()
-      .reverse()
-      .map(i=>{
+  const items =
+    data.inspections.slice().reverse();
 
-        const percentage=
-          i.percentage ??
-          (
-            i.total
-              ? Math.round(
-                  i.yes/i.total*100
-                )
-              : 0
-          );
+  container.innerHTML = items.map(function(i){
 
-        const resultado=
-          i.resultado ||
-          calculateResult(
-            percentage
-          );
+    const percentage =
+      i.percentage != null
+        ? i.percentage
+        : (
+          i.total
+            ? Math.round((i.yes / i.total) * 100)
+            : 0
+        );
 
-        return `
+    const resultado =
+      i.resultado ||
+      calculateResult(percentage);
 
-          <div class="item">
+    return `
+      <div class="list-item">
 
-            <strong>
-              🆔
-              ${escapeHTML(
-                i.id ||
-                "Inspeção antiga"
-              )}
-            </strong>
+        <h3>📋 ${escapeHTML(i.estabelecimento)}</h3>
 
-            <p>
-              🏢
-              <strong>
-                ${escapeHTML(
-                  i.estabelecimento
-                )}
-              </strong>
-            </p>
+        <p>
+          <strong>ID:</strong>
+          ${escapeHTML(i.id || "Inspeção antiga")}
+        </p>
 
-            <p>
-              📅
-              ${formatDate(i.date)}
-            </p>
+        <p>
+          <strong>Data:</strong>
+          ${formatDate(i.date)}
+          ${escapeHTML(i.time || "")}
+        </p>
 
-            <p>
-              🕐
-              ${escapeHTML(
-                i.time ||
-                "Não informada"
-              )}
-            </p>
+        <p>
+          <strong>Responsável:</strong>
+          ${escapeHTML(i.responsavel || "Não informado")}
+        </p>
 
-            <p>
-              👮
-              ${escapeHTML(
-                i.inspetor ||
-                "Não informado"
-              )}
-            </p>
+        <p>
+          <strong>Inspetor:</strong>
+          ${escapeHTML(i.inspetor || "Não informado")}
+        </p>
 
-            <p>
-              👤 Responsável:
-              ${escapeHTML(
-                i.responsavel ||
-                "Não informado"
-              )}
-            </p>
+        <p>
+          <strong>Conformidade:</strong>
+          ${percentage}%
+        </p>
 
-            <p>
-              📊 Conformidade:
-              <strong>
-                ${percentage}%
-              </strong>
-            </p>
+        <p>${resultBadge(resultado)}</p>
 
-            <p>
-              ${resultBadge(
-                resultado
-              )}
-            </p>
+        ${
+          i.notes
+          ? `<p class="muted">${escapeHTML(i.notes)}</p>`
+          : ""
+        }
 
-            ${
-              i.notes
-              ?
-              `<p>
-                📝
-                ${escapeHTML(i.notes)}
-              </p>`
-              :
-              ""
-            }
+      </div>
+    `;
 
-          </div>
-        `;
-      })
-      .join("");
+  }).join("");
+
 }
 
 
-/* =====================================================
-   ESTABELECIMENTOS
-===================================================== */
+/* =========================
+   PERFIL / ESTABELECIMENTOS
+   ========================= */
 
-function getLatestInspection(
-  name
-){
+function getLatestInspection(name){
 
-  const list=
-    data.inspections.filter(
-      i=>
-        normalizeName(
-          i.estabelecimento
-        )===
-        normalizeName(name)
-    );
+  const list = data.inspections
+    .filter(function(i){
+      return normalizeName(i.estabelecimento) === name;
+    })
+    .sort(function(a,b){
 
-  if(!list.length) return null;
+      const da =
+        new Date(a.createdAt || a.date || 0).getTime();
 
-  return list[list.length-1];
+      const db =
+        new Date(b.createdAt || b.date || 0).getTime();
+
+      return db - da;
+    });
+
+  return list[0] || null;
 }
 
+function getAverageCompliance(name){
 
-function getAverageCompliance(
-  name
-){
+  const list = data.inspections.filter(function(i){
 
-  const list=
-    data.inspections.filter(
-      i=>
-        normalizeName(
-          i.estabelecimento
-        )===
-        normalizeName(name)
-    );
+    return normalizeName(i.estabelecimento) === name;
 
-  if(!list.length) return 0;
+  });
 
-  const values=
-    list.map(i=>
-      i.percentage ??
-      (
-        i.total
-          ? i.yes/i.total*100
-          : 0
-      )
-    );
+  if(list.length === 0) return 0;
 
-  return Math.round(
-    values.reduce(
-      (a,b)=>a+b,
-      0
-    )/values.length
-  );
+  let total = 0;
+
+  list.forEach(function(i){
+
+    const p =
+      i.percentage != null
+        ? Number(i.percentage)
+        : (
+          i.total
+            ? (Number(i.yes || 0) / Number(i.total)) * 100
+            : 0
+        );
+
+    total += p;
+
+  });
+
+  return Math.round(total / list.length);
 }
 
+function getRisk(percentage){
 
-function getRisk(
-  percentage
-){
-
-  if(percentage>=80){
-
+  if(percentage >= 80){
     return {
-      text:"Baixo",
-      class:"green"
+      label:"Baixo",
+      badge:'<span class="badge green">🟢 Risco baixo</span>'
     };
   }
 
-  if(percentage>=60){
-
+  if(percentage >= 60){
     return {
-      text:"Médio",
-      class:"yellow"
+      label:"Médio",
+      badge:'<span class="badge yellow">🟡 Risco médio</span>'
     };
   }
 
   return {
-    text:"Alto",
-    class:"red"
+    label:"Alto",
+    badge:'<span class="badge red">🔴 Risco alto</span>'
   };
 }
 
-
 function renderEstablishments(){
 
-  const container=
-    $("establishmentList");
+  const container = $("establishmentList");
 
   if(!container) return;
 
-  const establishments=
-    getEstablishments();
+  const names = getEstablishments();
 
-  if(!establishments.length){
+  if(names.length === 0){
 
-    container.innerHTML=
+    container.innerHTML =
       '<div class="empty">Nenhum estabelecimento registado.</div>';
 
     return;
   }
 
-  container.innerHTML=
-    establishments
-      .map(name=>{
+  container.innerHTML = names.map(function(name){
 
-        const latest=
-          getLatestInspection(name);
+    const inspections =
+      data.inspections.filter(function(i){
+        return normalizeName(i.estabelecimento) === name;
+      });
 
-        const average=
-          getAverageCompliance(name);
+    const problems =
+      data.problems.filter(function(p){
+        return normalizeName(p.estabelecimento) === name;
+      });
 
-        const risk=
-          getRisk(average);
+    const average =
+      getAverageCompliance(name);
 
-        const inspections=
-          data.inspections.filter(
-            i=>
-              normalizeName(
-                i.estabelecimento
-              )===
-              normalizeName(name)
-          ).length;
+    const risk =
+      getRisk(average);
 
-        const problems=
-          data.problems.filter(
-            p=>
-              normalizeName(
-                p.estabelecimento
-              )===
-              normalizeName(name)
-          ).length;
+    const latest =
+      getLatestInspection(name);
 
-        return `
+    return `
+      <div class="list-item">
 
-          <div class="item">
+        <div class="profile-head">
 
-            <h3>
-              🏢 ${escapeHTML(name)}
-            </h3>
+          <div>
+            <h3>🏢 ${escapeHTML(name)}</h3>
 
-            <p>
-              📝 Inspeções:
-              <strong>${inspections}</strong>
+            <p class="muted">
+              ${inspections.length} inspeção(ões) ·
+              ${problems.length} problema(s)
             </p>
-
-            <p>
-              📊 Conformidade média:
-              <strong>${average}%</strong>
-            </p>
-
-            <p>
-              🛡️ Risco:
-              <span class="badge ${risk.class}">
-                ${risk.text}
-              </span>
-            </p>
-
-            <p>
-              ⚠️ Problemas:
-              <strong>${problems}</strong>
-            </p>
-
-            <p>
-              📅 Última inspeção:
-              ${
-                latest
-                ?
-                formatDate(latest.date)
-                :
-                "Nenhuma"
-              }
-            </p>
-
-            <button
-              class="primary"
-              onclick='openProfile(${JSON.stringify(name)})'
-            >
-              👁️ Ver perfil
-            </button>
-
           </div>
-        `;
-      })
-      .join("");
+
+          <div>
+            ${risk.badge}
+          </div>
+
+        </div>
+
+        <hr>
+
+        <p>
+          <strong>Conformidade média:</strong>
+          ${average}%
+        </p>
+
+        <p>
+          <strong>Última inspeção:</strong>
+          ${latest ? formatDate(latest.date) : "Não disponível"}
+        </p>
+
+        <button
+          type="button"
+          class="btn full"
+          data-open-profile="${escapeHTML(name)}">
+          👁️ Ver perfil
+        </button>
+
+      </div>
+    `;
+
+  }).join("");
+
 }
-
-
-/* =====================================================
-   PERFIL
-===================================================== */
 
 function openProfile(name){
 
-  showPage("perfil");
+  currentProfile = name;
 
   renderProfile(name);
-}
 
+  showPage("perfil");
+
+}
 
 function renderProfile(name){
 
-  const container=
-    $("profileContent");
+  const container = $("profileContent");
 
   if(!container) return;
 
-  const inspections=
-    data.inspections.filter(
-      i=>
-        normalizeName(
-          i.estabelecimento
-        )===
-        normalizeName(name)
-    );
+  const inspections =
+    data.inspections.filter(function(i){
+      return normalizeName(i.estabelecimento) === name;
+    });
 
-  const problems=
-    data.problems.filter(
-      p=>
-        normalizeName(
-          p.estabelecimento
-        )===
-        normalizeName(name)
-    );
+  const problems =
+    data.problems.filter(function(p){
+      return normalizeName(p.estabelecimento) === name;
+    });
 
-  const evidences=
-    data.evidences.filter(
-      e=>
-        normalizeName(
-          e.estabelecimento
-        )===
-        normalizeName(name)
-    );
+  const evidences =
+    data.evidences.filter(function(e){
+      return normalizeName(e.estabelecimento) === name;
+    });
 
-  const average=
+  const average =
     getAverageCompliance(name);
 
-  const risk=
+  const risk =
     getRisk(average);
 
-  const latest=
+  const latest =
     getLatestInspection(name);
 
-  const resolved=
-    problems.filter(
-      p=>
-        (p.status||"pendente")===
-        "resolvido"
-    ).length;
+  let evolution = "";
 
-  const pending=
-    problems.filter(
-      p=>
-        (p.status||"pendente")===
-        "pendente"
-    ).length;
+  if(inspections.length){
 
-  const progress=
-    problems.filter(
-      p=>
-        (p.status||"pendente")===
-        "andamento"
-    ).length;
+    const recent =
+      inspections.slice(-10);
 
-  const overdue=
-    problems.filter(
-      p=>
-        p.prazo &&
-        p.prazo<todayISO() &&
-        (p.status||"pendente")!=="resolvido"
-    ).length;
+    evolution = `
+      <div class="evolution">
 
-
-  container.innerHTML=`
-
-    <div class="profile-head">
-
-      <h2>
-        🏢 ${escapeHTML(name)}
-      </h2>
-
-      <p>
-        Último inspetor:
         ${
-          latest
-          ?
-          escapeHTML(
-            latest.inspetor ||
-            "Não informado"
-          )
-          :
-          "Não informado"
+          recent.map(function(i){
+
+            const p =
+              i.percentage != null
+                ? Number(i.percentage)
+                : 0;
+
+            return `
+              <div class="bar-wrap">
+
+                <div
+                  class="bar"
+                  style="height:${Math.max(3,p)}%">
+                </div>
+
+                <div class="bar-label">
+                  ${p}%
+                </div>
+
+              </div>
+            `;
+
+          }).join("")
         }
+
+      </div>
+    `;
+
+  }else{
+
+    evolution =
+      '<div class="empty">Ainda não existem inspeções.</div>';
+
+  }
+
+  let actionHTML = "";
+
+  if(problems.length === 0){
+
+    actionHTML =
+      '<div class="empty">Nenhuma ação corretiva registada.</div>';
+
+  }else{
+
+    actionHTML =
+      problems.map(function(p){
+
+        const index =
+          data.problems.indexOf(p);
+
+        return `
+          <div class="list-item">
+
+            <strong>${escapeHTML(p.desc)}</strong>
+
+            <p>
+              <strong>Ação:</strong>
+              ${escapeHTML(p.corrective || "Não definida")}
+            </p>
+
+            <p>
+              <strong>Responsável:</strong>
+              ${escapeHTML(p.responsavel || "Não definido")}
+            </p>
+
+            <p>
+              <strong>Prazo:</strong>
+              ${formatDate(p.prazo)}
+            </p>
+
+            <p>${statusBadge(p.status,p.prazo)}</p>
+
+            <div class="actions">
+
+              <button
+                type="button"
+                class="btn secondary"
+                data-problem-status="${index}"
+                data-status-value="pendente">
+                Pendente
+              </button>
+
+              <button
+                type="button"
+                class="btn warning"
+                data-problem-status="${index}"
+                data-status-value="andamento">
+                Em andamento
+              </button>
+
+              <button
+                type="button"
+                class="btn success"
+                data-problem-status="${index}"
+                data-status-value="resolvido">
+                Resolvido
+              </button>
+
+            </div>
+
+          </div>
+        `;
+
+      }).join("");
+
+  }
+
+  let evidenceHTML = "";
+
+  if(evidences.length === 0){
+
+    evidenceHTML =
+      '<div class="empty">Nenhuma evidência fotográfica.</div>';
+
+  }else{
+
+    evidenceHTML =
+      '<div class="photo-grid">'+
+
+      evidences.map(function(e){
+
+        return `
+          <div class="photo-card">
+
+            <img
+              src="${e.image}"
+              alt="Evidência">
+
+            <div>
+              <strong>${escapeHTML(e.description)}</strong>
+
+              <br>
+
+              <span class="muted">
+                ${formatDate(e.date)}
+              </span>
+            </div>
+
+          </div>
+        `;
+
+      }).join("")+
+
+      '</div>';
+
+  }
+
+  const latestHTML = latest ? `
+
+    <div class="card">
+
+      <h3>📋 Última inspeção</h3>
+
+      <p>
+        <strong>ID:</strong>
+        ${escapeHTML(latest.id || "Não informado")}
       </p>
 
       <p>
-        Última inspeção:
-        ${
-          latest
-          ?
-          formatDate(latest.date)
-          :
-          "Nenhuma"
-        }
+        <strong>Data:</strong>
+        ${formatDate(latest.date)}
       </p>
 
       <p>
-        Risco:
-        <span class="badge ${risk.class}">
-          ${risk.text}
-        </span>
+        <strong>Hora:</strong>
+        ${escapeHTML(latest.time || "Não informada")}
       </p>
 
-      <button
-        class="secondary"
-        onclick='generateReport(${JSON.stringify(name)})'
-      >
-        📄 Gerar relatório
-      </button>
+      <p>
+        <strong>Inspetor:</strong>
+        ${escapeHTML(latest.inspetor || "Não informado")}
+      </p>
+
+      <p>
+        <strong>Responsável:</strong>
+        ${escapeHTML(latest.responsavel || "Não informado")}
+      </p>
+
+      <p>
+        <strong>Resultado:</strong>
+        ${resultBadge(
+          latest.resultado ||
+          calculateResult(latest.percentage || 0)
+        )}
+      </p>
+
+      <p>
+        <strong>Conformidade:</strong>
+        ${latest.percentage || 0}%
+      </p>
+
+      ${
+        latest.notes
+        ? `<p><strong>Observações:</strong><br>${escapeHTML(latest.notes)}</p>`
+        : ""
+      }
 
     </div>
 
+  ` : "";
+
+  container.innerHTML = `
+
+    <div class="profile-head">
+
+      <div>
+        <h2>🏢 ${escapeHTML(name)}</h2>
+        <p class="muted">Perfil do estabelecimento</p>
+      </div>
+
+      <div>
+        ${risk.badge}
+      </div>
+
+    </div>
 
     <div class="grid">
 
       <div class="stat">
-        📝 Inspeções
-        <strong>${inspections.length}</strong>
-      </div>
-
-      <div class="stat">
-        📊 Média
         <strong>${average}%</strong>
+        <span>Conformidade média</span>
       </div>
 
       <div class="stat">
-        ⚠️ Não conformidades
+        <strong>${inspections.length}</strong>
+        <span>Inspeções</span>
+      </div>
+
+      <div class="stat">
         <strong>${problems.length}</strong>
+        <span>Problemas</span>
       </div>
 
       <div class="stat">
-        🔴 Pendentes
-        <strong>${pending}</strong>
-      </div>
-
-      <div class="stat">
-        🟡 Em andamento
-        <strong>${progress}</strong>
-      </div>
-
-      <div class="stat">
-        🟢 Resolvidos
-        <strong>${resolved}</strong>
-      </div>
-
-      <div class="stat">
-        🚨 Atrasados
-        <strong>${overdue}</strong>
-      </div>
-
-      <div class="stat">
-        📸 Evidências
         <strong>${evidences.length}</strong>
+        <span>Evidências</span>
       </div>
 
     </div>
 
-
     <div class="card">
 
-      <h3>📈 Evolução das inspeções</h3>
+      <h3>📈 Evolução</h3>
 
-      ${
-        inspections.length
-        ?
-        inspections
-          .map(i=>{
-
-            const percentage=
-              i.percentage ??
-              (
-                i.total
-                  ?
-                  Math.round(
-                    i.yes/i.total*100
-                  )
-                  :
-                  0
-              );
-
-            return `
-
-              <div class="item">
-
-                <strong>
-                  ${formatDate(i.date)}
-                </strong>
-
-                <p>
-                  ${percentage}%
-                </p>
-
-                <div style="
-                  background:#e9eeec;
-                  height:12px;
-                  border-radius:10px;
-                  overflow:hidden;
-                ">
-
-                  <div style="
-                    width:${percentage}%;
-                    height:100%;
-                    background:#087f5b;
-                  "></div>
-
-                </div>
-
-              </div>
-            `;
-          })
-          .join("")
-        :
-        '<div class="empty">Sem dados.</div>'
-      }
+      ${evolution}
 
     </div>
 
-
     <div class="card">
 
-      <h3>🔧 Plano de ações corretivas</h3>
+      <h3>⚠️ Plano de ações corretivas</h3>
 
-      ${
-        problems.length
-        ?
-        problems
-          .map((p)=>{
-
-            const originalIndex=
-              data.problems.indexOf(p);
-
-            const status=
-              p.status ||
-              "pendente";
-
-            return `
-
-              <div class="item">
-
-                <strong>
-                  ⚠️
-                  ${escapeHTML(p.desc)}
-                </strong>
-
-                <p>
-                  🔧
-                  ${escapeHTML(
-                    p.corrective ||
-                    "Não definida"
-                  )}
-                </p>
-
-                <p>
-                  👤
-                  ${escapeHTML(
-                    p.responsavel ||
-                    "Não informado"
-                  )}
-                </p>
-
-                <p>
-                  📅
-                  ${formatDate(p.prazo)}
-                </p>
-
-                <p>
-                  Estado:
-                  ${
-                    status==="resolvido"
-                    ?
-                    '<span class="badge green">Resolvido</span>'
-                    :
-                    status==="andamento"
-                    ?
-                    '<span class="badge yellow">Em andamento</span>'
-                    :
-                    '<span class="badge red">Pendente</span>'
-                  }
-                </p>
-
-                <div class="action-buttons">
-
-                  <button
-                    class="danger"
-                    onclick="setProblemStatus(${originalIndex},'pendente'); renderProfile(${JSON.stringify(name)})"
-                  >
-                    🔴 Pendente
-                  </button>
-
-                  <button
-                    class="warning"
-                    onclick="setProblemStatus(${originalIndex},'andamento'); renderProfile(${JSON.stringify(name)})"
-                  >
-                    🟡 Em andamento
-                  </button>
-
-                  <button
-                    class="success"
-                    onclick="setProblemStatus(${originalIndex},'resolvido'); renderProfile(${JSON.stringify(name)})"
-                  >
-                    🟢 Resolvido
-                  </button>
-
-                </div>
-
-              </div>
-            `;
-          })
-          .join("")
-        :
-        '<div class="empty">Nenhuma ação corretiva.</div>'
-      }
+      ${actionHTML}
 
     </div>
 
-
     <div class="card">
 
-      <h3>📸 Evidências fotográficas</h3>
+      <h3>📸 Evidências</h3>
 
-      ${
-        evidences.length
-        ?
-        evidences
-          .slice()
-          .reverse()
-          .map(e=>`
-
-            <div class="item">
-
-              <strong>
-                ${escapeHTML(
-                  e.id ||
-                  "Evidência"
-                )}
-              </strong>
-
-              <p>
-                📝
-                ${escapeHTML(
-                  e.description ||
-                  ""
-                )}
-              </p>
-
-              <p class="muted">
-                ${e.date
-                  ?
-                  new Date(
-                    e.date
-                  ).toLocaleString("pt-MZ")
-                  :
-                  ""}
-              </p>
-
-              <img
-                src="${e.image}"
-                alt="Evidência"
-                style="
-                  width:100%;
-                  max-height:350px;
-                  object-fit:contain;
-                  border-radius:12px;
-                  background:#f2f2f2;
-                "
-              >
-
-            </div>
-
-          `)
-          .join("")
-        :
-        '<div class="empty">Nenhuma evidência registada.</div>'
-      }
+      ${evidenceHTML}
 
     </div>
 
-
-    <div class="card">
-
-      <h3>📋 Informações das inspeções</h3>
-
-      ${
-        inspections.length
-        ?
-        inspections
-          .slice()
-          .reverse()
-          .map(i=>{
-
-            const percentage=
-              i.percentage ??
-              (
-                i.total
-                  ?
-                  Math.round(
-                    i.yes/i.total*100
-                  )
-                  :
-                  0
-              );
-
-            return `
-
-              <div class="item">
-
-                <p>
-                  🆔
-                  <strong>
-                    ${escapeHTML(
-                      i.id ||
-                      "Inspeção antiga"
-                    )}
-                  </strong>
-                </p>
-
-                <p>
-                  📅
-                  ${formatDate(i.date)}
-                </p>
-
-                <p>
-                  🕐
-                  ${escapeHTML(
-                    i.time ||
-                    "Não informada"
-                  )}
-                </p>
-
-                <p>
-                  👮
-                  ${escapeHTML(
-                    i.inspetor ||
-                    "Não informado"
-                  )}
-                </p>
-
-                <p>
-                  👤
-                  ${escapeHTML(
-                    i.responsavel ||
-                    "Não informado"
-                  )}
-                </p>
-
-                <p>
-                  📊
-                  ${percentage}%
-                </p>
-
-                <p>
-                  ${
-                    resultBadge(
-                      i.resultado ||
-                      calculateResult(
-                        percentage
-                      )
-                    )
-                  }
-                </p>
-
-              </div>
-            `;
-          })
-          .join("")
-        :
-        '<div class="empty">Nenhuma inspeção.</div>'
-      }
-
-    </div>
-
+    ${latestHTML}
 
     <button
-      class="primary"
-      onclick="showPage('estabelecimentos')"
-    >
+      type="button"
+      class="btn secondary full"
+      data-go="estabelecimentos">
       ← Voltar aos estabelecimentos
     </button>
+
+    <button
+      type="button"
+      class="btn full"
+      data-generate-report="${escapeHTML(name)}">
+      📄 Gerar relatório
+    </button>
+
   `;
+
 }
 
 
-/* =====================================================
+/* =========================
    EVIDÊNCIAS
-===================================================== */
+   ========================= */
 
 function renderEvidenceEstablishments(){
 
-  const select=
-    $("evidenceEstablishment");
+  const select = $("evidenceEstablishment");
 
   if(!select) return;
 
-  const current=
-    select.value;
+  const current = select.value;
 
-  const establishments=
-    getEstablishments();
+  const names = getEstablishments();
 
-  select.innerHTML=
-    '<option value="">Selecione o estabelecimento</option>';
+  select.innerHTML =
+    '<option value="">Selecionar estabelecimento</option>'+
 
-  establishments.forEach(name=>{
+    names.map(function(name){
 
-    const option=
-      document.createElement(
-        "option"
-      );
+      return `
+        <option value="${escapeHTML(name)}">
+          ${escapeHTML(name)}
+        </option>
+      `;
 
-    option.value=name;
+    }).join("");
 
-    option.textContent=name;
-
-    select.appendChild(
-      option
-    );
-  });
-
-  if(current){
-    select.value=current;
+  if(names.includes(current)){
+    select.value = current;
   }
-}
 
+}
 
 function renderEvidenceInspections(){
 
-  const establishment=
-    $("evidenceEstablishment");
+  const select = $("evidenceInspection");
 
-  const inspectionSelect=
-    $("evidenceInspection");
+  if(!select) return;
 
-  if(
-    !establishment ||
-    !inspectionSelect
-  ){
-    return;
+  const establishment =
+    $("evidenceEstablishment").value;
+
+  const current = select.value;
+
+  let list =
+    data.inspections.slice().reverse();
+
+  if(establishment){
+
+    list = list.filter(function(i){
+
+      return normalizeName(i.estabelecimento) ===
+        normalizeName(establishment);
+
+    });
+
   }
 
-  const name=
-    establishment.value;
+  select.innerHTML =
+    '<option value="">Selecionar inspeção</option>'+
 
-  inspectionSelect.innerHTML=
-    '<option value="">Selecione a inspeção</option>';
+    list.map(function(i){
 
-  if(!name) return;
+      return `
+        <option value="${escapeHTML(i.id)}">
+          ${escapeHTML(i.id)}
+          — ${escapeHTML(i.estabelecimento)}
+          — ${formatDate(i.date)}
+        </option>
+      `;
 
-  data.inspections
-    .filter(
-      i=>
-        normalizeName(
-          i.estabelecimento
-        )===
-        normalizeName(name)
-    )
-    .slice()
-    .reverse()
-    .forEach(i=>{
+    }).join("");
 
-      const option=
-        document.createElement(
-          "option"
-        );
-
-      option.value=
-        i.id ||
-        "";
-
-      option.textContent=
-        `${i.id || "Inspeção"} — ${formatDate(i.date)}`;
-
-      inspectionSelect.appendChild(
-        option
-      );
+  const exists =
+    Array.from(select.options).some(function(o){
+      return o.value === current;
     });
-}
 
+  if(exists){
+    select.value = current;
+  }
+
+}
 
 function renderEvidenceProblems(){
 
-  const establishment=
-    $("evidenceEstablishment");
+  const select = $("evidenceProblem");
 
-  const problemSelect=
-    $("evidenceProblem");
+  if(!select) return;
 
-  if(
-    !establishment ||
-    !problemSelect
-  ){
-    return;
+  const establishment =
+    $("evidenceEstablishment").value;
+
+  const current = select.value;
+
+  let list =
+    data.problems.slice().reverse();
+
+  if(establishment){
+
+    list = list.filter(function(p){
+
+      return normalizeName(p.estabelecimento) ===
+        normalizeName(establishment);
+
+    });
+
   }
 
-  const name=
-    establishment.value;
+  select.innerHTML =
+    '<option value="">Nenhum problema específico</option>'+
 
-  problemSelect.innerHTML=
-    '<option value="">Sem problema específico</option>';
+    list.map(function(p){
 
-  if(!name) return;
+      return `
+        <option value="${escapeHTML(p.id)}">
+          ${escapeHTML(p.id)} — ${escapeHTML(p.desc)}
+        </option>
+      `;
 
-  data.problems
-    .map(
-      (p,index)=>({
-        p,
-        index
-      })
-    )
-    .filter(
-      item=>
-        normalizeName(
-          item.p.estabelecimento
-        )===
-        normalizeName(name)
-    )
-    .forEach(item=>{
+    }).join("");
 
-      const option=
-        document.createElement(
-          "option"
-        );
-
-      option.value=
-        String(item.index);
-
-      option.textContent=
-        item.p.desc ||
-        "Problema sem descrição";
-
-      problemSelect.appendChild(
-        option
-      );
+  const exists =
+    Array.from(select.options).some(function(o){
+      return o.value === current;
     });
-}
 
+  if(exists){
+    select.value = current;
+  }
+
+}
 
 function previewEvidenceImage(){
 
-  const input=
-    $("evidencePhoto");
+  const input = $("evidencePhoto");
 
-  const preview=
-    $("evidencePreview");
+  const preview = $("evidencePreview");
 
   if(!input || !preview) return;
 
-  preview.innerHTML="";
-
-  const file=
-    input.files &&
-    input.files[0];
-
-  if(!file) return;
-
-  const reader=
-    new FileReader();
-
-  reader.onload=function(e){
-
-    preview.innerHTML=`
-
-      <img
-        src="${e.target.result}"
-        alt="Pré-visualização"
-      >
-
-    `;
-  };
-
-  reader.readAsDataURL(file);
-}
-
-
-function compressEvidenceImage(
-  file
-){
-
-  return new Promise(
-    (resolve,reject)=>{
-
-      const reader=
-        new FileReader();
-
-      reader.onload=function(e){
-
-        const img=
-          new Image();
-
-        img.onload=function(){
-
-          let width=
-            img.width;
-
-          let height=
-            img.height;
-
-          const maxSize=
-            1000;
-
-          if(
-            width>maxSize ||
-            height>maxSize
-          ){
-
-            const scale=
-              Math.min(
-                maxSize/width,
-                maxSize/height
-              );
-
-            width=
-              Math.round(
-                width*scale
-              );
-
-            height=
-              Math.round(
-                height*scale
-              );
-          }
-
-          const canvas=
-            document.createElement(
-              "canvas"
-            );
-
-          canvas.width=
-            width;
-
-          canvas.height=
-            height;
-
-          const ctx=
-            canvas.getContext(
-              "2d"
-            );
-
-          ctx.drawImage(
-            img,
-            0,
-            0,
-            width,
-            height
-          );
-
-          const compressed=
-            canvas.toDataURL(
-              "image/jpeg",
-              0.55
-            );
-
-          resolve(
-            compressed
-          );
-        };
-
-        img.onerror=
-          reject;
-
-        img.src=
-          e.target.result;
-      };
-
-      reader.onerror=
-        reject;
-
-      reader.readAsDataURL(
-        file
-      );
-    }
-  );
-}
-
-
-async function saveEvidence(){
-
-  ensureEvidenceData();
-
-  const establishment=
-    $("evidenceEstablishment")
-      .value
-      .trim();
-
-  const inspectionId=
-    $("evidenceInspection")
-      .value;
-
-  const problemIndex=
-    $("evidenceProblem")
-      .value;
-
-  const description=
-    $("evidenceDescription")
-      .value
-      .trim();
-
-  const file=
-    $("evidencePhoto")
-      .files[0];
-
-  if(!establishment){
-
-    alert(
-      "Selecione o estabelecimento."
-    );
-
-    return;
-  }
-
-  if(!inspectionId){
-
-    alert(
-      "Selecione a inspeção."
-    );
-
-    return;
-  }
+  const file =
+    input.files && input.files[0];
 
   if(!file){
 
-    alert(
-      "Adicione uma fotografia."
+    preview.innerHTML = "";
+
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+
+    preview.innerHTML = `
+      <img
+        src="${e.target.result}"
+        alt="Pré-visualização">
+    `;
+
+  };
+
+  reader.readAsDataURL(file);
+
+}
+
+function compressEvidenceImage(file){
+
+  return new Promise(function(resolve,reject){
+
+    const reader = new FileReader();
+
+    reader.onload = function(){
+
+      const img = new Image();
+
+      img.onload = function(){
+
+        const max = 1000;
+
+        let width = img.width;
+        let height = img.height;
+
+        if(width > max || height > max){
+
+          if(width > height){
+
+            height =
+              Math.round(height * max / width);
+
+            width = max;
+
+          }else{
+
+            width =
+              Math.round(width * max / height);
+
+            height = max;
+
+          }
+
+        }
+
+        const canvas =
+          document.createElement("canvas");
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx =
+          canvas.getContext("2d");
+
+        ctx.drawImage(
+          img,
+          0,
+          0,
+          width,
+          height
+        );
+
+        resolve(
+          canvas.toDataURL(
+            "image/jpeg",
+            0.55
+          )
+        );
+
+      };
+
+      img.onerror = reject;
+
+      img.src = reader.result;
+
+    };
+
+    reader.onerror = reject;
+
+    reader.readAsDataURL(file);
+
+  });
+
+}
+
+async function saveEvidence(){
+
+  const estabelecimento =
+    normalizeName(
+      $("evidenceEstablishment").value
     );
+
+  const inspectionId =
+    $("evidenceInspection").value;
+
+  const problemId =
+    $("evidenceProblem").value;
+
+  const description =
+    normalizeName(
+      $("evidenceDescription").value
+    );
+
+  const input =
+    $("evidencePhoto");
+
+  const file =
+    input.files && input.files[0];
+
+  if(!estabelecimento){
+
+    alert("Selecione o estabelecimento.");
 
     return;
   }
 
   if(!description){
 
-    alert(
-      "Escreva uma descrição da evidência."
-    );
+    alert("Descreva a evidência.");
+
+    $("evidenceDescription").focus();
+
+    return;
+  }
+
+  if(!file){
+
+    alert("Selecione ou tire uma fotografia.");
 
     return;
   }
 
   try{
 
-    const image=
-      await compressEvidenceImage(
-        file
-      );
+    const image =
+      await compressEvidenceImage(file);
 
-    const evidence={
+    data.evidences.push({
 
-      id:
-        "EV-" +
-        Date.now()
-          .toString()
-          .slice(-8),
+      id:generateId("EV"),
 
-      inspectionId,
+      inspectionId:
+        inspectionId || null,
 
-      estabelecimento:
-        establishment,
+      estabelecimento,
 
-      problemIndex:
-        problemIndex===""
-          ? null
-          : Number(problemIndex),
+      problemId:
+        problemId || null,
 
       description,
 
       image,
 
-      date:
-        new Date().toISOString()
-    };
+      date:new Date().toISOString()
 
-    data.evidences.push(
-      evidence
-    );
+    });
 
     save();
 
-    $("evidenceDescription")
-      .value="";
-
-    $("evidencePhoto")
-      .value="";
-
-    $("evidencePreview")
-      .innerHTML="";
-
     renderEvidenceList();
+    renderHome();
+    renderDashboard();
 
-    updateAll();
+    $("evidenceDescription").value = "";
+    $("evidencePhoto").value = "";
+    $("evidencePreview").innerHTML = "";
 
-    alert(
-      "✅ Evidência guardada com sucesso."
-    );
+    alert("Evidência guardada com sucesso.");
 
   }catch(error){
 
     console.error(error);
 
     alert(
-      "❌ Não foi possível guardar a fotografia."
+      "Não foi possível processar a fotografia."
     );
-  }
-}
 
+  }
+
+}
 
 function renderEvidenceList(){
 
-  ensureEvidenceData();
-
-  const container=
-    $("evidenceList");
+  const container = $("evidenceList");
 
   if(!container) return;
 
-  if(
-    data.evidences.length===0
-  ){
+  if(data.evidences.length === 0){
 
-    container.innerHTML=
-      '<div class="empty">Ainda não existem evidências registadas.</div>';
+    container.innerHTML =
+      '<div class="empty">Nenhuma evidência registada.</div>';
 
     return;
   }
 
-  container.innerHTML=
-    data.evidences
-      .slice()
-      .reverse()
-      .map(
-        (e,index)=>{
+  const items =
+    data.evidences.slice().reverse();
 
-          const originalIndex=
-            data.evidences.length -
-            1 -
-            index;
+  container.innerHTML =
+    items.map(function(e){
 
-          let problemText=
-            "Sem problema específico";
+      const index =
+        data.evidences.indexOf(e);
 
-          if(
-            e.problemIndex!==null &&
-            e.problemIndex!==undefined &&
-            data.problems[
-              e.problemIndex
-            ]
-          ){
+      const problem =
+        data.problems.find(function(p){
+          return p.id === e.problemId;
+        });
 
-            problemText=
-              data.problems[
-                e.problemIndex
-              ].desc ||
-              "Problema registado";
+      return `
+
+        <div class="list-item">
+
+          <h3>📸 ${escapeHTML(e.estabelecimento)}</h3>
+
+          <img
+            src="${e.image}"
+            alt="Evidência"
+            style="width:100%;max-height:300px;object-fit:cover;border-radius:10px;">
+
+          <p>
+            <strong>Descrição:</strong><br>
+            ${escapeHTML(e.description)}
+          </p>
+
+          <p class="muted">
+            ${formatDate(e.date)}
+          </p>
+
+          ${
+            e.inspectionId
+            ? `<p><strong>Inspeção:</strong> ${escapeHTML(e.inspectionId)}</p>`
+            : ""
           }
 
-          const date=
-            e.date
-            ?
-            new Date(
-              e.date
-            ).toLocaleString(
-              "pt-MZ"
-            )
-            :
-            "Data não disponível";
+          ${
+            problem
+            ? `<p><strong>Problema:</strong> ${escapeHTML(problem.desc)}</p>`
+            : ""
+          }
 
-          return `
+          <button
+            type="button"
+            class="btn danger"
+            data-delete-evidence="${index}">
+            🗑️ Eliminar
+          </button>
 
-            <div class="item">
+        </div>
 
-              <strong>
-                📸
-                ${escapeHTML(
-                  e.id ||
-                  "Evidência"
-                )}
-              </strong>
+      `;
 
-              <p>
-                🏢
-                ${escapeHTML(
-                  e.estabelecimento ||
-                  "Não informado"
-                )}
-              </p>
+    }).join("");
 
-              <p>
-                🔎
-                ${escapeHTML(
-                  e.inspectionId ||
-                  "Não informada"
-                )}
-              </p>
-
-              <p>
-                ⚠️
-                ${escapeHTML(
-                  problemText
-                )}
-              </p>
-
-              <p>
-                📝
-                ${escapeHTML(
-                  e.description ||
-                  ""
-                )}
-              </p>
-
-              <p class="muted">
-                ${escapeHTML(date)}
-              </p>
-
-              <img
-                src="${e.image}"
-                alt="Evidência"
-                style="
-                  width:100%;
-                  max-height:360px;
-                  object-fit:contain;
-                  border-radius:12px;
-                  background:#f2f2f2;
-                "
-              >
-
-              <button
-                class="danger"
-                onclick="deleteEvidence(${originalIndex})"
-                style="margin-top:10px"
-              >
-                🗑️ Eliminar
-              </button>
-
-            </div>
-          `;
-        }
-      )
-      .join("");
 }
-
 
 function deleteEvidence(index){
 
   if(
-    !confirm(
-      "Tem certeza que deseja eliminar esta evidência?"
-    )
+    index < 0 ||
+    index >= data.evidences.length
   ){
     return;
   }
 
-  data.evidences.splice(
-    index,
-    1
-  );
+  const ok =
+    confirm("Deseja eliminar esta evidência?");
+
+  if(!ok) return;
+
+  data.evidences.splice(index,1);
 
   save();
 
   renderEvidenceList();
+  renderHome();
+  renderDashboard();
 
-  updateAll();
 }
 
 
-/* =====================================================
+/* =========================
    RELATÓRIO
-===================================================== */
+   ========================= */
 
 function generateReport(name){
 
-  const inspections=
-    data.inspections.filter(
-      i=>
-        normalizeName(
-          i.estabelecimento
-        )===
-        normalizeName(name)
-    );
+  const inspections =
+    data.inspections.filter(function(i){
+      return normalizeName(i.estabelecimento) === name;
+    });
 
-  const problems=
-    data.problems.filter(
-      p=>
-        normalizeName(
-          p.estabelecimento
-        )===
-        normalizeName(name)
-    );
+  const problems =
+    data.problems.filter(function(p){
+      return normalizeName(p.estabelecimento) === name;
+    });
 
-  const evidences=
-    data.evidences.filter(
-      e=>
-        normalizeName(
-          e.estabelecimento
-        )===
-        normalizeName(name)
-    );
+  const evidences =
+    data.evidences.filter(function(e){
+      return normalizeName(e.estabelecimento) === name;
+    });
 
-  const average=
+  const average =
     getAverageCompliance(name);
 
-  const risk=
+  const risk =
     getRisk(average);
 
-  const stats=
-    getActionStats();
-
-  const win=
-    window.open(
-      "",
-      "_blank"
-    );
+  const win =
+    window.open("","_blank");
 
   if(!win){
 
     alert(
-      "Permita a abertura de novas janelas para gerar o relatório."
+      "O navegador bloqueou a abertura do relatório. Permita pop-ups para o FoodSafe Moz."
     );
 
     return;
   }
 
-  const inspectionRows=
-    inspections
-      .map(i=>{
+  const inspectionHTML =
+    inspections.length
+    ? inspections.map(function(i){
 
-        const percentage=
-          i.percentage ??
-          (
-            i.total
-              ?
-              Math.round(
-                i.yes/i.total*100
-              )
-              :
-              0
-          );
-
-        const result=
-          i.resultado ||
-          calculateResult(
-            percentage
-          );
+        const percentage =
+          i.percentage || 0;
 
         return `
+          <div class="item">
 
-          <tr>
+            <h3>${escapeHTML(i.id || "Inspeção")}</h3>
 
-            <td>
-              ${escapeHTML(
-                i.id ||
-                "Antiga"
-              )}
-            </td>
-
-            <td>
+            <p>
+              <strong>Data:</strong>
               ${formatDate(i.date)}
-            </td>
+            </p>
 
-            <td>
-              ${escapeHTML(
-                i.time ||
-                ""
-              )}
-            </td>
+            <p>
+              <strong>Hora:</strong>
+              ${escapeHTML(i.time || "Não informada")}
+            </p>
 
-            <td>
-              ${escapeHTML(
-                i.inspetor ||
-                ""
-              )}
-            </td>
+            <p>
+              <strong>Responsável:</strong>
+              ${escapeHTML(i.responsavel || "Não informado")}
+            </p>
 
-            <td>
-              ${escapeHTML(
-                i.responsavel ||
-                ""
-              )}
-            </td>
+            <p>
+              <strong>Inspetor:</strong>
+              ${escapeHTML(i.inspetor || "Não informado")}
+            </p>
 
-            <td>
-              ${escapeHTML(result)}
-            </td>
-
-            <td>
+            <p>
+              <strong>Conformidade:</strong>
               ${percentage}%
-            </td>
+            </p>
 
-          </tr>
+            <p>
+              <strong>Resultado:</strong>
+              ${escapeHTML(
+                i.resultado ||
+                calculateResult(percentage)
+              )}
+            </p>
+
+            ${
+              i.notes
+              ? `<p><strong>Observações:</strong> ${escapeHTML(i.notes)}</p>`
+              : ""
+            }
+
+          </div>
         `;
-      })
-      .join("");
 
+      }).join("")
+    : "<p>Nenhuma inspeção registada.</p>";
 
-  const problemRows=
-    problems
-      .map(p=>{
-
-        const status=
-          p.status ||
-          "pendente";
+  const problemsHTML =
+    problems.length
+    ? problems.map(function(p){
 
         return `
+          <div class="item">
 
-          <tr>
+            <h3>${escapeHTML(p.desc)}</h3>
 
-            <td>
-              ${escapeHTML(
-                p.desc
-              )}
-            </td>
+            <p>
+              <strong>Ação corretiva:</strong>
+              ${escapeHTML(p.corrective || "Não definida")}
+            </p>
 
-            <td>
-              ${escapeHTML(
-                p.corrective ||
-                ""
-              )}
-            </td>
+            <p>
+              <strong>Responsável:</strong>
+              ${escapeHTML(p.responsavel || "Não definido")}
+            </p>
 
-            <td>
-              ${escapeHTML(
-                p.responsavel ||
-                ""
-              )}
-            </td>
+            <p>
+              <strong>Prazo:</strong>
+              ${formatDate(p.prazo)}
+            </p>
 
-            <td>
-              ${formatDate(
-                p.prazo
-              )}
-            </td>
+            <p>
+              <strong>Status:</strong>
+              ${escapeHTML(p.status || "pendente")}
+            </p>
 
-            <td>
-              ${escapeHTML(
-                status
-              )}
-            </td>
-
-          </tr>
+          </div>
         `;
-      })
-      .join("");
 
+      }).join("")
+    : "<p>Nenhum problema registado.</p>";
 
-  const evidenceRows=
-    evidences
-      .map(e=>`
+  const evidenceHTML =
+    evidences.length
+    ? evidences.map(function(e){
 
-        <div style="
-          display:inline-block;
-          width:220px;
-          vertical-align:top;
-          margin:8px;
-          border:1px solid #ddd;
-          padding:8px;
-          border-radius:8px;
-        ">
+        return `
+          <div class="evidence">
 
-          <img
-            src="${e.image}"
-            style="
-              width:100%;
-              height:150px;
-              object-fit:contain;
-            "
-          >
+            <img src="${e.image}">
 
-          <p>
-            <strong>
-              ${escapeHTML(
-                e.id ||
-                ""
-              )}
-            </strong>
-          </p>
+            <p>
+              ${escapeHTML(e.description)}
+            </p>
 
-          <p>
-            ${escapeHTML(
-              e.description ||
-              ""
-            )}
-          </p>
+            <small>
+              ${formatDate(e.date)}
+            </small>
 
-        </div>
+          </div>
+        `;
 
-      `)
-      .join("");
-
+      }).join("")
+    : "<p>Nenhuma evidência fotográfica.</p>";
 
   win.document.write(`
 
-    <!DOCTYPE html>
+<!DOCTYPE html>
 
-    <html lang="pt">
+<html lang="pt">
 
-    <head>
+<head>
 
-      <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-      <title>
-        Relatório FoodSafe Moz
-      </title>
+<title>Relatório FoodSafe Moz</title>
 
-      <style>
+<style>
 
-        body{
-          font-family:Arial;
-          margin:30px;
-          color:#222;
-        }
+body{
+  font-family:Arial,sans-serif;
+  padding:30px;
+  color:#17352c;
+}
 
-        h1{
-          color:#087f5b;
-        }
+h1,h2{
+  color:#075b42;
+}
 
-        h2{
-          color:#075b42;
-          border-bottom:1px solid #ddd;
-          padding-bottom:6px;
-        }
+.header{
+  border-bottom:3px solid #087f5b;
+  padding-bottom:15px;
+}
 
-        .box{
-          border:1px solid #ddd;
-          padding:15px;
-          margin-bottom:20px;
-          border-radius:8px;
-        }
+.summary{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin:20px 0;
+}
 
-        table{
-          width:100%;
-          border-collapse:collapse;
-          margin-top:10px;
-        }
+.box{
+  border:1px solid #ddd;
+  padding:15px;
+  border-radius:8px;
+}
 
-        th,td{
-          border:1px solid #ddd;
-          padding:8px;
-          text-align:left;
-          font-size:12px;
-        }
-
-        th{
-          background:#eef5f2;
-        }
+.item{
+  border:1px solid #ddd;
+  padding:15px;
+  margin:10px 0;
+  border-radius:8px;
+}
 
-        @media print{
+.evidence{
+  border:1px solid #ddd;
+  padding:10px;
+  margin:10px 0;
+  page-break-inside:avoid;
+}
 
-          body{
-            margin:15mm;
-          }
+.evidence img{
+  max-width:100%;
+  max-height:400px;
+}
 
-          button{
-            display:none;
-          }
+button{
+  padding:12px 20px;
+  background:#087f5b;
+  color:white;
+  border:0;
+  border-radius:6px;
+}
 
-        }
+@media print{
+  button{
+    display:none;
+  }
+}
 
-      </style>
+</style>
 
-    </head>
+</head>
 
-    <body>
+<body>
 
-      <h1>
-        🛡️ FoodSafe Moz
-      </h1>
+<div class="header">
 
-      <p>
-        Relatório de Segurança Alimentar
-      </p>
+<h1>🛡️ FoodSafe Moz</h1>
 
-      <div class="box">
+<h2>Relatório de Segurança Alimentar</h2>
 
-        <h2>
-          🏢 Estabelecimento
-        </h2>
+<p>
+<strong>Estabelecimento:</strong>
+${escapeHTML(name)}
+</p>
 
-        <p>
-          <strong>
-            ${escapeHTML(name)}
-          </strong>
-        </p>
+<p>
+<strong>Data do relatório:</strong>
+${formatDate(todayISO())}
+</p>
 
-        <p>
-          📅 Relatório:
-          ${new Date().toLocaleDateString("pt-MZ")}
-        </p>
+</div>
 
-        <p>
-          📊 Conformidade média:
-          <strong>
-            ${average}%
-          </strong>
-        </p>
+<div class="summary">
 
-        <p>
-          🛡️ Classificação de risco:
-          <strong>
-            ${risk.text}
-          </strong>
-        </p>
+<div class="box">
+<strong>Conformidade média</strong>
+<h2>${average}%</h2>
+</div>
 
-      </div>
+<div class="box">
+<strong>Nível de risco</strong>
+<h2>${escapeHTML(risk.label)}</h2>
+</div>
 
+<div class="box">
+<strong>Inspeções</strong>
+<h2>${inspections.length}</h2>
+</div>
 
-      <div class="box">
+</div>
 
-        <h2>
-          📊 Resumo
-        </h2>
+<h2>📋 Inspeções</h2>
 
-        <p>
-          Inspeções:
-          ${inspections.length}
-        </p>
+${inspectionHTML}
 
-        <p>
-          Não conformidades:
-          ${problems.length}
-        </p>
+<h2>⚠️ Problemas e ações corretivas</h2>
 
-        <p>
-          Ações pendentes:
-          ${stats.pending}
-        </p>
+${problemsHTML}
 
-        <p>
-          Ações em andamento:
-          ${stats.progress}
-        </p>
+<h2>📸 Evidências fotográficas</h2>
 
-        <p>
-          Ações resolvidas:
-          ${stats.resolved}
-        </p>
+${evidenceHTML}
 
-        <p>
-          Evidências fotográficas:
-          ${evidences.length}
-        </p>
+<br>
 
-      </div>
+<button onclick="window.print()">
+🖨️ Imprimir / Guardar PDF
+</button>
 
+</body>
 
-      <div class="box">
-
-        <h2>
-          📋 Histórico de Inspeções
-        </h2>
-
-        <table>
-
-          <thead>
-
-            <tr>
-
-              <th>ID</th>
-              <th>Data</th>
-              <th>Hora</th>
-              <th>Inspetor</th>
-              <th>Responsável</th>
-              <th>Resultado</th>
-              <th>Conformidade</th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            ${inspectionRows}
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-
-      <div class="box">
-
-        <h2>
-          ⚠️ Não conformidades e ações corretivas
-        </h2>
-
-        <table>
-
-          <thead>
-
-            <tr>
-
-              <th>Problema</th>
-              <th>Ação</th>
-              <th>Responsável</th>
-              <th>Prazo</th>
-              <th>Estado</th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            ${problemRows}
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-
-      <div class="box">
-
-        <h2>
-          📸 Evidências fotográficas
-        </h2>
-
-        ${
-          evidenceRows ||
-          "<p>Nenhuma evidência registada.</p>"
-        }
-
-      </div>
-
-
-      <p style="
-        margin-top:40px;
-        color:#777;
-        font-size:12px;
-      ">
-
-        Relatório gerado pelo FoodSafe Moz.
-
-      </p>
-
-
-      <button
-        onclick="window.print()"
-        style="
-          padding:12px 20px;
-          background:#087f5b;
-          color:white;
-          border:0;
-          border-radius:6px;
-        "
-      >
-        🖨️ Imprimir / Guardar PDF
-      </button>
-
-    </body>
-
-    </html>
+</html>
 
   `);
 
   win.document.close();
+
 }
 
 
-/* =====================================================
+/* =========================
    ATUALIZAÇÃO GERAL
-===================================================== */
+   ========================= */
 
 function updateAll(){
 
-  ensureEvidenceData();
-
   renderHome();
-
   renderTemps();
-
   renderProblems();
-
   renderDashboard();
-
   renderHistory();
-
   renderEstablishments();
 
   renderEvidenceEstablishments();
-
   renderEvidenceInspections();
-
   renderEvidenceProblems();
-
   renderEvidenceList();
+
 }
 
 
-/* =====================================================
-   EVENTOS DAS EVIDÊNCIAS
-===================================================== */
+/* =========================================================
+   EVENTOS
+   IMPORTANTE:
+   USAMOS DELEGAÇÃO NO DOCUMENT.
+   ASSIM OS BOTÕES CONTINUAM A FUNCIONAR MESMO
+   QUANDO O HTML É RECRIADO.
+   ========================================================= */
 
-$("evidenceEstablishment")
-  .addEventListener(
-    "change",
-    ()=>{
+document.addEventListener("click",function(event){
 
-      renderEvidenceInspections();
+  const button =
+    event.target.closest("button");
 
-      renderEvidenceProblems();
+  if(!button) return;
+
+
+  /* NAVEGAÇÃO */
+
+  const go =
+    button.getAttribute("data-go");
+
+  if(go){
+
+    event.preventDefault();
+
+    showPage(go);
+
+    return;
+  }
+
+
+  /* PERFIL */
+
+  const profile =
+    button.getAttribute("data-open-profile");
+
+  if(profile !== null){
+
+    event.preventDefault();
+
+    openProfile(profile);
+
+    return;
+  }
+
+
+  /* RELATÓRIO */
+
+  const report =
+    button.getAttribute("data-generate-report");
+
+  if(report !== null){
+
+    event.preventDefault();
+
+    generateReport(report);
+
+    return;
+  }
+
+
+  /* STATUS DO PROBLEMA */
+
+  const problemIndex =
+    button.getAttribute("data-problem-status");
+
+  if(problemIndex !== null){
+
+    event.preventDefault();
+
+    const status =
+      button.getAttribute("data-status-value");
+
+    setProblemStatus(
+      Number(problemIndex),
+      status
+    );
+
+    if(currentProfile){
+
+      renderProfile(currentProfile);
+
     }
-  );
+
+    return;
+  }
 
 
-$("evidenceInspection")
-  .addEventListener(
-    "change",
-    ()=>{
+  /* ELIMINAR EVIDÊNCIA */
 
-      renderEvidenceProblems();
-    }
-  );
+  const evidenceIndex =
+    button.getAttribute("data-delete-evidence");
 
+  if(evidenceIndex !== null){
 
-$("evidencePhoto")
-  .addEventListener(
-    "change",
-    previewEvidenceImage
-  );
+    event.preventDefault();
 
+    deleteEvidence(
+      Number(evidenceIndex)
+    );
 
-$("saveEvidence")
-  .addEventListener(
-    "click",
-    saveEvidence
-  );
+    return;
+  }
+
+});
 
 
-/* =====================================================
+/* =========================
+   EVENTOS DOS FORMULÁRIOS
+   ========================= */
+
+document.addEventListener("click",function(event){
+
+  if(event.target.id === "saveInspection"){
+
+    event.preventDefault();
+
+    saveInspection();
+
+  }
+
+  if(event.target.id === "saveProblem"){
+
+    event.preventDefault();
+
+    saveProblem();
+
+  }
+
+  if(event.target.id === "saveTemp"){
+
+    event.preventDefault();
+
+    saveTemperature();
+
+  }
+
+  if(event.target.id === "saveEvidence"){
+
+    event.preventDefault();
+
+    saveEvidence();
+
+  }
+
+});
+
+
+/* =========================
+   EVENTOS DE EVIDÊNCIAS
+   ========================= */
+
+document.addEventListener("change",function(event){
+
+  if(event.target.id === "evidencePhoto"){
+
+    previewEvidenceImage();
+
+  }
+
+  if(event.target.id === "evidenceEstablishment"){
+
+    renderEvidenceInspections();
+    renderEvidenceProblems();
+
+  }
+
+});
+
+
+/* =========================
    INICIALIZAÇÃO
-===================================================== */
+   ========================= */
 
-load();
+function init(){
 
-ensureEvidenceData();
+  load();
 
-if($("inspectionDate")){
+  ensureEvidenceData();
 
-  $("inspectionDate").value=
-    todayISO();
+  if($("inspectionDate")){
+    $("inspectionDate").value =
+      todayISO();
+  }
+
+  if($("tempDate")){
+    $("tempDate").value =
+      todayISO();
+  }
+
+  updateAll();
+
+  showPage("home");
+
 }
 
-updateAll();
 
-showPage("home");
+/* Inicia somente depois do HTML estar totalmente carregado */
+if(document.readyState === "loading"){
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    init
+  );
+
+}else{
+
+  init();
+
+}
 
 </script>
 
