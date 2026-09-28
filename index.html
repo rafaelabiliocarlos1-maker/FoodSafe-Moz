@@ -11,771 +11,619 @@
 body{
   margin:0;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-  background:#f4f7f8;
-  color:#17202a
+  background:#f1f5f9;
+  color:#172033;
 }
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
-.hidden{display:none!important}
-
 .login{
   min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
   padding:20px;
-  background:linear-gradient(135deg,#0f766e,#134e4a)
+  background:linear-gradient(135deg,#0f766e,#115e59);
 }
 .login-box{
   width:100%;
-  max-width:420px;
+  max-width:430px;
   background:white;
   border-radius:20px;
   padding:28px;
-  box-shadow:0 20px 50px rgba(0,0,0,.2)
+  box-shadow:0 20px 50px rgba(0,0,0,.2);
 }
-.logo{text-align:center;font-size:28px;font-weight:800;color:#0f766e}
-.subtitle{text-align:center;color:#64748b;margin:6px 0 25px}
-
+.logo{
+  text-align:center;
+  margin-bottom:24px;
+}
+.logo h1{
+  margin:0;
+  color:#0f766e;
+  font-size:30px;
+}
+.logo p{margin:6px 0;color:#64748b}
+label{
+  display:block;
+  font-weight:700;
+  margin:12px 0 6px;
+}
 input,select,textarea{
   width:100%;
-  border:1px solid #d5dde3;
-  border-radius:10px;
   padding:12px;
+  border:1px solid #cbd5e1;
+  border-radius:10px;
   background:#fff;
-  outline:none
+  color:#172033;
 }
-input:focus,select:focus,textarea:focus{border-color:#0f766e}
 textarea{min-height:100px;resize:vertical}
-
-.field{margin-bottom:14px}
-.field label{display:block;font-size:14px;font-weight:700;margin-bottom:6px}
-
-.btn{
+button{
   border:0;
   border-radius:10px;
-  padding:12px 16px;
-  font-weight:700
+  padding:11px 15px;
+  font-weight:700;
 }
-.btn-primary{background:#0f766e;color:#fff}
-.btn-secondary{background:#e2e8f0;color:#17202a}
-.btn-danger{background:#dc2626;color:#fff}
-.btn-warning{background:#d97706;color:#fff}
-.btn-success{background:#16a34a;color:#fff}
-.btn-small{padding:8px 11px;font-size:13px}
-
-.login-actions{display:flex;gap:10px;margin-top:10px}
-.login-actions button{flex:1}
-
-.app{display:none;min-height:100vh}
-.app.active{display:block}
+.primary{background:#0f766e;color:white}
+.secondary{background:#e2e8f0;color:#172033}
+.success{background:#15803d;color:white}
+.warning{background:#d97706;color:white}
+.danger{background:#dc2626;color:white}
+.info{background:#2563eb;color:white}
+.small{padding:7px 10px;font-size:13px}
+.full{width:100%;margin-top:16px}
+.hidden{display:none!important}
 
 .topbar{
   background:#0f766e;
   color:white;
-  padding:15px 18px;
+  padding:14px 18px;
   display:flex;
   align-items:center;
   justify-content:space-between;
+  gap:12px;
   position:sticky;
   top:0;
-  z-index:50
+  z-index:20;
 }
-.topbar-title{font-weight:800;font-size:19px}
-.logout{
-  background:rgba(255,255,255,.15);
-  border:1px solid rgba(255,255,255,.3);
-  color:#fff;
-  border-radius:8px;
-  padding:7px 10px
-}
-
+.topbar h1{font-size:20px;margin:0}
 .nav{
+  background:white;
   display:flex;
   gap:6px;
   overflow-x:auto;
-  padding:10px;
-  background:#fff;
-  border-bottom:1px solid #e5e7eb;
+  padding:8px;
+  border-bottom:1px solid #cbd5e1;
   position:sticky;
-  top:55px;
-  z-index:40
+  top:57px;
+  z-index:19;
 }
 .nav button{
   white-space:nowrap;
-  border:0;
-  background:#eef2f3;
+  background:#f1f5f9;
   color:#334155;
-  padding:9px 12px;
-  border-radius:9px;
-  font-weight:700
 }
-.nav button.active{background:#0f766e;color:#fff}
-
-.container{width:100%;max-width:1200px;margin:auto;padding:18px}
+.nav button.active{
+  background:#0f766e;
+  color:white;
+}
+.container{
+  max-width:1250px;
+  margin:auto;
+  padding:20px;
+}
 .page{display:none}
 .page.active{display:block}
-
-h1{font-size:25px;margin:5px 0 8px}
-h2{font-size:20px;margin:0 0 12px}
-h3{margin:0 0 8px}
-.muted{color:#64748b}
-.small{font-size:13px}
-
+h2{margin-top:0}
+.card{
+  background:white;
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:18px;
+  box-shadow:0 2px 10px rgba(15,23,42,.06);
+}
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:14px
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
 }
-.card{
-  background:#fff;
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+}
+.stat{
+  background:white;
   border-radius:15px;
-  padding:17px;
-  box-shadow:0 2px 10px rgba(15,23,42,.06);
-  border:1px solid #e7ecef
+  padding:18px;
+  box-shadow:0 2px 8px rgba(15,23,42,.06);
 }
-.stat{font-size:30px;font-weight:800;color:#0f766e}
-
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-
+.stat strong{
+  display:block;
+  font-size:28px;
+  margin-top:6px;
+}
+.muted{color:#64748b}
 .badge{
   display:inline-block;
   padding:5px 9px;
   border-radius:999px;
   font-size:12px;
-  font-weight:800
+  font-weight:800;
 }
 .green{background:#dcfce7;color:#166534}
 .yellow{background:#fef3c7;color:#92400e}
 .red{background:#fee2e2;color:#991b1b}
-.gray{background:#e5e7eb;color:#374151}
+.gray{background:#e2e8f0;color:#475569}
 .blue{background:#dbeafe;color:#1d4ed8}
-
 .progress{
+  width:100%;
   height:12px;
-  background:#e5e7eb;
-  border-radius:99px;
+  background:#e2e8f0;
+  border-radius:20px;
   overflow:hidden;
-  margin:8px 0
+  margin:10px 0;
 }
-.progress-bar{
+.progress div{
   height:100%;
   background:#0f766e;
-  transition:.3s
 }
-
-.table-wrap{
-  overflow-x:auto;
-  background:#fff;
-  border-radius:14px;
-  border:1px solid #e5e7eb
-}
-table{width:100%;border-collapse:collapse;min-width:650px}
-th,td{
-  padding:11px;
-  border-bottom:1px solid #e5e7eb;
-  text-align:left;
-  vertical-align:top
-}
-th{background:#f8fafc;font-size:13px}
-
-.check-item{
+.actions{
   display:flex;
-  align-items:flex-start;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+.table-wrap{overflow-x:auto}
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:800px;
+}
+th,td{
+  padding:10px;
+  border-bottom:1px solid #e2e8f0;
+  text-align:left;
+  vertical-align:top;
+}
+th{background:#f8fafc}
+.overdue{background:#fff1f2}
+.alert{
+  padding:14px;
+  border-radius:12px;
+  background:#fef3c7;
+  color:#92400e;
+  margin:12px 0;
+}
+.empty{
+  padding:25px;
+  text-align:center;
+  color:#64748b;
+}
+.checklist-item{
+  display:flex;
+  align-items:center;
   gap:10px;
-  padding:13px;
+  padding:12px;
   border:1px solid #e2e8f0;
   border-radius:10px;
-  margin-bottom:8px;
-  background:#fff
+  margin:7px 0;
 }
-.check-item input{width:20px;height:20px;flex:none}
-
-.alert{
-  padding:13px;
-  border-radius:10px;
-  margin-bottom:12px;
-  background:#fff7ed;
-  border:1px solid #fed7aa;
-  color:#9a3412
+.checklist-item input{
+  width:auto;
 }
-
-.empty{padding:30px 15px;text-align:center;color:#64748b}
-
+.photo-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+.photo-grid img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  border-radius:12px;
+}
 .modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.55);
+  background:rgba(15,23,42,.65);
   display:none;
   align-items:center;
   justify-content:center;
+  padding:15px;
   z-index:100;
-  padding:15px
 }
 .modal.open{display:flex}
 .modal-box{
+  background:white;
   width:100%;
-  max-width:950px;
-  max-height:92vh;
+  max-width:850px;
+  max-height:94vh;
   overflow:auto;
-  background:#fff;
-  border-radius:16px;
-  padding:20px
+  border-radius:18px;
+  padding:20px;
 }
 .modal-head{
   display:flex;
   justify-content:space-between;
-  gap:10px;
   align-items:center;
-  margin-bottom:15px
+  gap:10px;
+  border-bottom:1px solid #e2e8f0;
+  padding-bottom:12px;
+  margin-bottom:15px;
 }
-.close{border:0;background:#e5e7eb;border-radius:8px;padding:8px 12px}
-
-.report{background:#fff;color:#111827}
-.report-header{border-bottom:3px solid #0f766e;padding-bottom:14px;margin-bottom:18px}
-.report-header h1{color:#0f766e}
-.report-section{margin:20px 0}
-.report-section h2{
-  background:#f1f5f9;
-  padding:9px;
-  border-left:4px solid #0f766e
-}
-.report-table{width:100%;min-width:0}
-.report-table th,.report-table td{border:1px solid #d1d5db}
-.signature{
-  margin-top:45px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:50px
-}
-.signature div{
-  border-top:1px solid #111;
-  text-align:center;
-  padding-top:7px
-}
-
-.photo-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:10px
-}
-.photo-grid img{
-  width:100%;
-  height:150px;
-  object-fit:cover;
-  border-radius:10px
-}
-
 .action-box{
-  background:#f8fafc;
+  border:1px solid #cbd5e1;
+  border-radius:14px;
+  padding:15px;
+  margin-top:12px;
+}
+.report-section{
   border:1px solid #e2e8f0;
   border-radius:12px;
-  padding:12px;
-  margin-top:10px
+  padding:14px;
+  margin:12px 0;
 }
-
-.overdue{
-  border-left:5px solid #dc2626!important;
-  background:#fff7f7
+@media(max-width:800px){
+  .grid,.stats{grid-template-columns:1fr 1fr}
 }
-
-@media print{
-  body{background:#fff}
-  .topbar,.nav,.no-print{display:none!important}
-  .modal{
-    position:static;
-    display:block!important;
-    background:#fff;
-    padding:0
-  }
-  .modal-box{
-    max-width:none;
-    max-height:none;
-    box-shadow:none;
-    padding:0
-  }
-  .report{display:block}
-}
-
-@media(max-width:600px){
+@media(max-width:560px){
+  .grid,.stats{grid-template-columns:1fr}
   .container{padding:12px}
   .topbar{padding:12px}
-  h1{font-size:22px}
-  .signature{grid-template-columns:1fr}
+  .photo-grid{grid-template-columns:1fr 1fr}
+}
+@media print{
+  body{background:white}
+  .no-print{display:none!important}
+  .modal{position:static;background:white;display:block!important}
+  .modal-box{max-width:none;max-height:none;box-shadow:none}
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
 <div id="loginScreen" class="login">
   <div class="login-box">
-    <div class="logo">FoodSafe Moz</div>
-    <div class="subtitle">Alimentos seguros, famílias protegidas</div>
+    <div class="logo">
+      <h1>FoodSafe Moz</h1>
+      <p>Alimentos seguros, famílias protegidas</p>
+    </div>
 
     <div id="loginForm">
-      <div class="field">
-        <label>Nome do utilizador</label>
-        <input id="loginUsername" autocomplete="username" placeholder="Nome do utilizador">
-      </div>
+      <label>Nome de utilizador</label>
+      <input id="username" autocomplete="username">
 
-      <div class="field">
-        <label>Palavra-passe</label>
-        <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Palavra-passe">
-      </div>
+      <label>Palavra-passe</label>
+      <input id="password" type="password" autocomplete="current-password">
 
-      <button class="btn btn-primary" style="width:100%" onclick="login()">Entrar</button>
+      <button class="primary full" onclick="login()">Entrar</button>
 
-      <button class="btn btn-secondary" style="width:100%;margin-top:10px" onclick="showRecovery()">
-        Recuperar acesso
+      <button class="secondary full" onclick="showRecovery()">
+        Esqueci a palavra-passe
       </button>
-
-      <div id="loginMessage" class="small" style="margin-top:12px"></div>
     </div>
 
     <div id="recoveryForm" class="hidden">
-      <h3>Recuperar acesso</h3>
-      <p class="muted small">Introduza o e-mail associado à conta.</p>
+      <h3>Recuperar conta</h3>
 
-      <div class="field">
-        <label>E-mail</label>
-        <input id="recoveryEmail" type="email" placeholder="seu@email.com">
-      </div>
+      <label>E-mail</label>
+      <input id="recoveryEmail" type="email">
 
-      <div class="field">
-        <label>Novo nome do utilizador</label>
-        <input id="recoveryUsername" placeholder="Novo utilizador">
-      </div>
+      <label>Novo nome de utilizador</label>
+      <input id="newUsername">
 
-      <div class="field">
-        <label>Nova palavra-passe</label>
-        <input id="recoveryPassword" type="password" placeholder="Nova palavra-passe">
-      </div>
+      <label>Nova palavra-passe</label>
+      <input id="newPassword" type="password">
 
-      <button class="btn btn-primary" style="width:100%" onclick="recoverAccount()">
-        Recuperar conta
-      </button>
-
-      <button class="btn btn-secondary" style="width:100%;margin-top:10px" onclick="showLogin()">
-        Voltar
-      </button>
-
-      <div id="recoveryMessage" class="small" style="margin-top:12px"></div>
+      <button class="primary full" onclick="recoverAccount()">Atualizar conta</button>
+      <button class="secondary full" onclick="showLogin()">Voltar</button>
     </div>
   </div>
 </div>
 
-<!-- APP -->
-<div id="app" class="app">
+<div id="app" class="hidden">
 
-  <div class="topbar">
-    <div class="topbar-title">FoodSafe Moz</div>
-    <button class="logout" onclick="logout()">Sair</button>
+<header class="topbar">
+  <h1>FoodSafe Moz</h1>
+  <button class="secondary small" onclick="logout()">Sair</button>
+</header>
+
+<nav class="nav">
+  <button data-page="home" onclick="go('home')">Início</button>
+  <button data-page="temperatura" onclick="go('temperatura')">Temperatura</button>
+  <button data-page="inspecao" onclick="go('inspecao')">Inspeção</button>
+  <button data-page="problemas" onclick="go('problemas')">Problemas</button>
+  <button data-page="evidencias" onclick="go('evidencias')">Evidências</button>
+  <button data-page="dashboard" onclick="go('dashboard')">Dashboard</button>
+  <button data-page="historico" onclick="go('historico')">Histórico</button>
+  <button data-page="estabelecimentos" onclick="go('estabelecimentos')">Estabelecimentos</button>
+  <button data-page="perfil" onclick="go('perfil')">Perfil</button>
+</nav>
+
+<main class="container">
+
+<section id="page-home" class="page active">
+  <div class="card">
+    <h2>Bem-vindo ao FoodSafe Moz</h2>
+    <p class="muted">Sistema de controlo e gestão da segurança dos alimentos.</p>
   </div>
 
-  <div class="nav">
-    <button data-page="home" onclick="go('home')">Início</button>
-    <button data-page="temperatura" onclick="go('temperatura')">Temperatura</button>
-    <button data-page="inspecao" onclick="go('inspecao')">Inspeção</button>
-    <button data-page="problemas" onclick="go('problemas')">Problemas</button>
-    <button data-page="evidencias" onclick="go('evidencias')">Evidências</button>
-    <button data-page="dashboard" onclick="go('dashboard')">Dashboard</button>
-    <button data-page="historico" onclick="go('historico')">Histórico</button>
-    <button data-page="estabelecimentos" onclick="go('estabelecimentos')">Estabelecimentos</button>
-    <button data-page="perfil" onclick="go('perfil')">Perfil</button>
+  <div class="stats">
+    <div class="stat">Estabelecimentos<strong id="homeEstablishments">0</strong></div>
+    <div class="stat">Inspeções<strong id="homeInspections">0</strong></div>
+    <div class="stat">Problemas abertos<strong id="homeOpenProblems">0</strong></div>
+    <div class="stat">Ações atrasadas<strong id="homeOverdue">0</strong></div>
   </div>
 
-  <main class="container">
+  <div class="card">
+    <h3>Ações corretivas pendentes</h3>
+    <div id="homeActions"></div>
+  </div>
+</section>
 
-    <!-- INÍCIO -->
-    <section id="page-home" class="page">
-      <h1>Bem-vindo ao FoodSafe Moz</h1>
-      <p class="muted">Alimentos seguros, famílias protegidas.</p>
+<section id="page-temperatura" class="page">
+  <div class="card">
+    <h2>Controlo de Temperatura</h2>
 
-      <div class="grid" style="margin-top:18px">
-        <div class="card">
-          <h3>Estabelecimentos</h3>
-          <div id="homeEstablishments" class="stat">0</div>
-        </div>
+    <label>Estabelecimento</label>
+    <select id="tempEstablishment"></select>
 
-        <div class="card">
-          <h3>Inspeções</h3>
-          <div id="homeInspections" class="stat">0</div>
-        </div>
+    <label>Equipamento / alimento</label>
+    <input id="tempItem" placeholder="Ex.: Frigorífico 1">
 
-        <div class="card">
-          <h3>Problemas abertos</h3>
-          <div id="homeProblems" class="stat">0</div>
-        </div>
+    <label>Temperatura (°C)</label>
+    <input id="tempValue" type="number" step="0.1">
 
-        <div class="card">
-          <h3>Ações atrasadas</h3>
-          <div id="homeOverdue" class="stat">0</div>
-        </div>
+    <button class="primary" onclick="saveTemperature()">Registar temperatura</button>
+
+    <div id="tempResult"></div>
+  </div>
+
+  <div class="card">
+    <h3>Registos recentes</h3>
+    <div id="temperatureTable"></div>
+  </div>
+</section>
+
+<section id="page-inspecao" class="page">
+  <div class="card">
+    <h2>Inspeção / Checklist</h2>
+
+    <label>Estabelecimento</label>
+    <select id="inspectionEstablishment" onchange="syncInspectionEstablishment()"></select>
+
+    <label>Nome do estabelecimento</label>
+    <input id="inspectionName">
+
+    <label>Responsável</label>
+    <input id="inspectionResponsible">
+
+    <label>Data</label>
+    <input id="inspectionDate" type="date">
+
+    <label>Observação</label>
+    <textarea id="inspectionObservation"></textarea>
+
+    <h3>Checklist</h3>
+    <div id="checklist"></div>
+
+    <div class="card" style="background:#f8fafc">
+      <strong>Conformidade: <span id="scoreText">0%</span></strong>
+      <div class="progress"><div id="scoreBar" style="width:0%"></div></div>
+      <span id="scoreClass" class="badge gray">Sem avaliação</span>
+    </div>
+
+    <button class="success full" onclick="saveInspection()">Guardar inspeção</button>
+  </div>
+</section>
+
+<section id="page-problemas" class="page">
+  <div class="card">
+    <h2>Problemas e Ações Corretivas</h2>
+
+    <div class="grid">
+      <div>
+        <label>Estabelecimento</label>
+        <select id="problemEstablishment"></select>
       </div>
 
-      <div class="card" style="margin-top:15px">
-        <h2>Como utilizar</h2>
-        <ol>
-          <li>Cadastre o estabelecimento.</li>
-          <li>Faça uma inspeção.</li>
-          <li>Registe temperaturas.</li>
-          <li>Registe problemas e ações corretivas.</li>
-          <li>Defina responsável e prazo para cada ação.</li>
-          <li>Acompanhe ações atrasadas.</li>
-          <li>Adicione evidências.</li>
-          <li>Consulte o perfil profissional e o relatório.</li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- TEMPERATURA -->
-    <section id="page-temperatura" class="page">
-      <h1>Controlo de Temperatura</h1>
-
-      <div class="card">
-        <div class="field">
-          <label>Estabelecimento</label>
-          <select id="tempEstablishment"></select>
-        </div>
-
-        <div class="field">
-          <label>Equipamento / alimento</label>
-          <input id="tempItem" placeholder="Ex.: Frigorífico 1">
-        </div>
-
-        <div class="field">
-          <label>Temperatura (°C)</label>
-          <input id="tempValue" type="number" step="0.1" placeholder="Ex.: 4">
-        </div>
-
-        <button class="btn btn-primary" onclick="saveTemperature()">
-          Registar temperatura
-        </button>
-
-        <div id="tempResult" style="margin-top:15px"></div>
+      <div>
+        <label>Problema / não conformidade</label>
+        <input id="problemTitle">
       </div>
 
-      <div class="card" style="margin-top:15px">
-        <h2>Registos recentes</h2>
-        <div id="temperatureTable"></div>
-      </div>
-    </section>
-
-    <!-- INSPEÇÃO -->
-    <section id="page-inspecao" class="page">
-      <h1>Inspeção Profissional</h1>
-
-      <div class="card">
-        <div class="field">
-          <label>Estabelecimento</label>
-          <select id="inspectionEstablishment"></select>
-          <div class="small muted" style="margin-top:5px">
-            Selecione o estabelecimento para ligar automaticamente esta inspeção ao seu perfil.
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Nome do estabelecimento</label>
-          <input id="inspectionName" placeholder="Nome do estabelecimento">
-        </div>
-
-        <div class="field">
-          <label>Responsável</label>
-          <input id="inspectionResponsible" placeholder="Nome do responsável">
-        </div>
-
-        <div class="field">
-          <label>Data</label>
-          <input id="inspectionDate" type="date">
-        </div>
-
-        <div class="field">
-          <label>Observações</label>
-          <textarea id="inspectionObservation" placeholder="Observações da inspeção"></textarea>
-        </div>
+      <div>
+        <label>Severidade</label>
+        <select id="problemSeverity">
+          <option>Baixa</option>
+          <option selected>Média</option>
+          <option>Alta</option>
+          <option>Crítica</option>
+        </select>
       </div>
 
-      <div class="card" style="margin-top:15px">
-        <h2>Checklist</h2>
-        <div id="checklist"></div>
-
-        <div style="margin-top:15px">
-          <strong>Conformidade:</strong>
-          <span id="inspectionScore">0%</span>
-
-          <div class="progress">
-            <div id="inspectionProgress" class="progress-bar" style="width:0%"></div>
-          </div>
-
-          <div id="inspectionClassification"></div>
-        </div>
-
-        <button class="btn btn-primary" style="margin-top:15px" onclick="saveInspection()">
-          Guardar inspeção
-        </button>
-      </div>
-    </section>
-
-    <!-- PROBLEMAS -->
-    <section id="page-problemas" class="page">
-      <h1>Problemas e Não Conformidades</h1>
-
-      <div class="card">
-        <div class="field">
-          <label>Estabelecimento</label>
-          <select id="problemEstablishment"></select>
-        </div>
-
-        <div class="field">
-          <label>Problema</label>
-          <input id="problemTitle" placeholder="Descreva o problema">
-        </div>
-
-        <div class="field">
-          <label>Severidade</label>
-          <select id="problemSeverity">
-            <option value="Baixa">Baixa</option>
-            <option value="Média" selected>Média</option>
-            <option value="Alta">Alta</option>
-            <option value="Crítica">Crítica</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Responsável pela ação corretiva</label>
-          <input id="problemResponsible" placeholder="Nome do responsável">
-        </div>
-
-        <div class="field">
-          <label>Prazo para correção</label>
-          <input id="problemDeadline" type="date">
-        </div>
-
-        <div class="field">
-          <label>Ação corretiva</label>
-          <textarea id="problemAction" placeholder="O que deve ser feito para corrigir?"></textarea>
-        </div>
-
-        <button class="btn btn-primary" onclick="saveProblem()">
-          Registar problema
-        </button>
+      <div>
+        <label>Responsável</label>
+        <input id="problemResponsible">
       </div>
 
-      <div class="card" style="margin-top:15px">
-        <h2>Resumo das ações</h2>
+      <div>
+        <label>Prazo</label>
+        <input id="problemDeadline" type="date">
+      </div>
+    </div>
 
-        <div class="grid">
-          <div>
-            <span class="muted small">Abertas</span>
-            <div id="problemOpenCount" class="stat">0</div>
-          </div>
+    <label>Ação corretiva</label>
+    <textarea id="problemAction"></textarea>
 
-          <div>
-            <span class="muted small">Em tratamento</span>
-            <div id="problemTreatmentCount" class="stat">0</div>
-          </div>
+    <button class="primary" onclick="saveProblem()">Registar problema</button>
+  </div>
 
-          <div>
-            <span class="muted small">Resolvidas</span>
-            <div id="problemResolvedCount" class="stat">0</div>
-          </div>
+  <div class="stats">
+    <div class="stat">Abertos<strong id="problemOpen">0</strong></div>
+    <div class="stat">Em tratamento<strong id="problemTreatment">0</strong></div>
+    <div class="stat">Resolvidos<strong id="problemResolved">0</strong></div>
+    <div class="stat">Atrasados<strong id="problemOverdue">0</strong></div>
+  </div>
 
-          <div>
-            <span class="muted small">Atrasadas</span>
-            <div id="problemOverdueCount" class="stat">0</div>
-          </div>
-        </div>
+  <div class="card">
+    <h3>Registo de não conformidades</h3>
+    <div id="problemsTable"></div>
+  </div>
+</section>
+
+<section id="page-evidencias" class="page">
+  <div class="card">
+    <h2>Evidências</h2>
+
+    <label>Estabelecimento</label>
+    <select id="evidenceEstablishment"></select>
+
+    <label>Descrição</label>
+    <textarea id="evidenceDescription"></textarea>
+
+    <label>Fotografia</label>
+    <input id="evidencePhoto" type="file" accept="image/*" capture="environment">
+
+    <button class="primary" onclick="saveEvidence()">Guardar evidência</button>
+  </div>
+
+  <div class="card">
+    <div id="evidenceGrid"></div>
+  </div>
+</section>
+
+<section id="page-dashboard" class="page">
+  <div class="card">
+    <h2>Dashboard</h2>
+  </div>
+
+  <div class="stats">
+    <div class="stat">Estabelecimentos<strong id="dashEstablishments">0</strong></div>
+    <div class="stat">Inspeções<strong id="dashInspections">0</strong></div>
+    <div class="stat">Problemas abertos<strong id="dashOpen">0</strong></div>
+    <div class="stat">Ações atrasadas<strong id="dashOverdue">0</strong></div>
+    <div class="stat">Conformidade média<strong id="dashAverage">0%</strong></div>
+  </div>
+
+  <div class="card">
+    <h3>Estado das ações corretivas</h3>
+    <div id="dashboardActions"></div>
+  </div>
+
+  <div class="card">
+    <h3>Ações que precisam de atenção</h3>
+    <div id="dashboardOverdue"></div>
+  </div>
+</section>
+
+<section id="page-historico" class="page">
+  <div class="card">
+    <h2>Histórico de Inspeções</h2>
+    <div id="historyTable"></div>
+  </div>
+</section>
+
+<section id="page-estabelecimentos" class="page">
+  <div class="card">
+    <h2>Estabelecimentos</h2>
+
+    <div class="grid">
+      <div>
+        <label>Nome</label>
+        <input id="estName">
       </div>
 
-      <div class="card" style="margin-top:15px">
-        <h2>Registos</h2>
-        <div id="problemsTable"></div>
-      </div>
-    </section>
-
-    <!-- EVIDÊNCIAS -->
-    <section id="page-evidencias" class="page">
-      <h1>Evidências</h1>
-
-      <div class="card">
-        <div class="field">
-          <label>Estabelecimento</label>
-          <select id="evidenceEstablishment"></select>
-        </div>
-
-        <div class="field">
-          <label>Descrição</label>
-          <input id="evidenceDescription" placeholder="Descrição da evidência">
-        </div>
-
-        <div class="field">
-          <label>Fotografia</label>
-          <input id="evidenceFile" type="file" accept="image/*" capture="environment">
-        </div>
-
-        <button class="btn btn-primary" onclick="saveEvidence()">
-          Guardar evidência
-        </button>
+      <div>
+        <label>Tipo</label>
+        <input id="estType" placeholder="Restaurante, cantina, mercado...">
       </div>
 
-      <div class="card" style="margin-top:15px">
-        <h2>Evidências registadas</h2>
-        <div id="evidenceGrid" class="photo-grid"></div>
-      </div>
-    </section>
-
-    <!-- DASHBOARD -->
-    <section id="page-dashboard" class="page">
-      <h1>Dashboard</h1>
-
-      <div class="grid">
-        <div class="card">
-          <h3>Total de estabelecimentos</h3>
-          <div id="dashEstablishments" class="stat">0</div>
-        </div>
-
-        <div class="card">
-          <h3>Total de inspeções</h3>
-          <div id="dashInspections" class="stat">0</div>
-        </div>
-
-        <div class="card">
-          <h3>Problemas abertos</h3>
-          <div id="dashProblems" class="stat">0</div>
-        </div>
-
-        <div class="card">
-          <h3>Ações atrasadas</h3>
-          <div id="dashOverdue" class="stat">0</div>
-        </div>
-
-        <div class="card">
-          <h3>Conformidade média</h3>
-          <div id="dashCompliance" class="stat">0%</div>
-        </div>
+      <div>
+        <label>Endereço</label>
+        <input id="estAddress">
       </div>
 
-      <div class="card" style="margin-top:15px">
-        <h2>Estado das ações corretivas</h2>
-        <div id="dashboardActions"></div>
-      </div>
-    </section>
-
-    <!-- HISTÓRICO -->
-    <section id="page-historico" class="page">
-      <h1>Histórico de Inspeções</h1>
-      <div class="card">
-        <div id="historyTable"></div>
-      </div>
-    </section>
-
-    <!-- ESTABELECIMENTOS -->
-    <section id="page-estabelecimentos" class="page">
-      <h1>Estabelecimentos</h1>
-
-      <div class="card">
-        <h2>Novo estabelecimento</h2>
-
-        <div class="grid">
-          <div class="field">
-            <label>Nome</label>
-            <input id="estName" placeholder="Nome do estabelecimento">
-          </div>
-
-          <div class="field">
-            <label>Tipo</label>
-            <input id="estType" placeholder="Ex.: Restaurante">
-          </div>
-
-          <div class="field">
-            <label>Endereço</label>
-            <input id="estAddress" placeholder="Endereço">
-          </div>
-
-          <div class="field">
-            <label>Bairro</label>
-            <input id="estBairro" placeholder="Bairro">
-          </div>
-
-          <div class="field">
-            <label>Distrito</label>
-            <input id="estDistrito" placeholder="Distrito">
-          </div>
-
-          <div class="field">
-            <label>Telefone</label>
-            <input id="estPhone" placeholder="Telefone">
-          </div>
-
-          <div class="field">
-            <label>Responsável</label>
-            <input id="estResponsible" placeholder="Responsável">
-          </div>
-        </div>
-
-        <button class="btn btn-primary" onclick="saveEstablishment()">
-          Guardar estabelecimento
-        </button>
+      <div>
+        <label>Bairro</label>
+        <input id="estBairro">
       </div>
 
-      <div class="card" style="margin-top:15px">
-        <h2>Estabelecimentos registados</h2>
-        <div id="establishmentsList"></div>
+      <div>
+        <label>Distrito</label>
+        <input id="estDistrito">
       </div>
-    </section>
 
-    <!-- PERFIL -->
-    <section id="page-perfil" class="page">
-      <div id="profileContent"></div>
-    </section>
+      <div>
+        <label>Telefone</label>
+        <input id="estPhone">
+      </div>
 
-  </main>
+      <div>
+        <label>Responsável</label>
+        <input id="estResponsible">
+      </div>
+    </div>
+
+    <button class="primary" onclick="saveEstablishment()">Registar estabelecimento</button>
+  </div>
+
+  <div id="establishmentList"></div>
+</section>
+
+<section id="page-perfil" class="page">
+  <div id="profileContent" class="card">
+    <div class="empty">Selecione um estabelecimento para ver o perfil profissional.</div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<!-- MODAL AÇÃO CORRETIVA -->
+<div id="actionModal" class="modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>Gerir ação corretiva</h2>
+      <button class="secondary" onclick="closeActionModal()">Fechar</button>
+    </div>
+    <div id="actionModalContent"></div>
+  </div>
 </div>
 
 <!-- MODAL RELATÓRIO -->
 <div id="reportModal" class="modal">
   <div class="modal-box">
-
     <div class="modal-head no-print">
-      <h2>Relatório Profissional</h2>
-
+      <h2>Relatório FoodSafe Moz</h2>
       <div class="actions">
-        <button class="btn btn-primary btn-small" onclick="window.print()">
-          Imprimir / PDF
-        </button>
-
-        <button class="close" onclick="closeReport()">
-          Fechar
-        </button>
+        <button class="primary" onclick="window.print()">Imprimir / PDF</button>
+        <button class="secondary" onclick="closeReport()">Fechar</button>
       </div>
     </div>
-
-    <div id="reportContent" class="report"></div>
+    <div id="reportContent"></div>
   </div>
 </div>
 
 <script>
 "use strict";
 
-/* =========================================================
-   CONFIGURAÇÃO
-========================================================= */
+const DATA_KEY="foodsafemoz_v2";
+const USERS_KEY="foodsafemoz_users";
+const SESSION_KEY="foodsafemoz_session";
 
-const DATA_KEY = "foodsafemoz_v2";
-const USERS_KEY = "foodsafemoz_users";
-const SESSION_KEY = "foodsafemoz_session";
-
-let db = {
-  establishments: [],
-  inspections: [],
-  temps: [],
-  problems: [],
-  evidences: []
+let db={
+  establishments:[],
+  inspections:[],
+  temps:[],
+  problems:[],
+  evidences:[]
 };
 
-const checklistItems = [
+let currentProfileId=null;
+let currentActionId=null;
+
+const checklistItems=[
   "Higiene das mãos e dos manipuladores",
   "Vestuário e equipamentos de proteção adequados",
   "Limpeza e desinfeção",
@@ -790,16 +638,12 @@ const checklistItems = [
   "Boas práticas de manipulação"
 ];
 
-/* =========================================================
-   UTILITÁRIOS
-========================================================= */
-
 function uid(prefix="id"){
   return prefix+"_"+Date.now()+"_"+Math.random().toString(36).slice(2,8);
 }
 
 function esc(value){
-  return String(value ?? "")
+  return String(value??"")
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;")
@@ -808,30 +652,33 @@ function esc(value){
 }
 
 function today(){
-  return new Date().toISOString().slice(0,10);
+  const d=new Date();
+  const y=d.getFullYear();
+  const m=String(d.getMonth()+1).padStart(2,"0");
+  const day=String(d.getDate()).padStart(2,"0");
+  return `${y}-${m}-${day}`;
 }
 
 function formatDate(date){
-  if(!date) return "—";
-
-  const d = new Date(date+"T00:00:00");
-
-  if(isNaN(d)) return esc(date);
-
-  return d.toLocaleDateString("pt-PT");
+  if(!date)return "—";
+  const p=String(date).split("-");
+  if(p.length===3)return `${p[2]}/${p[1]}/${p[0]}`;
+  return date;
 }
 
 function normalizeText(value){
-  return String(value || "")
-    .trim()
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g,"")
-    .replace(/\s+/g," ");
+  return String(value||"").trim().toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"");
 }
 
 function sameName(a,b){
-  return normalizeText(a) === normalizeText(b);
+  return normalizeText(a)===normalizeText(b);
+}
+
+function average(values){
+  const arr=values.filter(v=>Number.isFinite(Number(v)));
+  if(!arr.length)return 0;
+  return arr.reduce((a,b)=>a+Number(b),0)/arr.length;
 }
 
 function saveDB(){
@@ -840,1144 +687,322 @@ function saveDB(){
 
 function getUsers(){
   try{
-    return JSON.parse(localStorage.getItem(USERS_KEY) || "[]");
+    return JSON.parse(localStorage.getItem(USERS_KEY)||"[]");
   }catch(e){
     return [];
   }
 }
 
-function average(values){
-
-  const valid = values.filter(v => !isNaN(Number(v)));
-
-  if(!valid.length) return 0;
-
-  return valid.reduce((a,b)=>a+Number(b),0)/valid.length;
-}
-
-/* =========================================================
-   AÇÕES CORRETIVAS — FUNÇÕES CENTRAIS
-========================================================= */
-
-function isProblemOverdue(problem){
-
-  if(!problem) return false;
-
-  if(problem.status === "Resolvido") return false;
-
-  if(!problem.deadline) return false;
-
-  return problem.deadline < today();
-}
-
-function getProblemStatusClass(status){
-
-  if(status === "Aberto") return "red";
-  if(status === "Em tratamento") return "yellow";
-  if(status === "Resolvido") return "green";
-
-  return "gray";
-}
-
-function getProblemStatusLabel(problem){
-
-  if(isProblemOverdue(problem)){
-    return "Atrasado";
-  }
-
-  return problem.status || "Aberto";
-}
-
-function getProblemStatusClassFull(problem){
-
-  if(isProblemOverdue(problem)){
-    return "red";
-  }
-
-  return getProblemStatusClass(problem.status);
-}
-
-function getOverdueProblems(){
-
-  return db.problems.filter(p => isProblemOverdue(p));
-}
-
-function getOpenProblems(){
-
-  return db.problems.filter(p => p.status !== "Resolvido");
-}
-
-function getResolvedProblems(){
-
-  return db.problems.filter(p => p.status === "Resolvido");
-}
-
-function getProblemsInTreatment(){
-
-  return db.problems.filter(p => p.status === "Em tratamento");
-}
-
-function setProblemStatus(id,status){
-
-  const p = db.problems.find(x => x.id === id);
-
-  if(!p) return;
-
-  p.status = status;
-
-  if(status === "Resolvido"){
-
-    if(!p.resolutionDate){
-      p.resolutionDate = today();
-    }
-
-  }else{
-
-    p.resolutionDate = "";
-  }
-
-  saveDB();
-  renderAll();
-
-  if(p.establishmentId){
-    renderProfile(p.establishmentId);
-  }
-}
-
-function changeProblemStatus(id){
-
-  const p = db.problems.find(x => x.id === id);
-
-  if(!p) return;
-
-  const statuses = [
-    "Aberto",
-    "Em tratamento",
-    "Resolvido"
-  ];
-
-  const current = statuses.indexOf(p.status);
-
-  const next =
-    statuses[(current + 1) % statuses.length];
-
-  setProblemStatus(id,next);
-}
-
-function editProblem(id){
-
-  const p = db.problems.find(x => x.id === id);
-
-  if(!p) return;
-
-  const responsible = prompt(
-    "Responsável pela ação corretiva:",
-    p.responsible || ""
-  );
-
-  if(responsible === null) return;
-
-  const deadline = prompt(
-    "Prazo para correção (AAAA-MM-DD):",
-    p.deadline || ""
-  );
-
-  if(deadline === null) return;
-
-  const action = prompt(
-    "Ação corretiva:",
-    p.action || ""
-  );
-
-  if(action === null) return;
-
-  p.responsible = responsible.trim();
-  p.deadline = deadline.trim();
-  p.action = action.trim();
-
-  saveDB();
-  renderAll();
-
-  if(p.establishmentId){
-    renderProfile(p.establishmentId);
-  }
-}
-
-/* =========================================================
-   CARREGAMENTO E MIGRAÇÃO
-========================================================= */
-
 function loadDB(){
+  try{
+    const saved=JSON.parse(localStorage.getItem(DATA_KEY)||"null");
+    if(saved&&typeof saved==="object"){
+      db.establishments=Array.isArray(saved.establishments)?saved.establishments:[];
+      db.inspections=Array.isArray(saved.inspections)?saved.inspections:[];
+      db.temps=Array.isArray(saved.temps)?saved.temps:[];
+      db.problems=Array.isArray(saved.problems)?saved.problems:[];
+      db.evidences=Array.isArray(saved.evidences)?saved.evidences:[];
+    }
+  }catch(e){
+    console.error(e);
+  }
+
+  migrateOldData();
+  normalizeData();
+  saveDB();
+}
+
+function migrateOldData(){
+  const oldIns=localStorage.getItem("inspections");
+  const oldTemps=localStorage.getItem("temps");
+  const oldProblems=localStorage.getItem("problems");
+  const oldEvidence=localStorage.getItem("evidences");
 
   try{
-
-    const stored = localStorage.getItem(DATA_KEY);
-
-    if(stored){
-
-      const parsed = JSON.parse(stored);
-
-      db = {
-        establishments:
-          Array.isArray(parsed.establishments)
-          ? parsed.establishments
-          : [],
-
-        inspections:
-          Array.isArray(parsed.inspections)
-          ? parsed.inspections
-          : [],
-
-        temps:
-          Array.isArray(parsed.temps)
-          ? parsed.temps
-          : [],
-
-        problems:
-          Array.isArray(parsed.problems)
-          ? parsed.problems
-          : [],
-
-        evidences:
-          Array.isArray(parsed.evidences)
-          ? parsed.evidences
-          : []
-      };
+    if(oldIns && !db.inspections.length){
+      const arr=JSON.parse(oldIns);
+      if(Array.isArray(arr))db.inspections=arr;
     }
-
-  }catch(e){
-
-    console.error("Erro ao carregar dados:",e);
-  }
-
-  const oldInspections = localStorage.getItem("inspections");
-  const oldTemps = localStorage.getItem("temps");
-  const oldProblems = localStorage.getItem("problems");
-  const oldEvidences = localStorage.getItem("evidences");
-
-  if(db.inspections.length === 0 && oldInspections){
-
-    try{
-
-      const arr = JSON.parse(oldInspections);
-
-      if(Array.isArray(arr)){
-        db.inspections = arr;
-      }
-
-    }catch(e){}
-  }
-
-  if(db.temps.length === 0 && oldTemps){
-
-    try{
-
-      const arr = JSON.parse(oldTemps);
-
-      if(Array.isArray(arr)){
-        db.temps = arr;
-      }
-
-    }catch(e){}
-  }
-
-  if(db.problems.length === 0 && oldProblems){
-
-    try{
-
-      const arr = JSON.parse(oldProblems);
-
-      if(Array.isArray(arr)){
-        db.problems = arr;
-      }
-
-    }catch(e){}
-  }
-
-  if(db.evidences.length === 0 && oldEvidences){
-
-    try{
-
-      const arr = JSON.parse(oldEvidences);
-
-      if(Array.isArray(arr)){
-        db.evidences = arr;
-      }
-
-    }catch(e){}
-  }
-
-  /* =======================================================
-     MIGRAÇÃO DE INSPEÇÕES
-  ======================================================= */
-
-  db.inspections.forEach(ins => {
-
-    if(!ins.establishmentId){
-
-      const name =
-        ins.establishmentName ||
-        ins.name ||
-        ins.establishment ||
-        ins.nomeEstabelecimento ||
-        "";
-
-      const match =
-        db.establishments.find(est =>
-          sameName(est.name,name)
-        );
-
-      if(match){
-        ins.establishmentId = match.id;
-      }
+    if(oldTemps && !db.temps.length){
+      const arr=JSON.parse(oldTemps);
+      if(Array.isArray(arr))db.temps=arr;
     }
-  });
-
-  /* =======================================================
-     MIGRAÇÃO DE PROBLEMAS
-  ======================================================= */
-
-  db.problems.forEach(p => {
-
-    if(!p.establishmentId){
-
-      const name =
-        p.establishmentName ||
-        p.establishment ||
-        p.name ||
-        "";
-
-      const match =
-        db.establishments.find(est =>
-          sameName(est.name,name)
-        );
-
-      if(match){
-        p.establishmentId = match.id;
-      }
+    if(oldProblems && !db.problems.length){
+      const arr=JSON.parse(oldProblems);
+      if(Array.isArray(arr))db.problems=arr;
     }
-
-    /*
-      Compatibilidade com problemas antigos.
-    */
-
-    if(!p.status){
-      p.status = "Aberto";
+    if(oldEvidence && !db.evidences.length){
+      const arr=JSON.parse(oldEvidence);
+      if(Array.isArray(arr))db.evidences=arr;
     }
-
-    if(!p.action){
-      p.action = "";
-    }
-
-    if(!p.responsible){
-      p.responsible = "";
-    }
-
-    if(!p.deadline){
-      p.deadline = "";
-    }
-
-    if(!p.resolutionDate){
-      p.resolutionDate = "";
-    }
-  });
-
-  /* =======================================================
-     MIGRAÇÃO DE TEMPERATURAS
-  ======================================================= */
-
-  db.temps.forEach(item => {
-
-    if(!item.establishmentId){
-
-      const name =
-        item.establishmentName ||
-        item.establishment ||
-        item.name ||
-        "";
-
-      const match =
-        db.establishments.find(est =>
-          sameName(est.name,name)
-        );
-
-      if(match){
-        item.establishmentId = match.id;
-      }
-    }
-  });
-
-  /* =======================================================
-     MIGRAÇÃO DE EVIDÊNCIAS
-  ======================================================= */
-
-  db.evidences.forEach(item => {
-
-    if(!item.establishmentId){
-
-      const name =
-        item.establishmentName ||
-        item.establishment ||
-        item.name ||
-        "";
-
-      const match =
-        db.establishments.find(est =>
-          sameName(est.name,name)
-        );
-
-      if(match){
-        item.establishmentId = match.id;
-      }
-    }
-  });
-
-  saveDB();
+  }catch(e){}
 }
 
-/* =========================================================
-   UTILIZADORES / LOGIN
-========================================================= */
+function normalizeData(){
+  db.establishments.forEach(e=>{
+    if(!e.id)e.id=uid("est");
+    e.name=e.name||"Estabelecimento sem nome";
+    e.createdAt=e.createdAt||today();
+  });
+
+  db.inspections.forEach(i=>{
+    if(!i.id)i.id=uid("insp");
+    if(!i.date)i.date=today();
+    if(!i.name)i.name=i.establishmentName||"";
+    if(!i.checklist)i.checklist=[];
+    if(i.establishmentName && !i.establishmentId){
+      const e=db.establishments.find(x=>sameName(x.name,i.establishmentName));
+      if(e)i.establishmentId=e.id;
+    }
+  });
+
+  db.problems.forEach(p=>{
+    if(!p.id)p.id=uid("prob");
+    p.status=p.status||"Aberto";
+    p.action=p.action||"";
+    p.responsible=p.responsible||"";
+    p.deadline=p.deadline||"";
+    p.resolutionDate=p.resolutionDate||"";
+    p.severity=p.severity||"Média";
+    if(p.establishmentName && !p.establishmentId){
+      const e=db.establishments.find(x=>sameName(x.name,p.establishmentName));
+      if(e)p.establishmentId=e.id;
+    }
+  });
+
+  db.temps.forEach(t=>{
+    if(!t.id)t.id=uid("temp");
+    if(t.establishmentName && !t.establishmentId){
+      const e=db.establishments.find(x=>sameName(x.name,t.establishmentName));
+      if(e)t.establishmentId=e.id;
+    }
+  });
+
+  db.evidences.forEach(e=>{
+    if(!e.id)e.id=uid("ev");
+    if(e.establishmentName && !e.establishmentId){
+      const est=db.establishments.find(x=>sameName(x.name,e.establishmentName));
+      if(est)e.establishmentId=est.id;
+    }
+  });
+}
 
 function ensureUsers(){
-
-  let users = getUsers();
+  let users=getUsers();
 
   if(!users.length){
-
-    users = [{
+    users=[{
       id:uid("user"),
       username:"admin",
       email:"rafaelabiliocarlos1@gmail.com",
       password:"1234"
     }];
-
-    localStorage.setItem(
-      USERS_KEY,
-      JSON.stringify(users)
-    );
+    localStorage.setItem(USERS_KEY,JSON.stringify(users));
   }
 }
 
 function showRecovery(){
-
-  document.getElementById("loginForm")
-    .classList.add("hidden");
-
-  document.getElementById("recoveryForm")
-    .classList.remove("hidden");
+  document.getElementById("loginForm").classList.add("hidden");
+  document.getElementById("recoveryForm").classList.remove("hidden");
 }
 
 function showLogin(){
-
-  document.getElementById("recoveryForm")
-    .classList.add("hidden");
-
-  document.getElementById("loginForm")
-    .classList.remove("hidden");
+  document.getElementById("recoveryForm").classList.add("hidden");
+  document.getElementById("loginForm").classList.remove("hidden");
 }
 
 function login(){
+  const username=document.getElementById("username").value.trim();
+  const password=document.getElementById("password").value;
 
-  const username =
-    document.getElementById("loginUsername")
-      .value.trim();
-
-  const password =
-    document.getElementById("loginPassword").value;
-
-  const users = getUsers();
-
-  const user =
-    users.find(u =>
-      String(u.username).toLowerCase() ===
-      username.toLowerCase() &&
-      String(u.password) === password
-    );
+  const user=getUsers().find(u=>
+    u.username===username && u.password===password
+  );
 
   if(!user){
-
-    document.getElementById("loginMessage").innerHTML =
-      '<span style="color:#dc2626">Nome do utilizador ou palavra-passe incorretos.</span>';
-
+    alert("Nome de utilizador ou palavra-passe incorretos.");
     return;
   }
 
-  localStorage.setItem(
-    SESSION_KEY,
-    JSON.stringify({
-      userId:user.id,
-      username:user.username
-    })
-  );
-
+  localStorage.setItem(SESSION_KEY,user.id);
   openApp();
 }
 
 function recoverAccount(){
+  const email=document.getElementById("recoveryEmail").value.trim().toLowerCase();
+  const username=document.getElementById("newUsername").value.trim();
+  const password=document.getElementById("newPassword").value;
 
-  const email =
-    document.getElementById("recoveryEmail")
-      .value.trim()
-      .toLowerCase();
-
-  const username =
-    document.getElementById("recoveryUsername")
-      .value.trim();
-
-  const password =
-    document.getElementById("recoveryPassword").value;
-
-  if(!email || !username || !password){
-
-    document.getElementById("recoveryMessage").innerHTML =
-      '<span style="color:#dc2626">Preencha todos os campos.</span>';
-
+  if(!email||!username||!password){
+    alert("Preencha todos os campos.");
     return;
   }
 
-  let users = getUsers();
-
-  const user =
-    users.find(u =>
-      String(u.email || "").toLowerCase() === email
-    );
+  const users=getUsers();
+  const user=users.find(u=>(u.email||"").toLowerCase()===email);
 
   if(!user){
-
-    document.getElementById("recoveryMessage").innerHTML =
-      '<span style="color:#dc2626">E-mail não encontrado.</span>';
-
+    alert("E-mail não encontrado.");
     return;
   }
 
-  user.username = username;
-  user.password = password;
+  user.username=username;
+  user.password=password;
 
-  localStorage.setItem(
-    USERS_KEY,
-    JSON.stringify(users)
-  );
+  localStorage.setItem(USERS_KEY,JSON.stringify(users));
 
-  document.getElementById("recoveryMessage").innerHTML =
-    '<span style="color:#16a34a">Conta recuperada com sucesso. Agora pode entrar.</span>';
-
-  setTimeout(showLogin,800);
+  alert("Conta atualizada com sucesso.");
+  showLogin();
 }
 
 function logout(){
-
   localStorage.removeItem(SESSION_KEY);
-
-  document.getElementById("app")
-    .classList.remove("active");
-
-  document.getElementById("loginScreen")
-    .style.display="flex";
+  location.reload();
 }
 
-/* =========================================================
-   NAVEGAÇÃO
-========================================================= */
+function openApp(){
+  document.getElementById("loginScreen").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+
+  loadDB();
+  document.getElementById("inspectionDate").value=today();
+
+  if(!document.getElementById("checklist").children.length){
+    buildChecklist();
+  }
+
+  renderAll();
+  go("home");
+}
 
 function go(page){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  const target=document.getElementById("page-"+page);
+  if(target)target.classList.add("active");
 
-  document.querySelectorAll(".page")
-    .forEach(p => p.classList.remove("active"));
-
-  document.querySelectorAll(".nav button")
-    .forEach(b => b.classList.remove("active"));
-
-  const target =
-    document.getElementById("page-"+page);
-
-  if(target){
-    target.classList.add("active");
-  }
-
-  const button =
-    document.querySelector(
-      '.nav button[data-page="'+page+'"]'
-    );
-
-  if(button){
-    button.classList.add("active");
-  }
+  document.querySelectorAll(".nav button").forEach(b=>{
+    b.classList.toggle("active",b.dataset.page===page);
+  });
 
   renderAll();
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+  window.scrollTo({top:0,behavior:"smooth"});
 }
-
-/* =========================================================
-   ESTABELECIMENTOS
-========================================================= */
-
-function saveEstablishment(){
-
-  const name =
-    document.getElementById("estName")
-      .value.trim();
-
-  if(!name){
-
-    alert("Digite o nome do estabelecimento.");
-
-    return;
-  }
-
-  const establishment = {
-
-    id:uid("est"),
-
-    name,
-
-    type:
-      document.getElementById("estType")
-        .value.trim(),
-
-    address:
-      document.getElementById("estAddress")
-        .value.trim(),
-
-    bairro:
-      document.getElementById("estBairro")
-        .value.trim(),
-
-    distrito:
-      document.getElementById("estDistrito")
-        .value.trim(),
-
-    phone:
-      document.getElementById("estPhone")
-        .value.trim(),
-
-    responsible:
-      document.getElementById("estResponsible")
-        .value.trim(),
-
-    createdAt:today()
-  };
-
-  db.establishments.push(establishment);
-
-  saveDB();
-
-  document.getElementById("estName").value="";
-  document.getElementById("estType").value="";
-  document.getElementById("estAddress").value="";
-  document.getElementById("estBairro").value="";
-  document.getElementById("estDistrito").value="";
-  document.getElementById("estPhone").value="";
-  document.getElementById("estResponsible").value="";
-
-  renderAll();
-
-  alert("Estabelecimento registado com sucesso.");
-}
-
-function deleteEstablishment(id){
-
-  if(!confirm(
-    "Tem certeza que deseja eliminar este estabelecimento?"
-  )) return;
-
-  db.establishments =
-    db.establishments.filter(e => e.id !== id);
-
-  saveDB();
-
-  renderAll();
-}
-
-function renderEstablishments(){
-
-  const box =
-    document.getElementById("establishmentsList");
-
-  if(!db.establishments.length){
-
-    box.innerHTML =
-      '<div class="empty">Nenhum estabelecimento registado.</div>';
-
-    return;
-  }
-
-  box.innerHTML =
-    db.establishments.map(est => {
-
-      const inspections =
-        getInspectionsForEstablishment(est);
-
-      const avg =
-        average(
-          inspections.map(i => Number(i.score || 0))
-        );
-
-      const problems =
-        getProblemsForEstablishment(est);
-
-      const overdue =
-        problems.filter(isProblemOverdue).length;
-
-      return `
-        <div class="card" style="margin-bottom:10px">
-
-          <h3>${esc(est.name)}</h3>
-
-          <p class="muted">
-            ${esc(est.type || "Tipo não informado")}
-            ${est.distrito ? " • "+esc(est.distrito) : ""}
-          </p>
-
-          <p>
-            <strong>Responsável:</strong>
-            ${esc(est.responsible || "—")}
-          </p>
-
-          <p>
-            <strong>Inspeções:</strong> ${inspections.length}
-            &nbsp; | &nbsp;
-            <strong>Conformidade:</strong> ${Math.round(avg)}%
-          </p>
-
-          <p>
-            <strong>Ações atrasadas:</strong>
-            <span class="badge ${overdue ? "red" : "green"}">
-              ${overdue}
-            </span>
-          </p>
-
-          <div class="actions">
-
-            <button class="btn btn-primary btn-small"
-              onclick="openProfile('${est.id}')">
-              Ver perfil
-            </button>
-
-            <button class="btn btn-secondary btn-small"
-              onclick="startInspectionFor('${est.id}')">
-              Nova inspeção
-            </button>
-
-            <button class="btn btn-danger btn-small"
-              onclick="deleteEstablishment('${est.id}')">
-              Eliminar
-            </button>
-
-          </div>
-        </div>
-      `;
-
-    }).join("");
-}
-
-/* =========================================================
-   RELACIONAMENTOS
-========================================================= */
-
-function getInspectionsForEstablishment(est){
-
-  if(!est) return [];
-
-  return db.inspections.filter(ins => {
-
-    if(ins.establishmentId === est.id){
-      return true;
-    }
-
-    const name =
-      ins.establishmentName ||
-      ins.name ||
-      ins.establishment ||
-      ins.nomeEstabelecimento ||
-      "";
-
-    return sameName(name,est.name);
-  });
-}
-
-function getProblemsForEstablishment(est){
-
-  if(!est) return [];
-
-  return db.problems.filter(item => {
-
-    if(item.establishmentId === est.id){
-      return true;
-    }
-
-    const name =
-      item.establishmentName ||
-      item.establishment ||
-      item.name ||
-      "";
-
-    return sameName(name,est.name);
-  });
-}
-
-function getTempsForEstablishment(est){
-
-  if(!est) return [];
-
-  return db.temps.filter(item => {
-
-    if(item.establishmentId === est.id){
-      return true;
-    }
-
-    const name =
-      item.establishmentName ||
-      item.establishment ||
-      item.name ||
-      "";
-
-    return sameName(name,est.name);
-  });
-}
-
-function getEvidenceForEstablishment(est){
-
-  if(!est) return [];
-
-  return db.evidences.filter(item => {
-
-    if(item.establishmentId === est.id){
-      return true;
-    }
-
-    const name =
-      item.establishmentName ||
-      item.establishment ||
-      item.name ||
-      "";
-
-    return sameName(name,est.name);
-  });
-}
-
-/* =========================================================
-   SELECTS
-========================================================= */
-
-function fillEstablishmentSelects(){
-
-  const selects = [
-    "inspectionEstablishment",
-    "tempEstablishment",
-    "problemEstablishment",
-    "evidenceEstablishment"
-  ];
-
-  selects.forEach(id => {
-
-    const select =
-      document.getElementById(id);
-
-    if(!select) return;
-
-    const oldValue = select.value;
-
-    select.innerHTML =
-      '<option value="">Selecionar estabelecimento</option>' +
-
-      db.establishments.map(est =>
-        `<option value="${esc(est.id)}">
-          ${esc(est.name)}
-        </option>`
-      ).join("");
-
-    if(
-      db.establishments.some(
-        e => e.id === oldValue
-      )
-    ){
-      select.value = oldValue;
-    }
-  });
-}
-
-/* =========================================================
-   INSPEÇÃO
-========================================================= */
 
 function buildChecklist(){
+  const box=document.getElementById("checklist");
+  if(!box)return;
 
-  const box =
-    document.getElementById("checklist");
-
-  if(!box) return;
-
-  box.innerHTML =
-    checklistItems.map((item,index) => `
-
-      <label class="check-item">
-
-        <input
-          type="checkbox"
-          class="inspection-check"
-          data-index="${index}"
-          onchange="updateInspectionScore()">
-
-        <span>
-          ${index+1}. ${esc(item)}
-        </span>
-
-      </label>
-
-    `).join("");
-
-  updateInspectionScore();
+  box.innerHTML=checklistItems.map((item,i)=>`
+    <label class="checklist-item">
+      <input type="checkbox" class="check-item" data-index="${i}" onchange="updateInspectionScore()">
+      <span>${esc(item)}</span>
+    </label>
+  `).join("");
 }
 
 function updateInspectionScore(){
+  const items=[...document.querySelectorAll(".check-item")];
+  const checked=items.filter(x=>x.checked).length;
+  const score=items.length?Math.round((checked/items.length)*100):0;
 
-  const checks =
-    [...document.querySelectorAll(".inspection-check")];
+  document.getElementById("scoreText").textContent=score+"%";
+  document.getElementById("scoreBar").style.width=score+"%";
 
-  if(!checks.length) return;
-
-  const yes =
-    checks.filter(c => c.checked).length;
-
-  const score =
-    Math.round(
-      (yes / checks.length) * 100
-    );
-
-  document.getElementById(
-    "inspectionScore"
-  ).textContent = score+"%";
-
-  document.getElementById(
-    "inspectionProgress"
-  ).style.width = score+"%";
-
-  let classification="Não conforme";
+  let label="Não conforme";
   let cls="red";
 
-  if(score >= 80){
-
-    classification="Conforme";
+  if(score>=80){
+    label="Conforme";
     cls="green";
-
-  }else if(score >= 60){
-
-    classification="Parcialmente conforme";
+  }else if(score>=60){
+    label="Parcialmente conforme";
     cls="yellow";
   }
 
-  document.getElementById(
-    "inspectionClassification"
-  ).innerHTML =
-    `<span class="badge ${cls}">
-      ${classification}
-    </span>`;
-}
-
-function startInspectionFor(id){
-
-  go("inspecao");
-
-  setTimeout(() => {
-
-    const select =
-      document.getElementById(
-        "inspectionEstablishment"
-      );
-
-    if(select){
-
-      select.value=id;
-
-      syncInspectionEstablishment();
-    }
-
-  },50);
+  const el=document.getElementById("scoreClass");
+  el.textContent=label;
+  el.className="badge "+cls;
 }
 
 function syncInspectionEstablishment(){
+  const id=document.getElementById("inspectionEstablishment").value;
+  const e=db.establishments.find(x=>x.id===id);
 
-  const id =
-    document.getElementById(
-      "inspectionEstablishment"
-    ).value;
+  if(!e)return;
 
-  const est =
-    db.establishments.find(
-      e => e.id === id
-    );
+  document.getElementById("inspectionName").value=e.name||"";
+  document.getElementById("inspectionResponsible").value=e.responsible||"";
+}
 
-  if(!est) return;
+function resetInspectionForm(){
+  document.getElementById("inspectionName").value="";
+  document.getElementById("inspectionResponsible").value="";
+  document.getElementById("inspectionObservation").value="";
+  document.getElementById("inspectionDate").value=today();
 
-  document.getElementById(
-    "inspectionName"
-  ).value = est.name || "";
-
-  document.getElementById(
-    "inspectionResponsible"
-  ).value = est.responsible || "";
+  document.querySelectorAll(".check-item").forEach(c=>c.checked=false);
+  updateInspectionScore();
 }
 
 function saveInspection(){
-
-  const establishmentId =
-    document.getElementById(
-      "inspectionEstablishment"
-    ).value;
-
-  let establishmentName =
-    document.getElementById(
-      "inspectionName"
-    ).value.trim();
-
-  const responsible =
-    document.getElementById(
-      "inspectionResponsible"
-    ).value.trim();
-
-  const date =
-    document.getElementById(
-      "inspectionDate"
-    ).value || today();
-
-  const observation =
-    document.getElementById(
-      "inspectionObservation"
-    ).value.trim();
-
-  const establishment =
-    db.establishments.find(
-      e => e.id === establishmentId
-    );
-
-  if(establishment){
-    establishmentName=establishment.name;
-  }
+  const establishmentId=document.getElementById("inspectionEstablishment").value;
+  const establishmentName=document.getElementById("inspectionName").value.trim();
+  const responsible=document.getElementById("inspectionResponsible").value.trim();
+  const date=document.getElementById("inspectionDate").value||today();
+  const observation=document.getElementById("inspectionObservation").value.trim();
 
   if(!establishmentName){
-
-    alert(
-      "Selecione um estabelecimento ou informe o nome."
-    );
-
+    alert("Informe o estabelecimento.");
     return;
   }
 
-  const checks =
-    [...document.querySelectorAll(
-      ".inspection-check"
-    )];
+  const checks=[...document.querySelectorAll(".check-item")].map((el,i)=>({
+    item:checklistItems[i],
+    checked:el.checked
+  }));
 
-  const results =
-    checks.map((check,index) => ({
-      item:checklistItems[index],
-      conform:check.checked
-    }));
-
-  const conforming =
-    results.filter(
-      r => r.conform
-    ).length;
-
-  const total=results.length;
-
-  const score =
-    total
-    ? Math.round(
-        (conforming/total)*100
-      )
-    : 0;
+  const score=Math.round(
+    checks.filter(x=>x.checked).length/checks.length*100
+  );
 
   let classification="Não conforme";
+  if(score>=80)classification="Conforme";
+  else if(score>=60)classification="Parcialmente conforme";
 
-  if(score>=80){
-    classification="Conforme";
-  }else if(score>=60){
-    classification="Parcialmente conforme";
-  }
+  const est=db.establishments.find(e=>e.id===establishmentId);
 
   const inspection={
-
     id:uid("insp"),
-
-    establishmentId:
-      establishment
-      ? establishment.id
-      : null,
-
+    establishmentId:establishmentId||"",
     establishmentName,
-
-    name:establishmentName,
-
     responsible,
-
     date,
-
     observation,
-
+    checklist:checks,
     score,
-
     classification,
-
-    checklist:results,
-
-    createdAt:
-      new Date().toISOString()
+    createdAt:new Date().toISOString()
   };
 
   db.inspections.push(inspection);
 
-  /*
-    Criação automática de ações corretivas
-    para itens não conformes.
-  */
-
-  results
-    .filter(r => !r.conform)
-    .forEach(r => {
-
-      db.problems.push({
-
-        id:uid("problem"),
-
-        establishmentId:
-          establishment
-          ? establishment.id
-          : null,
-
-        establishmentName,
-
-        title:r.item,
-
-        description:
-          "Não conformidade identificada durante a inspeção.",
-
-        severity:"Média",
-
-        status:"Aberto",
-
-        action:
-          "Corrigir a não conformidade identificada.",
-
-        responsible:
-          responsible ||
-          establishment?.responsible ||
-          "",
-
-        deadline:"",
-
-        resolutionDate:"",
-
-        inspectionId:inspection.id,
-
-        date
-      });
+  checks.filter(x=>!x.checked).forEach(x=>{
+    db.problems.push({
+      id:uid("prob"),
+      establishmentId:establishmentId||"",
+      establishmentName,
+      title:x.item,
+      severity:"Média",
+      responsible:responsible||(est?est.responsible:""),
+      deadline:"",
+      action:"Corrigir a não conformidade identificada durante a inspeção.",
+      status:"Aberto",
+      resolutionDate:"",
+      date,
+      inspectionId:inspection.id
     });
+  });
 
   saveDB();
 
@@ -1988,414 +1013,312 @@ function saveInspection(){
   );
 
   resetInspectionForm();
-
   renderAll();
 
-  if(establishment){
-    openProfile(establishment.id);
-  }
+  if(establishmentId)openProfile(establishmentId);
 }
-
-function resetInspectionForm(){
-
-  document.getElementById(
-    "inspectionName"
-  ).value="";
-
-  document.getElementById(
-    "inspectionResponsible"
-  ).value="";
-
-  document.getElementById(
-    "inspectionDate"
-  ).value=today();
-
-  document.getElementById(
-    "inspectionObservation"
-  ).value="";
-
-  document.querySelectorAll(
-    ".inspection-check"
-  ).forEach(
-    c => c.checked=false
-  );
-
-  updateInspectionScore();
-}
-
-/* =========================================================
-   TEMPERATURA
-========================================================= */
 
 function evaluateTemperature(value){
+  const n=Number(value);
 
-  if(value<=5){
+  if(n<=5)return{
+    label:"Adequada",
+    cls:"green"
+  };
 
-    return {
-      label:"Adequada",
-      cls:"green"
-    };
-  }
+  if(n<=8)return{
+    label:"Atenção",
+    cls:"yellow"
+  };
 
-  if(value<=8){
-
-    return {
-      label:"Atenção",
-      cls:"yellow"
-    };
-  }
-
-  return {
+  return{
     label:"Inadequada",
     cls:"red"
   };
 }
 
 function saveTemperature(){
+  const establishmentId=document.getElementById("tempEstablishment").value;
+  const item=document.getElementById("tempItem").value.trim();
+  const value=document.getElementById("tempValue").value;
 
-  const establishmentId =
-    document.getElementById(
-      "tempEstablishment"
-    ).value;
-
-  const est =
-    db.establishments.find(
-      e => e.id === establishmentId
-    );
-
-  const item =
-    document.getElementById(
-      "tempItem"
-    ).value.trim();
-
-  const value =
-    Number(
-      document.getElementById(
-        "tempValue"
-      ).value
-    );
-
-  if(!est){
-
-    alert("Selecione um estabelecimento.");
-
+  if(!establishmentId||!item||value===""){
+    alert("Preencha estabelecimento, equipamento/alimento e temperatura.");
     return;
   }
 
-  if(!item){
-
-    alert(
-      "Informe o equipamento ou alimento."
-    );
-
-    return;
-  }
-
-  if(isNaN(value)){
-
-    alert(
-      "Informe uma temperatura válida."
-    );
-
-    return;
-  }
-
-  const evaluation =
-    evaluateTemperature(value);
+  const e=db.establishments.find(x=>x.id===establishmentId);
+  const evaluation=evaluateTemperature(value);
 
   db.temps.push({
-
     id:uid("temp"),
-
-    establishmentId:est.id,
-
-    establishmentName:est.name,
-
+    establishmentId,
+    establishmentName:e?e.name:"",
     item,
-
-    value,
-
+    value:Number(value),
     evaluation:evaluation.label,
-
     date:today(),
-
-    createdAt:
-      new Date().toISOString()
+    createdAt:new Date().toISOString()
   });
 
   saveDB();
 
-  document.getElementById(
-    "tempResult"
-  ).innerHTML =
-    `<span class="badge ${evaluation.cls}">
-      ${evaluation.label}
-    </span>`;
+  document.getElementById("tempResult").innerHTML=`
+    <div class="alert">
+      Resultado:
+      <span class="badge ${evaluation.cls}">
+        ${evaluation.label}
+      </span>
+    </div>
+  `;
 
-  document.getElementById(
-    "tempItem"
-  ).value="";
-
-  document.getElementById(
-    "tempValue"
-  ).value="";
+  document.getElementById("tempItem").value="";
+  document.getElementById("tempValue").value="";
 
   renderAll();
 }
 
-function renderTemperatureTable(){
-
-  const box =
-    document.getElementById(
-      "temperatureTable"
-    );
-
-  if(!db.temps.length){
-
-    box.innerHTML =
-      '<div class="empty">Nenhum registo de temperatura.</div>';
-
-    return;
-  }
-
-  const arr =
-    [...db.temps].reverse();
-
-  box.innerHTML=`
-
-    <div class="table-wrap">
-
-      <table>
-
-        <thead>
-          <tr>
-            <th>Data</th>
-            <th>Estabelecimento</th>
-            <th>Equipamento/alimento</th>
-            <th>Temperatura</th>
-            <th>Avaliação</th>
-          </tr>
-        </thead>
-
-        <tbody>
-
-          ${arr.map(t => {
-
-            const evaluation =
-              evaluateTemperature(
-                Number(t.value)
-              );
-
-            return `
-              <tr>
-
-                <td>
-                  ${formatDate(t.date)}
-                </td>
-
-                <td>
-                  ${esc(
-                    t.establishmentName || "—"
-                  )}
-                </td>
-
-                <td>
-                  ${esc(t.item || "—")}
-                </td>
-
-                <td>
-                  ${esc(t.value)} °C
-                </td>
-
-                <td>
-                  <span class="badge ${evaluation.cls}">
-                    ${esc(
-                      t.evaluation ||
-                      evaluation.label
-                    )}
-                  </span>
-                </td>
-
-              </tr>
-            `;
-
-          }).join("")}
-
-        </tbody>
-
-      </table>
-
-    </div>
-  `;
+function isProblemOverdue(problem){
+  if(problem.status==="Resolvido")return false;
+  if(!problem.deadline)return false;
+  return problem.deadline<today();
 }
 
-/* =========================================================
-   PROBLEMAS / AÇÕES CORRETIVAS
-========================================================= */
+function getProblemStatusLabel(problem){
+  if(isProblemOverdue(problem))return "Atrasado";
+  return problem.status||"Aberto";
+}
+
+function getProblemStatusClass(problem){
+  if(isProblemOverdue(problem))return "red";
+
+  if(problem.status==="Resolvido")return "green";
+  if(problem.status==="Em tratamento")return "yellow";
+  return "red";
+}
+
+function getOverdueProblems(){
+  return db.problems.filter(isProblemOverdue);
+}
+
+function getOpenProblems(){
+  return db.problems.filter(p=>p.status!=="Resolvido");
+}
+
+function getResolvedProblems(){
+  return db.problems.filter(p=>p.status==="Resolvido");
+}
+
+function getProblemsInTreatment(){
+  return db.problems.filter(p=>p.status==="Em tratamento");
+}
 
 function saveProblem(){
+  const establishmentId=document.getElementById("problemEstablishment").value;
+  const title=document.getElementById("problemTitle").value.trim();
+  const severity=document.getElementById("problemSeverity").value;
+  const responsible=document.getElementById("problemResponsible").value.trim();
+  const deadline=document.getElementById("problemDeadline").value;
+  const action=document.getElementById("problemAction").value.trim();
 
-  const establishmentId =
-    document.getElementById(
-      "problemEstablishment"
-    ).value;
-
-  const est =
-    db.establishments.find(
-      e => e.id === establishmentId
-    );
-
-  const title =
-    document.getElementById(
-      "problemTitle"
-    ).value.trim();
-
-  const severity =
-    document.getElementById(
-      "problemSeverity"
-    ).value;
-
-  const responsible =
-    document.getElementById(
-      "problemResponsible"
-    ).value.trim();
-
-  const deadline =
-    document.getElementById(
-      "problemDeadline"
-    ).value;
-
-  const action =
-    document.getElementById(
-      "problemAction"
-    ).value.trim();
-
-  if(!est){
-
-    alert(
-      "Selecione um estabelecimento."
-    );
-
+  if(!establishmentId||!title){
+    alert("Informe estabelecimento e problema.");
     return;
   }
 
-  if(!title){
+  const e=db.establishments.find(x=>x.id===establishmentId);
 
-    alert(
-      "Descreva o problema."
-    );
-
-    return;
-  }
-
-  if(deadline && deadline < today()){
-
-    if(!confirm(
-      "O prazo indicado já passou. Deseja mesmo guardar esta ação?"
-    )){
-      return;
-    }
+  if(deadline && deadline<today()){
+    if(!confirm("O prazo indicado já passou. Deseja guardar mesmo assim?"))return;
   }
 
   db.problems.push({
-
-    id:uid("problem"),
-
-    establishmentId:est.id,
-
-    establishmentName:est.name,
-
+    id:uid("prob"),
+    establishmentId,
+    establishmentName:e?e.name:"",
     title,
-
     severity,
-
-    responsible,
-
+    responsible:responsible||(e?e.responsible:""),
     deadline,
-
     action,
-
     status:"Aberto",
-
     resolutionDate:"",
-
     date:today()
   });
 
   saveDB();
 
-  document.getElementById(
-    "problemTitle"
-  ).value="";
+  alert("Problema registado com sucesso.");
 
-  document.getElementById(
-    "problemResponsible"
-  ).value="";
-
-  document.getElementById(
-    "problemDeadline"
-  ).value="";
-
-  document.getElementById(
-    "problemAction"
-  ).value="";
+  document.getElementById("problemTitle").value="";
+  document.getElementById("problemResponsible").value="";
+  document.getElementById("problemDeadline").value="";
+  document.getElementById("problemAction").value="";
 
   renderAll();
+}
 
-  alert(
-    "Problema e ação corretiva registados com sucesso."
-  );
+function setProblemStatus(id,status){
+  const p=db.problems.find(x=>x.id===id);
+  if(!p)return;
+
+  p.status=status;
+  p.resolutionDate=status==="Resolvido"?today():"";
+
+  saveDB();
+  renderAll();
+
+  if(currentProfileId)renderProfile(currentProfileId);
+}
+
+function changeProblemStatus(id){
+  const p=db.problems.find(x=>x.id===id);
+  if(!p)return;
+
+  if(p.status==="Aberto")setProblemStatus(id,"Em tratamento");
+  else if(p.status==="Em tratamento")setProblemStatus(id,"Resolvido");
+  else setProblemStatus(id,"Aberto");
+}
+
+/* ==============================
+   NOVA GESTÃO PROFISSIONAL
+============================== */
+
+function openAction(id){
+  const p=db.problems.find(x=>x.id===id);
+  if(!p)return;
+
+  currentActionId=id;
+
+  const overdue=isProblemOverdue(p);
+
+  document.getElementById("actionModalContent").innerHTML=`
+    <div class="action-box">
+      <label>Estabelecimento</label>
+      <input value="${esc(p.establishmentName)}" disabled>
+
+      <label>Problema / não conformidade</label>
+      <textarea id="actionTitle" disabled>${esc(p.title)}</textarea>
+
+      <div class="grid">
+        <div>
+          <label>Severidade</label>
+          <select id="actionSeverity">
+            <option ${p.severity==="Baixa"?"selected":""}>Baixa</option>
+            <option ${p.severity==="Média"?"selected":""}>Média</option>
+            <option ${p.severity==="Alta"?"selected":""}>Alta</option>
+            <option ${p.severity==="Crítica"?"selected":""}>Crítica</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Responsável</label>
+          <input id="actionResponsible" value="${esc(p.responsible)}">
+        </div>
+
+        <div>
+          <label>Prazo</label>
+          <input id="actionDeadline" type="date" value="${esc(p.deadline)}">
+        </div>
+
+        <div>
+          <label>Estado</label>
+          <select id="actionStatus">
+            <option ${p.status==="Aberto"?"selected":""}>Aberto</option>
+            <option ${p.status==="Em tratamento"?"selected":""}>Em tratamento</option>
+            <option ${p.status==="Resolvido"?"selected":""}>Resolvido</option>
+          </select>
+        </div>
+      </div>
+
+      <label>Ação corretiva</label>
+      <textarea id="actionCorrective">${esc(p.action)}</textarea>
+
+      <label>Data de resolução</label>
+      <input value="${esc(p.resolutionDate?formatDate(p.resolutionDate):"Será preenchida automaticamente ao resolver")}" disabled>
+
+      <div class="alert">
+        Estado atual:
+        <span class="badge ${getProblemStatusClass(p)}">
+          ${getProblemStatusLabel(p)}
+        </span>
+      </div>
+
+      ${overdue?`
+        <div class="alert" style="background:#fee2e2;color:#991b1b">
+          ⚠️ Esta ação está atrasada. O prazo é ${formatDate(p.deadline)}.
+        </div>
+      `:""}
+
+      <div class="actions">
+        <button class="success" onclick="saveAction()">Guardar alterações</button>
+        <button class="secondary" onclick="closeActionModal()">Cancelar</button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById("actionModal").classList.add("open");
+}
+
+function saveAction(){
+  const p=db.problems.find(x=>x.id===currentActionId);
+  if(!p)return;
+
+  const status=document.getElementById("actionStatus").value;
+
+  p.severity=document.getElementById("actionSeverity").value;
+  p.responsible=document.getElementById("actionResponsible").value.trim();
+  p.deadline=document.getElementById("actionDeadline").value;
+  p.status=status;
+  p.action=document.getElementById("actionCorrective").value.trim();
+
+  if(status==="Resolvido"){
+    if(!p.resolutionDate)p.resolutionDate=today();
+  }else{
+    p.resolutionDate="";
+  }
+
+  saveDB();
+  closeActionModal();
+  renderAll();
+
+  if(currentProfileId)renderProfile(currentProfileId);
+
+  alert("Ação corretiva atualizada com sucesso.");
+}
+
+function closeActionModal(){
+  document.getElementById("actionModal").classList.remove("open");
+  currentActionId=null;
 }
 
 function renderProblems(){
+  const open=getOpenProblems();
+  const treatment=getProblemsInTreatment();
+  const resolved=getResolvedProblems();
+  const overdue=getOverdueProblems();
 
-  const box =
-    document.getElementById(
-      "problemsTable"
-    );
+  document.getElementById("problemOpen").textContent=open.length;
+  document.getElementById("problemTreatment").textContent=treatment.length;
+  document.getElementById("problemResolved").textContent=resolved.length;
+  document.getElementById("problemOverdue").textContent=overdue.length;
 
-  const open =
-    getOpenProblems().length;
-
-  const treatment =
-    getProblemsInTreatment().length;
-
-  const resolved =
-    getResolvedProblems().length;
-
-  const overdue =
-    getOverdueProblems().length;
-
-  document.getElementById(
-    "problemOpenCount"
-  ).textContent=open;
-
-  document.getElementById(
-    "problemTreatmentCount"
-  ).textContent=treatment;
-
-  document.getElementById(
-    "problemResolvedCount"
-  ).textContent=resolved;
-
-  document.getElementById(
-    "problemOverdueCount"
-  ).textContent=overdue;
+  const box=document.getElementById("problemsTable");
 
   if(!db.problems.length){
-
-    box.innerHTML =
-      '<div class="empty">Nenhum problema registado.</div>';
-
+    box.innerHTML='<div class="empty">Nenhum problema registado.</div>';
     return;
   }
 
+  const rows=[...db.problems].sort((a,b)=>{
+    if(isProblemOverdue(a)!==isProblemOverdue(b))
+      return isProblemOverdue(a)?-1:1;
+    return String(b.date||"").localeCompare(String(a.date||""));
+  });
+
   box.innerHTML=`
-
     <div class="table-wrap">
-
       <table>
-
         <thead>
           <tr>
             <th>Data</th>
@@ -2404,419 +1327,710 @@ function renderProblems(){
             <th>Severidade</th>
             <th>Responsável</th>
             <th>Prazo</th>
-            <th>Status</th>
+            <th>Estado</th>
             <th>Resolução</th>
             <th>Ação corretiva</th>
-            <th>Ações</th>
+            <th>Gestão</th>
           </tr>
         </thead>
-
         <tbody>
-
-          ${[...db.problems]
-            .reverse()
-            .map(p => {
-
-              const overdue =
-                isProblemOverdue(p);
-
-              return `
-
-                <tr class="${overdue ? "overdue" : ""}">
-
-                  <td>
-                    ${formatDate(p.date)}
-                  </td>
-
-                  <td>
-                    ${esc(
-                      p.establishmentName || "—"
-                    )}
-                  </td>
-
-                  <td>
-                    ${esc(
-                      p.title ||
-                      p.description ||
-                      "—"
-                    )}
-                  </td>
-
-                  <td>
-                    ${esc(
-                      p.severity || "—"
-                    )}
-                  </td>
-
-                  <td>
-                    ${esc(
-                      p.responsible || "—"
-                    )}
-                  </td>
-
-                  <td>
-                    ${
-                      p.deadline
-                      ? formatDate(p.deadline)
-                      : "—"
-                    }
-
-                    ${
-                      overdue
-                      ? `
-                        <br>
-                        <span class="badge red">
-                          Atrasado
-                        </span>
-                      `
-                      : ""
-                    }
-                  </td>
-
-                  <td>
-                    <span class="badge ${
-                      getProblemStatusClassFull(p)
-                    }">
-                      ${esc(
-                        getProblemStatusLabel(p)
-                      )}
-                    </span>
-                  </td>
-
-                  <td>
-                    ${
-                      p.resolutionDate
-                      ? formatDate(
-                          p.resolutionDate
-                        )
-                      : "—"
-                    }
-                  </td>
-
-                  <td>
-                    ${esc(
-                      p.action || "—"
-                    )}
-                  </td>
-
-                  <td>
-
-                    <div class="actions">
-
-                      <button
-                        class="btn btn-secondary btn-small"
-                        onclick="changeProblemStatus('${p.id}')">
-                        Alterar status
-                      </button>
-
-                      <button
-                        class="btn btn-primary btn-small"
-                        onclick="editProblem('${p.id}')">
-                        Editar ação
-                      </button>
-
-                    </div>
-
-                  </td>
-
-                </tr>
-
-              `;
-
-            }).join("")}
-
+          ${rows.map(p=>`
+            <tr class="${isProblemOverdue(p)?"overdue":""}">
+              <td>${formatDate(p.date)}</td>
+              <td>${esc(p.establishmentName)}</td>
+              <td>${esc(p.title)}</td>
+              <td>${esc(p.severity)}</td>
+              <td>${esc(p.responsible||"—")}</td>
+              <td>${formatDate(p.deadline)}</td>
+              <td>
+                <span class="badge ${getProblemStatusClass(p)}">
+                  ${esc(getProblemStatusLabel(p))}
+                </span>
+              </td>
+              <td>${formatDate(p.resolutionDate)}</td>
+              <td>${esc(p.action||"—")}</td>
+              <td>
+                <button class="primary small" onclick="openAction('${p.id}')">
+                  Gerir ação
+                </button>
+              </td>
+            </tr>
+          `).join("")}
         </tbody>
-
       </table>
-
     </div>
   `;
 }
 
-/* =========================================================
-   EVIDÊNCIAS
-========================================================= */
-
 function saveEvidence(){
+  const establishmentId=document.getElementById("evidenceEstablishment").value;
+  const description=document.getElementById("evidenceDescription").value.trim();
+  const file=document.getElementById("evidencePhoto").files[0];
 
-  const establishmentId =
-    document.getElementById(
-      "evidenceEstablishment"
-    ).value;
-
-  const est =
-    db.establishments.find(
-      e => e.id === establishmentId
-    );
-
-  const description =
-    document.getElementById(
-      "evidenceDescription"
-    ).value.trim();
-
-  const file =
-    document.getElementById(
-      "evidenceFile"
-    ).files[0];
-
-  if(!est){
-
-    alert(
-      "Selecione um estabelecimento."
-    );
-
+  if(!establishmentId||!description||!file){
+    alert("Preencha estabelecimento, descrição e fotografia.");
     return;
   }
 
-  if(!file){
-
-    alert(
-      "Selecione uma fotografia."
-    );
-
-    return;
-  }
-
-  const reader =
-    new FileReader();
+  const e=db.establishments.find(x=>x.id===establishmentId);
+  const reader=new FileReader();
 
   reader.onload=function(){
-
     db.evidences.push({
-
-      id:uid("evidence"),
-
-      establishmentId:est.id,
-
-      establishmentName:est.name,
-
+      id:uid("ev"),
+      establishmentId,
+      establishmentName:e?e.name:"",
       description,
-
-      image:reader.result,
-
+      photo:reader.result,
       date:today()
     });
 
     saveDB();
 
-    document.getElementById(
-      "evidenceDescription"
-    ).value="";
+    document.getElementById("evidenceDescription").value="";
+    document.getElementById("evidencePhoto").value="";
 
-    document.getElementById(
-      "evidenceFile"
-    ).value="";
-
+    alert("Evidência guardada com sucesso.");
     renderAll();
-
-    alert(
-      "Evidência guardada com sucesso."
-    );
   };
 
   reader.readAsDataURL(file);
 }
 
-function renderEvidence(){
+function saveEstablishment(){
+  const name=document.getElementById("estName").value.trim();
 
-  const box =
-    document.getElementById(
-      "evidenceGrid"
-    );
-
-  if(!db.evidences.length){
-
-    box.innerHTML =
-      '<div class="empty">Nenhuma evidência registada.</div>';
-
+  if(!name){
+    alert("Informe o nome do estabelecimento.");
     return;
   }
 
-  box.innerHTML =
-    db.evidences.map(e => `
+  if(db.establishments.some(e=>sameName(e.name,name))){
+    alert("Este estabelecimento já está registado.");
+    return;
+  }
 
-      <div class="card">
+  db.establishments.push({
+    id:uid("est"),
+    name,
+    type:document.getElementById("estType").value.trim(),
+    address:document.getElementById("estAddress").value.trim(),
+    bairro:document.getElementById("estBairro").value.trim(),
+    distrito:document.getElementById("estDistrito").value.trim(),
+    phone:document.getElementById("estPhone").value.trim(),
+    responsible:document.getElementById("estResponsible").value.trim(),
+    createdAt:today()
+  });
 
-        ${
-          e.image
-          ?
-          `<img
-            src="${e.image}"
-            alt="Evidência"
-            style="width:100%;height:160px;object-fit:cover;border-radius:10px">`
-          :
-          ""
-        }
+  saveDB();
 
-        <p>
-          <strong>
-            ${esc(
-              e.establishmentName || "—"
-            )}
-          </strong>
-        </p>
+  [
+    "estName","estType","estAddress","estBairro",
+    "estDistrito","estPhone","estResponsible"
+  ].forEach(id=>document.getElementById(id).value="");
 
-        <p class="small">
-          ${esc(
-            e.description || ""
-          )}
-        </p>
-
-        <p class="small muted">
-          ${formatDate(e.date)}
-        </p>
-
-      </div>
-
-    `).join("");
+  alert("Estabelecimento registado com sucesso.");
+  renderAll();
 }
 
-/* =========================================================
-   DASHBOARD
-========================================================= */
+function deleteEstablishment(id){
+  const e=db.establishments.find(x=>x.id===id);
+  if(!e)return;
 
-function renderDashboard(){
+  if(!confirm(
+    "Excluir o estabelecimento da lista?\n\n"+
+    "Os históricos de inspeções, problemas, temperaturas e evidências serão mantidos."
+  ))return;
 
-  document.getElementById(
-    "dashEstablishments"
-  ).textContent =
-    db.establishments.length;
+  db.establishments=db.establishments.filter(x=>x.id!==id);
+  saveDB();
+  renderAll();
+}
 
-  document.getElementById(
-    "dashInspections"
-  ).textContent =
-    db.inspections.length;
+function getInspectionsForEstablishment(e){
+  return db.inspections.filter(i=>
+    i.establishmentId===e.id || sameName(i.establishmentName,e.name)
+  );
+}
 
-  document.getElementById(
-    "dashProblems"
-  ).textContent =
-    db.problems.filter(
-      p => p.status !== "Resolvido"
-    ).length;
+function getProblemsForEstablishment(e){
+  return db.problems.filter(p=>
+    p.establishmentId===e.id || sameName(p.establishmentName,e.name)
+  );
+}
 
-  document.getElementById(
-    "dashOverdue"
-  ).textContent =
-    getOverdueProblems().length;
+function getTempsForEstablishment(e){
+  return db.temps.filter(t=>
+    t.establishmentId===e.id || sameName(t.establishmentName,e.name)
+  );
+}
 
-  const avg =
-    average(
-      db.inspections.map(
-        i => Number(i.score || 0)
-      )
-    );
+function getEvidenceForEstablishment(e){
+  return db.evidences.filter(x=>
+    x.establishmentId===e.id || sameName(x.establishmentName,e.name)
+  );
+}
 
-  document.getElementById(
-    "dashCompliance"
-  ).textContent =
-    Math.round(avg)+"%";
+function fillEstablishmentSelects(){
+  const configs=[
+    "tempEstablishment",
+    "inspectionEstablishment",
+    "problemEstablishment",
+    "evidenceEstablishment"
+  ];
 
-  const total =
-    db.problems.length;
+  configs.forEach(id=>{
+    const select=document.getElementById(id);
+    if(!select)return;
 
-  const open =
-    getOpenProblems().length;
+    const old=select.value;
 
-  const treatment =
-    getProblemsInTreatment().length;
+    select.innerHTML=
+      '<option value="">Selecionar estabelecimento</option>'+
+      db.establishments.map(e=>
+        `<option value="${esc(e.id)}">${esc(e.name)}</option>`
+      ).join("");
 
-  const resolved =
-    getResolvedProblems().length;
+    if(db.establishments.some(e=>e.id===old)){
+      select.value=old;
+    }
+  });
+}
 
-  const overdue =
-    getOverdueProblems().length;
+function calculateRisk(e){
+  const inspections=getInspectionsForEstablishment(e);
+  const problems=getProblemsForEstablishment(e);
+  const avg=average(inspections.map(i=>i.score));
 
-  const dashboardActions =
-    document.getElementById(
-      "dashboardActions"
-    );
+  if(!inspections.length){
+    return {label:"Sem avaliação",cls:"gray"};
+  }
 
-  if(!total){
+  const critical=problems.some(p=>
+    p.status!=="Resolvido" &&
+    (p.severity==="Crítica"||p.severity==="Alta")
+  );
 
-    dashboardActions.innerHTML =
-      '<div class="empty">Nenhuma ação corretiva registada.</div>';
+  if(critical||avg<60){
+    return {label:"Alto",cls:"red"};
+  }
 
+  if(avg<80){
+    return {label:"Médio",cls:"yellow"};
+  }
+
+  return {label:"Baixo",cls:"green"};
+}
+
+function renderEstablishments(){
+  const box=document.getElementById("establishmentList");
+
+  if(!db.establishments.length){
+    box.innerHTML='<div class="card empty">Nenhum estabelecimento registado.</div>';
     return;
   }
 
-  dashboardActions.innerHTML=`
+  box.innerHTML=db.establishments.map(e=>{
+    const inspections=getInspectionsForEstablishment(e);
+    const problems=getProblemsForEstablishment(e);
+    const avg=average(inspections.map(i=>i.score));
+    const risk=calculateRisk(e);
+    const overdue=problems.filter(isProblemOverdue).length;
 
-    <div class="grid">
+    return `
+      <div class="card">
+        <h3>${esc(e.name)}</h3>
 
-      <div>
-        <strong>Abertas</strong>
-        <div class="stat">
-          ${open}
+        <p class="muted">
+          ${esc(e.type||"Tipo não informado")}
+          ${e.distrito?" • "+esc(e.distrito):""}
+        </p>
+
+        <div class="grid">
+          <div>
+            <strong>Conformidade média</strong>
+            <div class="progress">
+              <div style="width:${Math.round(avg)}%"></div>
+            </div>
+            ${Math.round(avg)}%
+          </div>
+
+          <div>
+            <strong>Nível de risco</strong><br>
+            <span class="badge ${risk.cls}">${risk.label}</span>
+          </div>
+        </div>
+
+        <p>
+          Inspeções: <strong>${inspections.length}</strong> |
+          Problemas: <strong>${problems.length}</strong> |
+          Atrasados: <strong>${overdue}</strong>
+        </p>
+
+        <div class="actions">
+          <button class="primary" onclick="openProfile('${e.id}')">
+            Ver perfil
+          </button>
+
+          <button class="success" onclick="startInspectionFor('${e.id}')">
+            Nova inspeção
+          </button>
+
+          <button class="secondary" onclick="goToProblemsFor('${e.id}')">
+            Problemas
+          </button>
+
+          <button class="danger" onclick="deleteEstablishment('${e.id}')">
+            Excluir
+          </button>
         </div>
       </div>
+    `;
+  }).join("");
+}
 
-      <div>
-        <strong>Em tratamento</strong>
-        <div class="stat">
-          ${treatment}
-        </div>
-      </div>
+function startInspectionFor(id){
+  go("inspecao");
 
-      <div>
-        <strong>Resolvidas</strong>
-        <div class="stat">
-          ${resolved}
-        </div>
-      </div>
+  document.getElementById("inspectionEstablishment").value=id;
+  syncInspectionEstablishment();
+}
 
-      <div>
-        <strong>Atrasadas</strong>
-        <div class="stat">
-          ${overdue}
-        </div>
-      </div>
+function goToProblemsFor(id){
+  go("problemas");
+  document.getElementById("problemEstablishment").value=id;
+}
 
+function openProfile(id){
+  currentProfileId=id;
+  go("perfil");
+  renderProfile(id);
+}
+
+function renderProfile(id){
+  const e=db.establishments.find(x=>x.id===id);
+
+  if(!e){
+    document.getElementById("profileContent").innerHTML=
+      '<div class="empty">Estabelecimento não encontrado.</div>';
+    return;
+  }
+
+  currentProfileId=id;
+
+  const inspections=getInspectionsForEstablishment(e)
+    .sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+
+  const problems=getProblemsForEstablishment(e);
+  const temps=getTempsForEstablishment(e)
+    .sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  const evidences=getEvidenceForEstablishment(e);
+
+  const avg=average(inspections.map(i=>i.score));
+  const risk=calculateRisk(e);
+
+  const open=problems.filter(p=>p.status!=="Resolvido").length;
+  const treatment=problems.filter(p=>p.status==="Em tratamento").length;
+  const resolved=problems.filter(p=>p.status==="Resolvido").length;
+  const overdue=problems.filter(isProblemOverdue).length;
+
+  const latest=inspections[0];
+
+  document.getElementById("profileContent").innerHTML=`
+    <div class="actions no-print">
+      <button class="secondary" onclick="go('estabelecimentos')">← Estabelecimentos</button>
+      <button class="success" onclick="startInspectionFor('${e.id}')">Nova inspeção</button>
+      <button class="warning" onclick="goToProblemsFor('${e.id}')">Ações corretivas</button>
+      <button class="primary" onclick="generateReportForEstablishment('${e.id}')">Relatório profissional</button>
     </div>
 
-    ${
-      overdue
-      ?
-      `
-        <div class="alert" style="margin-top:15px">
-          Existem <strong>${overdue}</strong>
-          ações corretivas atrasadas que precisam de acompanhamento.
+    <div class="card">
+      <h2>${esc(e.name)}</h2>
+      <p>${esc(e.type||"Tipo não informado")}</p>
+
+      <div class="grid">
+        <div>
+          <strong>Endereço</strong>
+          <p>${esc(e.address||"—")}</p>
         </div>
-      `
-      :
-      `
-        <div class="alert" style="margin-top:15px;background:#f0fdf4;border-color:#bbf7d0;color:#166534">
-          Não existem ações corretivas atrasadas.
+        <div>
+          <strong>Bairro</strong>
+          <p>${esc(e.bairro||"—")}</p>
         </div>
-      `
-    }
+        <div>
+          <strong>Distrito</strong>
+          <p>${esc(e.distrito||"—")}</p>
+        </div>
+        <div>
+          <strong>Responsável</strong>
+          <p>${esc(e.responsible||"—")}</p>
+        </div>
+        <div>
+          <strong>Telefone</strong>
+          <p>${esc(e.phone||"—")}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        Conformidade média
+        <strong>${Math.round(avg)}%</strong>
+      </div>
+      <div class="stat">
+        Inspeções
+        <strong>${inspections.length}</strong>
+      </div>
+      <div class="stat">
+        Problemas abertos
+        <strong>${open}</strong>
+      </div>
+      <div class="stat">
+        Ações atrasadas
+        <strong>${overdue}</strong>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Nível de risco</h3>
+      <span class="badge ${risk.cls}">${risk.label}</span>
+    </div>
+
+    <div class="card">
+      <h3>Estado das ações corretivas</h3>
+
+      <div class="grid">
+        <div class="stat">Abertas<strong>${open}</strong></div>
+        <div class="stat">Em tratamento<strong>${treatment}</strong></div>
+        <div class="stat">Resolvidas<strong>${resolved}</strong></div>
+        <div class="stat">Atrasadas<strong>${overdue}</strong></div>
+      </div>
+
+      ${overdue?`
+        <div class="alert">
+          Existem ${overdue} ação(ões) corretiva(s) atrasada(s).
+        </div>
+      `:""}
+    </div>
+
+    <div class="card">
+      <h3>Última inspeção</h3>
+
+      ${latest?`
+        <p>
+          <strong>Data:</strong> ${formatDate(latest.date)}
+        </p>
+        <p>
+          <strong>Conformidade:</strong> ${latest.score}%
+        </p>
+        <span class="badge ${
+          latest.score>=80?"green":
+          latest.score>=60?"yellow":"red"
+        }">${esc(latest.classification)}</span>
+      `:
+      `<div class="empty">Ainda não existem inspeções.</div>`}
+    </div>
+
+    <div class="card">
+      <h3>Evolução da conformidade</h3>
+
+      ${
+        inspections.length?
+        inspections.map(i=>`
+          <div style="margin:12px 0">
+            <div style="display:flex;justify-content:space-between">
+              <span>${formatDate(i.date)}</span>
+              <strong>${i.score}%</strong>
+            </div>
+            <div class="progress">
+              <div style="width:${i.score}%"></div>
+            </div>
+          </div>
+        `).join("")
+        :
+        '<div class="empty">Sem dados.</div>'
+      }
+    </div>
+
+    <div class="card">
+      <h3>Histórico de inspeções</h3>
+
+      ${
+        inspections.length?
+        `<div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Responsável</th>
+                <th>Conformidade</th>
+                <th>Classificação</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              ${inspections.map(i=>`
+                <tr>
+                  <td>${formatDate(i.date)}</td>
+                  <td>${esc(i.responsible||"—")}</td>
+                  <td>${i.score}%</td>
+                  <td>${esc(i.classification)}</td>
+                  <td>
+                    <button class="primary small"
+                      onclick="generateReportForInspection('${i.id}')">
+                      Relatório
+                    </button>
+                  </td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>`
+        :
+        '<div class="empty">Sem inspeções.</div>'
+      }
+    </div>
+
+    <div class="card">
+      <h3>Ações corretivas</h3>
+
+      ${
+        problems.length?
+        `<div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Problema</th>
+                <th>Severidade</th>
+                <th>Responsável</th>
+                <th>Prazo</th>
+                <th>Estado</th>
+                <th>Resolução</th>
+                <th>Ação</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              ${problems.map(p=>`
+                <tr class="${isProblemOverdue(p)?"overdue":""}">
+                  <td>${esc(p.title)}</td>
+                  <td>${esc(p.severity)}</td>
+                  <td>${esc(p.responsible||"—")}</td>
+                  <td>${formatDate(p.deadline)}</td>
+                  <td>
+                    <span class="badge ${getProblemStatusClass(p)}">
+                      ${esc(getProblemStatusLabel(p))}
+                    </span>
+                  </td>
+                  <td>${formatDate(p.resolutionDate)}</td>
+                  <td>${esc(p.action||"—")}</td>
+                  <td>
+                    <button class="primary small"
+                      onclick="openAction('${p.id}')">
+                      Gerir
+                    </button>
+                  </td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>`
+        :
+        '<div class="empty">Nenhuma ação corretiva registada.</div>'
+      }
+    </div>
+
+    <div class="card">
+      <h3>Histórico de temperaturas</h3>
+
+      ${
+        temps.length?
+        `<div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Item</th>
+                <th>Temperatura</th>
+                <th>Avaliação</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${temps.map(t=>`
+                <tr>
+                  <td>${formatDate(t.date)}</td>
+                  <td>${esc(t.item)}</td>
+                  <td>${t.value} °C</td>
+                  <td>
+                    <span class="badge ${
+                      t.evaluation==="Adequada"?"green":
+                      t.evaluation==="Atenção"?"yellow":"red"
+                    }">${esc(t.evaluation)}</span>
+                  </td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>`
+        :
+        '<div class="empty">Sem registos de temperatura.</div>'
+      }
+    </div>
+
+    <div class="card">
+      <h3>Evidências fotográficas</h3>
+
+      ${
+        evidences.length?
+        `<div class="photo-grid">
+          ${evidences.map(x=>`
+            <div>
+              <img src="${x.photo}" alt="${esc(x.description)}">
+              <small>${esc(x.description)}<br>${formatDate(x.date)}</small>
+            </div>
+          `).join("")}
+        </div>`
+        :
+        '<div class="empty">Nenhuma evidência.</div>'
+      }
+    </div>
   `;
 }
 
-/* =========================================================
-   HISTÓRICO
-========================================================= */
+function renderEvidence(){
+  const box=document.getElementById("evidenceGrid");
 
-function renderHistory(){
-
-  const box =
-    document.getElementById(
-      "historyTable"
-    );
-
-  if(!db.inspections.length){
-
-    box.innerHTML =
-      '<div class="empty">Nenhuma inspeção registada.</div>';
-
+  if(!db.evidences.length){
+    box.innerHTML='<div class="empty">Nenhuma evidência registada.</div>';
     return;
   }
 
   box.innerHTML=`
+    <div class="photo-grid">
+      ${db.evidences.slice().reverse().map(e=>`
+        <div>
+          <img src="${e.photo}" alt="${esc(e.description)}">
+          <strong>${esc(e.establishmentName)}</strong>
+          <p>${esc(e.description)}</p>
+          <small>${formatDate(e.date)}</small>
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
 
+function renderTemperatureTable(){
+  const box=document.getElementById("temperatureTable");
+
+  if(!db.temps.length){
+    box.innerHTML='<div class="empty">Nenhum registo de temperatura.</div>';
+    return;
+  }
+
+  const rows=[...db.temps].reverse().slice(0,50);
+
+  box.innerHTML=`
     <div class="table-wrap">
-
       <table>
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Estabelecimento</th>
+            <th>Item</th>
+            <th>Temperatura</th>
+            <th>Avaliação</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.map(t=>`
+            <tr>
+              <td>${formatDate(t.date)}</td>
+              <td>${esc(t.establishmentName)}</td>
+              <td>${esc(t.item)}</td>
+              <td>${t.value} °C</td>
+              <td>
+                <span class="badge ${
+                  t.evaluation==="Adequada"?"green":
+                  t.evaluation==="Atenção"?"yellow":"red"
+                }">
+                  ${esc(t.evaluation)}
+                </span>
+              </td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
 
+function renderDashboard(){
+  const avg=average(db.inspections.map(i=>i.score));
+  const overdue=getOverdueProblems();
+
+  document.getElementById("dashEstablishments").textContent=db.establishments.length;
+  document.getElementById("dashInspections").textContent=db.inspections.length;
+  document.getElementById("dashOpen").textContent=getOpenProblems().length;
+  document.getElementById("dashOverdue").textContent=overdue.length;
+  document.getElementById("dashAverage").textContent=Math.round(avg)+"%";
+
+  document.getElementById("dashboardActions").innerHTML=`
+    <div class="grid">
+      <div class="stat">
+        Abertas
+        <strong>${getOpenProblems().length}</strong>
+      </div>
+      <div class="stat">
+        Em tratamento
+        <strong>${getProblemsInTreatment().length}</strong>
+      </div>
+      <div class="stat">
+        Resolvidas
+        <strong>${getResolvedProblems().length}</strong>
+      </div>
+      <div class="stat">
+        Atrasadas
+        <strong>${overdue.length}</strong>
+      </div>
+    </div>
+  `;
+
+  const box=document.getElementById("dashboardOverdue");
+
+  if(!overdue.length){
+    box.innerHTML='<div class="empty">Não existem ações corretivas atrasadas.</div>';
+    return;
+  }
+
+  box.innerHTML=overdue.map(p=>`
+    <div class="action-box">
+      <strong>${esc(p.title)}</strong>
+      <p>
+        ${esc(p.establishmentName)}<br>
+        Responsável: ${esc(p.responsible||"Não definido")}<br>
+        Prazo: ${formatDate(p.deadline)}
+      </p>
+      <button class="primary small" onclick="openAction('${p.id}')">
+        Gerir ação
+      </button>
+    </div>
+  `).join("");
+}
+
+function renderHistory(){
+  const box=document.getElementById("historyTable");
+
+  if(!db.inspections.length){
+    box.innerHTML='<div class="empty">Nenhuma inspeção realizada.</div>';
+    return;
+  }
+
+  const rows=[...db.inspections]
+    .sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+
+  box.innerHTML=`
+    <div class="table-wrap">
+      <table>
         <thead>
           <tr>
             <th>Data</th>
@@ -2824,2101 +2038,368 @@ function renderHistory(){
             <th>Responsável</th>
             <th>Conformidade</th>
             <th>Classificação</th>
-            <th>Relatório</th>
+            <th></th>
           </tr>
         </thead>
-
         <tbody>
-
-          ${[...db.inspections]
-            .sort(
-              (a,b) =>
-                String(b.date)
-                .localeCompare(
-                  String(a.date)
-                )
-            )
-            .map(i => {
-
-              let cls="red";
-
-              if(Number(i.score)>=80){
-                cls="green";
-              }else if(Number(i.score)>=60){
-                cls="yellow";
-              }
-
-              const est =
-                db.establishments.find(
-                  e => e.id === i.establishmentId
-                );
-
-              return `
-
-                <tr>
-
-                  <td>
-                    ${formatDate(i.date)}
-                  </td>
-
-                  <td>
-                    ${esc(
-                      est?.name ||
-                      i.establishmentName ||
-                      i.name ||
-                      "—"
-                    )}
-                  </td>
-
-                  <td>
-                    ${esc(
-                      i.responsible || "—"
-                    )}
-                  </td>
-
-                  <td>
-                    ${Number(i.score || 0)}%
-                  </td>
-
-                  <td>
-                    <span class="badge ${cls}">
-                      ${esc(
-                        i.classification || "—"
-                      )}
-                    </span>
-                  </td>
-
-                  <td>
-                    <button
-                      class="btn btn-primary btn-small"
-                      onclick="generateReportForInspection('${i.id}')">
-                      Ver relatório
-                    </button>
-                  </td>
-
-                </tr>
-              `;
-
-            }).join("")}
-
+          ${rows.map(i=>`
+            <tr>
+              <td>${formatDate(i.date)}</td>
+              <td>${esc(i.establishmentName)}</td>
+              <td>${esc(i.responsible||"—")}</td>
+              <td>${i.score}%</td>
+              <td>${esc(i.classification)}</td>
+              <td>
+                <button class="primary small"
+                  onclick="generateReportForInspection('${i.id}')">
+                  Relatório
+                </button>
+              </td>
+            </tr>
+          `).join("")}
         </tbody>
-
       </table>
-
     </div>
   `;
 }
 
-/* =========================================================
-   RISCO
-========================================================= */
+function renderHome(){
+  document.getElementById("homeEstablishments").textContent=db.establishments.length;
+  document.getElementById("homeInspections").textContent=db.inspections.length;
+  document.getElementById("homeOpenProblems").textContent=getOpenProblems().length;
+  document.getElementById("homeOverdue").textContent=getOverdueProblems().length;
 
-function calculateRisk(est){
+  const box=document.getElementById("homeActions");
+  const actions=getOverdueProblems();
 
-  const inspections =
-    getInspectionsForEstablishment(est);
-
-  const problems =
-    getProblemsForEstablishment(est);
-
-  if(!inspections.length){
-
-    return {
-      label:"Sem avaliação",
-      cls:"gray"
-    };
-  }
-
-  const avg =
-    average(
-      inspections.map(
-        i => Number(i.score || 0)
-      )
-    );
-
-  const criticalOpen =
-    problems.some(p =>
-      p.status !== "Resolvido" &&
-      (
-        p.severity === "Crítica" ||
-        p.severity === "Alta"
-      )
-    );
-
-  if(
-    criticalOpen ||
-    avg < 60
-  ){
-
-    return {
-      label:"Alto",
-      cls:"red"
-    };
-  }
-
-  if(avg < 80){
-
-    return {
-      label:"Médio",
-      cls:"yellow"
-    };
-  }
-
-  return {
-    label:"Baixo",
-    cls:"green"
-  };
-}
-
-/* =========================================================
-   PERFIL
-========================================================= */
-
-function openProfile(id){
-
-  const est =
-    db.establishments.find(
-      e => e.id === id
-    );
-
-  if(!est) return;
-
-  db.inspections.forEach(ins => {
-
-    const name =
-      ins.establishmentName ||
-      ins.name ||
-      ins.establishment ||
-      "";
-
-    if(
-      !ins.establishmentId &&
-      sameName(name,est.name)
-    ){
-      ins.establishmentId=est.id;
-    }
-  });
-
-  db.problems.forEach(item => {
-
-    const name =
-      item.establishmentName ||
-      item.establishment ||
-      item.name ||
-      "";
-
-    if(
-      !item.establishmentId &&
-      sameName(name,est.name)
-    ){
-      item.establishmentId=est.id;
-    }
-  });
-
-  db.temps.forEach(item => {
-
-    const name =
-      item.establishmentName ||
-      item.establishment ||
-      item.name ||
-      "";
-
-    if(
-      !item.establishmentId &&
-      sameName(name,est.name)
-    ){
-      item.establishmentId=est.id;
-    }
-  });
-
-  db.evidences.forEach(item => {
-
-    const name =
-      item.establishmentName ||
-      item.establishment ||
-      item.name ||
-      "";
-
-    if(
-      !item.establishmentId &&
-      sameName(name,est.name)
-    ){
-      item.establishmentId=est.id;
-    }
-  });
-
-  saveDB();
-
-  go("perfil");
-
-  renderProfile(id);
-}
-
-function renderProfile(id){
-
-  const box =
-    document.getElementById(
-      "profileContent"
-    );
-
-  const est =
-    db.establishments.find(
-      e => e.id === id
-    );
-
-  if(!est){
-
-    box.innerHTML =
-      '<div class="empty">Estabelecimento não encontrado.</div>';
-
+  if(!actions.length){
+    box.innerHTML='<div class="empty">Não existem ações atrasadas.</div>';
     return;
   }
 
-  const inspections =
-    getInspectionsForEstablishment(est);
-
-  const problems =
-    getProblemsForEstablishment(est);
-
-  const temps =
-    getTempsForEstablishment(est);
-
-  const evidences =
-    getEvidenceForEstablishment(est);
-
-  const avg =
-    Math.round(
-      average(
-        inspections.map(
-          i => Number(i.score || 0)
-        )
-      )
-    );
-
-  const risk =
-    calculateRisk(est);
-
-  const lastInspection =
-    [...inspections]
-      .sort(
-        (a,b) =>
-          String(b.date)
-          .localeCompare(
-            String(a.date)
-          )
-      )[0];
-
-  const openProblems =
-    problems.filter(
-      p => p.status !== "Resolvido"
-    ).length;
-
-  const overdueProblems =
-    problems.filter(
-      p => isProblemOverdue(p)
-    ).length;
-
-  const resolvedProblems =
-    problems.filter(
-      p => p.status === "Resolvido"
-    ).length;
-
-  const treatmentProblems =
-    problems.filter(
-      p => p.status === "Em tratamento"
-    ).length;
-
-  box.innerHTML=`
-
-    <div class="actions no-print" style="margin-bottom:12px">
-
-      <button
-        class="btn btn-secondary"
-        onclick="go('estabelecimentos')">
-        ← Voltar
-      </button>
-
-      <button
-        class="btn btn-primary"
-        onclick="startInspectionFor('${est.id}')">
-        Nova inspeção
-      </button>
-
-      <button
-        class="btn btn-warning"
-        onclick="goToProblemsFor('${est.id}')">
-        Ações corretivas
-      </button>
-
-      <button
-        class="btn btn-success"
-        onclick="generateReportForEstablishment('${est.id}')">
-        Relatório profissional
-      </button>
-
-    </div>
-
-    <div class="card">
-
-      <h1>${esc(est.name)}</h1>
-
-      <p class="muted">
-        ${esc(
-          est.type ||
-          "Estabelecimento alimentar"
-        )}
+  box.innerHTML=actions.slice(0,5).map(p=>`
+    <div class="action-box">
+      <strong>${esc(p.title)}</strong>
+      <p>
+        ${esc(p.establishmentName)} —
+        prazo ${formatDate(p.deadline)}
       </p>
-
-      <div class="grid" style="margin-top:15px">
-
-        <div>
-          <strong>Responsável</strong>
-          <div>
-            ${esc(est.responsible || "—")}
-          </div>
-        </div>
-
-        <div>
-          <strong>Endereço</strong>
-          <div>
-            ${esc(est.address || "—")}
-          </div>
-        </div>
-
-        <div>
-          <strong>Bairro</strong>
-          <div>
-            ${esc(est.bairro || "—")}
-          </div>
-        </div>
-
-        <div>
-          <strong>Distrito</strong>
-          <div>
-            ${esc(est.distrito || "—")}
-          </div>
-        </div>
-
-        <div>
-          <strong>Telefone</strong>
-          <div>
-            ${esc(est.phone || "—")}
-          </div>
-        </div>
-
-      </div>
-
+      <button class="primary small" onclick="openAction('${p.id}')">
+        Gerir ação
+      </button>
     </div>
-
-    <div class="grid" style="margin-top:15px">
-
-      <div class="card">
-        <div class="muted small">
-          Conformidade média
-        </div>
-
-        <div class="stat">
-          ${avg}%
-        </div>
-
-        <div class="progress">
-          <div
-            class="progress-bar"
-            style="width:${Math.min(avg,100)}%">
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-
-        <div class="muted small">
-          Nível de risco
-        </div>
-
-        <div style="margin-top:8px">
-
-          <span class="badge ${risk.cls}">
-            ${risk.label}
-          </span>
-
-        </div>
-
-      </div>
-
-      <div class="card">
-
-        <div class="muted small">
-          Total de inspeções
-        </div>
-
-        <div class="stat">
-          ${inspections.length}
-        </div>
-
-      </div>
-
-      <div class="card">
-
-        <div class="muted small">
-          Problemas em aberto
-        </div>
-
-        <div class="stat">
-          ${openProblems}
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- RESUMO DAS AÇÕES -->
-    <div class="card" style="margin-top:15px">
-
-      <h2>Ações corretivas</h2>
-
-      <div class="grid">
-
-        <div>
-          <div class="muted small">
-            Abertas
-          </div>
-
-          <div class="stat">
-            ${openProblems}
-          </div>
-        </div>
-
-        <div>
-          <div class="muted small">
-            Em tratamento
-          </div>
-
-          <div class="stat">
-            ${treatmentProblems}
-          </div>
-        </div>
-
-        <div>
-          <div class="muted small">
-            Resolvidas
-          </div>
-
-          <div class="stat">
-            ${resolvedProblems}
-          </div>
-        </div>
-
-        <div>
-          <div class="muted small">
-            Atrasadas
-          </div>
-
-          <div class="stat">
-            ${overdueProblems}
-          </div>
-        </div>
-
-      </div>
-
-      ${
-        overdueProblems
-        ?
-        `
-          <div class="alert" style="margin-top:15px">
-            Este estabelecimento possui
-            <strong>${overdueProblems}</strong>
-            ação(ões) corretiva(s) atrasada(s).
-          </div>
-        `
-        :
-        `
-          <div class="alert" style="margin-top:15px;background:#f0fdf4;border-color:#bbf7d0;color:#166534">
-            Não existem ações corretivas atrasadas.
-          </div>
-        `
-      }
-
-    </div>
-
-    <!-- ÚLTIMA INSPEÇÃO -->
-    <div class="card" style="margin-top:15px">
-
-      <h2>Última inspeção</h2>
-
-      ${
-        lastInspection
-        ?
-        `
-          <p>
-            <strong>Data:</strong>
-            ${formatDate(
-              lastInspection.date
-            )}
-          </p>
-
-          <p>
-            <strong>Conformidade:</strong>
-            ${Number(
-              lastInspection.score || 0
-            )}%
-          </p>
-
-          <p>
-            <strong>Classificação:</strong>
-            ${esc(
-              lastInspection.classification ||
-              "—"
-            )}
-          </p>
-
-          <button
-            class="btn btn-primary btn-small"
-            onclick="generateReportForInspection('${lastInspection.id}')">
-            Ver relatório da inspeção
-          </button>
-        `
-        :
-        `
-          <div class="empty">
-            Este estabelecimento ainda não possui inspeções.
-
-            <br><br>
-
-            <button
-              class="btn btn-primary"
-              onclick="startInspectionFor('${est.id}')">
-              Fazer primeira inspeção
-            </button>
-          </div>
-        `
-      }
-
-    </div>
-
-    <!-- EVOLUÇÃO -->
-    <div class="card" style="margin-top:15px">
-
-      <h2>Evolução da conformidade</h2>
-
-      ${
-        inspections.length
-        ?
-        `
-          ${
-            inspections
-              .slice()
-              .sort(
-                (a,b) =>
-                  String(a.date)
-                  .localeCompare(
-                    String(b.date)
-                  )
-              )
-              .map((i,index) => `
-
-                <div style="margin-bottom:12px">
-
-                  <div
-                    style="display:flex;justify-content:space-between">
-
-                    <span>
-                      Inspeção ${index+1}
-                      —
-                      ${formatDate(i.date)}
-                    </span>
-
-                    <strong>
-                      ${Number(
-                        i.score || 0
-                      )}%
-                    </strong>
-
-                  </div>
-
-                  <div class="progress">
-
-                    <div
-                      class="progress-bar"
-                      style="width:${Math.min(
-                        Number(i.score || 0),
-                        100
-                      )}%">
-                    </div>
-
-                  </div>
-
-                </div>
-
-              `).join("")
-          }
-        `
-        :
-        '<div class="empty">Ainda não existem dados de evolução.</div>'
-      }
-
-    </div>
-
-    <!-- HISTÓRICO INSPEÇÕES -->
-    <div class="card" style="margin-top:15px">
-
-      <h2>Histórico de inspeções</h2>
-
-      ${
-        inspections.length
-        ?
-        `
-          <div class="table-wrap">
-
-            <table>
-
-              <thead>
-                <tr>
-                  <th>Data</th>
-                  <th>Conformidade</th>
-                  <th>Classificação</th>
-                  <th>Ação</th>
-                </tr>
-              </thead>
-
-              <tbody>
-
-                ${
-                  inspections
-                    .slice()
-                    .sort(
-                      (a,b) =>
-                        String(b.date)
-                        .localeCompare(
-                          String(a.date)
-                        )
-                    )
-                    .map(i => `
-
-                      <tr>
-
-                        <td>
-                          ${formatDate(i.date)}
-                        </td>
-
-                        <td>
-                          ${Number(
-                            i.score || 0
-                          )}%
-                        </td>
-
-                        <td>
-                          ${esc(
-                            i.classification || "—"
-                          )}
-                        </td>
-
-                        <td>
-
-                          <button
-                            class="btn btn-primary btn-small"
-                            onclick="generateReportForInspection('${i.id}')">
-                            Relatório
-                          </button>
-
-                        </td>
-
-                      </tr>
-
-                    `).join("")
-                }
-
-              </tbody>
-
-            </table>
-
-          </div>
-        `
-        :
-        '<div class="empty">Sem inspeções.</div>'
-      }
-
-    </div>
-
-    <!-- AÇÕES CORRETIVAS -->
-    <div class="card" style="margin-top:15px">
-
-      <h2>
-        Não conformidades e ações corretivas
-      </h2>
-
-      ${
-        problems.length
-        ?
-        `
-          <div class="table-wrap">
-
-            <table>
-
-              <thead>
-
-                <tr>
-                  <th>Data</th>
-                  <th>Problema</th>
-                  <th>Severidade</th>
-                  <th>Responsável</th>
-                  <th>Prazo</th>
-                  <th>Status</th>
-                  <th>Resolução</th>
-                  <th>Ação corretiva</th>
-                  <th>Ação</th>
-                </tr>
-
-              </thead>
-
-              <tbody>
-
-                ${
-                  problems
-                    .slice()
-                    .sort(
-                      (a,b) =>
-                        String(b.date)
-                        .localeCompare(
-                          String(a.date)
-                        )
-                    )
-                    .map(p => {
-
-                      const overdue =
-                        isProblemOverdue(p);
-
-                      return `
-
-                        <tr class="${
-                          overdue ? "overdue" : ""
-                        }">
-
-                          <td>
-                            ${formatDate(p.date)}
-                          </td>
-
-                          <td>
-                            ${esc(
-                              p.title ||
-                              p.description ||
-                              "—"
-                            )}
-                          </td>
-
-                          <td>
-                            ${esc(
-                              p.severity || "—"
-                            )}
-                          </td>
-
-                          <td>
-                            ${esc(
-                              p.responsible || "—"
-                            )}
-                          </td>
-
-                          <td>
-
-                            ${
-                              p.deadline
-                              ? formatDate(
-                                  p.deadline
-                                )
-                              : "—"
-                            }
-
-                            ${
-                              overdue
-                              ?
-                              `
-                                <br>
-                                <span class="badge red">
-                                  Atrasado
-                                </span>
-                              `
-                              :
-                              ""
-                            }
-
-                          </td>
-
-                          <td>
-
-                            <span
-                              class="badge ${
-                                getProblemStatusClassFull(p)
-                              }">
-
-                              ${esc(
-                                getProblemStatusLabel(p)
-                              )}
-
-                            </span>
-
-                          </td>
-
-                          <td>
-                            ${
-                              p.resolutionDate
-                              ? formatDate(
-                                  p.resolutionDate
-                                )
-                              : "—"
-                            }
-                          </td>
-
-                          <td>
-                            ${esc(
-                              p.action || "—"
-                            )}
-                          </td>
-
-                          <td>
-
-                            <div class="actions">
-
-                              <button
-                                class="btn btn-secondary btn-small"
-                                onclick="changeProblemStatus('${p.id}')">
-                                Status
-                              </button>
-
-                              <button
-                                class="btn btn-primary btn-small"
-                                onclick="editProblem('${p.id}')">
-                                Editar
-                              </button>
-
-                            </div>
-
-                          </td>
-
-                        </tr>
-
-                      `;
-
-                    }).join("")
-                }
-
-              </tbody>
-
-            </table>
-
-          </div>
-        `
-        :
-        '<div class="empty">Nenhuma não conformidade registada.</div>'
-      }
-
-    </div>
-
-    <!-- TEMPERATURAS -->
-    <div class="card" style="margin-top:15px">
-
-      <h2>Histórico de temperaturas</h2>
-
-      ${
-        temps.length
-        ?
-        `
-          <div class="table-wrap">
-
-            <table>
-
-              <thead>
-
-                <tr>
-                  <th>Data</th>
-                  <th>Equipamento/alimento</th>
-                  <th>Temperatura</th>
-                  <th>Avaliação</th>
-                </tr>
-
-              </thead>
-
-              <tbody>
-
-                ${
-                  temps
-                    .slice()
-                    .sort(
-                      (a,b) =>
-                        String(b.date)
-                        .localeCompare(
-                          String(a.date)
-                        )
-                    )
-                    .map(t => {
-
-                      const ev =
-                        evaluateTemperature(
-                          Number(t.value)
-                        );
-
-                      return `
-
-                        <tr>
-
-                          <td>
-                            ${formatDate(t.date)}
-                          </td>
-
-                          <td>
-                            ${esc(
-                              t.item || "—"
-                            )}
-                          </td>
-
-                          <td>
-                            ${esc(t.value)} °C
-                          </td>
-
-                          <td>
-
-                            <span class="badge ${ev.cls}">
-                              ${esc(
-                                t.evaluation ||
-                                ev.label
-                              )}
-                            </span>
-
-                          </td>
-
-                        </tr>
-
-                      `;
-
-                    }).join("")
-                }
-
-              </tbody>
-
-            </table>
-
-          </div>
-        `
-        :
-        '<div class="empty">Nenhum registo de temperatura.</div>'
-      }
-
-    </div>
-
-    <!-- EVIDÊNCIAS -->
-    <div class="card" style="margin-top:15px">
-
-      <h2>Evidências</h2>
-
-      ${
-        evidences.length
-        ?
-        `
-          <div class="photo-grid">
-
-            ${
-              evidences.map(e => `
-
-                <div>
-
-                  ${
-                    e.image
-                    ?
-                    `<img
-                      src="${e.image}"
-                      alt="Evidência">`
-                    :
-                    ""
-                  }
-
-                  <div class="small">
-                    ${esc(
-                      e.description || ""
-                    )}
-                  </div>
-
-                  <div class="small muted">
-                    ${formatDate(e.date)}
-                  </div>
-
-                </div>
-
-              `).join("")
-            }
-
-          </div>
-        `
-        :
-        '<div class="empty">Nenhuma evidência registada.</div>'
-      }
-
-    </div>
-  `;
-
-  /*
-    Garante associação definitiva
-    das inspeções antigas.
-  */
-
-  inspections.forEach(i => {
-
-    if(!i.establishmentId){
-      i.establishmentId=est.id;
-    }
-  });
-
-  problems.forEach(p => {
-
-    if(!p.establishmentId){
-      p.establishmentId=est.id;
-    }
-
-    if(!p.responsible){
-      p.responsible=est.responsible || "";
-    }
-
-    if(p.status === "Resolvido" &&
-       !p.resolutionDate){
-
-      p.resolutionDate=today();
-    }
-  });
-
-  saveDB();
+  `).join("");
 }
 
-/* =========================================================
-   IR PARA PROBLEMAS DE UM ESTABELECIMENTO
-========================================================= */
-
-function goToProblemsFor(id){
-
-  go("problemas");
-
-  setTimeout(() => {
-
-    const select =
-      document.getElementById(
-        "problemEstablishment"
-      );
-
-    if(select){
-      select.value=id;
-    }
-
-  },50);
-}
-
-/* =========================================================
-   RELATÓRIO PROFISSIONAL
-========================================================= */
+/* ==============================
+   RELATÓRIOS
+============================== */
 
 function generateReportForEstablishment(id){
+  const e=db.establishments.find(x=>x.id===id);
+  if(!e)return;
 
-  const est =
-    db.establishments.find(
-      e => e.id === id
-    );
+  const inspections=getInspectionsForEstablishment(e)
+    .sort((a,b)=>String(b.date).localeCompare(String(a.date)));
 
-  if(!est) return;
+  const latest=inspections[0];
 
-  const inspections =
-    getInspectionsForEstablishment(est);
+  if(latest){
+    generateReportForInspection(latest.id);
+  }else{
+    const problems=getProblemsForEstablishment(e);
+    const temps=getTempsForEstablishment(e);
+    const evidence=getEvidenceForEstablishment(e);
+    const risk=calculateRisk(e);
 
-  if(!inspections.length){
+    document.getElementById("reportContent").innerHTML=
+      generateReportHTML(e,null,problems,temps,evidence,risk);
 
-    alert(
-      "Este estabelecimento ainda não possui inspeções.\n\n"+
-      "Faça uma inspeção primeiro para gerar o relatório."
-    );
-
-    return;
+    document.getElementById("reportModal").classList.add("open");
   }
-
-  const latest =
-    inspections
-      .slice()
-      .sort(
-        (a,b) =>
-          String(b.date)
-          .localeCompare(
-            String(a.date)
-          )
-      )[0];
-
-  generateReportForInspection(
-    latest.id
-  );
 }
 
-function generateReportForInspection(
-  inspectionId
-){
+function generateReportForInspection(id){
+  const inspection=db.inspections.find(i=>i.id===id);
+  if(!inspection)return;
 
-  const inspection =
-    db.inspections.find(
-      i => i.id === inspectionId
+  const e=db.establishments.find(x=>x.id===inspection.establishmentId)||
+    db.establishments.find(x=>sameName(x.name,inspection.establishmentName));
+
+  const establishment=e||{
+    id:"",
+    name:inspection.establishmentName
+  };
+
+  const problems=getProblemsForEstablishment(establishment)
+    .filter(p=>!p.inspectionId||p.inspectionId===inspection.id);
+
+  const temps=getTempsForEstablishment(establishment);
+  const evidence=getEvidenceForEstablishment(establishment);
+  const risk=calculateRisk(establishment);
+
+  document.getElementById("reportContent").innerHTML=
+    generateReportHTML(
+      establishment,
+      inspection,
+      problems,
+      temps,
+      evidence,
+      risk
     );
 
-  if(!inspection){
+  document.getElementById("reportModal").classList.add("open");
+}
 
-    alert(
-      "Inspeção não encontrada."
-    );
+function generateReportHTML(e,inspection,problems,temps,evidence,risk){
+  const avg=inspection?inspection.score:0;
 
-    return;
-  }
-
-  let est =
-    db.establishments.find(
-      e => e.id === inspection.establishmentId
-    );
-
-  if(!est){
-
-    const name =
-      inspection.establishmentName ||
-      inspection.name ||
-      inspection.establishment ||
-      "";
-
-    est =
-      db.establishments.find(
-        e => sameName(e.name,name)
-      );
-  }
-
-  const establishmentName =
-    est?.name ||
-    inspection.establishmentName ||
-    inspection.name ||
-    "Estabelecimento";
-
-  const problems =
-    est
-    ? getProblemsForEstablishment(est)
-    : db.problems.filter(
-        p =>
-          sameName(
-            p.establishmentName ||
-            p.establishment ||
-            "",
-            establishmentName
-          )
-      );
-
-  const temps =
-    est
-    ? getTempsForEstablishment(est)
-    : [];
-
-  const evidences =
-    est
-    ? getEvidenceForEstablishment(est)
-    : [];
-
-  const risk =
-    est
-    ? calculateRisk(est)
-    : {
-        label:"Não avaliado",
-        cls:"gray"
-      };
-
-  const nonconformities =
-    (inspection.checklist || [])
-      .filter(
-        item => !item.conform
-      );
-
-  const score =
-    Number(
-      inspection.score || 0
-    );
-
-  const classification =
-    inspection.classification ||
-    (
-      score >= 80
-      ? "Conforme"
-      : score >= 60
-      ? "Parcialmente conforme"
-      : "Não conforme"
-    );
-
-  const openActions =
-    problems.filter(
-      p => p.status !== "Resolvido"
-    ).length;
-
-  const treatmentActions =
-    problems.filter(
-      p => p.status === "Em tratamento"
-    ).length;
-
-  const resolvedActions =
-    problems.filter(
-      p => p.status === "Resolvido"
-    ).length;
-
-  const overdueActions =
-    problems.filter(
-      p => isProblemOverdue(p)
-    ).length;
-
-  document.getElementById(
-    "reportContent"
-  ).innerHTML=`
-
-    <div class="report-header">
-
+  return `
+    <div class="report-section">
       <h1>FoodSafe Moz</h1>
-
-      <h2>
-        Relatório Profissional de Inspeção
-      </h2>
-
-      <p>
-        <strong>
-          Alimentos seguros, famílias protegidas
-        </strong>
-      </p>
-
-      <p class="muted">
-        Documento gerado pelo sistema FoodSafe Moz.
-      </p>
-
+      <h2>Relatório de Segurança Alimentar</h2>
+      <p>Alimentos seguros, famílias protegidas</p>
     </div>
 
-    <!-- 1 -->
     <div class="report-section">
-
-      <h2>
-        1. Identificação do estabelecimento
-      </h2>
-
-      <table class="report-table">
-
-        <tr>
-          <th>Estabelecimento</th>
-          <td>
-            ${esc(establishmentName)}
-          </td>
-        </tr>
-
-        <tr>
-          <th>Tipo</th>
-          <td>
-            ${esc(est?.type || "—")}
-          </td>
-        </tr>
-
-        <tr>
-          <th>Endereço</th>
-          <td>
-            ${esc(est?.address || "—")}
-          </td>
-        </tr>
-
-        <tr>
-          <th>Bairro</th>
-          <td>
-            ${esc(est?.bairro || "—")}
-          </td>
-        </tr>
-
-        <tr>
-          <th>Distrito</th>
-          <td>
-            ${esc(est?.distrito || "—")}
-          </td>
-        </tr>
-
-        <tr>
-          <th>Telefone</th>
-          <td>
-            ${esc(est?.phone || "—")}
-          </td>
-        </tr>
-
-        <tr>
-          <th>Responsável</th>
-          <td>
-            ${esc(
-              inspection.responsible ||
-              est?.responsible ||
-              "—"
-            )}
-          </td>
-        </tr>
-
-      </table>
-
+      <h3>1. Identificação do estabelecimento</h3>
+      <p><strong>Nome:</strong> ${esc(e.name)}</p>
+      <p><strong>Tipo:</strong> ${esc(e.type||"—")}</p>
+      <p><strong>Endereço:</strong> ${esc(e.address||"—")}</p>
+      <p><strong>Bairro:</strong> ${esc(e.bairro||"—")}</p>
+      <p><strong>Distrito:</strong> ${esc(e.distrito||"—")}</p>
+      <p><strong>Responsável:</strong> ${esc(e.responsible||"—")}</p>
+      <p><strong>Telefone:</strong> ${esc(e.phone||"—")}</p>
     </div>
 
-    <!-- 2 -->
     <div class="report-section">
-
-      <h2>
-        2. Dados da inspeção
-      </h2>
-
-      <table class="report-table">
-
-        <tr>
-          <th>Data</th>
-          <td>
-            ${formatDate(inspection.date)}
-          </td>
-        </tr>
-
-        <tr>
-          <th>Conformidade</th>
-          <td>
-            ${score}%
-          </td>
-        </tr>
-
-        <tr>
-          <th>Classificação</th>
-          <td>
-            ${esc(classification)}
-          </td>
-        </tr>
-
-        <tr>
-          <th>Nível de risco atual</th>
-          <td>
-            ${esc(risk.label)}
-          </td>
-        </tr>
-
-      </table>
-
-    </div>
-
-    <!-- 3 -->
-    <div class="report-section">
-
-      <h2>
-        3. Checklist de inspeção
-      </h2>
-
-      <table class="report-table">
-
-        <thead>
-
-          <tr>
-            <th>#</th>
-            <th>Item avaliado</th>
-            <th>Resultado</th>
-          </tr>
-
-        </thead>
-
-        <tbody>
-
-          ${
-            (inspection.checklist || [])
-              .map(
-                (item,index) => `
-
-                  <tr>
-
-                    <td>
-                      ${index+1}
-                    </td>
-
-                    <td>
-                      ${esc(item.item)}
-                    </td>
-
-                    <td>
-                      ${
-                        item.conform
-                        ? "Conforme"
-                        : "Não conforme"
-                      }
-                    </td>
-
-                  </tr>
-
-                `
-              )
-              .join("")
-          }
-
-        </tbody>
-
-      </table>
-
-    </div>
-
-    <!-- 4 -->
-    <div class="report-section">
-
-      <h2>
-        4. Não conformidades
-      </h2>
-
+      <h3>2. Dados da inspeção</h3>
       ${
-        nonconformities.length
-        ?
+        inspection?
         `
-          <table class="report-table">
-
-            <thead>
-              <tr>
-                <th>Item</th>
-                <th>Situação</th>
-              </tr>
-            </thead>
-
-            <tbody>
-
-              ${
-                nonconformities.map(
-                  item => `
-
-                    <tr>
-
-                      <td>
-                        ${esc(item.item)}
-                      </td>
-
-                      <td>
-                        Não conforme
-                      </td>
-
-                    </tr>
-
-                  `
-                ).join("")
-              }
-
-            </tbody>
-
-          </table>
+        <p><strong>Data:</strong> ${formatDate(inspection.date)}</p>
+        <p><strong>Responsável pela inspeção:</strong> ${esc(inspection.responsible||"—")}</p>
+        <p><strong>Conformidade:</strong> ${inspection.score}%</p>
+        <p><strong>Classificação:</strong> ${esc(inspection.classification)}</p>
         `
         :
-        "<p>Nenhuma não conformidade identificada nesta inspeção.</p>"
+        `<p>Não existe inspeção registada.</p>`
       }
 
+      <p>
+        <strong>Nível de risco:</strong>
+        <span class="badge ${risk.cls}">${risk.label}</span>
+      </p>
     </div>
 
-    <!-- 5 -->
-    <div class="report-section">
+    ${
+      inspection?
+      `
+      <div class="report-section">
+        <h3>3. Checklist</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Resultado</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${inspection.checklist.map(c=>`
+              <tr>
+                <td>${esc(c.item)}</td>
+                <td>
+                  <span class="badge ${c.checked?"green":"red"}">
+                    ${c.checked?"Conforme":"Não conforme"}
+                  </span>
+                </td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      </div>
+      `
+      :""
+    }
 
-      <h2>
-        5. Ações corretivas
-      </h2>
+    <div class="report-section">
+      <h3>4. Não conformidades e ações corretivas</h3>
+
+      ${
+        problems.length?
+        `<table>
+          <thead>
+            <tr>
+              <th>Problema</th>
+              <th>Severidade</th>
+              <th>Responsável</th>
+              <th>Prazo</th>
+              <th>Estado</th>
+              <th>Resolução</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${problems.map(p=>`
+              <tr>
+                <td>${esc(p.title)}</td>
+                <td>${esc(p.severity)}</td>
+                <td>${esc(p.responsible||"—")}</td>
+                <td>${formatDate(p.deadline)}</td>
+                <td>${esc(getProblemStatusLabel(p))}</td>
+                <td>${formatDate(p.resolutionDate)}</td>
+                <td>${esc(p.action||"—")}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>`
+        :
+        "<p>Nenhuma não conformidade registada.</p>"
+      }
+    </div>
+
+    <div class="report-section">
+      <h3>5. Controlo de temperaturas</h3>
+
+      ${
+        temps.length?
+        `<table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Item</th>
+              <th>Temperatura</th>
+              <th>Avaliação</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${temps.map(t=>`
+              <tr>
+                <td>${formatDate(t.date)}</td>
+                <td>${esc(t.item)}</td>
+                <td>${t.value} °C</td>
+                <td>${esc(t.evaluation)}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>`
+        :
+        "<p>Nenhum registo de temperatura.</p>"
+      }
+    </div>
+
+    <div class="report-section">
+      <h3>6. Evidências</h3>
+
+      ${
+        evidence.length?
+        `<div class="photo-grid">
+          ${evidence.map(x=>`
+            <div>
+              <img src="${x.photo}">
+              <p>${esc(x.description)}</p>
+              <small>${formatDate(x.date)}</small>
+            </div>
+          `).join("")}
+        </div>`
+        :
+        "<p>Nenhuma evidência fotográfica.</p>"
+      }
+    </div>
+
+    <div class="report-section">
+      <h3>7. Observações</h3>
+      <p>${esc(inspection?inspection.observation:"—")}</p>
+    </div>
+
+    <div class="report-section">
+      <h3>8. Conclusão</h3>
+      <p>
+        O presente relatório foi gerado pelo sistema FoodSafe Moz
+        com base nos registos disponíveis no momento da emissão.
+      </p>
+      ${
+        inspection?
+        `<p>
+          A inspeção apresentou uma conformidade de
+          <strong>${avg}%</strong>,
+          classificada como
+          <strong>${esc(inspection.classification)}</strong>.
+        </p>`
+        :""
+      }
+    </div>
+
+    <div class="report-section">
+      <p><strong>Relatório gerado em:</strong> ${formatDate(today())}</p>
+
+      <br><br>
 
       <div class="grid">
-
         <div>
-          <strong>Abertas</strong>
-          <div class="stat">
-            ${openActions}
-          </div>
+          ______________________________<br>
+          Responsável pela inspeção
         </div>
-
         <div>
-          <strong>Em tratamento</strong>
-          <div class="stat">
-            ${treatmentActions}
-          </div>
+          ______________________________<br>
+          Responsável do estabelecimento
         </div>
-
-        <div>
-          <strong>Resolvidas</strong>
-          <div class="stat">
-            ${resolvedActions}
-          </div>
-        </div>
-
-        <div>
-          <strong>Atrasadas</strong>
-          <div class="stat">
-            ${overdueActions}
-          </div>
-        </div>
-
       </div>
-
-      ${
-        problems.length
-        ?
-        `
-          <table
-            class="report-table"
-            style="margin-top:15px">
-
-            <thead>
-
-              <tr>
-                <th>Problema</th>
-                <th>Severidade</th>
-                <th>Responsável</th>
-                <th>Prazo</th>
-                <th>Status</th>
-                <th>Data de resolução</th>
-                <th>Ação corretiva</th>
-              </tr>
-
-            </thead>
-
-            <tbody>
-
-              ${
-                problems.map(p => `
-
-                  <tr>
-
-                    <td>
-                      ${esc(
-                        p.title ||
-                        p.description ||
-                        "—"
-                      )}
-                    </td>
-
-                    <td>
-                      ${esc(
-                        p.severity || "—"
-                      )}
-                    </td>
-
-                    <td>
-                      ${esc(
-                        p.responsible || "—"
-                      )}
-                    </td>
-
-                    <td>
-                      ${
-                        p.deadline
-                        ? formatDate(
-                            p.deadline
-                          )
-                        : "—"
-                      }
-
-                      ${
-                        isProblemOverdue(p)
-                        ?
-                        `
-                          <br>
-                          <strong>
-                            Atrasado
-                          </strong>
-                        `
-                        :
-                        ""
-                      }
-                    </td>
-
-                    <td>
-                      ${esc(
-                        getProblemStatusLabel(p)
-                      )}
-                    </td>
-
-                    <td>
-                      ${
-                        p.resolutionDate
-                        ? formatDate(
-                            p.resolutionDate
-                          )
-                        : "—"
-                      }
-                    </td>
-
-                    <td>
-                      ${esc(
-                        p.action || "—"
-                      )}
-                    </td>
-
-                  </tr>
-
-                `).join("")
-              }
-
-            </tbody>
-
-          </table>
-        `
-        :
-        "<p>Nenhuma ação corretiva registada.</p>"
-      }
-
     </div>
-
-    <!-- 6 -->
-    <div class="report-section">
-
-      <h2>
-        6. Controlo de temperatura
-      </h2>
-
-      ${
-        temps.length
-        ?
-        `
-          <table class="report-table">
-
-            <thead>
-
-              <tr>
-                <th>Data</th>
-                <th>Equipamento/alimento</th>
-                <th>Temperatura</th>
-                <th>Avaliação</th>
-              </tr>
-
-            </thead>
-
-            <tbody>
-
-              ${
-                temps.map(t => `
-
-                  <tr>
-
-                    <td>
-                      ${formatDate(t.date)}
-                    </td>
-
-                    <td>
-                      ${esc(
-                        t.item || "—"
-                      )}
-                    </td>
-
-                    <td>
-                      ${esc(t.value)} °C
-                    </td>
-
-                    <td>
-                      ${esc(
-                        t.evaluation || "—"
-                      )}
-                    </td>
-
-                  </tr>
-
-                `).join("")
-              }
-
-            </tbody>
-
-          </table>
-        `
-        :
-        "<p>Nenhum registo de temperatura associado.</p>"
-      }
-
-    </div>
-
-    <!-- 7 -->
-    <div class="report-section">
-
-      <h2>
-        7. Evidências
-      </h2>
-
-      ${
-        evidences.length
-        ?
-        `
-          <div class="photo-grid">
-
-            ${
-              evidences.map(e => `
-
-                <div>
-
-                  ${
-                    e.image
-                    ?
-                    `<img
-                      src="${e.image}"
-                      alt="Evidência">`
-                    :
-                    ""
-                  }
-
-                  <p class="small">
-                    ${esc(
-                      e.description || ""
-                    )}
-                  </p>
-
-                  <p class="small muted">
-                    ${formatDate(e.date)}
-                  </p>
-
-                </div>
-
-              `).join("")
-            }
-
-          </div>
-        `
-        :
-        "<p>Nenhuma evidência associada.</p>"
-      }
-
-    </div>
-
-    <!-- 8 -->
-    <div class="report-section">
-
-      <h2>
-        8. Observações
-      </h2>
-
-      <p>
-        ${esc(
-          inspection.observation ||
-          "Nenhuma observação registada."
-        )}
-      </p>
-
-    </div>
-
-    <!-- 9 -->
-    <div class="report-section">
-
-      <h2>
-        9. Conclusão
-      </h2>
-
-      <p>
-
-        A inspeção realizada em
-        <strong>
-          ${formatDate(inspection.date)}
-        </strong>
-
-        apresentou um nível de conformidade de
-
-        <strong>
-          ${score}%
-        </strong>
-
-        com classificação
-
-        <strong>
-          ${esc(classification)}
-        </strong>.
-
-      </p>
-
-      <p>
-
-        O nível de risco atual calculado pelo sistema é:
-
-        <strong>
-          ${esc(risk.label)}
-        </strong>.
-
-      </p>
-
-      <p>
-
-        As não conformidades identificadas devem ser
-        acompanhadas através das respetivas ações
-        corretivas, responsáveis e prazos definidos.
-
-      </p>
-
-    </div>
-
-    <!-- 10 -->
-    <div class="report-section">
-
-      <h2>
-        10. Registo
-      </h2>
-
-      <p>
-        Relatório gerado em:
-        ${new Date().toLocaleString("pt-PT")}
-      </p>
-
-    </div>
-
-    <div class="signature">
-
-      <div>
-        Responsável pela inspeção
-      </div>
-
-      <div>
-        Responsável do estabelecimento
-      </div>
-
-    </div>
-
   `;
-
-  document.getElementById(
-    "reportModal"
-  ).classList.add("open");
 }
 
 function closeReport(){
-
-  document.getElementById(
-    "reportModal"
-  ).classList.remove("open");
+  document.getElementById("reportModal").classList.remove("open");
 }
 
-/* =========================================================
-   HOME
-========================================================= */
-
-function renderHome(){
-
-  document.getElementById(
-    "homeEstablishments"
-  ).textContent =
-    db.establishments.length;
-
-  document.getElementById(
-    "homeInspections"
-  ).textContent =
-    db.inspections.length;
-
-  document.getElementById(
-    "homeProblems"
-  ).textContent =
-    db.problems.filter(
-      p => p.status !== "Resolvido"
-    ).length;
-
-  document.getElementById(
-    "homeOverdue"
-  ).textContent =
-    getOverdueProblems().length;
-}
-
-/* =========================================================
+/* ==============================
    RENDER GERAL
-========================================================= */
+============================== */
 
 function renderAll(){
-
   fillEstablishmentSelects();
-
   renderHome();
-
   renderTemperatureTable();
-
   renderProblems();
-
   renderEvidence();
-
   renderDashboard();
-
   renderHistory();
-
   renderEstablishments();
 
-  const checklist =
-    document.getElementById(
-      "checklist"
-    );
+  const checklist=document.getElementById("checklist");
 
-  if(
-    checklist &&
-    !checklist.children.length
-  ){
+  if(checklist && !checklist.children.length){
     buildChecklist();
   }
+
+  if(currentProfileId){
+    const profile=document.getElementById("page-perfil");
+    if(profile && profile.classList.contains("active")){
+      renderProfile(currentProfileId);
+    }
+  }
 }
 
-/* =========================================================
-   ABRIR APP
-========================================================= */
-
-function openApp(){
-
-  document.getElementById(
-    "loginScreen"
-  ).style.display="none";
-
-  document.getElementById(
-    "app"
-  ).classList.add("active");
-
+document.addEventListener("DOMContentLoaded",()=>{
+  ensureUsers();
   loadDB();
 
-  const dateInput =
-    document.getElementById(
-      "inspectionDate"
-    );
+  document.getElementById("inspectionDate").value=today();
 
-  if(
-    dateInput &&
-    !dateInput.value
-  ){
-    dateInput.value=today();
+  if(!document.getElementById("checklist").children.length){
+    buildChecklist();
   }
 
-  buildChecklist();
+  if(localStorage.getItem(SESSION_KEY)){
+    openApp();
+  }
+});
 
+window.addEventListener("load",()=>{
+  loadDB();
   renderAll();
-
-  go("home");
-}
-
-/* =========================================================
-   EVENTOS
-========================================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  function(){
-
-    ensureUsers();
-
-    loadDB();
-
-    document
-      .getElementById(
-        "inspectionEstablishment"
-      )
-      .addEventListener(
-        "change",
-        syncInspectionEstablishment
-      );
-
-    const session =
-      localStorage.getItem(
-        SESSION_KEY
-      );
-
-    if(session){
-      openApp();
-    }
-
-    document.getElementById(
-      "inspectionDate"
-    ).value=today();
-
-  }
-);
-
-/* =========================================================
-   MIGRAÇÃO FINAL AO CARREGAR
-========================================================= */
-
-window.addEventListener(
-  "load",
-  function(){
-
-    loadDB();
-
-    let changed=false;
-
-    db.inspections.forEach(ins => {
-
-      if(ins.establishmentId) return;
-
-      const name =
-        ins.establishmentName ||
-        ins.name ||
-        ins.establishment ||
-        ins.nomeEstabelecimento ||
-        "";
-
-      const est =
-        db.establishments.find(
-          e => sameName(e.name,name)
-        );
-
-      if(est){
-
-        ins.establishmentId=est.id;
-
-        changed=true;
-      }
-    });
-
-    db.problems.forEach(p => {
-
-      if(!p.status){
-
-        p.status="Aberto";
-
-        changed=true;
-      }
-
-      if(
-        p.status === "Resolvido" &&
-        !p.resolutionDate
-      ){
-
-        p.resolutionDate=p.date || today();
-
-        changed=true;
-      }
-
-      if(
-        p.responsible === undefined
-      ){
-
-        p.responsible="";
-
-        changed=true;
-      }
-
-      if(
-        p.deadline === undefined
-      ){
-
-        p.deadline="";
-
-        changed=true;
-      }
-
-      if(
-        p.resolutionDate === undefined
-      ){
-
-        p.resolutionDate="";
-
-        changed=true;
-      }
-
-      if(!p.establishmentId){
-
-        const name =
-          p.establishmentName ||
-          p.establishment ||
-          p.name ||
-          "";
-
-        const est =
-          db.establishments.find(
-            e => sameName(e.name,name)
-          );
-
-        if(est){
-
-          p.establishmentId=est.id;
-
-          changed=true;
-        }
-      }
-    });
-
-    if(changed){
-      saveDB();
-    }
-
-  }
-);
+});
 </script>
 
 </body>
