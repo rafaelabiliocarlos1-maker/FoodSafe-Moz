@@ -34,17 +34,8 @@ button{cursor:pointer}
   padding:28px;
   box-shadow:0 20px 50px rgba(0,0,0,.2)
 }
-.logo{
-  text-align:center;
-  font-size:28px;
-  font-weight:800;
-  color:#0f766e
-}
-.subtitle{
-  text-align:center;
-  color:#64748b;
-  margin:6px 0 25px
-}
+.logo{text-align:center;font-size:28px;font-weight:800;color:#0f766e}
+.subtitle{text-align:center;color:#64748b;margin:6px 0 25px}
 
 input,select,textarea{
   width:100%;
@@ -54,18 +45,11 @@ input,select,textarea{
   background:#fff;
   outline:none
 }
-input:focus,select:focus,textarea:focus{
-  border-color:#0f766e
-}
+input:focus,select:focus,textarea:focus{border-color:#0f766e}
 textarea{min-height:100px;resize:vertical}
 
 .field{margin-bottom:14px}
-.field label{
-  display:block;
-  font-size:14px;
-  font-weight:700;
-  margin-bottom:6px
-}
+.field label{display:block;font-size:14px;font-weight:700;margin-bottom:6px}
 
 .btn{
   border:0;
@@ -80,11 +64,7 @@ textarea{min-height:100px;resize:vertical}
 .btn-success{background:#16a34a;color:#fff}
 .btn-small{padding:8px 11px;font-size:13px}
 
-.login-actions{
-  display:flex;
-  gap:10px;
-  margin-top:10px
-}
+.login-actions{display:flex;gap:10px;margin-top:10px}
 .login-actions button{flex:1}
 
 .app{display:none;min-height:100vh}
@@ -130,17 +110,9 @@ textarea{min-height:100px;resize:vertical}
   border-radius:9px;
   font-weight:700
 }
-.nav button.active{
-  background:#0f766e;
-  color:#fff
-}
+.nav button.active{background:#0f766e;color:#fff}
 
-.container{
-  width:100%;
-  max-width:1200px;
-  margin:auto;
-  padding:18px
-}
+.container{width:100%;max-width:1200px;margin:auto;padding:18px}
 .page{display:none}
 .page.active{display:block}
 
@@ -162,18 +134,9 @@ h3{margin:0 0 8px}
   box-shadow:0 2px 10px rgba(15,23,42,.06);
   border:1px solid #e7ecef
 }
-.stat{
-  font-size:30px;
-  font-weight:800;
-  color:#0f766e
-}
+.stat{font-size:30px;font-weight:800;color:#0f766e}
 
-.actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:12px
-}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 
 .badge{
   display:inline-block;
@@ -207,21 +170,14 @@ h3{margin:0 0 8px}
   border-radius:14px;
   border:1px solid #e5e7eb
 }
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:650px
-}
+table{width:100%;border-collapse:collapse;min-width:650px}
 th,td{
   padding:11px;
   border-bottom:1px solid #e5e7eb;
   text-align:left;
   vertical-align:top
 }
-th{
-  background:#f8fafc;
-  font-size:13px
-}
+th{background:#f8fafc;font-size:13px}
 
 .check-item{
   display:flex;
@@ -233,11 +189,7 @@ th{
   margin-bottom:8px;
   background:#fff
 }
-.check-item input{
-  width:20px;
-  height:20px;
-  flex:none
-}
+.check-item input{width:20px;height:20px;flex:none}
 
 .alert{
   padding:13px;
@@ -248,11 +200,7 @@ th{
   color:#9a3412
 }
 
-.empty{
-  padding:30px 15px;
-  text-align:center;
-  color:#64748b
-}
+.empty{padding:30px 15px;text-align:center;color:#64748b}
 
 .modal{
   position:fixed;
@@ -281,40 +229,19 @@ th{
   align-items:center;
   margin-bottom:15px
 }
-.close{
-  border:0;
-  background:#e5e7eb;
-  border-radius:8px;
-  padding:8px 12px
-}
+.close{border:0;background:#e5e7eb;border-radius:8px;padding:8px 12px}
 
-.report{
-  background:#fff;
-  color:#111827
-}
-.report-header{
-  border-bottom:3px solid #0f766e;
-  padding-bottom:14px;
-  margin-bottom:18px
-}
-.report-header h1{
-  color:#0f766e
-}
-.report-section{
-  margin:20px 0
-}
+.report{background:#fff;color:#111827}
+.report-header{border-bottom:3px solid #0f766e;padding-bottom:14px;margin-bottom:18px}
+.report-header h1{color:#0f766e}
+.report-section{margin:20px 0}
 .report-section h2{
   background:#f1f5f9;
   padding:9px;
   border-left:4px solid #0f766e
 }
-.report-table{
-  width:100%;
-  min-width:0
-}
-.report-table th,.report-table td{
-  border:1px solid #d1d5db
-}
+.report-table{width:100%;min-width:0}
+.report-table th,.report-table td{border:1px solid #d1d5db}
 .signature{
   margin-top:45px;
   display:grid;
@@ -337,6 +264,19 @@ th{
   height:150px;
   object-fit:cover;
   border-radius:10px
+}
+
+.action-box{
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+  border-radius:12px;
+  padding:12px;
+  margin-top:10px
+}
+
+.overdue{
+  border-left:5px solid #dc2626!important;
+  background:#fff7f7
 }
 
 @media print{
@@ -385,9 +325,7 @@ th{
         <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Palavra-passe">
       </div>
 
-      <button class="btn btn-primary" style="width:100%" onclick="login()">
-        Entrar
-      </button>
+      <button class="btn btn-primary" style="width:100%" onclick="login()">Entrar</button>
 
       <button class="btn btn-secondary" style="width:100%;margin-top:10px" onclick="showRecovery()">
         Recuperar acesso
@@ -398,9 +336,7 @@ th{
 
     <div id="recoveryForm" class="hidden">
       <h3>Recuperar acesso</h3>
-      <p class="muted small">
-        Introduza o e-mail associado à conta.
-      </p>
+      <p class="muted small">Introduza o e-mail associado à conta.</p>
 
       <div class="field">
         <label>E-mail</label>
@@ -474,8 +410,8 @@ th{
         </div>
 
         <div class="card">
-          <h3>Temperaturas</h3>
-          <div id="homeTemps" class="stat">0</div>
+          <h3>Ações atrasadas</h3>
+          <div id="homeOverdue" class="stat">0</div>
         </div>
       </div>
 
@@ -486,6 +422,8 @@ th{
           <li>Faça uma inspeção.</li>
           <li>Registe temperaturas.</li>
           <li>Registe problemas e ações corretivas.</li>
+          <li>Defina responsável e prazo para cada ação.</li>
+          <li>Acompanhe ações atrasadas.</li>
           <li>Adicione evidências.</li>
           <li>Consulte o perfil profissional e o relatório.</li>
         </ol>
@@ -566,9 +504,11 @@ th{
         <div style="margin-top:15px">
           <strong>Conformidade:</strong>
           <span id="inspectionScore">0%</span>
+
           <div class="progress">
             <div id="inspectionProgress" class="progress-bar" style="width:0%"></div>
           </div>
+
           <div id="inspectionClassification"></div>
         </div>
 
@@ -604,6 +544,16 @@ th{
         </div>
 
         <div class="field">
+          <label>Responsável pela ação corretiva</label>
+          <input id="problemResponsible" placeholder="Nome do responsável">
+        </div>
+
+        <div class="field">
+          <label>Prazo para correção</label>
+          <input id="problemDeadline" type="date">
+        </div>
+
+        <div class="field">
           <label>Ação corretiva</label>
           <textarea id="problemAction" placeholder="O que deve ser feito para corrigir?"></textarea>
         </div>
@@ -611,6 +561,32 @@ th{
         <button class="btn btn-primary" onclick="saveProblem()">
           Registar problema
         </button>
+      </div>
+
+      <div class="card" style="margin-top:15px">
+        <h2>Resumo das ações</h2>
+
+        <div class="grid">
+          <div>
+            <span class="muted small">Abertas</span>
+            <div id="problemOpenCount" class="stat">0</div>
+          </div>
+
+          <div>
+            <span class="muted small">Em tratamento</span>
+            <div id="problemTreatmentCount" class="stat">0</div>
+          </div>
+
+          <div>
+            <span class="muted small">Resolvidas</span>
+            <div id="problemResolvedCount" class="stat">0</div>
+          </div>
+
+          <div>
+            <span class="muted small">Atrasadas</span>
+            <div id="problemOverdueCount" class="stat">0</div>
+          </div>
+        </div>
       </div>
 
       <div class="card" style="margin-top:15px">
@@ -671,9 +647,19 @@ th{
         </div>
 
         <div class="card">
+          <h3>Ações atrasadas</h3>
+          <div id="dashOverdue" class="stat">0</div>
+        </div>
+
+        <div class="card">
           <h3>Conformidade média</h3>
           <div id="dashCompliance" class="stat">0%</div>
         </div>
+      </div>
+
+      <div class="card" style="margin-top:15px">
+        <h2>Estado das ações corretivas</h2>
+        <div id="dashboardActions"></div>
       </div>
     </section>
 
@@ -751,11 +737,18 @@ th{
 <!-- MODAL RELATÓRIO -->
 <div id="reportModal" class="modal">
   <div class="modal-box">
+
     <div class="modal-head no-print">
       <h2>Relatório Profissional</h2>
+
       <div class="actions">
-        <button class="btn btn-primary btn-small" onclick="window.print()">Imprimir / PDF</button>
-        <button class="close" onclick="closeReport()">Fechar</button>
+        <button class="btn btn-primary btn-small" onclick="window.print()">
+          Imprimir / PDF
+        </button>
+
+        <button class="close" onclick="closeReport()">
+          Fechar
+        </button>
       </div>
     </div>
 
@@ -767,7 +760,7 @@ th{
 "use strict";
 
 /* =========================================================
-   CONFIGURAÇÃO E DADOS
+   CONFIGURAÇÃO
 ========================================================= */
 
 const DATA_KEY = "foodsafemoz_v2";
@@ -802,7 +795,7 @@ const checklistItems = [
 ========================================================= */
 
 function uid(prefix="id"){
-  return prefix + "_" + Date.now() + "_" + Math.random().toString(36).slice(2,8);
+  return prefix+"_"+Date.now()+"_"+Math.random().toString(36).slice(2,8);
 }
 
 function esc(value){
@@ -820,8 +813,11 @@ function today(){
 
 function formatDate(date){
   if(!date) return "—";
-  const d = new Date(date + "T00:00:00");
+
+  const d = new Date(date+"T00:00:00");
+
   if(isNaN(d)) return esc(date);
+
   return d.toLocaleDateString("pt-PT");
 }
 
@@ -839,7 +835,7 @@ function sameName(a,b){
 }
 
 function saveDB(){
-  localStorage.setItem(DATA_KEY, JSON.stringify(db));
+  localStorage.setItem(DATA_KEY,JSON.stringify(db));
 }
 
 function getUsers(){
@@ -850,36 +846,209 @@ function getUsers(){
   }
 }
 
+function average(values){
+
+  const valid = values.filter(v => !isNaN(Number(v)));
+
+  if(!valid.length) return 0;
+
+  return valid.reduce((a,b)=>a+Number(b),0)/valid.length;
+}
+
 /* =========================================================
-   CARREGAR DADOS — SEM APAGAR DADOS EXISTENTES
+   AÇÕES CORRETIVAS — FUNÇÕES CENTRAIS
+========================================================= */
+
+function isProblemOverdue(problem){
+
+  if(!problem) return false;
+
+  if(problem.status === "Resolvido") return false;
+
+  if(!problem.deadline) return false;
+
+  return problem.deadline < today();
+}
+
+function getProblemStatusClass(status){
+
+  if(status === "Aberto") return "red";
+  if(status === "Em tratamento") return "yellow";
+  if(status === "Resolvido") return "green";
+
+  return "gray";
+}
+
+function getProblemStatusLabel(problem){
+
+  if(isProblemOverdue(problem)){
+    return "Atrasado";
+  }
+
+  return problem.status || "Aberto";
+}
+
+function getProblemStatusClassFull(problem){
+
+  if(isProblemOverdue(problem)){
+    return "red";
+  }
+
+  return getProblemStatusClass(problem.status);
+}
+
+function getOverdueProblems(){
+
+  return db.problems.filter(p => isProblemOverdue(p));
+}
+
+function getOpenProblems(){
+
+  return db.problems.filter(p => p.status !== "Resolvido");
+}
+
+function getResolvedProblems(){
+
+  return db.problems.filter(p => p.status === "Resolvido");
+}
+
+function getProblemsInTreatment(){
+
+  return db.problems.filter(p => p.status === "Em tratamento");
+}
+
+function setProblemStatus(id,status){
+
+  const p = db.problems.find(x => x.id === id);
+
+  if(!p) return;
+
+  p.status = status;
+
+  if(status === "Resolvido"){
+
+    if(!p.resolutionDate){
+      p.resolutionDate = today();
+    }
+
+  }else{
+
+    p.resolutionDate = "";
+  }
+
+  saveDB();
+  renderAll();
+
+  if(p.establishmentId){
+    renderProfile(p.establishmentId);
+  }
+}
+
+function changeProblemStatus(id){
+
+  const p = db.problems.find(x => x.id === id);
+
+  if(!p) return;
+
+  const statuses = [
+    "Aberto",
+    "Em tratamento",
+    "Resolvido"
+  ];
+
+  const current = statuses.indexOf(p.status);
+
+  const next =
+    statuses[(current + 1) % statuses.length];
+
+  setProblemStatus(id,next);
+}
+
+function editProblem(id){
+
+  const p = db.problems.find(x => x.id === id);
+
+  if(!p) return;
+
+  const responsible = prompt(
+    "Responsável pela ação corretiva:",
+    p.responsible || ""
+  );
+
+  if(responsible === null) return;
+
+  const deadline = prompt(
+    "Prazo para correção (AAAA-MM-DD):",
+    p.deadline || ""
+  );
+
+  if(deadline === null) return;
+
+  const action = prompt(
+    "Ação corretiva:",
+    p.action || ""
+  );
+
+  if(action === null) return;
+
+  p.responsible = responsible.trim();
+  p.deadline = deadline.trim();
+  p.action = action.trim();
+
+  saveDB();
+  renderAll();
+
+  if(p.establishmentId){
+    renderProfile(p.establishmentId);
+  }
+}
+
+/* =========================================================
+   CARREGAMENTO E MIGRAÇÃO
 ========================================================= */
 
 function loadDB(){
 
   try{
+
     const stored = localStorage.getItem(DATA_KEY);
 
     if(stored){
+
       const parsed = JSON.parse(stored);
 
       db = {
-        establishments: Array.isArray(parsed.establishments) ? parsed.establishments : [],
-        inspections: Array.isArray(parsed.inspections) ? parsed.inspections : [],
-        temps: Array.isArray(parsed.temps) ? parsed.temps : [],
-        problems: Array.isArray(parsed.problems) ? parsed.problems : [],
-        evidences: Array.isArray(parsed.evidences) ? parsed.evidences : []
+        establishments:
+          Array.isArray(parsed.establishments)
+          ? parsed.establishments
+          : [],
+
+        inspections:
+          Array.isArray(parsed.inspections)
+          ? parsed.inspections
+          : [],
+
+        temps:
+          Array.isArray(parsed.temps)
+          ? parsed.temps
+          : [],
+
+        problems:
+          Array.isArray(parsed.problems)
+          ? parsed.problems
+          : [],
+
+        evidences:
+          Array.isArray(parsed.evidences)
+          ? parsed.evidences
+          : []
       };
     }
 
   }catch(e){
+
     console.error("Erro ao carregar dados:",e);
   }
-
-  /*
-    MIGRAÇÃO:
-    Caso versões antigas tenham guardado arrays separados,
-    aproveitamos os dados em vez de os apagar.
-  */
 
   const oldInspections = localStorage.getItem("inspections");
   const oldTemps = localStorage.getItem("temps");
@@ -887,53 +1056,76 @@ function loadDB(){
   const oldEvidences = localStorage.getItem("evidences");
 
   if(db.inspections.length === 0 && oldInspections){
+
     try{
+
       const arr = JSON.parse(oldInspections);
-      if(Array.isArray(arr)) db.inspections = arr;
+
+      if(Array.isArray(arr)){
+        db.inspections = arr;
+      }
+
     }catch(e){}
   }
 
   if(db.temps.length === 0 && oldTemps){
+
     try{
+
       const arr = JSON.parse(oldTemps);
-      if(Array.isArray(arr)) db.temps = arr;
+
+      if(Array.isArray(arr)){
+        db.temps = arr;
+      }
+
     }catch(e){}
   }
 
   if(db.problems.length === 0 && oldProblems){
+
     try{
+
       const arr = JSON.parse(oldProblems);
-      if(Array.isArray(arr)) db.problems = arr;
+
+      if(Array.isArray(arr)){
+        db.problems = arr;
+      }
+
     }catch(e){}
   }
 
   if(db.evidences.length === 0 && oldEvidences){
+
     try{
+
       const arr = JSON.parse(oldEvidences);
-      if(Array.isArray(arr)) db.evidences = arr;
+
+      if(Array.isArray(arr)){
+        db.evidences = arr;
+      }
+
     }catch(e){}
   }
 
-  /*
-    NOVA CORREÇÃO:
-    Associar automaticamente inspeções antigas a estabelecimentos
-    pelo nome.
-  */
+  /* =======================================================
+     MIGRAÇÃO DE INSPEÇÕES
+  ======================================================= */
 
   db.inspections.forEach(ins => {
 
     if(!ins.establishmentId){
 
-      const inspectionName =
+      const name =
         ins.establishmentName ||
         ins.name ||
         ins.establishment ||
         ins.nomeEstabelecimento ||
         "";
 
-      const match = db.establishments.find(est =>
-        sameName(est.name, inspectionName)
-      );
+      const match =
+        db.establishments.find(est =>
+          sameName(est.name,name)
+        );
 
       if(match){
         ins.establishmentId = match.id;
@@ -941,29 +1133,61 @@ function loadDB(){
     }
   });
 
-  /*
-    Também associamos problemas, temperaturas e evidências antigas
-    pelo nome, quando possível.
-  */
+  /* =======================================================
+     MIGRAÇÃO DE PROBLEMAS
+  ======================================================= */
 
-  db.problems.forEach(item => {
-    if(!item.establishmentId){
+  db.problems.forEach(p => {
+
+    if(!p.establishmentId){
 
       const name =
-        item.establishmentName ||
-        item.establishment ||
-        item.name ||
+        p.establishmentName ||
+        p.establishment ||
+        p.name ||
         "";
 
-      const match = db.establishments.find(est =>
-        sameName(est.name,name)
-      );
+      const match =
+        db.establishments.find(est =>
+          sameName(est.name,name)
+        );
 
-      if(match) item.establishmentId = match.id;
+      if(match){
+        p.establishmentId = match.id;
+      }
+    }
+
+    /*
+      Compatibilidade com problemas antigos.
+    */
+
+    if(!p.status){
+      p.status = "Aberto";
+    }
+
+    if(!p.action){
+      p.action = "";
+    }
+
+    if(!p.responsible){
+      p.responsible = "";
+    }
+
+    if(!p.deadline){
+      p.deadline = "";
+    }
+
+    if(!p.resolutionDate){
+      p.resolutionDate = "";
     }
   });
+
+  /* =======================================================
+     MIGRAÇÃO DE TEMPERATURAS
+  ======================================================= */
 
   db.temps.forEach(item => {
+
     if(!item.establishmentId){
 
       const name =
@@ -972,15 +1196,23 @@ function loadDB(){
         item.name ||
         "";
 
-      const match = db.establishments.find(est =>
-        sameName(est.name,name)
-      );
+      const match =
+        db.establishments.find(est =>
+          sameName(est.name,name)
+        );
 
-      if(match) item.establishmentId = match.id;
+      if(match){
+        item.establishmentId = match.id;
+      }
     }
   });
 
+  /* =======================================================
+     MIGRAÇÃO DE EVIDÊNCIAS
+  ======================================================= */
+
   db.evidences.forEach(item => {
+
     if(!item.establishmentId){
 
       const name =
@@ -989,11 +1221,14 @@ function loadDB(){
         item.name ||
         "";
 
-      const match = db.establishments.find(est =>
-        sameName(est.name,name)
-      );
+      const match =
+        db.establishments.find(est =>
+          sameName(est.name,name)
+        );
 
-      if(match) item.establishmentId = match.id;
+      if(match){
+        item.establishmentId = match.id;
+      }
     }
   });
 
@@ -1011,80 +1246,118 @@ function ensureUsers(){
   if(!users.length){
 
     users = [{
-      id: uid("user"),
-      username: "admin",
-      email: "rafaelabiliocarlos1@gmail.com",
-      password: "1234"
+      id:uid("user"),
+      username:"admin",
+      email:"rafaelabiliocarlos1@gmail.com",
+      password:"1234"
     }];
 
-    localStorage.setItem(USERS_KEY,JSON.stringify(users));
+    localStorage.setItem(
+      USERS_KEY,
+      JSON.stringify(users)
+    );
   }
 }
 
 function showRecovery(){
-  document.getElementById("loginForm").classList.add("hidden");
-  document.getElementById("recoveryForm").classList.remove("hidden");
+
+  document.getElementById("loginForm")
+    .classList.add("hidden");
+
+  document.getElementById("recoveryForm")
+    .classList.remove("hidden");
 }
 
 function showLogin(){
-  document.getElementById("recoveryForm").classList.add("hidden");
-  document.getElementById("loginForm").classList.remove("hidden");
+
+  document.getElementById("recoveryForm")
+    .classList.add("hidden");
+
+  document.getElementById("loginForm")
+    .classList.remove("hidden");
 }
 
 function login(){
 
-  const username = document.getElementById("loginUsername").value.trim();
-  const password = document.getElementById("loginPassword").value;
+  const username =
+    document.getElementById("loginUsername")
+      .value.trim();
+
+  const password =
+    document.getElementById("loginPassword").value;
 
   const users = getUsers();
 
-  const user = users.find(u =>
-    String(u.username).toLowerCase() === username.toLowerCase() &&
-    String(u.password) === password
-  );
+  const user =
+    users.find(u =>
+      String(u.username).toLowerCase() ===
+      username.toLowerCase() &&
+      String(u.password) === password
+    );
 
   if(!user){
+
     document.getElementById("loginMessage").innerHTML =
       '<span style="color:#dc2626">Nome do utilizador ou palavra-passe incorretos.</span>';
+
     return;
   }
 
-  localStorage.setItem(SESSION_KEY,JSON.stringify({
-    userId:user.id,
-    username:user.username
-  }));
+  localStorage.setItem(
+    SESSION_KEY,
+    JSON.stringify({
+      userId:user.id,
+      username:user.username
+    })
+  );
 
   openApp();
 }
 
 function recoverAccount(){
 
-  const email = document.getElementById("recoveryEmail").value.trim().toLowerCase();
-  const username = document.getElementById("recoveryUsername").value.trim();
-  const password = document.getElementById("recoveryPassword").value;
+  const email =
+    document.getElementById("recoveryEmail")
+      .value.trim()
+      .toLowerCase();
+
+  const username =
+    document.getElementById("recoveryUsername")
+      .value.trim();
+
+  const password =
+    document.getElementById("recoveryPassword").value;
 
   if(!email || !username || !password){
+
     document.getElementById("recoveryMessage").innerHTML =
       '<span style="color:#dc2626">Preencha todos os campos.</span>';
+
     return;
   }
 
   let users = getUsers();
 
-  const user = users.find(u =>
-    String(u.email || "").toLowerCase() === email
-  );
+  const user =
+    users.find(u =>
+      String(u.email || "").toLowerCase() === email
+    );
 
   if(!user){
+
     document.getElementById("recoveryMessage").innerHTML =
       '<span style="color:#dc2626">E-mail não encontrado.</span>';
+
     return;
   }
 
   user.username = username;
   user.password = password;
 
-  localStorage.setItem(USERS_KEY,JSON.stringify(users));
+  localStorage.setItem(
+    USERS_KEY,
+    JSON.stringify(users)
+  );
 
   document.getElementById("recoveryMessage").innerHTML =
     '<span style="color:#16a34a">Conta recuperada com sucesso. Agora pode entrar.</span>';
@@ -1093,9 +1366,14 @@ function recoverAccount(){
 }
 
 function logout(){
+
   localStorage.removeItem(SESSION_KEY);
-  document.getElementById("app").classList.remove("active");
-  document.getElementById("loginScreen").style.display="flex";
+
+  document.getElementById("app")
+    .classList.remove("active");
+
+  document.getElementById("loginScreen")
+    .style.display="flex";
 }
 
 /* =========================================================
@@ -1104,27 +1382,34 @@ function logout(){
 
 function go(page){
 
-  document.querySelectorAll(".page").forEach(p =>
-    p.classList.remove("active")
-  );
+  document.querySelectorAll(".page")
+    .forEach(p => p.classList.remove("active"));
 
-  document.querySelectorAll(".nav button").forEach(b =>
-    b.classList.remove("active")
-  );
+  document.querySelectorAll(".nav button")
+    .forEach(b => b.classList.remove("active"));
 
-  const target = document.getElementById("page-"+page);
+  const target =
+    document.getElementById("page-"+page);
 
-  if(target) target.classList.add("active");
+  if(target){
+    target.classList.add("active");
+  }
 
-  const button = document.querySelector(
-    '.nav button[data-page="'+page+'"]'
-  );
+  const button =
+    document.querySelector(
+      '.nav button[data-page="'+page+'"]'
+    );
 
-  if(button) button.classList.add("active");
+  if(button){
+    button.classList.add("active");
+  }
 
   renderAll();
 
-  window.scrollTo({top:0,behavior:"smooth"});
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 }
 
 /* =========================================================
@@ -1133,26 +1418,52 @@ function go(page){
 
 function saveEstablishment(){
 
-  const name = document.getElementById("estName").value.trim();
+  const name =
+    document.getElementById("estName")
+      .value.trim();
 
   if(!name){
+
     alert("Digite o nome do estabelecimento.");
+
     return;
   }
 
   const establishment = {
+
     id:uid("est"),
+
     name,
-    type:document.getElementById("estType").value.trim(),
-    address:document.getElementById("estAddress").value.trim(),
-    bairro:document.getElementById("estBairro").value.trim(),
-    distrito:document.getElementById("estDistrito").value.trim(),
-    phone:document.getElementById("estPhone").value.trim(),
-    responsible:document.getElementById("estResponsible").value.trim(),
+
+    type:
+      document.getElementById("estType")
+        .value.trim(),
+
+    address:
+      document.getElementById("estAddress")
+        .value.trim(),
+
+    bairro:
+      document.getElementById("estBairro")
+        .value.trim(),
+
+    distrito:
+      document.getElementById("estDistrito")
+        .value.trim(),
+
+    phone:
+      document.getElementById("estPhone")
+        .value.trim(),
+
+    responsible:
+      document.getElementById("estResponsible")
+        .value.trim(),
+
     createdAt:today()
   };
 
   db.establishments.push(establishment);
+
   saveDB();
 
   document.getElementById("estName").value="";
@@ -1170,71 +1481,102 @@ function saveEstablishment(){
 
 function deleteEstablishment(id){
 
-  if(!confirm("Tem certeza que deseja eliminar este estabelecimento?")) return;
+  if(!confirm(
+    "Tem certeza que deseja eliminar este estabelecimento?"
+  )) return;
 
-  db.establishments = db.establishments.filter(e => e.id !== id);
+  db.establishments =
+    db.establishments.filter(e => e.id !== id);
+
   saveDB();
+
   renderAll();
 }
 
 function renderEstablishments(){
 
-  const box = document.getElementById("establishmentsList");
+  const box =
+    document.getElementById("establishmentsList");
 
   if(!db.establishments.length){
-    box.innerHTML = '<div class="empty">Nenhum estabelecimento registado.</div>';
+
+    box.innerHTML =
+      '<div class="empty">Nenhum estabelecimento registado.</div>';
+
     return;
   }
 
-  box.innerHTML = db.establishments.map(est => {
+  box.innerHTML =
+    db.establishments.map(est => {
 
-    const inspections = getInspectionsForEstablishment(est);
-    const avg = average(inspections.map(i => Number(i.score || 0)));
+      const inspections =
+        getInspectionsForEstablishment(est);
 
-    return `
-      <div class="card" style="margin-bottom:10px">
-        <h3>${esc(est.name)}</h3>
+      const avg =
+        average(
+          inspections.map(i => Number(i.score || 0))
+        );
 
-        <p class="muted">
-          ${esc(est.type || "Tipo não informado")}
-          ${est.distrito ? " • "+esc(est.distrito) : ""}
-        </p>
+      const problems =
+        getProblemsForEstablishment(est);
 
-        <p>
-          <strong>Responsável:</strong>
-          ${esc(est.responsible || "—")}
-        </p>
+      const overdue =
+        problems.filter(isProblemOverdue).length;
 
-        <p>
-          <strong>Inspeções:</strong> ${inspections.length}
-          &nbsp; | &nbsp;
-          <strong>Conformidade:</strong> ${Math.round(avg)}%
-        </p>
+      return `
+        <div class="card" style="margin-bottom:10px">
 
-        <div class="actions">
-          <button class="btn btn-primary btn-small"
-            onclick="openProfile('${est.id}')">
-            Ver perfil
-          </button>
+          <h3>${esc(est.name)}</h3>
 
-          <button class="btn btn-secondary btn-small"
-            onclick="startInspectionFor('${est.id}')">
-            Nova inspeção
-          </button>
+          <p class="muted">
+            ${esc(est.type || "Tipo não informado")}
+            ${est.distrito ? " • "+esc(est.distrito) : ""}
+          </p>
 
-          <button class="btn btn-danger btn-small"
-            onclick="deleteEstablishment('${est.id}')">
-            Eliminar
-          </button>
+          <p>
+            <strong>Responsável:</strong>
+            ${esc(est.responsible || "—")}
+          </p>
+
+          <p>
+            <strong>Inspeções:</strong> ${inspections.length}
+            &nbsp; | &nbsp;
+            <strong>Conformidade:</strong> ${Math.round(avg)}%
+          </p>
+
+          <p>
+            <strong>Ações atrasadas:</strong>
+            <span class="badge ${overdue ? "red" : "green"}">
+              ${overdue}
+            </span>
+          </p>
+
+          <div class="actions">
+
+            <button class="btn btn-primary btn-small"
+              onclick="openProfile('${est.id}')">
+              Ver perfil
+            </button>
+
+            <button class="btn btn-secondary btn-small"
+              onclick="startInspectionFor('${est.id}')">
+              Nova inspeção
+            </button>
+
+            <button class="btn btn-danger btn-small"
+              onclick="deleteEstablishment('${est.id}')">
+              Eliminar
+            </button>
+
+          </div>
         </div>
-      </div>
-    `;
-  }).join("");
+      `;
+
+    }).join("");
 }
 
 /* =========================================================
-   CORREÇÃO CENTRAL:
-   ENCONTRAR INSPEÇÕES DO ESTABELECIMENTO
+   RELACIONAMENTOS
 ========================================================= */
 
 function getInspectionsForEstablishment(est){
@@ -1243,30 +1585,18 @@ function getInspectionsForEstablishment(est){
 
   return db.inspections.filter(ins => {
 
-    /*
-      Primeiro tenta pelo ID.
-    */
     if(ins.establishmentId === est.id){
       return true;
     }
 
-    /*
-      Depois tenta pelo nome.
-      Isto permite recuperar inspeções antigas.
-    */
-
-    const inspectionName =
+    const name =
       ins.establishmentName ||
       ins.name ||
       ins.establishment ||
       ins.nomeEstabelecimento ||
       "";
 
-    if(sameName(inspectionName,est.name)){
-      return true;
-    }
-
-    return false;
+    return sameName(name,est.name);
   });
 }
 
@@ -1276,7 +1606,9 @@ function getProblemsForEstablishment(est){
 
   return db.problems.filter(item => {
 
-    if(item.establishmentId === est.id) return true;
+    if(item.establishmentId === est.id){
+      return true;
+    }
 
     const name =
       item.establishmentName ||
@@ -1294,7 +1626,9 @@ function getTempsForEstablishment(est){
 
   return db.temps.filter(item => {
 
-    if(item.establishmentId === est.id) return true;
+    if(item.establishmentId === est.id){
+      return true;
+    }
 
     const name =
       item.establishmentName ||
@@ -1312,7 +1646,9 @@ function getEvidenceForEstablishment(est){
 
   return db.evidences.filter(item => {
 
-    if(item.establishmentId === est.id) return true;
+    if(item.establishmentId === est.id){
+      return true;
+    }
 
     const name =
       item.establishmentName ||
@@ -1339,18 +1675,27 @@ function fillEstablishmentSelects(){
 
   selects.forEach(id => {
 
-    const select = document.getElementById(id);
+    const select =
+      document.getElementById(id);
+
     if(!select) return;
 
     const oldValue = select.value;
 
     select.innerHTML =
       '<option value="">Selecionar estabelecimento</option>' +
+
       db.establishments.map(est =>
-        `<option value="${esc(est.id)}">${esc(est.name)}</option>`
+        `<option value="${esc(est.id)}">
+          ${esc(est.name)}
+        </option>`
       ).join("");
 
-    if(db.establishments.some(e => e.id === oldValue)){
+    if(
+      db.establishments.some(
+        e => e.id === oldValue
+      )
+    ){
       select.value = oldValue;
     }
   });
@@ -1362,50 +1707,76 @@ function fillEstablishmentSelects(){
 
 function buildChecklist(){
 
-  const box = document.getElementById("checklist");
+  const box =
+    document.getElementById("checklist");
 
   if(!box) return;
 
-  box.innerHTML = checklistItems.map((item,index) => `
-    <label class="check-item">
-      <input
-        type="checkbox"
-        class="inspection-check"
-        data-index="${index}"
-        onchange="updateInspectionScore()">
-      <span>${index+1}. ${esc(item)}</span>
-    </label>
-  `).join("");
+  box.innerHTML =
+    checklistItems.map((item,index) => `
+
+      <label class="check-item">
+
+        <input
+          type="checkbox"
+          class="inspection-check"
+          data-index="${index}"
+          onchange="updateInspectionScore()">
+
+        <span>
+          ${index+1}. ${esc(item)}
+        </span>
+
+      </label>
+
+    `).join("");
 
   updateInspectionScore();
 }
 
 function updateInspectionScore(){
 
-  const checks = [...document.querySelectorAll(".inspection-check")];
+  const checks =
+    [...document.querySelectorAll(".inspection-check")];
 
   if(!checks.length) return;
 
-  const yes = checks.filter(c => c.checked).length;
+  const yes =
+    checks.filter(c => c.checked).length;
 
-  const score = Math.round((yes / checks.length) * 100);
+  const score =
+    Math.round(
+      (yes / checks.length) * 100
+    );
 
-  document.getElementById("inspectionScore").textContent = score+"%";
-  document.getElementById("inspectionProgress").style.width = score+"%";
+  document.getElementById(
+    "inspectionScore"
+  ).textContent = score+"%";
 
-  let classification = "Não conforme";
-  let cls = "red";
+  document.getElementById(
+    "inspectionProgress"
+  ).style.width = score+"%";
+
+  let classification="Não conforme";
+  let cls="red";
 
   if(score >= 80){
-    classification = "Conforme";
-    cls = "green";
+
+    classification="Conforme";
+    cls="green";
+
   }else if(score >= 60){
-    classification = "Parcialmente conforme";
-    cls = "yellow";
+
+    classification="Parcialmente conforme";
+    cls="yellow";
   }
 
-  document.getElementById("inspectionClassification").innerHTML =
-    `<span class="badge ${cls}">${classification}</span>`;
+  document.getElementById(
+    "inspectionClassification"
+  ).innerHTML =
+    `<span class="badge ${cls}">
+      ${classification}
+    </span>`;
 }
 
 function startInspectionFor(id){
@@ -1414,10 +1785,15 @@ function startInspectionFor(id){
 
   setTimeout(() => {
 
-    const select = document.getElementById("inspectionEstablishment");
+    const select =
+      document.getElementById(
+        "inspectionEstablishment"
+      );
 
     if(select){
-      select.value = id;
+
+      select.value=id;
+
       syncInspectionEstablishment();
     }
 
@@ -1426,100 +1802,139 @@ function startInspectionFor(id){
 
 function syncInspectionEstablishment(){
 
-  const id = document.getElementById("inspectionEstablishment").value;
+  const id =
+    document.getElementById(
+      "inspectionEstablishment"
+    ).value;
 
-  const est = db.establishments.find(e => e.id === id);
+  const est =
+    db.establishments.find(
+      e => e.id === id
+    );
 
   if(!est) return;
 
-  document.getElementById("inspectionName").value = est.name || "";
-  document.getElementById("inspectionResponsible").value =
-    est.responsible || "";
+  document.getElementById(
+    "inspectionName"
+  ).value = est.name || "";
+
+  document.getElementById(
+    "inspectionResponsible"
+  ).value = est.responsible || "";
 }
 
 function saveInspection(){
 
   const establishmentId =
-    document.getElementById("inspectionEstablishment").value;
+    document.getElementById(
+      "inspectionEstablishment"
+    ).value;
 
   let establishmentName =
-    document.getElementById("inspectionName").value.trim();
+    document.getElementById(
+      "inspectionName"
+    ).value.trim();
 
   const responsible =
-    document.getElementById("inspectionResponsible").value.trim();
+    document.getElementById(
+      "inspectionResponsible"
+    ).value.trim();
 
   const date =
-    document.getElementById("inspectionDate").value || today();
+    document.getElementById(
+      "inspectionDate"
+    ).value || today();
 
   const observation =
-    document.getElementById("inspectionObservation").value.trim();
+    document.getElementById(
+      "inspectionObservation"
+    ).value.trim();
 
   const establishment =
-    db.establishments.find(e => e.id === establishmentId);
-
-  /*
-    Se o utilizador selecionou estabelecimento,
-    usamos sempre o nome oficial dele.
-  */
+    db.establishments.find(
+      e => e.id === establishmentId
+    );
 
   if(establishment){
-    establishmentName = establishment.name;
+    establishmentName=establishment.name;
   }
 
   if(!establishmentName){
-    alert("Selecione um estabelecimento ou informe o nome.");
+
+    alert(
+      "Selecione um estabelecimento ou informe o nome."
+    );
+
     return;
   }
 
-  const checks = [...document.querySelectorAll(".inspection-check")];
+  const checks =
+    [...document.querySelectorAll(
+      ".inspection-check"
+    )];
 
-  const results = checks.map((check,index) => ({
-    item:checklistItems[index],
-    conform:check.checked
-  }));
+  const results =
+    checks.map((check,index) => ({
+      item:checklistItems[index],
+      conform:check.checked
+    }));
 
-  const conforming = results.filter(r => r.conform).length;
-  const total = results.length;
-  const score = total ? Math.round((conforming / total) * 100) : 0;
+  const conforming =
+    results.filter(
+      r => r.conform
+    ).length;
 
-  let classification = "Não conforme";
+  const total=results.length;
 
-  if(score >= 80){
-    classification = "Conforme";
-  }else if(score >= 60){
-    classification = "Parcialmente conforme";
+  const score =
+    total
+    ? Math.round(
+        (conforming/total)*100
+      )
+    : 0;
+
+  let classification="Não conforme";
+
+  if(score>=80){
+    classification="Conforme";
+  }else if(score>=60){
+    classification="Parcialmente conforme";
   }
 
-  const inspection = {
+  const inspection={
+
     id:uid("insp"),
 
-    /*
-      ESTA É A CORREÇÃO MAIS IMPORTANTE:
-      guardamos o ID e o nome.
-    */
+    establishmentId:
+      establishment
+      ? establishment.id
+      : null,
 
-    establishmentId: establishment ? establishment.id : null,
-    establishmentName: establishmentName,
+    establishmentName,
 
-    name: establishmentName,
+    name:establishmentName,
 
     responsible,
+
     date,
+
     observation,
 
     score,
+
     classification,
 
     checklist:results,
 
-    createdAt:new Date().toISOString()
+    createdAt:
+      new Date().toISOString()
   };
 
   db.inspections.push(inspection);
 
   /*
-    Se existe estabelecimento selecionado,
-    criamos problemas ligados diretamente ao ID.
+    Criação automática de ações corretivas
+    para itens não conformes.
   */
 
   results
@@ -1527,34 +1942,54 @@ function saveInspection(){
     .forEach(r => {
 
       db.problems.push({
+
         id:uid("problem"),
-        establishmentId:establishment ? establishment.id : null,
+
+        establishmentId:
+          establishment
+          ? establishment.id
+          : null,
+
         establishmentName,
+
         title:r.item,
-        description:"Não conformidade identificada durante a inspeção.",
+
+        description:
+          "Não conformidade identificada durante a inspeção.",
+
         severity:"Média",
+
         status:"Aberto",
-        action:"Corrigir a não conformidade identificada.",
+
+        action:
+          "Corrigir a não conformidade identificada.",
+
+        responsible:
+          responsible ||
+          establishment?.responsible ||
+          "",
+
+        deadline:"",
+
+        resolutionDate:"",
+
         inspectionId:inspection.id,
+
         date
       });
-
     });
 
   saveDB();
 
   alert(
-    "Inspeção guardada com sucesso.\n\n" +
-    "Conformidade: "+score+"%\n" +
+    "Inspeção guardada com sucesso.\n\n"+
+    "Conformidade: "+score+"%\n"+
     "Classificação: "+classification
   );
 
   resetInspectionForm();
-  renderAll();
 
-  /*
-    Depois de guardar, mostramos o perfil do estabelecimento.
-  */
+  renderAll();
 
   if(establishment){
     openProfile(establishment.id);
@@ -1563,13 +1998,27 @@ function saveInspection(){
 
 function resetInspectionForm(){
 
-  document.getElementById("inspectionName").value="";
-  document.getElementById("inspectionResponsible").value="";
-  document.getElementById("inspectionDate").value=today();
-  document.getElementById("inspectionObservation").value="";
+  document.getElementById(
+    "inspectionName"
+  ).value="";
 
-  document.querySelectorAll(".inspection-check")
-    .forEach(c => c.checked=false);
+  document.getElementById(
+    "inspectionResponsible"
+  ).value="";
+
+  document.getElementById(
+    "inspectionDate"
+  ).value=today();
+
+  document.getElementById(
+    "inspectionObservation"
+  ).value="";
+
+  document.querySelectorAll(
+    ".inspection-check"
+  ).forEach(
+    c => c.checked=false
+  );
 
   updateInspectionScore();
 }
@@ -1580,14 +2029,16 @@ function resetInspectionForm(){
 
 function evaluateTemperature(value){
 
-  if(value <= 5){
+  if(value<=5){
+
     return {
       label:"Adequada",
       cls:"green"
     };
   }
 
-  if(value <= 8){
+  if(value<=8){
+
     return {
       label:"Atenção",
       cls:"yellow"
@@ -1603,73 +2054,119 @@ function evaluateTemperature(value){
 function saveTemperature(){
 
   const establishmentId =
-    document.getElementById("tempEstablishment").value;
+    document.getElementById(
+      "tempEstablishment"
+    ).value;
 
   const est =
-    db.establishments.find(e => e.id === establishmentId);
+    db.establishments.find(
+      e => e.id === establishmentId
+    );
 
   const item =
-    document.getElementById("tempItem").value.trim();
+    document.getElementById(
+      "tempItem"
+    ).value.trim();
 
   const value =
-    Number(document.getElementById("tempValue").value);
+    Number(
+      document.getElementById(
+        "tempValue"
+      ).value
+    );
 
   if(!est){
+
     alert("Selecione um estabelecimento.");
+
     return;
   }
 
   if(!item){
-    alert("Informe o equipamento ou alimento.");
+
+    alert(
+      "Informe o equipamento ou alimento."
+    );
+
     return;
   }
 
   if(isNaN(value)){
-    alert("Informe uma temperatura válida.");
+
+    alert(
+      "Informe uma temperatura válida."
+    );
+
     return;
   }
 
-  const evaluation = evaluateTemperature(value);
+  const evaluation =
+    evaluateTemperature(value);
 
   db.temps.push({
+
     id:uid("temp"),
+
     establishmentId:est.id,
+
     establishmentName:est.name,
+
     item,
+
     value,
+
     evaluation:evaluation.label,
+
     date:today(),
-    createdAt:new Date().toISOString()
+
+    createdAt:
+      new Date().toISOString()
   });
 
   saveDB();
 
-  document.getElementById("tempResult").innerHTML =
+  document.getElementById(
+    "tempResult"
+  ).innerHTML =
     `<span class="badge ${evaluation.cls}">
       ${evaluation.label}
     </span>`;
 
-  document.getElementById("tempItem").value="";
-  document.getElementById("tempValue").value="";
+  document.getElementById(
+    "tempItem"
+  ).value="";
+
+  document.getElementById(
+    "tempValue"
+  ).value="";
 
   renderAll();
 }
 
 function renderTemperatureTable(){
 
-  const box = document.getElementById("temperatureTable");
+  const box =
+    document.getElementById(
+      "temperatureTable"
+    );
 
   if(!db.temps.length){
+
     box.innerHTML =
       '<div class="empty">Nenhum registo de temperatura.</div>';
+
     return;
   }
 
-  const arr = [...db.temps].reverse();
+  const arr =
+    [...db.temps].reverse();
 
-  box.innerHTML = `
+  box.innerHTML=`
+
     <div class="table-wrap">
+
       <table>
+
         <thead>
           <tr>
             <th>Data</th>
@@ -1679,156 +2176,359 @@ function renderTemperatureTable(){
             <th>Avaliação</th>
           </tr>
         </thead>
+
         <tbody>
+
           ${arr.map(t => {
 
-            const evaluation = evaluateTemperature(Number(t.value));
+            const evaluation =
+              evaluateTemperature(
+                Number(t.value)
+              );
 
             return `
               <tr>
-                <td>${formatDate(t.date)}</td>
-                <td>${esc(t.establishmentName || "—")}</td>
-                <td>${esc(t.item || "—")}</td>
-                <td>${esc(t.value)} °C</td>
+
+                <td>
+                  ${formatDate(t.date)}
+                </td>
+
+                <td>
+                  ${esc(
+                    t.establishmentName || "—"
+                  )}
+                </td>
+
+                <td>
+                  ${esc(t.item || "—")}
+                </td>
+
+                <td>
+                  ${esc(t.value)} °C
+                </td>
+
                 <td>
                   <span class="badge ${evaluation.cls}">
-                    ${esc(t.evaluation || evaluation.label)}
+                    ${esc(
+                      t.evaluation ||
+                      evaluation.label
+                    )}
                   </span>
                 </td>
+
               </tr>
             `;
+
           }).join("")}
+
         </tbody>
+
       </table>
+
     </div>
   `;
 }
 
 /* =========================================================
-   PROBLEMAS
+   PROBLEMAS / AÇÕES CORRETIVAS
 ========================================================= */
 
 function saveProblem(){
 
   const establishmentId =
-    document.getElementById("problemEstablishment").value;
+    document.getElementById(
+      "problemEstablishment"
+    ).value;
 
   const est =
-    db.establishments.find(e => e.id === establishmentId);
+    db.establishments.find(
+      e => e.id === establishmentId
+    );
 
   const title =
-    document.getElementById("problemTitle").value.trim();
+    document.getElementById(
+      "problemTitle"
+    ).value.trim();
 
   const severity =
-    document.getElementById("problemSeverity").value;
+    document.getElementById(
+      "problemSeverity"
+    ).value;
+
+  const responsible =
+    document.getElementById(
+      "problemResponsible"
+    ).value.trim();
+
+  const deadline =
+    document.getElementById(
+      "problemDeadline"
+    ).value;
 
   const action =
-    document.getElementById("problemAction").value.trim();
+    document.getElementById(
+      "problemAction"
+    ).value.trim();
 
   if(!est){
-    alert("Selecione um estabelecimento.");
+
+    alert(
+      "Selecione um estabelecimento."
+    );
+
     return;
   }
 
   if(!title){
-    alert("Descreva o problema.");
+
+    alert(
+      "Descreva o problema."
+    );
+
     return;
   }
 
+  if(deadline && deadline < today()){
+
+    if(!confirm(
+      "O prazo indicado já passou. Deseja mesmo guardar esta ação?"
+    )){
+      return;
+    }
+  }
+
   db.problems.push({
+
     id:uid("problem"),
+
     establishmentId:est.id,
+
     establishmentName:est.name,
+
     title,
+
     severity,
+
+    responsible,
+
+    deadline,
+
     action,
+
     status:"Aberto",
+
+    resolutionDate:"",
+
     date:today()
   });
 
   saveDB();
 
-  document.getElementById("problemTitle").value="";
-  document.getElementById("problemAction").value="";
+  document.getElementById(
+    "problemTitle"
+  ).value="";
+
+  document.getElementById(
+    "problemResponsible"
+  ).value="";
+
+  document.getElementById(
+    "problemDeadline"
+  ).value="";
+
+  document.getElementById(
+    "problemAction"
+  ).value="";
 
   renderAll();
 
-  alert("Problema registado com sucesso.");
-}
-
-function changeProblemStatus(id){
-
-  const p = db.problems.find(x => x.id === id);
-
-  if(!p) return;
-
-  const statuses = ["Aberto","Em tratamento","Resolvido"];
-
-  const current = statuses.indexOf(p.status);
-
-  p.status = statuses[(current + 1) % statuses.length];
-
-  saveDB();
-  renderAll();
+  alert(
+    "Problema e ação corretiva registados com sucesso."
+  );
 }
 
 function renderProblems(){
 
-  const box = document.getElementById("problemsTable");
+  const box =
+    document.getElementById(
+      "problemsTable"
+    );
+
+  const open =
+    getOpenProblems().length;
+
+  const treatment =
+    getProblemsInTreatment().length;
+
+  const resolved =
+    getResolvedProblems().length;
+
+  const overdue =
+    getOverdueProblems().length;
+
+  document.getElementById(
+    "problemOpenCount"
+  ).textContent=open;
+
+  document.getElementById(
+    "problemTreatmentCount"
+  ).textContent=treatment;
+
+  document.getElementById(
+    "problemResolvedCount"
+  ).textContent=resolved;
+
+  document.getElementById(
+    "problemOverdueCount"
+  ).textContent=overdue;
 
   if(!db.problems.length){
+
     box.innerHTML =
       '<div class="empty">Nenhum problema registado.</div>';
+
     return;
   }
 
-  box.innerHTML = `
+  box.innerHTML=`
+
     <div class="table-wrap">
+
       <table>
+
         <thead>
           <tr>
             <th>Data</th>
             <th>Estabelecimento</th>
             <th>Problema</th>
             <th>Severidade</th>
+            <th>Responsável</th>
+            <th>Prazo</th>
             <th>Status</th>
+            <th>Resolução</th>
             <th>Ação corretiva</th>
-            <th>Ação</th>
+            <th>Ações</th>
           </tr>
         </thead>
 
         <tbody>
-          ${[...db.problems].reverse().map(p => {
 
-            let cls = "gray";
+          ${[...db.problems]
+            .reverse()
+            .map(p => {
 
-            if(p.status === "Aberto") cls="red";
-            if(p.status === "Em tratamento") cls="yellow";
-            if(p.status === "Resolvido") cls="green";
+              const overdue =
+                isProblemOverdue(p);
 
-            return `
-              <tr>
-                <td>${formatDate(p.date)}</td>
-                <td>${esc(p.establishmentName || "—")}</td>
-                <td>${esc(p.title || p.description || "—")}</td>
-                <td>${esc(p.severity || "—")}</td>
-                <td>
-                  <span class="badge ${cls}">
-                    ${esc(p.status || "Aberto")}
-                  </span>
-                </td>
-                <td>${esc(p.action || "—")}</td>
-                <td>
-                  <button class="btn btn-secondary btn-small"
-                    onclick="changeProblemStatus('${p.id}')">
-                    Alterar status
-                  </button>
-                </td>
-              </tr>
-            `;
-          }).join("")}
+              return `
+
+                <tr class="${overdue ? "overdue" : ""}">
+
+                  <td>
+                    ${formatDate(p.date)}
+                  </td>
+
+                  <td>
+                    ${esc(
+                      p.establishmentName || "—"
+                    )}
+                  </td>
+
+                  <td>
+                    ${esc(
+                      p.title ||
+                      p.description ||
+                      "—"
+                    )}
+                  </td>
+
+                  <td>
+                    ${esc(
+                      p.severity || "—"
+                    )}
+                  </td>
+
+                  <td>
+                    ${esc(
+                      p.responsible || "—"
+                    )}
+                  </td>
+
+                  <td>
+                    ${
+                      p.deadline
+                      ? formatDate(p.deadline)
+                      : "—"
+                    }
+
+                    ${
+                      overdue
+                      ? `
+                        <br>
+                        <span class="badge red">
+                          Atrasado
+                        </span>
+                      `
+                      : ""
+                    }
+                  </td>
+
+                  <td>
+                    <span class="badge ${
+                      getProblemStatusClassFull(p)
+                    }">
+                      ${esc(
+                        getProblemStatusLabel(p)
+                      )}
+                    </span>
+                  </td>
+
+                  <td>
+                    ${
+                      p.resolutionDate
+                      ? formatDate(
+                          p.resolutionDate
+                        )
+                      : "—"
+                    }
+                  </td>
+
+                  <td>
+                    ${esc(
+                      p.action || "—"
+                    )}
+                  </td>
+
+                  <td>
+
+                    <div class="actions">
+
+                      <button
+                        class="btn btn-secondary btn-small"
+                        onclick="changeProblemStatus('${p.id}')">
+                        Alterar status
+                      </button>
+
+                      <button
+                        class="btn btn-primary btn-small"
+                        onclick="editProblem('${p.id}')">
+                        Editar ação
+                      </button>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              `;
+
+            }).join("")}
+
         </tbody>
+
       </table>
+
     </div>
   `;
 }
@@ -1840,48 +2540,78 @@ function renderProblems(){
 function saveEvidence(){
 
   const establishmentId =
-    document.getElementById("evidenceEstablishment").value;
+    document.getElementById(
+      "evidenceEstablishment"
+    ).value;
 
   const est =
-    db.establishments.find(e => e.id === establishmentId);
+    db.establishments.find(
+      e => e.id === establishmentId
+    );
 
   const description =
-    document.getElementById("evidenceDescription").value.trim();
+    document.getElementById(
+      "evidenceDescription"
+    ).value.trim();
 
   const file =
-    document.getElementById("evidenceFile").files[0];
+    document.getElementById(
+      "evidenceFile"
+    ).files[0];
 
   if(!est){
-    alert("Selecione um estabelecimento.");
+
+    alert(
+      "Selecione um estabelecimento."
+    );
+
     return;
   }
 
   if(!file){
-    alert("Selecione uma fotografia.");
+
+    alert(
+      "Selecione uma fotografia."
+    );
+
     return;
   }
 
-  const reader = new FileReader();
+  const reader =
+    new FileReader();
 
-  reader.onload = function(){
+  reader.onload=function(){
 
     db.evidences.push({
+
       id:uid("evidence"),
+
       establishmentId:est.id,
+
       establishmentName:est.name,
+
       description,
+
       image:reader.result,
+
       date:today()
     });
 
     saveDB();
 
-    document.getElementById("evidenceDescription").value="";
-    document.getElementById("evidenceFile").value="";
+    document.getElementById(
+      "evidenceDescription"
+    ).value="";
+
+    document.getElementById(
+      "evidenceFile"
+    ).value="";
 
     renderAll();
 
-    alert("Evidência guardada com sucesso.");
+    alert(
+      "Evidência guardada com sucesso."
+    );
   };
 
   reader.readAsDataURL(file);
@@ -1889,58 +2619,177 @@ function saveEvidence(){
 
 function renderEvidence(){
 
-  const box = document.getElementById("evidenceGrid");
+  const box =
+    document.getElementById(
+      "evidenceGrid"
+    );
 
   if(!db.evidences.length){
+
     box.innerHTML =
       '<div class="empty">Nenhuma evidência registada.</div>';
+
     return;
   }
 
-  box.innerHTML = db.evidences.map(e => `
-    <div class="card">
-      ${e.image ?
-        `<img src="${e.image}" alt="Evidência"
-          style="width:100%;height:160px;object-fit:cover;border-radius:10px">`
-        : ""
-      }
+  box.innerHTML =
+    db.evidences.map(e => `
 
-      <p><strong>${esc(e.establishmentName || "—")}</strong></p>
-      <p class="small">${esc(e.description || "")}</p>
-      <p class="small muted">${formatDate(e.date)}</p>
-    </div>
-  `).join("");
+      <div class="card">
+
+        ${
+          e.image
+          ?
+          `<img
+            src="${e.image}"
+            alt="Evidência"
+            style="width:100%;height:160px;object-fit:cover;border-radius:10px">`
+          :
+          ""
+        }
+
+        <p>
+          <strong>
+            ${esc(
+              e.establishmentName || "—"
+            )}
+          </strong>
+        </p>
+
+        <p class="small">
+          ${esc(
+            e.description || ""
+          )}
+        </p>
+
+        <p class="small muted">
+          ${formatDate(e.date)}
+        </p>
+
+      </div>
+
+    `).join("");
 }
 
 /* =========================================================
    DASHBOARD
 ========================================================= */
 
-function average(values){
-
-  const valid = values.filter(v => !isNaN(Number(v)));
-
-  if(!valid.length) return 0;
-
-  return valid.reduce((a,b) => a + Number(b),0) / valid.length;
-}
-
 function renderDashboard(){
 
-  document.getElementById("dashEstablishments").textContent =
+  document.getElementById(
+    "dashEstablishments"
+  ).textContent =
     db.establishments.length;
 
-  document.getElementById("dashInspections").textContent =
+  document.getElementById(
+    "dashInspections"
+  ).textContent =
     db.inspections.length;
 
-  document.getElementById("dashProblems").textContent =
-    db.problems.filter(p => p.status !== "Resolvido").length;
+  document.getElementById(
+    "dashProblems"
+  ).textContent =
+    db.problems.filter(
+      p => p.status !== "Resolvido"
+    ).length;
+
+  document.getElementById(
+    "dashOverdue"
+  ).textContent =
+    getOverdueProblems().length;
 
   const avg =
-    average(db.inspections.map(i => Number(i.score || 0)));
+    average(
+      db.inspections.map(
+        i => Number(i.score || 0)
+      )
+    );
 
-  document.getElementById("dashCompliance").textContent =
+  document.getElementById(
+    "dashCompliance"
+  ).textContent =
     Math.round(avg)+"%";
+
+  const total =
+    db.problems.length;
+
+  const open =
+    getOpenProblems().length;
+
+  const treatment =
+    getProblemsInTreatment().length;
+
+  const resolved =
+    getResolvedProblems().length;
+
+  const overdue =
+    getOverdueProblems().length;
+
+  const dashboardActions =
+    document.getElementById(
+      "dashboardActions"
+    );
+
+  if(!total){
+
+    dashboardActions.innerHTML =
+      '<div class="empty">Nenhuma ação corretiva registada.</div>';
+
+    return;
+  }
+
+  dashboardActions.innerHTML=`
+
+    <div class="grid">
+
+      <div>
+        <strong>Abertas</strong>
+        <div class="stat">
+          ${open}
+        </div>
+      </div>
+
+      <div>
+        <strong>Em tratamento</strong>
+        <div class="stat">
+          ${treatment}
+        </div>
+      </div>
+
+      <div>
+        <strong>Resolvidas</strong>
+        <div class="stat">
+          ${resolved}
+        </div>
+      </div>
+
+      <div>
+        <strong>Atrasadas</strong>
+        <div class="stat">
+          ${overdue}
+        </div>
+      </div>
+
+    </div>
+
+    ${
+      overdue
+      ?
+      `
+        <div class="alert" style="margin-top:15px">
+          Existem <strong>${overdue}</strong>
+          ações corretivas atrasadas que precisam de acompanhamento.
+        </div>
+      `
+      :
+      `
+        <div class="alert" style="margin-top:15px;background:#f0fdf4;border-color:#bbf7d0;color:#166534">
+          Não existem ações corretivas atrasadas.
+        </div>
+      `
+    }
+  `;
 }
 
 /* =========================================================
@@ -1949,17 +2798,25 @@ function renderDashboard(){
 
 function renderHistory(){
 
-  const box = document.getElementById("historyTable");
+  const box =
+    document.getElementById(
+      "historyTable"
+    );
 
   if(!db.inspections.length){
+
     box.innerHTML =
       '<div class="empty">Nenhuma inspeção registada.</div>';
+
     return;
   }
 
-  box.innerHTML = `
+  box.innerHTML=`
+
     <div class="table-wrap">
+
       <table>
+
         <thead>
           <tr>
             <th>Data</th>
@@ -1972,61 +2829,100 @@ function renderHistory(){
         </thead>
 
         <tbody>
+
           ${[...db.inspections]
-            .sort((a,b) => String(b.date).localeCompare(String(a.date)))
+            .sort(
+              (a,b) =>
+                String(b.date)
+                .localeCompare(
+                  String(a.date)
+                )
+            )
             .map(i => {
 
               let cls="red";
 
-              if(Number(i.score)>=80) cls="green";
-              else if(Number(i.score)>=60) cls="yellow";
+              if(Number(i.score)>=80){
+                cls="green";
+              }else if(Number(i.score)>=60){
+                cls="yellow";
+              }
 
               const est =
-                db.establishments.find(e =>
-                  e.id === i.establishmentId
+                db.establishments.find(
+                  e => e.id === i.establishmentId
                 );
 
               return `
+
                 <tr>
-                  <td>${formatDate(i.date)}</td>
-                  <td>${esc(
-                    est?.name ||
-                    i.establishmentName ||
-                    i.name ||
-                    "—"
-                  )}</td>
-                  <td>${esc(i.responsible || "—")}</td>
-                  <td>${Number(i.score || 0)}%</td>
+
+                  <td>
+                    ${formatDate(i.date)}
+                  </td>
+
+                  <td>
+                    ${esc(
+                      est?.name ||
+                      i.establishmentName ||
+                      i.name ||
+                      "—"
+                    )}
+                  </td>
+
+                  <td>
+                    ${esc(
+                      i.responsible || "—"
+                    )}
+                  </td>
+
+                  <td>
+                    ${Number(i.score || 0)}%
+                  </td>
+
                   <td>
                     <span class="badge ${cls}">
-                      ${esc(i.classification || "—")}
+                      ${esc(
+                        i.classification || "—"
+                      )}
                     </span>
                   </td>
+
                   <td>
-                    <button class="btn btn-primary btn-small"
+                    <button
+                      class="btn btn-primary btn-small"
                       onclick="generateReportForInspection('${i.id}')">
                       Ver relatório
                     </button>
                   </td>
+
                 </tr>
               `;
+
             }).join("")}
+
         </tbody>
+
       </table>
+
     </div>
   `;
 }
 
 /* =========================================================
-   PERFIL PROFISSIONAL
+   RISCO
 ========================================================= */
 
 function calculateRisk(est){
 
-  const inspections = getInspectionsForEstablishment(est);
-  const problems = getProblemsForEstablishment(est);
+  const inspections =
+    getInspectionsForEstablishment(est);
+
+  const problems =
+    getProblemsForEstablishment(est);
 
   if(!inspections.length){
+
     return {
       label:"Sem avaliação",
       cls:"gray"
@@ -2034,15 +2930,26 @@ function calculateRisk(est){
   }
 
   const avg =
-    average(inspections.map(i => Number(i.score || 0)));
+    average(
+      inspections.map(
+        i => Number(i.score || 0)
+      )
+    );
 
   const criticalOpen =
     problems.some(p =>
       p.status !== "Resolvido" &&
-      (p.severity === "Crítica" || p.severity === "Alta")
+      (
+        p.severity === "Crítica" ||
+        p.severity === "Alta"
+      )
     );
 
-  if(criticalOpen || avg < 60){
+  if(
+    criticalOpen ||
+    avg < 60
+  ){
+
     return {
       label:"Alto",
       cls:"red"
@@ -2050,6 +2957,7 @@ function calculateRisk(est){
   }
 
   if(avg < 80){
+
     return {
       label:"Médio",
       cls:"yellow"
@@ -2062,16 +2970,18 @@ function calculateRisk(est){
   };
 }
 
+/* =========================================================
+   PERFIL
+========================================================= */
+
 function openProfile(id){
 
-  const est = db.establishments.find(e => e.id === id);
+  const est =
+    db.establishments.find(
+      e => e.id === id
+    );
 
   if(!est) return;
-
-  /*
-    Corrige também as inspeções antigas no momento em que
-    o perfil é aberto.
-  */
 
   db.inspections.forEach(ins => {
 
@@ -2081,10 +2991,12 @@ function openProfile(id){
       ins.establishment ||
       "";
 
-    if(!ins.establishmentId && sameName(name,est.name)){
-      ins.establishmentId = est.id;
+    if(
+      !ins.establishmentId &&
+      sameName(name,est.name)
+    ){
+      ins.establishmentId=est.id;
     }
-
   });
 
   db.problems.forEach(item => {
@@ -2095,10 +3007,12 @@ function openProfile(id){
       item.name ||
       "";
 
-    if(!item.establishmentId && sameName(name,est.name)){
-      item.establishmentId = est.id;
+    if(
+      !item.establishmentId &&
+      sameName(name,est.name)
+    ){
+      item.establishmentId=est.id;
     }
-
   });
 
   db.temps.forEach(item => {
@@ -2109,10 +3023,12 @@ function openProfile(id){
       item.name ||
       "";
 
-    if(!item.establishmentId && sameName(name,est.name)){
-      item.establishmentId = est.id;
+    if(
+      !item.establishmentId &&
+      sameName(name,est.name)
+    ){
+      item.establishmentId=est.id;
     }
-
   });
 
   db.evidences.forEach(item => {
@@ -2123,10 +3039,12 @@ function openProfile(id){
       item.name ||
       "";
 
-    if(!item.establishmentId && sameName(name,est.name)){
-      item.establishmentId = est.id;
+    if(
+      !item.establishmentId &&
+      sameName(name,est.name)
+    ){
+      item.establishmentId=est.id;
     }
-
   });
 
   saveDB();
@@ -2138,120 +3056,293 @@ function openProfile(id){
 
 function renderProfile(id){
 
-  const box = document.getElementById("profileContent");
+  const box =
+    document.getElementById(
+      "profileContent"
+    );
 
-  const est = db.establishments.find(e => e.id === id);
+  const est =
+    db.establishments.find(
+      e => e.id === id
+    );
 
   if(!est){
+
     box.innerHTML =
       '<div class="empty">Estabelecimento não encontrado.</div>';
+
     return;
   }
 
-  const inspections = getInspectionsForEstablishment(est);
-  const problems = getProblemsForEstablishment(est);
-  const temps = getTempsForEstablishment(est);
-  const evidences = getEvidenceForEstablishment(est);
+  const inspections =
+    getInspectionsForEstablishment(est);
+
+  const problems =
+    getProblemsForEstablishment(est);
+
+  const temps =
+    getTempsForEstablishment(est);
+
+  const evidences =
+    getEvidenceForEstablishment(est);
 
   const avg =
     Math.round(
-      average(inspections.map(i => Number(i.score || 0)))
+      average(
+        inspections.map(
+          i => Number(i.score || 0)
+        )
+      )
     );
 
-  const risk = calculateRisk(est);
+  const risk =
+    calculateRisk(est);
 
   const lastInspection =
     [...inspections]
-      .sort((a,b) => String(b.date).localeCompare(String(a.date)))[0];
+      .sort(
+        (a,b) =>
+          String(b.date)
+          .localeCompare(
+            String(a.date)
+          )
+      )[0];
 
   const openProblems =
-    problems.filter(p => p.status !== "Resolvido").length;
+    problems.filter(
+      p => p.status !== "Resolvido"
+    ).length;
 
-  box.innerHTML = `
+  const overdueProblems =
+    problems.filter(
+      p => isProblemOverdue(p)
+    ).length;
+
+  const resolvedProblems =
+    problems.filter(
+      p => p.status === "Resolvido"
+    ).length;
+
+  const treatmentProblems =
+    problems.filter(
+      p => p.status === "Em tratamento"
+    ).length;
+
+  box.innerHTML=`
+
     <div class="actions no-print" style="margin-bottom:12px">
-      <button class="btn btn-secondary"
+
+      <button
+        class="btn btn-secondary"
         onclick="go('estabelecimentos')">
         ← Voltar
       </button>
 
-      <button class="btn btn-primary"
+      <button
+        class="btn btn-primary"
         onclick="startInspectionFor('${est.id}')">
         Nova inspeção
       </button>
 
-      <button class="btn btn-success"
+      <button
+        class="btn btn-warning"
+        onclick="goToProblemsFor('${est.id}')">
+        Ações corretivas
+      </button>
+
+      <button
+        class="btn btn-success"
         onclick="generateReportForEstablishment('${est.id}')">
         Relatório profissional
       </button>
+
     </div>
 
     <div class="card">
+
       <h1>${esc(est.name)}</h1>
+
       <p class="muted">
-        ${esc(est.type || "Estabelecimento alimentar")}
+        ${esc(
+          est.type ||
+          "Estabelecimento alimentar"
+        )}
       </p>
 
       <div class="grid" style="margin-top:15px">
 
         <div>
           <strong>Responsável</strong>
-          <div>${esc(est.responsible || "—")}</div>
+          <div>
+            ${esc(est.responsible || "—")}
+          </div>
         </div>
 
         <div>
           <strong>Endereço</strong>
-          <div>${esc(est.address || "—")}</div>
+          <div>
+            ${esc(est.address || "—")}
+          </div>
         </div>
 
         <div>
           <strong>Bairro</strong>
-          <div>${esc(est.bairro || "—")}</div>
+          <div>
+            ${esc(est.bairro || "—")}
+          </div>
         </div>
 
         <div>
           <strong>Distrito</strong>
-          <div>${esc(est.distrito || "—")}</div>
+          <div>
+            ${esc(est.distrito || "—")}
+          </div>
         </div>
 
         <div>
           <strong>Telefone</strong>
-          <div>${esc(est.phone || "—")}</div>
+          <div>
+            ${esc(est.phone || "—")}
+          </div>
         </div>
+
       </div>
+
     </div>
 
     <div class="grid" style="margin-top:15px">
 
       <div class="card">
-        <div class="muted small">Conformidade média</div>
-        <div class="stat">${avg}%</div>
+        <div class="muted small">
+          Conformidade média
+        </div>
+
+        <div class="stat">
+          ${avg}%
+        </div>
 
         <div class="progress">
-          <div class="progress-bar" style="width:${Math.min(avg,100)}%"></div>
+          <div
+            class="progress-bar"
+            style="width:${Math.min(avg,100)}%">
+          </div>
         </div>
       </div>
 
       <div class="card">
-        <div class="muted small">Nível de risco</div>
+
+        <div class="muted small">
+          Nível de risco
+        </div>
+
         <div style="margin-top:8px">
+
           <span class="badge ${risk.cls}">
             ${risk.label}
           </span>
+
         </div>
+
       </div>
 
       <div class="card">
-        <div class="muted small">Total de inspeções</div>
-        <div class="stat">${inspections.length}</div>
+
+        <div class="muted small">
+          Total de inspeções
+        </div>
+
+        <div class="stat">
+          ${inspections.length}
+        </div>
+
       </div>
 
       <div class="card">
-        <div class="muted small">Problemas em aberto</div>
-        <div class="stat">${openProblems}</div>
+
+        <div class="muted small">
+          Problemas em aberto
+        </div>
+
+        <div class="stat">
+          ${openProblems}
+        </div>
+
       </div>
+
     </div>
 
+    <!-- RESUMO DAS AÇÕES -->
     <div class="card" style="margin-top:15px">
+
+      <h2>Ações corretivas</h2>
+
+      <div class="grid">
+
+        <div>
+          <div class="muted small">
+            Abertas
+          </div>
+
+          <div class="stat">
+            ${openProblems}
+          </div>
+        </div>
+
+        <div>
+          <div class="muted small">
+            Em tratamento
+          </div>
+
+          <div class="stat">
+            ${treatmentProblems}
+          </div>
+        </div>
+
+        <div>
+          <div class="muted small">
+            Resolvidas
+          </div>
+
+          <div class="stat">
+            ${resolvedProblems}
+          </div>
+        </div>
+
+        <div>
+          <div class="muted small">
+            Atrasadas
+          </div>
+
+          <div class="stat">
+            ${overdueProblems}
+          </div>
+        </div>
+
+      </div>
+
+      ${
+        overdueProblems
+        ?
+        `
+          <div class="alert" style="margin-top:15px">
+            Este estabelecimento possui
+            <strong>${overdueProblems}</strong>
+            ação(ões) corretiva(s) atrasada(s).
+          </div>
+        `
+        :
+        `
+          <div class="alert" style="margin-top:15px;background:#f0fdf4;border-color:#bbf7d0;color:#166534">
+            Não existem ações corretivas atrasadas.
+          </div>
+        `
+      }
+
+    </div>
+
+    <!-- ÚLTIMA INSPEÇÃO -->
+    <div class="card" style="margin-top:15px">
+
       <h2>Última inspeção</h2>
 
       ${
@@ -2260,20 +3351,28 @@ function renderProfile(id){
         `
           <p>
             <strong>Data:</strong>
-            ${formatDate(lastInspection.date)}
+            ${formatDate(
+              lastInspection.date
+            )}
           </p>
 
           <p>
             <strong>Conformidade:</strong>
-            ${Number(lastInspection.score || 0)}%
+            ${Number(
+              lastInspection.score || 0
+            )}%
           </p>
 
           <p>
             <strong>Classificação:</strong>
-            ${esc(lastInspection.classification || "—")}
+            ${esc(
+              lastInspection.classification ||
+              "—"
+            )}
           </p>
 
-          <button class="btn btn-primary btn-small"
+          <button
+            class="btn btn-primary btn-small"
             onclick="generateReportForInspection('${lastInspection.id}')">
             Ver relatório da inspeção
           </button>
@@ -2282,49 +3381,86 @@ function renderProfile(id){
         `
           <div class="empty">
             Este estabelecimento ainda não possui inspeções.
+
             <br><br>
-            <button class="btn btn-primary"
+
+            <button
+              class="btn btn-primary"
               onclick="startInspectionFor('${est.id}')">
               Fazer primeira inspeção
             </button>
           </div>
         `
       }
+
     </div>
 
+    <!-- EVOLUÇÃO -->
     <div class="card" style="margin-top:15px">
+
       <h2>Evolução da conformidade</h2>
 
       ${
         inspections.length
         ?
         `
-          ${inspections
-            .slice()
-            .sort((a,b) => String(a.date).localeCompare(String(b.date)))
-            .map((i,index) => `
-              <div style="margin-bottom:12px">
-                <div style="display:flex;justify-content:space-between">
-                  <span>
-                    Inspeção ${index+1} — ${formatDate(i.date)}
-                  </span>
-                  <strong>${Number(i.score || 0)}%</strong>
+          ${
+            inspections
+              .slice()
+              .sort(
+                (a,b) =>
+                  String(a.date)
+                  .localeCompare(
+                    String(b.date)
+                  )
+              )
+              .map((i,index) => `
+
+                <div style="margin-bottom:12px">
+
+                  <div
+                    style="display:flex;justify-content:space-between">
+
+                    <span>
+                      Inspeção ${index+1}
+                      —
+                      ${formatDate(i.date)}
+                    </span>
+
+                    <strong>
+                      ${Number(
+                        i.score || 0
+                      )}%
+                    </strong>
+
+                  </div>
+
+                  <div class="progress">
+
+                    <div
+                      class="progress-bar"
+                      style="width:${Math.min(
+                        Number(i.score || 0),
+                        100
+                      )}%">
+                    </div>
+
+                  </div>
+
                 </div>
 
-                <div class="progress">
-                  <div class="progress-bar"
-                    style="width:${Math.min(Number(i.score || 0),100)}%">
-                  </div>
-                </div>
-              </div>
-            `).join("")}
+              `).join("")
+          }
         `
         :
         '<div class="empty">Ainda não existem dados de evolução.</div>'
       }
+
     </div>
 
+    <!-- HISTÓRICO INSPEÇÕES -->
     <div class="card" style="margin-top:15px">
+
       <h2>Histórico de inspeções</h2>
 
       ${
@@ -2332,7 +3468,9 @@ function renderProfile(id){
         ?
         `
           <div class="table-wrap">
+
             <table>
+
               <thead>
                 <tr>
                   <th>Data</th>
@@ -2341,86 +3479,242 @@ function renderProfile(id){
                   <th>Ação</th>
                 </tr>
               </thead>
+
               <tbody>
-                ${inspections
-                  .slice()
-                  .sort((a,b) => String(b.date).localeCompare(String(a.date)))
-                  .map(i => `
-                    <tr>
-                      <td>${formatDate(i.date)}</td>
-                      <td>${Number(i.score || 0)}%</td>
-                      <td>${esc(i.classification || "—")}</td>
-                      <td>
-                        <button class="btn btn-primary btn-small"
-                          onclick="generateReportForInspection('${i.id}')">
-                          Relatório
-                        </button>
-                      </td>
-                    </tr>
-                  `).join("")}
+
+                ${
+                  inspections
+                    .slice()
+                    .sort(
+                      (a,b) =>
+                        String(b.date)
+                        .localeCompare(
+                          String(a.date)
+                        )
+                    )
+                    .map(i => `
+
+                      <tr>
+
+                        <td>
+                          ${formatDate(i.date)}
+                        </td>
+
+                        <td>
+                          ${Number(
+                            i.score || 0
+                          )}%
+                        </td>
+
+                        <td>
+                          ${esc(
+                            i.classification || "—"
+                          )}
+                        </td>
+
+                        <td>
+
+                          <button
+                            class="btn btn-primary btn-small"
+                            onclick="generateReportForInspection('${i.id}')">
+                            Relatório
+                          </button>
+
+                        </td>
+
+                      </tr>
+
+                    `).join("")
+                }
+
               </tbody>
+
             </table>
+
           </div>
         `
         :
         '<div class="empty">Sem inspeções.</div>'
       }
+
     </div>
 
+    <!-- AÇÕES CORRETIVAS -->
     <div class="card" style="margin-top:15px">
-      <h2>Não conformidades e ações corretivas</h2>
+
+      <h2>
+        Não conformidades e ações corretivas
+      </h2>
 
       ${
         problems.length
         ?
         `
           <div class="table-wrap">
+
             <table>
+
               <thead>
+
                 <tr>
                   <th>Data</th>
                   <th>Problema</th>
                   <th>Severidade</th>
+                  <th>Responsável</th>
+                  <th>Prazo</th>
                   <th>Status</th>
+                  <th>Resolução</th>
                   <th>Ação corretiva</th>
+                  <th>Ação</th>
                 </tr>
+
               </thead>
 
               <tbody>
-                ${problems
-                  .slice()
-                  .sort((a,b) => String(b.date).localeCompare(String(a.date)))
-                  .map(p => {
 
-                    let cls="gray";
-                    if(p.status==="Aberto") cls="red";
-                    if(p.status==="Em tratamento") cls="yellow";
-                    if(p.status==="Resolvido") cls="green";
+                ${
+                  problems
+                    .slice()
+                    .sort(
+                      (a,b) =>
+                        String(b.date)
+                        .localeCompare(
+                          String(a.date)
+                        )
+                    )
+                    .map(p => {
 
-                    return `
-                      <tr>
-                        <td>${formatDate(p.date)}</td>
-                        <td>${esc(p.title || p.description || "—")}</td>
-                        <td>${esc(p.severity || "—")}</td>
-                        <td>
-                          <span class="badge ${cls}">
-                            ${esc(p.status || "—")}
-                          </span>
-                        </td>
-                        <td>${esc(p.action || "—")}</td>
-                      </tr>
-                    `;
-                  }).join("")}
+                      const overdue =
+                        isProblemOverdue(p);
+
+                      return `
+
+                        <tr class="${
+                          overdue ? "overdue" : ""
+                        }">
+
+                          <td>
+                            ${formatDate(p.date)}
+                          </td>
+
+                          <td>
+                            ${esc(
+                              p.title ||
+                              p.description ||
+                              "—"
+                            )}
+                          </td>
+
+                          <td>
+                            ${esc(
+                              p.severity || "—"
+                            )}
+                          </td>
+
+                          <td>
+                            ${esc(
+                              p.responsible || "—"
+                            )}
+                          </td>
+
+                          <td>
+
+                            ${
+                              p.deadline
+                              ? formatDate(
+                                  p.deadline
+                                )
+                              : "—"
+                            }
+
+                            ${
+                              overdue
+                              ?
+                              `
+                                <br>
+                                <span class="badge red">
+                                  Atrasado
+                                </span>
+                              `
+                              :
+                              ""
+                            }
+
+                          </td>
+
+                          <td>
+
+                            <span
+                              class="badge ${
+                                getProblemStatusClassFull(p)
+                              }">
+
+                              ${esc(
+                                getProblemStatusLabel(p)
+                              )}
+
+                            </span>
+
+                          </td>
+
+                          <td>
+                            ${
+                              p.resolutionDate
+                              ? formatDate(
+                                  p.resolutionDate
+                                )
+                              : "—"
+                            }
+                          </td>
+
+                          <td>
+                            ${esc(
+                              p.action || "—"
+                            )}
+                          </td>
+
+                          <td>
+
+                            <div class="actions">
+
+                              <button
+                                class="btn btn-secondary btn-small"
+                                onclick="changeProblemStatus('${p.id}')">
+                                Status
+                              </button>
+
+                              <button
+                                class="btn btn-primary btn-small"
+                                onclick="editProblem('${p.id}')">
+                                Editar
+                              </button>
+
+                            </div>
+
+                          </td>
+
+                        </tr>
+
+                      `;
+
+                    }).join("")
+                }
+
               </tbody>
+
             </table>
+
           </div>
         `
         :
         '<div class="empty">Nenhuma não conformidade registada.</div>'
       }
+
     </div>
 
+    <!-- TEMPERATURAS -->
     <div class="card" style="margin-top:15px">
+
       <h2>Histórico de temperaturas</h2>
 
       ${
@@ -2428,47 +3722,90 @@ function renderProfile(id){
         ?
         `
           <div class="table-wrap">
+
             <table>
+
               <thead>
+
                 <tr>
                   <th>Data</th>
                   <th>Equipamento/alimento</th>
                   <th>Temperatura</th>
                   <th>Avaliação</th>
                 </tr>
+
               </thead>
 
               <tbody>
-                ${temps
-                  .slice()
-                  .sort((a,b) => String(b.date).localeCompare(String(a.date)))
-                  .map(t => {
 
-                    const ev = evaluateTemperature(Number(t.value));
+                ${
+                  temps
+                    .slice()
+                    .sort(
+                      (a,b) =>
+                        String(b.date)
+                        .localeCompare(
+                          String(a.date)
+                        )
+                    )
+                    .map(t => {
 
-                    return `
-                      <tr>
-                        <td>${formatDate(t.date)}</td>
-                        <td>${esc(t.item || "—")}</td>
-                        <td>${esc(t.value)} °C</td>
-                        <td>
-                          <span class="badge ${ev.cls}">
-                            ${esc(t.evaluation || ev.label)}
-                          </span>
-                        </td>
-                      </tr>
-                    `;
-                  }).join("")}
+                      const ev =
+                        evaluateTemperature(
+                          Number(t.value)
+                        );
+
+                      return `
+
+                        <tr>
+
+                          <td>
+                            ${formatDate(t.date)}
+                          </td>
+
+                          <td>
+                            ${esc(
+                              t.item || "—"
+                            )}
+                          </td>
+
+                          <td>
+                            ${esc(t.value)} °C
+                          </td>
+
+                          <td>
+
+                            <span class="badge ${ev.cls}">
+                              ${esc(
+                                t.evaluation ||
+                                ev.label
+                              )}
+                            </span>
+
+                          </td>
+
+                        </tr>
+
+                      `;
+
+                    }).join("")
+                }
+
               </tbody>
+
             </table>
+
           </div>
         `
         :
         '<div class="empty">Nenhum registo de temperatura.</div>'
       }
+
     </div>
 
+    <!-- EVIDÊNCIAS -->
     <div class="card" style="margin-top:15px">
+
       <h2>Evidências</h2>
 
       ${
@@ -2476,42 +3813,98 @@ function renderProfile(id){
         ?
         `
           <div class="photo-grid">
-            ${evidences.map(e => `
-              <div>
-                ${
-                  e.image
-                  ?
-                  `<img src="${e.image}" alt="Evidência">`
-                  :
-                  ""
-                }
-                <div class="small">
-                  ${esc(e.description || "")}
+
+            ${
+              evidences.map(e => `
+
+                <div>
+
+                  ${
+                    e.image
+                    ?
+                    `<img
+                      src="${e.image}"
+                      alt="Evidência">`
+                    :
+                    ""
+                  }
+
+                  <div class="small">
+                    ${esc(
+                      e.description || ""
+                    )}
+                  </div>
+
+                  <div class="small muted">
+                    ${formatDate(e.date)}
+                  </div>
+
                 </div>
-                <div class="small muted">
-                  ${formatDate(e.date)}
-                </div>
-              </div>
-            `).join("")}
+
+              `).join("")
+            }
+
           </div>
         `
         :
         '<div class="empty">Nenhuma evidência registada.</div>'
       }
+
     </div>
   `;
 
   /*
-    Se existiam inspeções antigas pelo nome,
-    agora ficam definitivamente associadas ao ID.
+    Garante associação definitiva
+    das inspeções antigas.
   */
+
   inspections.forEach(i => {
+
     if(!i.establishmentId){
-      i.establishmentId = est.id;
+      i.establishmentId=est.id;
+    }
+  });
+
+  problems.forEach(p => {
+
+    if(!p.establishmentId){
+      p.establishmentId=est.id;
+    }
+
+    if(!p.responsible){
+      p.responsible=est.responsible || "";
+    }
+
+    if(p.status === "Resolvido" &&
+       !p.resolutionDate){
+
+      p.resolutionDate=today();
     }
   });
 
   saveDB();
+}
+
+/* =========================================================
+   IR PARA PROBLEMAS DE UM ESTABELECIMENTO
+========================================================= */
+
+function goToProblemsFor(id){
+
+  go("problemas");
+
+  setTimeout(() => {
+
+    const select =
+      document.getElementById(
+        "problemEstablishment"
+      );
+
+    if(select){
+      select.value=id;
+    }
+
+  },50);
 }
 
 /* =========================================================
@@ -2520,16 +3913,20 @@ function renderProfile(id){
 
 function generateReportForEstablishment(id){
 
-  const est = db.establishments.find(e => e.id === id);
+  const est =
+    db.establishments.find(
+      e => e.id === id
+    );
 
   if(!est) return;
 
-  const inspections = getInspectionsForEstablishment(est);
+  const inspections =
+    getInspectionsForEstablishment(est);
 
   if(!inspections.length){
 
     alert(
-      "Este estabelecimento ainda não possui inspeções.\n\n" +
+      "Este estabelecimento ainda não possui inspeções.\n\n"+
       "Faça uma inspeção primeiro para gerar o relatório."
     );
 
@@ -2539,30 +3936,41 @@ function generateReportForEstablishment(id){
   const latest =
     inspections
       .slice()
-      .sort((a,b) => String(b.date).localeCompare(String(a.date)))[0];
+      .sort(
+        (a,b) =>
+          String(b.date)
+          .localeCompare(
+            String(a.date)
+          )
+      )[0];
 
-  generateReportForInspection(latest.id);
+  generateReportForInspection(
+    latest.id
+  );
 }
 
-function generateReportForInspection(inspectionId){
+function generateReportForInspection(
+  inspectionId
+){
 
   const inspection =
-    db.inspections.find(i => i.id === inspectionId);
+    db.inspections.find(
+      i => i.id === inspectionId
+    );
 
   if(!inspection){
-    alert("Inspeção não encontrada.");
+
+    alert(
+      "Inspeção não encontrada."
+    );
+
     return;
   }
 
   let est =
-    db.establishments.find(e =>
-      e.id === inspection.establishmentId
+    db.establishments.find(
+      e => e.id === inspection.establishmentId
     );
-
-  /*
-    CORREÇÃO:
-    Se não encontrou pelo ID, encontra pelo nome.
-  */
 
   if(!est){
 
@@ -2572,9 +3980,10 @@ function generateReportForInspection(inspectionId){
       inspection.establishment ||
       "";
 
-    est = db.establishments.find(e =>
-      sameName(e.name,name)
-    );
+    est =
+      db.establishments.find(
+        e => sameName(e.name,name)
+      );
   }
 
   const establishmentName =
@@ -2586,11 +3995,14 @@ function generateReportForInspection(inspectionId){
   const problems =
     est
     ? getProblemsForEstablishment(est)
-    : db.problems.filter(p =>
-        sameName(
-          p.establishmentName || p.establishment || "",
-          establishmentName
-        )
+    : db.problems.filter(
+        p =>
+          sameName(
+            p.establishmentName ||
+            p.establishment ||
+            "",
+            establishmentName
+          )
       );
 
   const temps =
@@ -2607,145 +4019,252 @@ function generateReportForInspection(inspectionId){
     est
     ? calculateRisk(est)
     : {
-      label:"Não avaliado",
-      cls:"gray"
-    };
+        label:"Não avaliado",
+        cls:"gray"
+      };
 
   const nonconformities =
     (inspection.checklist || [])
-      .filter(item => !item.conform);
+      .filter(
+        item => !item.conform
+      );
 
   const score =
-    Number(inspection.score || 0);
+    Number(
+      inspection.score || 0
+    );
 
   const classification =
     inspection.classification ||
-    (score >= 80
+    (
+      score >= 80
       ? "Conforme"
       : score >= 60
       ? "Parcialmente conforme"
-      : "Não conforme");
+      : "Não conforme"
+    );
 
-  document.getElementById("reportContent").innerHTML = `
+  const openActions =
+    problems.filter(
+      p => p.status !== "Resolvido"
+    ).length;
+
+  const treatmentActions =
+    problems.filter(
+      p => p.status === "Em tratamento"
+    ).length;
+
+  const resolvedActions =
+    problems.filter(
+      p => p.status === "Resolvido"
+    ).length;
+
+  const overdueActions =
+    problems.filter(
+      p => isProblemOverdue(p)
+    ).length;
+
+  document.getElementById(
+    "reportContent"
+  ).innerHTML=`
 
     <div class="report-header">
+
       <h1>FoodSafe Moz</h1>
-      <h2>Relatório Profissional de Inspeção</h2>
+
+      <h2>
+        Relatório Profissional de Inspeção
+      </h2>
 
       <p>
-        <strong>Alimentos seguros, famílias protegidas</strong>
+        <strong>
+          Alimentos seguros, famílias protegidas
+        </strong>
       </p>
 
       <p class="muted">
         Documento gerado pelo sistema FoodSafe Moz.
       </p>
+
     </div>
 
+    <!-- 1 -->
     <div class="report-section">
-      <h2>1. Identificação do estabelecimento</h2>
+
+      <h2>
+        1. Identificação do estabelecimento
+      </h2>
 
       <table class="report-table">
+
         <tr>
           <th>Estabelecimento</th>
-          <td>${esc(establishmentName)}</td>
+          <td>
+            ${esc(establishmentName)}
+          </td>
         </tr>
 
         <tr>
           <th>Tipo</th>
-          <td>${esc(est?.type || "—")}</td>
+          <td>
+            ${esc(est?.type || "—")}
+          </td>
         </tr>
 
         <tr>
           <th>Endereço</th>
-          <td>${esc(est?.address || "—")}</td>
+          <td>
+            ${esc(est?.address || "—")}
+          </td>
         </tr>
 
         <tr>
           <th>Bairro</th>
-          <td>${esc(est?.bairro || "—")}</td>
+          <td>
+            ${esc(est?.bairro || "—")}
+          </td>
         </tr>
 
         <tr>
           <th>Distrito</th>
-          <td>${esc(est?.distrito || "—")}</td>
+          <td>
+            ${esc(est?.distrito || "—")}
+          </td>
         </tr>
 
         <tr>
           <th>Telefone</th>
-          <td>${esc(est?.phone || "—")}</td>
+          <td>
+            ${esc(est?.phone || "—")}
+          </td>
         </tr>
 
         <tr>
           <th>Responsável</th>
-          <td>${esc(inspection.responsible || est?.responsible || "—")}</td>
+          <td>
+            ${esc(
+              inspection.responsible ||
+              est?.responsible ||
+              "—"
+            )}
+          </td>
         </tr>
+
       </table>
+
     </div>
 
+    <!-- 2 -->
     <div class="report-section">
-      <h2>2. Dados da inspeção</h2>
+
+      <h2>
+        2. Dados da inspeção
+      </h2>
 
       <table class="report-table">
+
         <tr>
           <th>Data</th>
-          <td>${formatDate(inspection.date)}</td>
+          <td>
+            ${formatDate(inspection.date)}
+          </td>
         </tr>
 
         <tr>
           <th>Conformidade</th>
-          <td>${score}%</td>
+          <td>
+            ${score}%
+          </td>
         </tr>
 
         <tr>
           <th>Classificação</th>
-          <td>${esc(classification)}</td>
+          <td>
+            ${esc(classification)}
+          </td>
         </tr>
 
         <tr>
           <th>Nível de risco atual</th>
-          <td>${esc(risk.label)}</td>
+          <td>
+            ${esc(risk.label)}
+          </td>
         </tr>
+
       </table>
+
     </div>
 
+    <!-- 3 -->
     <div class="report-section">
-      <h2>3. Checklist de inspeção</h2>
+
+      <h2>
+        3. Checklist de inspeção
+      </h2>
 
       <table class="report-table">
+
         <thead>
+
           <tr>
             <th>#</th>
             <th>Item avaliado</th>
             <th>Resultado</th>
           </tr>
+
         </thead>
 
         <tbody>
-          ${(inspection.checklist || []).map((item,index) => `
-            <tr>
-              <td>${index+1}</td>
-              <td>${esc(item.item)}</td>
-              <td>
-                ${
-                  item.conform
-                  ? "Conforme"
-                  : "Não conforme"
-                }
-              </td>
-            </tr>
-          `).join("")}
+
+          ${
+            (inspection.checklist || [])
+              .map(
+                (item,index) => `
+
+                  <tr>
+
+                    <td>
+                      ${index+1}
+                    </td>
+
+                    <td>
+                      ${esc(item.item)}
+                    </td>
+
+                    <td>
+                      ${
+                        item.conform
+                        ? "Conforme"
+                        : "Não conforme"
+                      }
+                    </td>
+
+                  </tr>
+
+                `
+              )
+              .join("")
+          }
+
         </tbody>
+
       </table>
+
     </div>
 
+    <!-- 4 -->
     <div class="report-section">
-      <h2>4. Não conformidades</h2>
+
+      <h2>
+        4. Não conformidades
+      </h2>
 
       ${
         nonconformities.length
         ?
         `
           <table class="report-table">
+
             <thead>
               <tr>
                 <th>Item</th>
@@ -2754,168 +4273,404 @@ function generateReportForInspection(inspectionId){
             </thead>
 
             <tbody>
-              ${nonconformities.map(item => `
-                <tr>
-                  <td>${esc(item.item)}</td>
-                  <td>Não conforme</td>
-                </tr>
-              `).join("")}
+
+              ${
+                nonconformities.map(
+                  item => `
+
+                    <tr>
+
+                      <td>
+                        ${esc(item.item)}
+                      </td>
+
+                      <td>
+                        Não conforme
+                      </td>
+
+                    </tr>
+
+                  `
+                ).join("")
+              }
+
             </tbody>
+
           </table>
         `
         :
         "<p>Nenhuma não conformidade identificada nesta inspeção.</p>"
       }
+
     </div>
 
+    <!-- 5 -->
     <div class="report-section">
-      <h2>5. Ações corretivas</h2>
+
+      <h2>
+        5. Ações corretivas
+      </h2>
+
+      <div class="grid">
+
+        <div>
+          <strong>Abertas</strong>
+          <div class="stat">
+            ${openActions}
+          </div>
+        </div>
+
+        <div>
+          <strong>Em tratamento</strong>
+          <div class="stat">
+            ${treatmentActions}
+          </div>
+        </div>
+
+        <div>
+          <strong>Resolvidas</strong>
+          <div class="stat">
+            ${resolvedActions}
+          </div>
+        </div>
+
+        <div>
+          <strong>Atrasadas</strong>
+          <div class="stat">
+            ${overdueActions}
+          </div>
+        </div>
+
+      </div>
 
       ${
         problems.length
         ?
         `
-          <table class="report-table">
+          <table
+            class="report-table"
+            style="margin-top:15px">
+
             <thead>
+
               <tr>
                 <th>Problema</th>
                 <th>Severidade</th>
+                <th>Responsável</th>
+                <th>Prazo</th>
                 <th>Status</th>
+                <th>Data de resolução</th>
                 <th>Ação corretiva</th>
               </tr>
+
             </thead>
 
             <tbody>
-              ${problems.map(p => `
-                <tr>
-                  <td>${esc(p.title || p.description || "—")}</td>
-                  <td>${esc(p.severity || "—")}</td>
-                  <td>${esc(p.status || "—")}</td>
-                  <td>${esc(p.action || "—")}</td>
-                </tr>
-              `).join("")}
+
+              ${
+                problems.map(p => `
+
+                  <tr>
+
+                    <td>
+                      ${esc(
+                        p.title ||
+                        p.description ||
+                        "—"
+                      )}
+                    </td>
+
+                    <td>
+                      ${esc(
+                        p.severity || "—"
+                      )}
+                    </td>
+
+                    <td>
+                      ${esc(
+                        p.responsible || "—"
+                      )}
+                    </td>
+
+                    <td>
+                      ${
+                        p.deadline
+                        ? formatDate(
+                            p.deadline
+                          )
+                        : "—"
+                      }
+
+                      ${
+                        isProblemOverdue(p)
+                        ?
+                        `
+                          <br>
+                          <strong>
+                            Atrasado
+                          </strong>
+                        `
+                        :
+                        ""
+                      }
+                    </td>
+
+                    <td>
+                      ${esc(
+                        getProblemStatusLabel(p)
+                      )}
+                    </td>
+
+                    <td>
+                      ${
+                        p.resolutionDate
+                        ? formatDate(
+                            p.resolutionDate
+                          )
+                        : "—"
+                      }
+                    </td>
+
+                    <td>
+                      ${esc(
+                        p.action || "—"
+                      )}
+                    </td>
+
+                  </tr>
+
+                `).join("")
+              }
+
             </tbody>
+
           </table>
         `
         :
         "<p>Nenhuma ação corretiva registada.</p>"
       }
+
     </div>
 
+    <!-- 6 -->
     <div class="report-section">
-      <h2>6. Controlo de temperatura</h2>
+
+      <h2>
+        6. Controlo de temperatura
+      </h2>
 
       ${
         temps.length
         ?
         `
           <table class="report-table">
+
             <thead>
+
               <tr>
                 <th>Data</th>
                 <th>Equipamento/alimento</th>
                 <th>Temperatura</th>
                 <th>Avaliação</th>
               </tr>
+
             </thead>
 
             <tbody>
-              ${temps.map(t => `
-                <tr>
-                  <td>${formatDate(t.date)}</td>
-                  <td>${esc(t.item || "—")}</td>
-                  <td>${esc(t.value)} °C</td>
-                  <td>${esc(t.evaluation || "—")}</td>
-                </tr>
-              `).join("")}
+
+              ${
+                temps.map(t => `
+
+                  <tr>
+
+                    <td>
+                      ${formatDate(t.date)}
+                    </td>
+
+                    <td>
+                      ${esc(
+                        t.item || "—"
+                      )}
+                    </td>
+
+                    <td>
+                      ${esc(t.value)} °C
+                    </td>
+
+                    <td>
+                      ${esc(
+                        t.evaluation || "—"
+                      )}
+                    </td>
+
+                  </tr>
+
+                `).join("")
+              }
+
             </tbody>
+
           </table>
         `
         :
         "<p>Nenhum registo de temperatura associado.</p>"
       }
+
     </div>
 
+    <!-- 7 -->
     <div class="report-section">
-      <h2>7. Evidências</h2>
+
+      <h2>
+        7. Evidências
+      </h2>
 
       ${
         evidences.length
         ?
         `
           <div class="photo-grid">
-            ${evidences.map(e => `
-              <div>
-                ${
-                  e.image
-                  ? `<img src="${e.image}" alt="Evidência">`
-                  : ""
-                }
 
-                <p class="small">
-                  ${esc(e.description || "")}
-                </p>
+            ${
+              evidences.map(e => `
 
-                <p class="small muted">
-                  ${formatDate(e.date)}
-                </p>
-              </div>
-            `).join("")}
+                <div>
+
+                  ${
+                    e.image
+                    ?
+                    `<img
+                      src="${e.image}"
+                      alt="Evidência">`
+                    :
+                    ""
+                  }
+
+                  <p class="small">
+                    ${esc(
+                      e.description || ""
+                    )}
+                  </p>
+
+                  <p class="small muted">
+                    ${formatDate(e.date)}
+                  </p>
+
+                </div>
+
+              `).join("")
+            }
+
           </div>
         `
         :
         "<p>Nenhuma evidência associada.</p>"
       }
+
     </div>
 
+    <!-- 8 -->
     <div class="report-section">
-      <h2>8. Observações</h2>
-      <p>${esc(inspection.observation || "Nenhuma observação registada.")}</p>
-    </div>
 
-    <div class="report-section">
-      <h2>9. Conclusão</h2>
+      <h2>
+        8. Observações
+      </h2>
 
       <p>
+        ${esc(
+          inspection.observation ||
+          "Nenhuma observação registada."
+        )}
+      </p>
+
+    </div>
+
+    <!-- 9 -->
+    <div class="report-section">
+
+      <h2>
+        9. Conclusão
+      </h2>
+
+      <p>
+
         A inspeção realizada em
-        <strong>${formatDate(inspection.date)}</strong>
+        <strong>
+          ${formatDate(inspection.date)}
+        </strong>
+
         apresentou um nível de conformidade de
-        <strong>${score}%</strong>,
+
+        <strong>
+          ${score}%
+        </strong>
+
         com classificação
-        <strong>${esc(classification)}</strong>.
+
+        <strong>
+          ${esc(classification)}
+        </strong>.
+
       </p>
 
       <p>
+
         O nível de risco atual calculado pelo sistema é:
-        <strong>${esc(risk.label)}</strong>.
+
+        <strong>
+          ${esc(risk.label)}
+        </strong>.
+
       </p>
 
       <p>
-        As não conformidades identificadas devem ser acompanhadas
-        através das respetivas ações corretivas.
+
+        As não conformidades identificadas devem ser
+        acompanhadas através das respetivas ações
+        corretivas, responsáveis e prazos definidos.
+
       </p>
+
     </div>
 
+    <!-- 10 -->
     <div class="report-section">
-      <h2>10. Registo</h2>
+
+      <h2>
+        10. Registo
+      </h2>
 
       <p>
         Relatório gerado em:
         ${new Date().toLocaleString("pt-PT")}
       </p>
+
     </div>
 
     <div class="signature">
-      <div>Responsável pela inspeção</div>
-      <div>Responsável do estabelecimento</div>
+
+      <div>
+        Responsável pela inspeção
+      </div>
+
+      <div>
+        Responsável do estabelecimento
+      </div>
+
     </div>
+
   `;
 
-  document.getElementById("reportModal").classList.add("open");
+  document.getElementById(
+    "reportModal"
+  ).classList.add("open");
 }
 
 function closeReport(){
-  document.getElementById("reportModal").classList.remove("open");
+
+  document.getElementById(
+    "reportModal"
+  ).classList.remove("open");
 }
 
 /* =========================================================
@@ -2924,17 +4679,27 @@ function closeReport(){
 
 function renderHome(){
 
-  document.getElementById("homeEstablishments").textContent =
+  document.getElementById(
+    "homeEstablishments"
+  ).textContent =
     db.establishments.length;
 
-  document.getElementById("homeInspections").textContent =
+  document.getElementById(
+    "homeInspections"
+  ).textContent =
     db.inspections.length;
 
-  document.getElementById("homeProblems").textContent =
-    db.problems.filter(p => p.status !== "Resolvido").length;
+  document.getElementById(
+    "homeProblems"
+  ).textContent =
+    db.problems.filter(
+      p => p.status !== "Resolvido"
+    ).length;
 
-  document.getElementById("homeTemps").textContent =
-    db.temps.length;
+  document.getElementById(
+    "homeOverdue"
+  ).textContent =
+    getOverdueProblems().length;
 }
 
 /* =========================================================
@@ -2946,31 +4711,30 @@ function renderAll(){
   fillEstablishmentSelects();
 
   renderHome();
+
   renderTemperatureTable();
+
   renderProblems();
+
   renderEvidence();
+
   renderDashboard();
+
   renderHistory();
+
   renderEstablishments();
 
-  /*
-    Recria o checklist somente quando necessário.
-  */
-
   const checklist =
-    document.getElementById("checklist");
+    document.getElementById(
+      "checklist"
+    );
 
-  if(checklist && !checklist.children.length){
+  if(
+    checklist &&
+    !checklist.children.length
+  ){
     buildChecklist();
   }
-
-  const profilePage =
-    document.getElementById("page-perfil");
-
-  /*
-    Não destruímos o perfil automaticamente aqui,
-    porque o perfil é renderizado pelo openProfile().
-  */
 }
 
 /* =========================================================
@@ -2979,23 +4743,30 @@ function renderAll(){
 
 function openApp(){
 
-  document.getElementById("loginScreen").style.display="none";
-  document.getElementById("app").classList.add("active");
+  document.getElementById(
+    "loginScreen"
+  ).style.display="none";
+
+  document.getElementById(
+    "app"
+  ).classList.add("active");
 
   loadDB();
 
-  /*
-    Data inicial.
-  */
-
   const dateInput =
-    document.getElementById("inspectionDate");
+    document.getElementById(
+      "inspectionDate"
+    );
 
-  if(dateInput && !dateInput.value){
+  if(
+    dateInput &&
+    !dateInput.value
+  ){
     dateInput.value=today();
   }
 
   buildChecklist();
+
   renderAll();
 
   go("home");
@@ -3005,71 +4776,149 @@ function openApp(){
    EVENTOS
 ========================================================= */
 
-document.addEventListener("DOMContentLoaded",function(){
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
 
-  ensureUsers();
-  loadDB();
+    ensureUsers();
 
-  document
-    .getElementById("inspectionEstablishment")
-    .addEventListener("change",syncInspectionEstablishment);
+    loadDB();
 
-  const session =
-    localStorage.getItem(SESSION_KEY);
-
-  if(session){
-    openApp();
-  }
-
-  document
-    .getElementById("inspectionDate")
-    .value=today();
-
-});
-
-/* =========================================================
-   SEGURANÇA EXTRA DE MIGRAÇÃO
-   Executa quando a página termina de carregar
-========================================================= */
-
-window.addEventListener("load",function(){
-
-  loadDB();
-
-  /*
-    Se houver estabelecimento e inspeção antiga
-    com o mesmo nome, liga definitivamente os dois.
-  */
-
-  let changed = false;
-
-  db.inspections.forEach(ins => {
-
-    if(ins.establishmentId) return;
-
-    const name =
-      ins.establishmentName ||
-      ins.name ||
-      ins.establishment ||
-      ins.nomeEstabelecimento ||
-      "";
-
-    const est =
-      db.establishments.find(e =>
-        sameName(e.name,name)
+    document
+      .getElementById(
+        "inspectionEstablishment"
+      )
+      .addEventListener(
+        "change",
+        syncInspectionEstablishment
       );
 
-    if(est){
-      ins.establishmentId = est.id;
-      changed = true;
+    const session =
+      localStorage.getItem(
+        SESSION_KEY
+      );
+
+    if(session){
+      openApp();
     }
-  });
 
-  if(changed){
-    saveDB();
+    document.getElementById(
+      "inspectionDate"
+    ).value=today();
+
   }
+);
 
-});
+/* =========================================================
+   MIGRAÇÃO FINAL AO CARREGAR
+========================================================= */
+
+window.addEventListener(
+  "load",
+  function(){
+
+    loadDB();
+
+    let changed=false;
+
+    db.inspections.forEach(ins => {
+
+      if(ins.establishmentId) return;
+
+      const name =
+        ins.establishmentName ||
+        ins.name ||
+        ins.establishment ||
+        ins.nomeEstabelecimento ||
+        "";
+
+      const est =
+        db.establishments.find(
+          e => sameName(e.name,name)
+        );
+
+      if(est){
+
+        ins.establishmentId=est.id;
+
+        changed=true;
+      }
+    });
+
+    db.problems.forEach(p => {
+
+      if(!p.status){
+
+        p.status="Aberto";
+
+        changed=true;
+      }
+
+      if(
+        p.status === "Resolvido" &&
+        !p.resolutionDate
+      ){
+
+        p.resolutionDate=p.date || today();
+
+        changed=true;
+      }
+
+      if(
+        p.responsible === undefined
+      ){
+
+        p.responsible="";
+
+        changed=true;
+      }
+
+      if(
+        p.deadline === undefined
+      ){
+
+        p.deadline="";
+
+        changed=true;
+      }
+
+      if(
+        p.resolutionDate === undefined
+      ){
+
+        p.resolutionDate="";
+
+        changed=true;
+      }
+
+      if(!p.establishmentId){
+
+        const name =
+          p.establishmentName ||
+          p.establishment ||
+          p.name ||
+          "";
+
+        const est =
+          db.establishments.find(
+            e => sameName(e.name,name)
+          );
+
+        if(est){
+
+          p.establishmentId=est.id;
+
+          changed=true;
+        }
+      }
+    });
+
+    if(changed){
+      saveDB();
+    }
+
+  }
+);
 </script>
 
 </body>
