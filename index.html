@@ -1389,4 +1389,2206 @@ function renderEstablishments(){
       .filter(p => String(p.estabelecimentoId) === String(e.id));
 
     const evidence = visibleEvidence()
-      .filter(x => String(x.estabelecimentoId) ===
+      .filter(x => String(x.estabelecimentoId) === String(e.id));
+
+    return `
+      <div class="card" style="margin-bottom:12px">
+        <div class="profile-header">
+          <div>
+            <h3 style="margin:0">${escapeHtml(e.nome)}</h3>
+            <p style="margin:5px 0;color:#64748b">
+              ${escapeHtml(e.tipo || "Estabelecimento")}
+            </p>
+          </div>
+
+          <span class="badge badge-blue">
+            ${escapeHtml(e.localizacao || "Localização não informada")}
+          </span>
+        </div>
+
+        <div class="grid-4" style="margin-top:15px">
+          <div>
+            <small>Responsável</small>
+            <strong>${escapeHtml(e.responsavel || "-")}</strong>
+          </div>
+
+          <div>
+            <small>Telefone</small>
+            <strong>${escapeHtml(e.telefone || "-")}</strong>
+          </div>
+
+          <div>
+            <small>Inspeções</small>
+            <strong>${inspections.length}</strong>
+          </div>
+
+          <div>
+            <small>Problemas</small>
+            <strong>${problems.length}</strong>
+          </div>
+        </div>
+
+        <div class="actions" style="margin-top:15px">
+          <button class="btn"
+            onclick="openEstablishmentProfile('${e.id}')">
+            👤 Ver perfil
+          </button>
+
+          <button class="btn btn-secondary"
+            onclick="openEstablishmentReport('${e.id}')">
+            📄 Relatório
+          </button>
+
+          ${
+            isAdmin()
+            ? `<button class="btn btn-danger"
+                onclick="deleteEstablishment('${e.id}')">
+                🗑️ Eliminar
+              </button>`
+            : ""
+          }
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+/* =========================================================
+   PERFIL PROFISSIONAL
+========================================================= */
+
+function getRisk(average, openProblems, inspectionsCount){
+  if(!inspectionsCount){
+    return {
+      label:"Não avaliado",
+      emoji:"⚪",
+      className:"risk-none"
+    };
+  }
+
+  const critical = openProblems.some(p =>
+    p.severity === "Crítica"
+  );
+
+  const high = openProblems.some(p =>
+    p.severity === "Alta"
+  );
+
+  if(average < 50 || critical){
+    return {
+      label:"Alto",
+      emoji:"🔴",
+      className:"risk-high"
+    };
+  }
+
+  if(average < 75 || high){
+    return {
+      label:"Médio",
+      emoji:"🟡",
+      className:"risk-medium"
+    };
+  }
+
+  return {
+    label:"Baixo",
+    emoji:"🟢",
+    className:"risk-low"
+  };
+}
+
+function getInspectionScoreClass(value){
+  if(value >= 90) return "badge-green";
+  if(value >= 75) return "badge-blue";
+  if(value >= 50) return "badge-yellow";
+  return "badge-red";
+}
+
+function renderEstablishmentProfile(){
+  const container = $("profileContent");
+
+  if(!container) return;
+
+  const e = data.establishments.find(
+    x => String(x.id) === String(currentProfileEstablishmentId)
+  );
+
+  if(!e){
+    container.innerHTML =
+      '<div class="card"><div class="empty">Estabelecimento não encontrado.</div></div>';
+    return;
+  }
+
+  const inspections = visibleInspections()
+    .filter(i => String(i.estabelecimentoId) === String(e.id))
+    .sort((a,b) =>
+      String((b.date || "") + (b.time || "") + (b.createdAt || ""))
+      .localeCompare(
+        String((a.date || "") + (a.time || "") + (a.createdAt || ""))
+      )
+    );
+
+  const problems = visibleProblems()
+    .filter(p => String(p.estabelecimentoId) === String(e.id));
+
+  const evidence = visibleEvidence()
+    .filter(x => String(x.estabelecimentoId) === String(e.id));
+
+  const temps = visibleTemps()
+    .filter(t => String(t.estabelecimentoId) === String(e.id));
+
+  const openProblems = problems.filter(
+    p => p.status !== "Resolvido"
+  );
+
+  const average = inspections.length
+    ? inspections.reduce(
+        (sum,i) => sum + Number(i.percentage || 0),0
+      ) / inspections.length
+    : 0;
+
+  const lastInspection = inspections[0] || null;
+
+  const risk = getRisk(
+    average,
+    openProblems,
+    inspections.length
+  );
+
+  const nonConformities = {};
+
+  inspections.forEach(i => {
+    if(Array.isArray(i.nonConformities)){
+      i.nonConformities.forEach(n => {
+        const key = n.text || n;
+        nonConformities[key] =
+          (nonConformities[key] || 0) + 1;
+      });
+    }
+  });
+
+  const ncRows = Object.entries(nonConformities)
+    .sort((a,b) => b[1] - a[1]);
+
+  const problemSeverityBadge = severity => {
+    if(severity === "Crítica" || severity === "Alta"){
+      return "badge-red";
+    }
+
+    if(severity === "Média"){
+      return "badge-yellow";
+    }
+
+    return "badge-green";
+  };
+
+  container.innerHTML = `
+    <div class="card">
+      <div class="profile-header">
+
+        <div class="profile-title">
+          <div class="profile-icon">🏢</div>
+
+          <div>
+            <h2 style="margin:0">${escapeHtml(e.nome)}</h2>
+
+            <p style="margin:5px 0;color:#64748b">
+              ${escapeHtml(e.tipo || "Estabelecimento")}
+              ${e.localizacao ? " • " + escapeHtml(e.localizacao) : ""}
+            </p>
+
+            <span class="risk ${risk.className}">
+              ${risk.emoji} Risco ${risk.label}
+            </span>
+          </div>
+        </div>
+
+        <div>
+          <strong>Responsável</strong><br>
+          ${escapeHtml(e.responsavel || "-")}
+          <br>
+          <small>${escapeHtml(e.telefone || "")}</small>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="profile-grid">
+
+      <div class="profile-kpi">
+        <span class="stat-label">Conformidade média</span>
+        <strong>${average.toFixed(1)}%</strong>
+      </div>
+
+      <div class="profile-kpi">
+        <span class="stat-label">Total de inspeções</span>
+        <strong>${inspections.length}</strong>
+      </div>
+
+      <div class="profile-kpi">
+        <span class="stat-label">Problemas abertos</span>
+        <strong>${openProblems.length}</strong>
+      </div>
+
+      <div class="profile-kpi">
+        <span class="stat-label">Evidências</span>
+        <strong>${evidence.length}</strong>
+      </div>
+
+    </div>
+
+    <div class="card">
+      <h3 class="profile-section-title">Última inspeção</h3>
+
+      ${
+        lastInspection
+        ? `
+          <div class="grid-4">
+            <div class="profile-kpi">
+              <span class="stat-label">Data</span>
+              <strong style="font-size:18px">
+                ${formatDate(lastInspection.date)}
+              </strong>
+            </div>
+
+            <div class="profile-kpi">
+              <span class="stat-label">Hora</span>
+              <strong style="font-size:18px">
+                ${escapeHtml(lastInspection.time || "-")}
+              </strong>
+            </div>
+
+            <div class="profile-kpi">
+              <span class="stat-label">Conformidade</span>
+              <strong style="font-size:18px">
+                ${Number(lastInspection.percentage || 0).toFixed(1)}%
+              </strong>
+            </div>
+
+            <div class="profile-kpi">
+              <span class="stat-label">Resultado</span>
+              <strong style="font-size:16px">
+                ${escapeHtml(lastInspection.resultado || "-")}
+              </strong>
+            </div>
+          </div>
+        `
+        : '<div class="empty">Ainda não existem inspeções.</div>'
+      }
+    </div>
+
+    <div class="card">
+      <h3 class="profile-section-title">
+        Evolução da conformidade
+      </h3>
+
+      ${
+        inspections.length
+        ? inspections.slice(0,10).map(i => `
+          <div style="margin-bottom:15px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:5px">
+              <strong>${formatDate(i.date)}</strong>
+              <span>${Number(i.percentage || 0).toFixed(1)}%</span>
+            </div>
+
+            <div class="profile-bar">
+              <div
+                class="profile-bar-fill"
+                style="width:${Math.max(0,Math.min(100,Number(i.percentage || 0)))}%">
+              </div>
+            </div>
+          </div>
+        `).join("")
+        : '<div class="empty">Sem dados de evolução.</div>'
+      }
+    </div>
+
+    <div class="card">
+      <h3 class="profile-section-title">
+        Histórico de inspeções
+      </h3>
+
+      ${
+        inspections.length
+        ? `
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Inspetor</th>
+                  <th>Conformidade</th>
+                  <th>Resultado</th>
+                  <th>Não conformidades</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                ${inspections.map(i => `
+                  <tr>
+                    <td>${formatDate(i.date)}</td>
+                    <td>${escapeHtml(i.inspetor || i.createdByName || "-")}</td>
+                    <td>
+                      <span class="badge ${getInspectionScoreClass(Number(i.percentage || 0))}">
+                        ${Number(i.percentage || 0).toFixed(1)}%
+                      </span>
+                    </td>
+                    <td>${escapeHtml(i.resultado || "-")}</td>
+                    <td>${Array.isArray(i.nonConformities) ? i.nonConformities.length : 0}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        `
+        : '<div class="empty">Nenhuma inspeção encontrada.</div>'
+      }
+    </div>
+
+    <div class="card">
+      <h3 class="profile-section-title">
+        Não conformidades mais frequentes
+      </h3>
+
+      ${
+        ncRows.length
+        ? `
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Não conformidade</th>
+                  <th>Ocorrências</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${ncRows.map(([text,count]) => `
+                  <tr>
+                    <td>${escapeHtml(text)}</td>
+                    <td><strong>${count}</strong></td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        `
+        : '<div class="empty">Nenhuma não conformidade registada.</div>'
+      }
+    </div>
+
+    <div class="card">
+      <h3 class="profile-section-title">
+        Ações corretivas / Problemas
+      </h3>
+
+      ${
+        problems.length
+        ? `
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Problema</th>
+                  <th>Severidade</th>
+                  <th>Estado</th>
+                  <th>Ação / Observação</th>
+                  <th class="no-print">Ação</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                ${problems.map(p => `
+                  <tr>
+                    <td>${formatDate(p.date)}</td>
+                    <td>${escapeHtml(p.description)}</td>
+                    <td>
+                      <span class="badge ${problemSeverityBadge(p.severity)}">
+                        ${escapeHtml(p.severity)}
+                      </span>
+                    </td>
+                    <td>
+                      <span class="badge ${
+                        p.status === "Resolvido"
+                        ? "badge-green"
+                        : "badge-red"
+                      }">
+                        ${escapeHtml(p.status || "Aberto")}
+                      </span>
+                    </td>
+                    <td>${escapeHtml(p.notes || "-")}</td>
+                    <td class="no-print">
+                      <button
+                        class="btn btn-small ${
+                          p.status === "Resolvido"
+                          ? "btn-warning"
+                          : "btn-success"
+                        }"
+                        onclick="toggleProblem('${p.id}')">
+                        ${
+                          p.status === "Resolvido"
+                          ? "Reabrir"
+                          : "Resolver"
+                        }
+                      </button>
+                    </td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        `
+        : '<div class="empty">Nenhum problema registado.</div>'
+      }
+    </div>
+
+    <div class="card">
+      <h3 class="profile-section-title">
+        Controlo de temperaturas
+      </h3>
+
+      ${
+        temps.length
+        ? `
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Equipamento</th>
+                  <th>Temperatura</th>
+                  <th>Observação</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                ${temps.sort((a,b) =>
+                  String(b.date || "").localeCompare(String(a.date || ""))
+                ).slice(0,20).map(t => `
+                  <tr>
+                    <td>${formatDate(t.date)}</td>
+                    <td>${escapeHtml(t.item || "-")}</td>
+                    <td><strong>${escapeHtml(t.value)} °C</strong></td>
+                    <td>${escapeHtml(t.notes || "-")}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        `
+        : '<div class="empty">Nenhum registo de temperatura.</div>'
+      }
+    </div>
+
+    <div class="card">
+      <h3 class="profile-section-title">
+        Evidências fotográficas
+      </h3>
+
+      ${
+        evidence.length
+        ? `
+          <div class="grid-4">
+            ${evidence.map(x => `
+              <div class="card" style="margin:0">
+                ${
+                  x.image
+                  ? `<img class="evidence-image"
+                          src="${x.image}"
+                          alt="Evidência">`
+                  : `<div class="empty">Sem imagem</div>`
+                }
+
+                <p>
+                  <strong>${escapeHtml(x.description || "Evidência")}</strong>
+                </p>
+
+                <small>${formatDate(x.date || "")}</small>
+              </div>
+            `).join("")}
+          </div>
+        `
+        : '<div class="empty">Nenhuma evidência encontrada.</div>'
+      }
+    </div>
+  `;
+}
+
+/* =========================================================
+   SELECTS
+========================================================= */
+
+function fillEstablishmentSelect(id, includeEmpty=true){
+  const select = $(id);
+  if(!select) return;
+
+  const establishments = visibleEstablishments();
+
+  select.innerHTML =
+    (includeEmpty ? '<option value="">Selecione...</option>' : "") +
+    establishments.map(e =>
+      `<option value="${escapeHtml(e.id)}">
+        ${escapeHtml(e.nome)}
+      </option>`
+    ).join("");
+}
+
+function populateAllEstablishmentSelects(){
+  [
+    "tempEstablishment",
+    "inspectionEstablishment",
+    "problemEstablishment",
+    "evidenceEstablishment",
+    "reportEstablishment"
+  ].forEach(id => fillEstablishmentSelect(id,true));
+
+  populateEvidenceInspectionSelect();
+  populateReportInspectionSelect();
+}
+
+function populateEvidenceInspectionSelect(){
+  const select = $("evidenceInspection");
+  if(!select) return;
+
+  const establishmentId =
+    $("evidenceEstablishment")?.value || "";
+
+  let inspections = visibleInspections();
+
+  if(establishmentId){
+    inspections = inspections.filter(i =>
+      String(i.estabelecimentoId) === String(establishmentId)
+    );
+  }
+
+  select.innerHTML =
+    '<option value="">Nenhuma / não relacionada</option>' +
+    inspections.map(i =>
+      `<option value="${escapeHtml(i.id)}">
+        ${formatDate(i.date)} — ${escapeHtml(i.estabelecimento || "")}
+      </option>`
+    ).join("");
+}
+
+function populateReportInspectionSelect(){
+  const select = $("reportInspection");
+  if(!select) return;
+
+  const inspections = visibleInspections();
+
+  select.innerHTML =
+    '<option value="">Selecione...</option>' +
+    inspections.map(i =>
+      `<option value="${escapeHtml(i.id)}">
+        ${formatDate(i.date)} — ${escapeHtml(i.estabelecimento || "")}
+      </option>`
+    ).join("");
+}
+
+/* =========================================================
+   TEMPERATURA
+========================================================= */
+
+function evaluateTemperature(value){
+  const n = Number(value);
+
+  if(Number.isNaN(n)){
+    return {
+      text:"Temperatura inválida.",
+      className:"alert-danger"
+    };
+  }
+
+  if(n <= 5){
+    return {
+      text:"Temperatura adequada para conservação refrigerada.",
+      className:"alert-success"
+    };
+  }
+
+  if(n <= 8){
+    return {
+      text:"Atenção: temperatura acima do recomendado para refrigeração.",
+      className:"alert-warning"
+    };
+  }
+
+  return {
+    text:"Não conforme: temperatura elevada. Verificar imediatamente.",
+    className:"alert-danger"
+  };
+}
+
+function showTemperatureEvaluation(){
+  const value = $("tempValue").value;
+
+  if(value === ""){
+    $("temperatureEvaluation").innerHTML = "";
+    return;
+  }
+
+  const result = evaluateTemperature(value);
+
+  $("temperatureEvaluation").innerHTML =
+    `<div class="alert ${result.className}">
+      ${result.text}
+    </div>`;
+}
+
+function saveTemperature(){
+  if(!can("temperature")){
+    alert("Não tem permissão para registar temperaturas.");
+    return;
+  }
+
+  const estabelecimentoId = $("tempEstablishment").value;
+  const item = $("tempItem").value.trim();
+  const value = $("tempValue").value;
+  const date = $("tempDate").value || today();
+
+  if(!estabelecimentoId || !item || value === ""){
+    alert("Preencha estabelecimento, equipamento e temperatura.");
+    return;
+  }
+
+  const e = data.establishments.find(x =>
+    String(x.id) === String(estabelecimentoId)
+  );
+
+  data.temps.push({
+    id:generateId("tmp"),
+    estabelecimentoId,
+    estabelecimento:e?.nome || "",
+    item,
+    value:Number(value),
+    date,
+    notes:$("tempNotes").value.trim(),
+    createdBy:currentUser.id,
+    createdByName:currentUser.name,
+    createdAt:new Date().toISOString()
+  });
+
+  saveData();
+
+  $("tempItem").value = "";
+  $("tempValue").value = "";
+  $("tempNotes").value = "";
+
+  $("temperatureEvaluation").innerHTML =
+    '<div class="alert alert-success">Temperatura registada com sucesso.</div>';
+
+  refreshAll();
+}
+
+function deleteTemperature(id){
+  if(!isAdmin()){
+    alert("Apenas o administrador pode eliminar.");
+    return;
+  }
+
+  if(!confirm("Eliminar este registo?")) return;
+
+  data.temps = data.temps.filter(x => x.id !== id);
+  saveData();
+  refreshAll();
+}
+
+function renderTemperatures(){
+  const list = $("temperaturesList");
+  const temps = visibleTemps()
+    .slice()
+    .sort((a,b) =>
+      String(b.date || "").localeCompare(String(a.date || ""))
+    );
+
+  if(!temps.length){
+    list.innerHTML =
+      '<div class="empty">Nenhum registo de temperatura.</div>';
+    return;
+  }
+
+  list.innerHTML = `
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Estabelecimento</th>
+            <th>Item</th>
+            <th>Temperatura</th>
+            <th>Avaliação</th>
+            <th>Ação</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          ${temps.map(t => {
+            const ev = evaluateTemperature(t.value);
+
+            return `
+              <tr>
+                <td>${formatDate(t.date)}</td>
+                <td>${escapeHtml(t.estabelecimento || "-")}</td>
+                <td>${escapeHtml(t.item || "-")}</td>
+                <td><strong>${escapeHtml(t.value)} °C</strong></td>
+                <td>
+                  <span class="badge ${
+                    ev.className === "alert-success"
+                    ? "badge-green"
+                    : ev.className === "alert-warning"
+                    ? "badge-yellow"
+                    : "badge-red"
+                  }">
+                    ${
+                      ev.className === "alert-success"
+                      ? "Adequada"
+                      : ev.className === "alert-warning"
+                      ? "Atenção"
+                      : "Não conforme"
+                    }
+                  </span>
+                </td>
+                <td>
+                  ${
+                    isAdmin()
+                    ? `<button class="btn btn-danger btn-small"
+                        onclick="deleteTemperature('${t.id}')">
+                        Eliminar
+                      </button>`
+                    : "-"
+                  }
+                </td>
+              </tr>
+            `;
+          }).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+/* =========================================================
+   CHECKLIST / INSPEÇÃO
+========================================================= */
+
+function renderChecklist(){
+  const container = $("checklist");
+  if(!container) return;
+
+  container.innerHTML = checklistItems.map((item,index) => `
+    <label class="check-item">
+      <input
+        type="checkbox"
+        class="check-input"
+        data-index="${index}">
+      <span>${escapeHtml(item)}</span>
+    </label>
+  `).join("");
+}
+
+function getResult(percentage){
+  if(percentage >= 90){
+    return "Excelente";
+  }
+
+  if(percentage >= 75){
+    return "Bom";
+  }
+
+  if(percentage >= 50){
+    return "Atenção necessária";
+  }
+
+  return "Não conforme";
+}
+
+function showInspectionPreview(){
+  const checks = [...document.querySelectorAll(".check-input")];
+  const yes = checks.filter(c => c.checked).length;
+  const percentage =
+    checks.length ? (yes / checks.length) * 100 : 0;
+
+  $("inspectionResult").innerHTML = `
+    <div class="alert ${
+      percentage >= 75
+      ? "alert-success"
+      : percentage >= 50
+      ? "alert-warning"
+      : "alert-danger"
+    }">
+      <strong>${yes}/${checks.length}</strong>
+      — Conformidade atual: <strong>${percentage.toFixed(1)}%</strong>
+      — ${getResult(percentage)}
+    </div>
+  `;
+}
+
+function saveInspection(){
+  if(!can("inspection")){
+    alert("Não tem permissão para realizar inspeções.");
+    return;
+  }
+
+  const estabelecimentoId =
+    $("inspectionEstablishment").value;
+
+  if(!estabelecimentoId){
+    alert("Selecione o estabelecimento.");
+    return;
+  }
+
+  const checks = [...document.querySelectorAll(".check-input")];
+
+  const yes = checks.filter(c => c.checked).length;
+  const no = checks.length - yes;
+  const total = checks.length;
+  const percentage = total ? (yes / total) * 100 : 0;
+
+  const e = data.establishments.find(x =>
+    String(x.id) === String(estabelecimentoId)
+  );
+
+  const nonConformities = checks
+    .map((c,i) => !c.checked ? {
+      index:i,
+      text:checklistItems[i]
+    } : null)
+    .filter(Boolean);
+
+  const inspection = {
+    id:generateId("insp"),
+    estabelecimentoId,
+    estabelecimento:e?.nome || "",
+    responsavel:$("inspectionResponsible").value.trim(),
+    inspetor:currentUser.name,
+    date:$("inspectionDate").value || today(),
+    time:$("inspectionTime").value || nowTime(),
+    notes:$("inspectionNotes").value.trim(),
+    yes,
+    no,
+    total,
+    percentage,
+    resultado:getResult(percentage),
+    status:"concluida",
+    nonConformities,
+    createdBy:currentUser.id,
+    createdByName:currentUser.name,
+    createdByRole:currentUser.role,
+    createdAt:new Date().toISOString()
+  };
+
+  data.inspections.push(inspection);
+  saveData();
+
+  $("inspectionResult").innerHTML = `
+    <div class="alert alert-success">
+      Inspeção concluída com sucesso.
+      Resultado: <strong>${escapeHtml(inspection.resultado)}</strong>
+      — ${percentage.toFixed(1)}%.
+    </div>
+  `;
+
+  document.querySelectorAll(".check-input")
+    .forEach(c => c.checked = false);
+
+  $("inspectionNotes").value = "";
+
+  refreshAll();
+}
+
+function deleteInspection(id){
+  if(!isAdmin()){
+    alert("Apenas o administrador pode eliminar.");
+    return;
+  }
+
+  if(!confirm("Eliminar esta inspeção?")) return;
+
+  data.inspections =
+    data.inspections.filter(i => i.id !== id);
+
+  saveData();
+  refreshAll();
+}
+
+function renderInspections(){
+  const list = $("inspectionsList");
+  const inspections = visibleInspections()
+    .slice()
+    .sort((a,b) =>
+      String((b.date || "") + (b.time || ""))
+      .localeCompare(
+        String((a.date || "") + (a.time || ""))
+      )
+    );
+
+  if(!inspections.length){
+    list.innerHTML =
+      '<div class="empty">Nenhuma inspeção realizada.</div>';
+    return;
+  }
+
+  list.innerHTML = `
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Estabelecimento</th>
+            <th>Inspetor</th>
+            <th>Conformidade</th>
+            <th>Resultado</th>
+            <th>NC</th>
+            <th>Ação</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          ${inspections.map(i => `
+            <tr>
+              <td>${formatDate(i.date)}<br>${escapeHtml(i.time || "")}</td>
+              <td>${escapeHtml(i.estabelecimento || "-")}</td>
+              <td>${escapeHtml(i.inspetor || i.createdByName || "-")}</td>
+              <td>
+                <span class="badge ${getInspectionScoreClass(Number(i.percentage || 0))}">
+                  ${Number(i.percentage || 0).toFixed(1)}%
+                </span>
+              </td>
+              <td>${escapeHtml(i.resultado || "-")}</td>
+              <td>${Array.isArray(i.nonConformities) ? i.nonConformities.length : 0}</td>
+              <td>
+                ${
+                  isAdmin()
+                  ? `<button class="btn btn-danger btn-small"
+                      onclick="deleteInspection('${i.id}')">
+                      Eliminar
+                    </button>`
+                  : "-"
+                }
+              </td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+/* =========================================================
+   PROBLEMAS
+========================================================= */
+
+function saveProblem(){
+  if(!can("problem")){
+    alert("Não tem permissão para registar problemas.");
+    return;
+  }
+
+  const estabelecimentoId =
+    $("problemEstablishment").value;
+
+  const description =
+    $("problemDescription").value.trim();
+
+  if(!estabelecimentoId || !description){
+    alert("Selecione o estabelecimento e descreva o problema.");
+    return;
+  }
+
+  const e = data.establishments.find(x =>
+    String(x.id) === String(estabelecimentoId)
+  );
+
+  data.problems.push({
+    id:generateId("prob"),
+    estabelecimentoId,
+    estabelecimento:e?.nome || "",
+    description,
+    severity:$("problemSeverity").value,
+    date:$("problemDate").value || today(),
+    notes:$("problemNotes").value.trim(),
+    status:"Aberto",
+    createdBy:currentUser.id,
+    createdByName:currentUser.name,
+    createdAt:new Date().toISOString()
+  });
+
+  saveData();
+
+  $("problemDescription").value = "";
+  $("problemNotes").value = "";
+
+  refreshAll();
+
+  alert("Problema registado com sucesso.");
+}
+
+function toggleProblem(id){
+  const p = data.problems.find(x => x.id === id);
+
+  if(!p) return;
+
+  if(!isAdmin() && p.createdBy !== currentUser?.id){
+    alert("Não tem permissão para alterar este problema.");
+    return;
+  }
+
+  p.status =
+    p.status === "Resolvido"
+    ? "Aberto"
+    : "Resolvido";
+
+  p.updatedAt = new Date().toISOString();
+  p.updatedBy = currentUser.id;
+
+  saveData();
+  refreshAll();
+}
+
+function deleteProblem(id){
+  if(!isAdmin()){
+    alert("Apenas o administrador pode eliminar.");
+    return;
+  }
+
+  if(!confirm("Eliminar este problema?")) return;
+
+  data.problems =
+    data.problems.filter(p => p.id !== id);
+
+  saveData();
+  refreshAll();
+}
+
+function renderProblems(){
+  const list = $("problemsList");
+  const problems = visibleProblems()
+    .slice()
+    .sort((a,b) =>
+      String(b.date || "").localeCompare(String(a.date || ""))
+    );
+
+  if(!problems.length){
+    list.innerHTML =
+      '<div class="empty">Nenhum problema registado.</div>';
+    return;
+  }
+
+  list.innerHTML = `
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Estabelecimento</th>
+            <th>Problema</th>
+            <th>Severidade</th>
+            <th>Estado</th>
+            <th>Ação corretiva</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          ${problems.map(p => `
+            <tr>
+              <td>${formatDate(p.date)}</td>
+              <td>${escapeHtml(p.estabelecimento || "-")}</td>
+              <td>${escapeHtml(p.description)}</td>
+              <td>
+                <span class="badge ${
+                  p.severity === "Crítica" || p.severity === "Alta"
+                  ? "badge-red"
+                  : p.severity === "Média"
+                  ? "badge-yellow"
+                  : "badge-green"
+                }">
+                  ${escapeHtml(p.severity)}
+                </span>
+              </td>
+              <td>
+                <span class="badge ${
+                  p.status === "Resolvido"
+                  ? "badge-green"
+                  : "badge-red"
+                }">
+                  ${escapeHtml(p.status)}
+                </span>
+              </td>
+              <td>${escapeHtml(p.notes || "-")}</td>
+              <td>
+                <div class="actions">
+                  <button
+                    class="btn btn-small ${
+                      p.status === "Resolvido"
+                      ? "btn-warning"
+                      : "btn-success"
+                    }"
+                    onclick="toggleProblem('${p.id}')">
+                    ${p.status === "Resolvido" ? "Reabrir" : "Resolver"}
+                  </button>
+
+                  ${
+                    isAdmin()
+                    ? `<button class="btn btn-danger btn-small"
+                        onclick="deleteProblem('${p.id}')">
+                        Eliminar
+                      </button>`
+                    : ""
+                  }
+                </div>
+              </td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+/* =========================================================
+   EVIDÊNCIAS
+========================================================= */
+
+function saveEvidence(){
+  if(!can("evidence")){
+    alert("Não tem permissão para adicionar evidências.");
+    return;
+  }
+
+  const estabelecimentoId =
+    $("evidenceEstablishment").value;
+
+  if(!estabelecimentoId){
+    alert("Selecione o estabelecimento.");
+    return;
+  }
+
+  const file = $("evidenceFile").files[0];
+
+  if(!file){
+    alert("Selecione uma fotografia.");
+    return;
+  }
+
+  const e = data.establishments.find(x =>
+    String(x.id) === String(estabelecimentoId)
+  );
+
+  const inspectionId =
+    $("evidenceInspection").value;
+
+  const reader = new FileReader();
+
+  reader.onload = function(event){
+
+    data.evidences.push({
+      id:generateId("ev"),
+      estabelecimentoId,
+      estabelecimento:e?.nome || "",
+      inspectionId,
+      description:$("evidenceDescription").value.trim(),
+      image:event.target.result,
+      date:today(),
+      createdBy:currentUser.id,
+      createdByName:currentUser.name,
+      createdAt:new Date().toISOString()
+    });
+
+    saveData();
+
+    $("evidenceDescription").value = "";
+    $("evidenceFile").value = "";
+
+    refreshAll();
+
+    alert("Evidência guardada com sucesso.");
+  };
+
+  reader.readAsDataURL(file);
+}
+
+function deleteEvidence(id){
+  if(!isAdmin()){
+    alert("Apenas o administrador pode eliminar.");
+    return;
+  }
+
+  if(!confirm("Eliminar esta evidência?")) return;
+
+  data.evidences =
+    data.evidences.filter(e => e.id !== id);
+
+  saveData();
+  refreshAll();
+}
+
+function renderEvidence(){
+  const list = $("evidenceList");
+  const evidences = visibleEvidence()
+    .slice()
+    .sort((a,b) =>
+      String(b.createdAt || "").localeCompare(
+        String(a.createdAt || "")
+      )
+    );
+
+  if(!evidences.length){
+    list.innerHTML =
+      '<div class="empty">Nenhuma evidência registada.</div>';
+    return;
+  }
+
+  list.innerHTML = `
+    <div class="grid-4">
+      ${evidences.map(e => `
+        <div class="card" style="margin:0">
+          ${
+            e.image
+            ? `<img class="evidence-image"
+                    src="${e.image}"
+                    alt="Evidência">`
+            : ""
+          }
+
+          <p>
+            <strong>${escapeHtml(e.estabelecimento || "-")}</strong>
+          </p>
+
+          <p>${escapeHtml(e.description || "Sem descrição")}</p>
+
+          <small>${formatDate(e.date)}</small>
+
+          <div style="margin-top:10px">
+            ${
+              isAdmin()
+              ? `<button class="btn btn-danger btn-small"
+                  onclick="deleteEvidence('${e.id}')">
+                  Eliminar
+                </button>`
+              : ""
+            }
+          </div>
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function renderDashboard(){
+  const establishments = visibleEstablishments();
+  const inspections = visibleInspections();
+  const problems = visibleProblems();
+  const evidence = visibleEvidence();
+
+  const openProblems = problems.filter(
+    p => p.status !== "Resolvido"
+  );
+
+  const avg = inspections.length
+    ? inspections.reduce(
+        (s,i) => s + Number(i.percentage || 0),0
+      ) / inspections.length
+    : 0;
+
+  $("dashboardStats").innerHTML = `
+    <div class="stat">
+      <div class="stat-label">Estabelecimentos</div>
+      <div class="stat-value">${establishments.length}</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Inspeções</div>
+      <div class="stat-value">${inspections.length}</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Problemas abertos</div>
+      <div class="stat-value">${openProblems.length}</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Conformidade média</div>
+      <div class="stat-value">${avg.toFixed(1)}%</div>
+    </div>
+  `;
+
+  if(!establishments.length){
+    $("dashboardEstablishments").innerHTML =
+      '<div class="empty">Nenhum estabelecimento.</div>';
+    return;
+  }
+
+  $("dashboardEstablishments").innerHTML = `
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Estabelecimento</th>
+            <th>Inspeções</th>
+            <th>Média</th>
+            <th>Problemas abertos</th>
+            <th>Risco</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          ${establishments.map(e => {
+
+            const ei = inspections.filter(i =>
+              String(i.estabelecimentoId) === String(e.id)
+            );
+
+            const ep = problems.filter(p =>
+              String(p.estabelecimentoId) === String(e.id) &&
+              p.status !== "Resolvido"
+            );
+
+            const average = ei.length
+              ? ei.reduce(
+                  (s,i) => s + Number(i.percentage || 0),0
+                ) / ei.length
+              : 0;
+
+            const risk = getRisk(
+              average,
+              ep,
+              ei.length
+            );
+
+            return `
+              <tr>
+                <td>
+                  <button
+                    class="btn btn-light btn-small"
+                    onclick="openEstablishmentProfile('${e.id}')">
+                    ${escapeHtml(e.nome)}
+                  </button>
+                </td>
+
+                <td>${ei.length}</td>
+
+                <td>
+                  <strong>${average.toFixed(1)}%</strong>
+                </td>
+
+                <td>${ep.length}</td>
+
+                <td>
+                  <span class="risk ${risk.className}">
+                    ${risk.emoji} ${risk.label}
+                  </span>
+                </td>
+              </tr>
+            `;
+          }).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+/* =========================================================
+   HISTÓRICO
+========================================================= */
+
+function renderHistory(){
+  const list = $("historyList");
+
+  const events = [];
+
+  visibleInspections().forEach(i => {
+    events.push({
+      date:i.createdAt || i.date,
+      title:"Inspeção realizada",
+      text:(i.estabelecimento || "") +
+        " — " + Number(i.percentage || 0).toFixed(1) + "%"
+    });
+  });
+
+  visibleProblems().forEach(p => {
+    events.push({
+      date:p.createdAt || p.date,
+      title:"Problema registado",
+      text:(p.estabelecimento || "") +
+        " — " + (p.description || "")
+    });
+  });
+
+  visibleTemps().forEach(t => {
+    events.push({
+      date:t.createdAt || t.date,
+      title:"Temperatura registada",
+      text:(t.estabelecimento || "") +
+        " — " + t.value + " °C"
+    });
+  });
+
+  visibleEvidence().forEach(e => {
+    events.push({
+      date:e.createdAt || e.date,
+      title:"Evidência adicionada",
+      text:(e.estabelecimento || "") +
+        " — " + (e.description || "")
+    });
+  });
+
+  events.sort((a,b) =>
+    String(b.date || "").localeCompare(String(a.date || ""))
+  );
+
+  if(!events.length){
+    list.innerHTML =
+      '<div class="empty">Ainda não existem atividades.</div>';
+    return;
+  }
+
+  list.innerHTML = events.slice(0,100).map(event => `
+    <div style="
+      padding:14px 0;
+      border-bottom:1px solid #e2e8f0
+    ">
+      <strong>${escapeHtml(event.title)}</strong>
+
+      <div style="color:#475569;margin-top:4px">
+        ${escapeHtml(event.text)}
+      </div>
+
+      <small style="color:#94a3b8">
+        ${escapeHtml(event.date || "")}
+      </small>
+    </div>
+  `).join("");
+}
+
+/* =========================================================
+   RELATÓRIOS
+========================================================= */
+
+function updateReportControls(){
+  const type = $("reportType")?.value || "inspection";
+
+  if(type === "establishment"){
+    $("reportInspectionField").classList.add("hidden");
+    $("reportEstablishmentField").classList.remove("hidden");
+  }else{
+    $("reportInspectionField").classList.remove("hidden");
+    $("reportEstablishmentField").classList.add("hidden");
+  }
+
+  populateReportInspectionSelect();
+  fillEstablishmentSelect("reportEstablishment",true);
+}
+
+function generateReport(){
+  const type = $("reportType").value;
+
+  if(type === "establishment"){
+    generateEstablishmentReport();
+  }else{
+    generateInspectionReport();
+  }
+}
+
+function generateInspectionReport(){
+  const id = $("reportInspection").value;
+
+  if(!id){
+    alert("Selecione uma inspeção.");
+    return;
+  }
+
+  const i = data.inspections.find(x => x.id === id);
+
+  if(!i) return;
+
+  const problems = visibleProblems().filter(p =>
+    String(p.estabelecimentoId) === String(i.estabelecimentoId)
+  );
+
+  $("reportOutput").innerHTML = `
+    <div class="card report">
+
+      <div class="report-header">
+        <h1>FoodSafe Moz</h1>
+        <h2>Relatório de Inspeção Sanitária</h2>
+      </div>
+
+      <div class="grid">
+        <div>
+          <strong>Estabelecimento</strong>
+          <p>${escapeHtml(i.estabelecimento || "-")}</p>
+        </div>
+
+        <div>
+          <strong>Responsável</strong>
+          <p>${escapeHtml(i.responsavel || "-")}</p>
+        </div>
+
+        <div>
+          <strong>Data</strong>
+          <p>${formatDate(i.date)}</p>
+        </div>
+
+        <div>
+          <strong>Inspetor</strong>
+          <p>${escapeHtml(i.inspetor || i.createdByName || "-")}</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <h3>Resultado</h3>
+
+      <div class="grid-3">
+        <div class="profile-kpi">
+          <span class="stat-label">Conformidade</span>
+          <strong>${Number(i.percentage || 0).toFixed(1)}%</strong>
+        </div>
+
+        <div class="profile-kpi">
+          <span class="stat-label">Conformes</span>
+          <strong>${i.yes || 0}</strong>
+        </div>
+
+        <div class="profile-kpi">
+          <span class="stat-label">Não conformes</span>
+          <strong>${i.no || 0}</strong>
+        </div>
+      </div>
+
+      <h3>Resultado final</h3>
+      <p>
+        <strong>${escapeHtml(i.resultado || "-")}</strong>
+      </p>
+
+      <h3>Não conformidades</h3>
+
+      ${
+        Array.isArray(i.nonConformities) &&
+        i.nonConformities.length
+        ? `
+          <ol>
+            ${i.nonConformities.map(n =>
+              `<li>${escapeHtml(n.text || n)}</li>`
+            ).join("")}
+          </ol>
+        `
+        : "<p>Nenhuma não conformidade.</p>"
+      }
+
+      <h3>Observações</h3>
+      <p>${escapeHtml(i.notes || "Sem observações.")}</p>
+
+      <h3>Problemas relacionados</h3>
+
+      ${
+        problems.length
+        ? `
+          <ul>
+            ${problems.map(p => `
+              <li>
+                ${escapeHtml(p.description)}
+                — ${escapeHtml(p.status)}
+              </li>
+            `).join("")}
+          </ul>
+        `
+        : "<p>Nenhum problema registado.</p>"
+      }
+
+      <div class="signature-grid">
+        <div class="signature">Inspetor</div>
+        <div class="signature">Responsável do estabelecimento</div>
+      </div>
+
+    </div>
+  `;
+}
+
+function generateEstablishmentReport(){
+  const id = $("reportEstablishment").value;
+
+  if(!id){
+    alert("Selecione um estabelecimento.");
+    return;
+  }
+
+  const e = data.establishments.find(x => x.id === id);
+
+  if(!e) return;
+
+  const inspections = visibleInspections()
+    .filter(i => String(i.estabelecimentoId) === String(id))
+    .sort((a,b) =>
+      String((b.date || "") + (b.time || ""))
+      .localeCompare(
+        String((a.date || "") + (a.time || ""))
+      )
+    );
+
+  const problems = visibleProblems()
+    .filter(p => String(p.estabelecimentoId) === String(id));
+
+  const temps = visibleTemps()
+    .filter(t => String(t.estabelecimentoId) === String(id));
+
+  const evidences = visibleEvidence()
+    .filter(x => String(x.estabelecimentoId) === String(id));
+
+  const average = inspections.length
+    ? inspections.reduce(
+        (s,i) => s + Number(i.percentage || 0),0
+      ) / inspections.length
+    : 0;
+
+  const openProblems =
+    problems.filter(p => p.status !== "Resolvido");
+
+  const risk = getRisk(
+    average,
+    openProblems,
+    inspections.length
+  );
+
+  $("reportOutput").innerHTML = `
+    <div class="card report">
+
+      <div class="report-header">
+        <h1>FoodSafe Moz</h1>
+        <h2>Relatório Profissional do Estabelecimento</h2>
+        <p>Alimentos seguros, famílias protegidas.</p>
+      </div>
+
+      <h2>${escapeHtml(e.nome)}</h2>
+
+      <div class="grid">
+        <div>
+          <strong>Tipo</strong>
+          <p>${escapeHtml(e.tipo || "-")}</p>
+        </div>
+
+        <div>
+          <strong>Responsável</strong>
+          <p>${escapeHtml(e.responsavel || "-")}</p>
+        </div>
+
+        <div>
+          <strong>Telefone</strong>
+          <p>${escapeHtml(e.telefone || "-")}</p>
+        </div>
+
+        <div>
+          <strong>Localização</strong>
+          <p>${escapeHtml(e.localizacao || "-")}</p>
+        </div>
+      </div>
+
+      <h3>Resumo executivo</h3>
+
+      <div class="grid-4">
+
+        <div class="profile-kpi">
+          <span class="stat-label">Conformidade média</span>
+          <strong>${average.toFixed(1)}%</strong>
+        </div>
+
+        <div class="profile-kpi">
+          <span class="stat-label">Inspeções</span>
+          <strong>${inspections.length}</strong>
+        </div>
+
+        <div class="profile-kpi">
+          <span class="stat-label">Problemas abertos</span>
+          <strong>${openProblems.length}</strong>
+        </div>
+
+        <div class="profile-kpi">
+          <span class="stat-label">Nível de risco</span>
+          <strong>${risk.emoji} ${risk.label}</strong>
+        </div>
+
+      </div>
+
+      <h3>Evolução das inspeções</h3>
+
+      ${
+        inspections.length
+        ? `
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Inspetor</th>
+                  <th>Conformidade</th>
+                  <th>Resultado</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${inspections.map(i => `
+                  <tr>
+                    <td>${formatDate(i.date)}</td>
+                    <td>${escapeHtml(i.inspetor || i.createdByName || "-")}</td>
+                    <td>${Number(i.percentage || 0).toFixed(1)}%</td>
+                    <td>${escapeHtml(i.resultado || "-")}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        `
+        : "<p>Nenhuma inspeção.</p>"
+      }
+
+      <h3>Problemas e ações corretivas</h3>
+
+      ${
+        problems.length
+        ? `
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Problema</th>
+                  <th>Severidade</th>
+                  <th>Estado</th>
+                  <th>Ação corretiva</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                ${problems.map(p => `
+                  <tr>
+                    <td>${formatDate(p.date)}</td>
+                    <td>${escapeHtml(p.description)}</td>
+                    <td>${escapeHtml(p.severity)}</td>
+                    <td>${escapeHtml(p.status)}</td>
+                    <td>${escapeHtml(p.notes || "-")}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        `
+        : "<p>Nenhum problema registado.</p>"
+      }
+
+      <h3>Controlo de temperaturas</h3>
+
+      ${
+        temps.length
+        ? `
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Equipamento</th>
+                  <th>Temperatura</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${temps.map(t => `
+                  <tr>
+                    <td>${formatDate(t.date)}</td>
+                    <td>${escapeHtml(t.item || "-")}</td>
+                    <td>${escapeHtml(t.value)} °C</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        `
+        : "<p>Nenhum registo de temperatura.</p>"
+      }
+
+      <h3>Evidências</h3>
+      <p>Total de evidências: <strong>${evidences.length}</strong></p>
+
+      <div class="signature-grid">
+        <div class="signature">Inspetor</div>
+        <div class="signature">Responsável do estabelecimento</div>
+      </div>
+
+    </div>
+  `;
+}
+
+function openEstablishmentReport(id){
+  currentProfileEstablishmentId = id;
+
+  showPage("relatorios");
+
+  $("reportType").value = "establishment";
+
+  updateReportControls();
+
+  $("reportEstablishment").value = id;
+
+  generateEstablishmentReport();
+}
+
+function printReport(){
+  if(!$("reportOutput").innerHTML.trim()){
+    alert("Gere primeiro um relatório.");
+    return;
+  }
+
+  window.print();
+}
+
+/* =========================================================
+   UTILIZADORES
+========================================================= */
+
+function saveUser(){
+  if(!isAdmin()){
+    alert("Apenas o administrador pode criar utilizadores.");
+    return;
+  }
+
+  const name = $("newUserName").value.trim();
+  const username = $("newUserUsername").value.trim();
+  const password = $("newUserPassword").value;
+  const role = $("newUserRole").value;
+  const establishmentId = $("newUserEstablishment").value;
+
+  if(!name || !username || !password){
+    alert("Preencha nome, utilizador e palavra-passe.");
+    return;
+  }
+
+  if(data.users.some(u => u.username === username)){
+    alert("Esse utilizador já existe.");
+    return;
+  }
+
+  data.users.push({
+    id:generateId("usr"),
+    name,
+    username,
+    password,
+    role,
+    establishmentId,
+    active:true,
+    createdAt:new Date().toISOString()
+  });
+
+  saveData();
+
+  $("newUserName").value = "";
+  $("newUserUsername").value = "";
+  $("newUserPassword").value = "";
+
+  refreshAll();
+
+  alert("Utilizador criado com sucesso.");
+}
+
+function toggleUser(id){
+  if(!isAdmin()) return;
+
+  const user = data.users.find(u => u.id === id);
+
+  if(!user) return;
+
+  if(user.id === currentUser.id){
+    alert("Não pode desativar o utilizador atualmente ligado.");
+    return;
+  }
+
+  user.active = user.active === false;
+
+  saveData();
+  refreshAll();
+}
+
+function deleteUser(id){
+  if(!isAdmin()) return;
+
+  const user = data.users.find(u => u.id === id);
+
+  if(!user) return;
+
+  if(user.id === currentUser.id){
+    alert("Não pode eliminar o próprio utilizador.");
+    return;
+  }
+
+  if(!confirm("Eliminar este utilizador?")) return;
+
+  data.users = data.users.filter(u => u.id !== id);
+
+  saveData();
+  refreshAll();
+}
+
+function renderUsers(){
+  const container = $("usersAdminOnly");
+
+  if(!isAdmin()){
+    container.innerHTML = `
+      <div class="card">
+        <div class="alert alert-info">
+          Esta área está disponível apenas para administradores.
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="card">
+      <h3>Criar utilizador</h3>
+
+      <div class="grid">
+        <div class="field">
+          <label>Nome</label>
+          <input id="newUserName" type="text">
+        </div>
+
+        <div class="field">
+          <label>Utilizador</label>
+          <input id="newUserUsername" type="text">
+        </div>
+
+        <div class="field">
+          <label>Palavra-passe</label>
+          <input id="newUserPassword" type="password">
+        </div>
+
+        <div class="field">
+          <label>Função</label>
+          <select id="newUserRole">
+            <option value="Inspetor">Inspetor</option>
+            <option value="Responsável">Responsável</option>
+            <option value="Administrador">Administrador</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Estabelecimento</label>
+          <select id="newUserEstablishment"></select>
+        </div>
+      </div>
+
+      <button class="btn" onclick="saveUser()">
+        Criar utilizador
+      </button>
+    </div>
+
+    <div class="card">
+      <h3>Utilizadores existentes</h3>
+      <div id="usersList"></div>
+    </div>
+  `;
+
+  fillEstablishmentSelect("newUserEstablishment",true);
+
+  const list = $("usersList");
+
+  list.innerHTML = `
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Utilizador</th>
+            <th>Função</th>
+            <th>Estabelecimento</th>
+            <th>Estado</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          ${data.users.map(u => {
+
+            const e = data.establishments.find(x =>
+              String(x.id) === String(u.establishmentId)
+            );
+
+            return `
+              <tr>
+                <td>${escapeHtml(u.name)}</td>
+                <td>${escapeHtml(u.username)}</td>
+                <td>${escapeHtml(u.role)}</td>
+                <td>${escapeHtml(e?.nome || "-")}</td>
+                <td>
+                  <span class="badge ${
+                    u.active === false
+                    ? "badge-red"
+                    : "badge-green"
+                  }">
+                    ${u.active === false ? "Inativo" : "Ativo"}
+                  </span>
+                </td>
+                <td>
+                  <div class="actions">
+                    <button
+                      class="btn btn-small btn-warning"
+                      onclick="toggleUser('${u.id}')">
+                      ${u.active === false ? "Ativar" : "Desativar"}
+                    </button>
+
+                    ${
+                      u.id !== currentUser.id
+                      ? `<button
+                          class="btn btn-small btn-danger"
+                          onclick="deleteUser('${u.id}')">
+                          Eliminar
+                        </button>`
+                      : ""
+                    }
+                  </div>
+                </td>
+              </tr>
+            `;
+          }).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+/* =========================================================
+   REFRESH GERAL
+========================================================= */
+
+function refreshAll(){
+  if(!currentUser) return;
+
+  populateAllEstablishmentSelects();
+
+  renderEstablishments();
+  renderTemperatures();
+  renderInspections();
+  renderProblems();
+  renderEvidence();
+  renderDashboard();
+  renderHistory();
+  renderUsers();
+
+  $("homeEstablishments").textContent =
+    visibleEstablishments().length;
+
+  $("homeInspections").textContent =
+    visibleInspections().length;
+
+  $("homeProblems").textContent =
+    visibleProblems().filter(
+      p => p.status !== "Resolvido"
+    ).length;
+
+  $("homeEvidence").textContent =
+    visibleEvidence().length;
+
+  if($("tempDate") && !$("tempDate").value){
+    $("tempDate").value = today();
+  }
+
+  if($("inspectionDate") && !$("inspectionDate").value){
+    $("inspectionDate").value = today();
+  }
+
+  if($("inspectionTime") && !$("inspectionTime").value){
+    $("inspectionTime").value = nowTime();
+  }
+
+  if($("problemDate") && !$("problemDate").value){
+    $("problemDate").value = today();
+  }
+
+  if(currentPage === "perfilEstabelecimento" &&
+     currentProfileEstablishmentId){
+    renderEstablishmentProfile();
+  }
+
+  if(currentPage === "relatorios"){
+    updateReportControls();
+  }
+}
+
+/* =========================================================
+   EVENTOS
+========================================================= */
+
+document.addEventListener("click",function(event){
+
+  const pageButton =
+    event.target.closest("[data-page]");
+
+  if(pageButton){
+    showPage(pageButton.dataset.page);
+  }
+
+});
+
+document.addEventListener("change",function(event){
+
+  if(event.target.id === "evidenceEstablishment"){
+    populateEvidenceInspectionSelect();
+  }
+
+  if(event.target.id === "reportType"){
+    updateReportControls();
+  }
+
+  if(event.target.classList.contains("check-input")){
+    showInspectionPreview();
+  }
+
+  if(event.target.id === "tempValue"){
+    showTemperatureEvaluation();
+  }
+
+});
+
+document.addEventListener("keydown",function(event){
+
+  if(event.key === "Enter"){
+    if(
+      document.activeElement === $("loginUsername") ||
+      document.activeElement === $("loginPassword")
+    ){
+      login();
+    }
+  }
+
+});
+
+/* =========================================================
+   INICIALIZAÇÃO
+========================================================= */
+
+loadData();
+renderChecklist();
+
+if($("tempDate")){
+  $("tempDate").value = today();
+}
+
+if($("inspectionDate")){
+  $("inspectionDate").value = today();
+}
+
+if($("inspectionTime")){
+  $("inspectionTime").value = nowTime();
+}
+
+if($("problemDate")){
+  $("problemDate").value = today();
+}
+
+loadSession();
+
+</script>
+
+</body>
+</html>
