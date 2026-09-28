@@ -236,6 +236,7 @@ th{background:#f8fafc}
   font-size:12px;
   font-weight:bold;
   background:#e2e8f0;
+  margin:2px;
 }
 .badge-admin{background:#dbeafe;color:#1d4ed8}
 .badge-inspector{background:#dcfce7;color:#15803d}
@@ -285,12 +286,224 @@ th{background:#f8fafc}
   color:#667085;
 }
 
+/* =========================================================
+   PERFIL PROFISSIONAL
+========================================================= */
+
+.profile-header{
+  background:linear-gradient(135deg,#0f766e,#115e59);
+  color:#fff;
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:18px;
+}
+
+.profile-header h1{
+  margin:0 0 8px;
+  font-size:27px;
+}
+
+.profile-header p{
+  margin:5px 0;
+  opacity:.95;
+}
+
+.profile-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:18px;
+}
+
+.profile-actions button{
+  width:auto;
+}
+
+.profile-kpis{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;
+  margin-bottom:18px;
+}
+
+.profile-kpi{
+  background:#fff;
+  border-radius:14px;
+  padding:17px;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+
+.profile-kpi strong{
+  display:block;
+  font-size:25px;
+  color:#0f766e;
+  margin-bottom:5px;
+}
+
+.profile-kpi span{
+  color:#667085;
+  font-size:13px;
+}
+
+.risk-box{
+  border-radius:15px;
+  padding:18px;
+  margin-bottom:18px;
+  border:2px solid #ddd;
+}
+
+.risk-box strong{
+  font-size:25px;
+  display:block;
+  margin-bottom:5px;
+}
+
+.risk-high{
+  background:#fee2e2;
+  color:#991b1b;
+  border-color:#fecaca;
+}
+
+.risk-medium{
+  background:#fef3c7;
+  color:#92400e;
+  border-color:#fde68a;
+}
+
+.risk-low{
+  background:#dcfce7;
+  color:#166534;
+  border-color:#bbf7d0;
+}
+
+.risk-none{
+  background:#f1f5f9;
+  color:#475569;
+  border-color:#cbd5e1;
+}
+
+.profile-section{
+  background:#fff;
+  border-radius:15px;
+  padding:18px;
+  margin-bottom:18px;
+  box-shadow:0 2px 10px rgba(0,0,0,.06);
+}
+
+.profile-section h2{
+  margin-top:0;
+}
+
+.profile-info-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:12px;
+}
+
+.profile-info-item{
+  background:#f8fafc;
+  padding:13px;
+  border-radius:10px;
+}
+
+.profile-info-item small{
+  display:block;
+  color:#667085;
+  margin-bottom:5px;
+}
+
+.profile-info-item strong{
+  display:block;
+}
+
+.profile-bar-row{
+  margin-bottom:15px;
+}
+
+.profile-bar-label{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:5px;
+  font-size:13px;
+}
+
+.profile-bar{
+  height:11px;
+  background:#e5e7eb;
+  border-radius:999px;
+  overflow:hidden;
+}
+
+.profile-bar-fill{
+  height:100%;
+  background:#0f766e;
+  border-radius:999px;
+}
+
+.profile-mini-card{
+  background:#f8fafc;
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:10px;
+}
+
+.profile-mini-card:last-child{
+  margin-bottom:0;
+}
+
+.profile-empty{
+  color:#667085;
+  padding:10px 0;
+}
+
+.profile-status-open{
+  color:#b91c1c;
+  font-weight:bold;
+}
+
+.profile-status-closed{
+  color:#15803d;
+  font-weight:bold;
+}
+
+.profile-severity-critical{
+  color:#991b1b;
+  font-weight:bold;
+}
+
+.profile-severity-high{
+  color:#b45309;
+  font-weight:bold;
+}
+
+.profile-severity-medium{
+  color:#92400e;
+  font-weight:bold;
+}
+
+.profile-severity-low{
+  color:#166534;
+  font-weight:bold;
+}
+
+.profile-back{
+  margin-bottom:15px;
+}
+
 @media(max-width:600px){
   .header-inner{align-items:flex-start}
   .user-info{flex-direction:column;align-items:flex-end}
   main{padding:12px}
   .card{padding:14px}
   .signature-grid{grid-template-columns:1fr}
+  .profile-header h1{font-size:23px}
+  .profile-actions{
+    flex-direction:column;
+  }
+  .profile-actions button{
+    width:100%;
+  }
 }
 
 @media print{
@@ -311,15 +524,21 @@ th{background:#f8fafc}
 
 <body>
 
-<!-- LOGIN -->
+<!-- =====================================================
+     LOGIN
+===================================================== -->
+
 <div id="loginScreen" class="login-screen">
+
   <div class="login-box">
 
     <div class="logo">FoodSafe Moz</div>
     <div class="logo-sub">Alimentos seguros, famílias protegidas</div>
 
     <div id="firstAdminBox" style="display:none">
+
       <h2>Primeiro acesso</h2>
+
       <p style="text-align:center;color:#667085">
         Crie o primeiro administrador do FoodSafe Moz.
       </p>
@@ -344,9 +563,11 @@ th{background:#f8fafc}
       <button class="primary" data-action="create-first-admin">
         Criar administrador
       </button>
+
     </div>
 
     <div id="loginBox">
+
       <h2>Entrar</h2>
 
       <div class="field">
@@ -364,16 +585,22 @@ th{background:#f8fafc}
       <button class="primary" data-action="login">
         Entrar no FoodSafe Moz
       </button>
+
     </div>
 
   </div>
 </div>
 
-<!-- APP -->
+<!-- =====================================================
+     APP
+===================================================== -->
+
 <div id="app" class="app">
 
 <header>
+
   <div class="header-inner">
+
     <div>
       <div class="brand">🛡️ FoodSafe Moz</div>
       <small>Segurança alimentar</small>
@@ -383,39 +610,80 @@ th{background:#f8fafc}
       <div id="currentUserInfo" class="user-badge"></div>
       <button class="logout" data-action="logout">Sair</button>
     </div>
+
   </div>
+
 </header>
 
 <nav>
+
   <div class="nav-inner">
 
-    <button class="nav-btn" data-page="home">🏠 Início</button>
-    <button class="nav-btn" data-page="estabelecimentos">🏢 Estabelecimentos</button>
-    <button class="nav-btn" data-page="temperatura">🌡️ Temperatura</button>
-    <button class="nav-btn" data-page="inspecao">✅ Inspeção</button>
-    <button class="nav-btn" data-page="problemas">⚠️ Problemas</button>
-    <button class="nav-btn" data-page="evidencias">📸 Evidências</button>
-    <button class="nav-btn" data-page="dashboard">📊 Dashboard</button>
-    <button class="nav-btn" data-page="historico">🕘 Histórico</button>
-    <button class="nav-btn" data-page="relatorios">📄 Relatórios</button>
-    <button class="nav-btn" data-page="utilizadores" id="usersNav">👥 Utilizadores</button>
+    <button class="nav-btn" data-page="home">
+      🏠 Início
+    </button>
+
+    <button class="nav-btn" data-page="estabelecimentos">
+      🏢 Estabelecimentos
+    </button>
+
+    <button class="nav-btn" data-page="temperatura">
+      🌡️ Temperatura
+    </button>
+
+    <button class="nav-btn" data-page="inspecao">
+      ✅ Inspeção
+    </button>
+
+    <button class="nav-btn" data-page="problemas">
+      ⚠️ Problemas
+    </button>
+
+    <button class="nav-btn" data-page="evidencias">
+      📸 Evidências
+    </button>
+
+    <button class="nav-btn" data-page="dashboard">
+      📊 Dashboard
+    </button>
+
+    <button class="nav-btn" data-page="historico">
+      🕘 Histórico
+    </button>
+
+    <button class="nav-btn" data-page="relatorios">
+      📄 Relatórios
+    </button>
+
+    <button class="nav-btn" data-page="utilizadores" id="usersNav">
+      👥 Utilizadores
+    </button>
 
   </div>
+
 </nav>
 
 <main>
 
-<!-- INÍCIO -->
+<!-- =====================================================
+     INÍCIO
+===================================================== -->
+
 <section id="home" class="page">
 
   <div class="card">
+
     <h2>Bem-vindo ao FoodSafe Moz</h2>
+
     <p>
-      Sistema digital para gestão, inspeção e monitorização da segurança alimentar.
+      Sistema digital para gestão, inspeção e monitorização
+      da segurança alimentar.
     </p>
+
   </div>
 
   <div class="grid">
+
     <div class="stat">
       <strong id="homeEstablishments">0</strong>
       Estabelecimentos
@@ -435,17 +703,23 @@ th{background:#f8fafc}
       <strong id="homeEvidence">0</strong>
       Evidências
     </div>
+
   </div>
 
 </section>
 
-<!-- ESTABELECIMENTOS -->
+<!-- =====================================================
+     ESTABELECIMENTOS
+===================================================== -->
+
 <section id="estabelecimentos" class="page">
 
   <div class="card" id="establishmentFormCard">
+
     <h2>🏢 Registar estabelecimento</h2>
 
     <div class="grid">
+
       <div class="field">
         <label>Nome do estabelecimento</label>
         <input id="estName" type="text">
@@ -468,26 +742,59 @@ th{background:#f8fafc}
 
       <div class="field">
         <label>Tipo de estabelecimento</label>
-        <input id="estType" type="text" placeholder="Restaurante, cantina, mercado...">
+        <input
+          id="estType"
+          type="text"
+          placeholder="Restaurante, cantina, mercado..."
+        >
       </div>
+
     </div>
 
     <button class="primary" data-action="save-establishment">
       ➕ Registar estabelecimento
     </button>
+
   </div>
 
   <div class="card">
+
     <h2>Estabelecimentos registados</h2>
+
     <div id="establishmentList"></div>
+
   </div>
 
 </section>
 
-<!-- TEMPERATURA -->
+<!-- =====================================================
+     PERFIL PROFISSIONAL
+===================================================== -->
+
+<section id="perfilEstabelecimento" class="page">
+
+  <div class="profile-back">
+
+    <button
+      class="secondary"
+      data-action="back-establishments">
+      ← Voltar aos estabelecimentos
+    </button>
+
+  </div>
+
+  <div id="establishmentProfile"></div>
+
+</section>
+
+<!-- =====================================================
+     TEMPERATURA
+===================================================== -->
+
 <section id="temperatura" class="page">
 
   <div class="card">
+
     <h2>🌡️ Registo de temperatura</h2>
 
     <div class="grid">
@@ -522,19 +829,27 @@ th{background:#f8fafc}
     <button class="primary" data-action="save-temperature">
       💾 Guardar temperatura
     </button>
+
   </div>
 
   <div class="card">
+
     <h2>Registos de temperatura</h2>
+
     <div id="temperatureList"></div>
+
   </div>
 
 </section>
 
-<!-- INSPEÇÃO -->
+<!-- =====================================================
+     INSPEÇÃO
+===================================================== -->
+
 <section id="inspecao" class="page">
 
   <div class="card">
+
     <h2>✅ Nova inspeção</h2>
 
     <div class="grid">
@@ -567,29 +882,41 @@ th{background:#f8fafc}
     </div>
 
     <h3>Checklist</h3>
+
     <div id="checklist"></div>
 
     <div class="field" style="margin-top:15px">
+
       <label>Observações</label>
+
       <textarea id="inspectionNotes"></textarea>
+
     </div>
 
     <button class="primary" data-action="save-inspection">
       💾 Concluir inspeção
     </button>
+
   </div>
 
   <div class="card">
+
     <h2>Inspeções realizadas</h2>
+
     <div id="inspectionList"></div>
+
   </div>
 
 </section>
 
-<!-- PROBLEMAS -->
+<!-- =====================================================
+     PROBLEMAS
+===================================================== -->
+
 <section id="problemas" class="page">
 
   <div class="card">
+
     <h2>⚠️ Registar problema</h2>
 
     <div class="grid">
@@ -606,12 +933,14 @@ th{background:#f8fafc}
 
       <div class="field">
         <label>Gravidade</label>
+
         <select id="problemSeverity">
           <option>Baixa</option>
           <option>Média</option>
           <option>Alta</option>
           <option>Crítica</option>
         </select>
+
       </div>
 
       <div class="field">
@@ -621,35 +950,48 @@ th{background:#f8fafc}
 
       <div class="field">
         <label>Estado</label>
+
         <select id="problemStatus">
           <option>Aberto</option>
           <option>Resolvido</option>
         </select>
+
       </div>
 
     </div>
 
     <div class="field">
+
       <label>Observações</label>
+
       <textarea id="problemNotes"></textarea>
+
     </div>
 
     <button class="primary" data-action="save-problem">
       💾 Guardar problema
     </button>
+
   </div>
 
   <div class="card">
+
     <h2>Problemas registados</h2>
+
     <div id="problemList"></div>
+
   </div>
 
 </section>
 
-<!-- EVIDÊNCIAS -->
+<!-- =====================================================
+     EVIDÊNCIAS
+===================================================== -->
+
 <section id="evidencias" class="page">
 
   <div class="card">
+
     <h2>📸 Evidência</h2>
 
     <div class="grid">
@@ -660,10 +1002,15 @@ th{background:#f8fafc}
       </div>
 
       <div class="field">
+
         <label>Inspeção relacionada</label>
+
         <select id="evidenceInspection">
-          <option value="">Nenhuma — evidência geral</option>
+          <option value="">
+            Nenhuma — evidência geral
+          </option>
         </select>
+
       </div>
 
       <div class="field">
@@ -681,19 +1028,27 @@ th{background:#f8fafc}
     <button class="primary" data-action="save-evidence">
       📸 Guardar evidência
     </button>
+
   </div>
 
   <div class="card">
+
     <h2>Evidências registadas</h2>
+
     <div id="evidenceList"></div>
+
   </div>
 
 </section>
 
-<!-- DASHBOARD -->
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
+
 <section id="dashboard" class="page">
 
   <div class="card">
+
     <h2>📊 Dashboard</h2>
 
     <div class="grid">
@@ -729,44 +1084,71 @@ th{background:#f8fafc}
       </div>
 
     </div>
+
   </div>
 
 </section>
 
-<!-- HISTÓRICO -->
+<!-- =====================================================
+     HISTÓRICO
+===================================================== -->
+
 <section id="historico" class="page">
 
   <div class="card">
+
     <h2>🕘 Histórico</h2>
+
     <div id="historyList"></div>
+
   </div>
 
 </section>
 
-<!-- RELATÓRIOS -->
+<!-- =====================================================
+     RELATÓRIOS
+===================================================== -->
+
 <section id="relatorios" class="page">
 
   <div class="card">
+
     <h2>📄 Relatórios profissionais</h2>
 
     <div class="grid">
 
       <div class="field">
+
         <label>Tipo de relatório</label>
+
         <select id="reportType">
-          <option value="inspection">Relatório de inspeção</option>
-          <option value="establishment">Resumo do estabelecimento</option>
+
+          <option value="inspection">
+            Relatório de inspeção
+          </option>
+
+          <option value="establishment">
+            Resumo do estabelecimento
+          </option>
+
         </select>
+
       </div>
 
       <div class="field">
+
         <label>Estabelecimento</label>
+
         <select id="reportEstablishment"></select>
+
       </div>
 
       <div class="field" id="reportInspectionField">
+
         <label>Inspeção</label>
+
         <select id="reportInspection"></select>
+
       </div>
 
     </div>
@@ -775,19 +1157,27 @@ th{background:#f8fafc}
       📄 Gerar relatório
     </button>
 
-    <button class="secondary" data-action="print-report" style="margin-top:10px">
+    <button
+      class="secondary"
+      data-action="print-report"
+      style="margin-top:10px">
       🖨️ Imprimir / Guardar PDF
     </button>
+
   </div>
 
   <div id="reportPreview"></div>
 
 </section>
 
-<!-- UTILIZADORES -->
+<!-- =====================================================
+     UTILIZADORES
+===================================================== -->
+
 <section id="utilizadores" class="page">
 
   <div class="card">
+
     <h2>👥 Gestão de utilizadores</h2>
 
     <div class="grid">
@@ -808,19 +1198,27 @@ th{background:#f8fafc}
       </div>
 
       <div class="field">
+
         <label>Perfil</label>
+
         <select id="userRole">
+
           <option value="Inspetor">Inspetor</option>
           <option value="Responsável">Responsável</option>
           <option value="Administrador">Administrador</option>
+
         </select>
+
       </div>
 
       <div class="field">
+
         <label>Estabelecimento associado</label>
+
         <select id="userEstablishment">
           <option value="">Nenhum</option>
         </select>
+
       </div>
 
     </div>
@@ -828,11 +1226,15 @@ th{background:#f8fafc}
     <button class="primary" data-action="save-user">
       ➕ Criar utilizador
     </button>
+
   </div>
 
   <div class="card">
+
     <h2>Utilizadores do sistema</h2>
+
     <div id="userList"></div>
+
   </div>
 
 </section>
@@ -841,6 +1243,7 @@ th{background:#f8fafc}
 </div>
 
 <script>
+
 /* =========================================================
    FOODSAVE MOZ
    SISTEMA DE DADOS
@@ -850,6 +1253,7 @@ const KEY = "foodsafemoz_v2";
 const SESSION_KEY = "foodsafemoz_session";
 
 const checklistItems = [
+
   "O estabelecimento apresenta boas condições de higiene?",
   "As superfícies de contacto com alimentos estão limpas?",
   "Os equipamentos estão em boas condições?",
@@ -865,63 +1269,117 @@ const checklistItems = [
   "Os produtos químicos estão separados dos alimentos?",
   "Existe documentação/registo de controlo alimentar?",
   "Existe aplicação de boas práticas de higiene?"
+
 ];
 
 let data = {
+
   inspections: [],
   temps: [],
   problems: [],
   evidences: [],
   establishments: [],
   users: []
+
 };
 
 let currentUser = null;
 let currentPage = "home";
+let currentProfileEstablishmentId = "";
 
 /* =========================================================
    INICIALIZAÇÃO
 ========================================================= */
 
 function loadData(){
+
   try{
+
     const saved = localStorage.getItem(KEY);
 
     if(saved){
+
       const parsed = JSON.parse(saved);
 
       data = {
-        inspections:Array.isArray(parsed.inspections) ? parsed.inspections : [],
-        temps:Array.isArray(parsed.temps) ? parsed.temps : [],
-        problems:Array.isArray(parsed.problems) ? parsed.problems : [],
-        evidences:Array.isArray(parsed.evidences) ? parsed.evidences : [],
-        establishments:Array.isArray(parsed.establishments) ? parsed.establishments : [],
-        users:Array.isArray(parsed.users) ? parsed.users : []
+
+        inspections:
+          Array.isArray(parsed.inspections)
+          ? parsed.inspections
+          : [],
+
+        temps:
+          Array.isArray(parsed.temps)
+          ? parsed.temps
+          : [],
+
+        problems:
+          Array.isArray(parsed.problems)
+          ? parsed.problems
+          : [],
+
+        evidences:
+          Array.isArray(parsed.evidences)
+          ? parsed.evidences
+          : [],
+
+        establishments:
+          Array.isArray(parsed.establishments)
+          ? parsed.establishments
+          : [],
+
+        users:
+          Array.isArray(parsed.users)
+          ? parsed.users
+          : []
+
       };
+
     }
+
   }catch(error){
+
     console.error(error);
+
   }
+
 }
 
 function saveData(){
-  localStorage.setItem(KEY, JSON.stringify(data));
+
+  localStorage.setItem(
+    KEY,
+    JSON.stringify(data)
+  );
+
 }
 
 function generateId(prefix){
+
   return prefix + "-" +
     Date.now().toString(36).toUpperCase() +
     "-" +
-    Math.random().toString(36).substring(2,7).toUpperCase();
+    Math.random()
+      .toString(36)
+      .substring(2,7)
+      .toUpperCase();
+
 }
 
 function today(){
-  return new Date().toISOString().split("T")[0];
+
+  return new Date()
+    .toISOString()
+    .split("T")[0];
+
 }
 
 function nowTime(){
+
   const d = new Date();
+
   return d.toTimeString().slice(0,5);
+
 }
 
 /* =========================================================
@@ -929,79 +1387,147 @@ function nowTime(){
 ========================================================= */
 
 function loadSession(){
-  const id = localStorage.getItem(SESSION_KEY);
+
+  const id =
+    localStorage.getItem(SESSION_KEY);
 
   if(!id){
+
     currentUser = null;
     return;
+
   }
 
-  currentUser = data.users.find(u => u.id === id && u.active !== false) || null;
+  currentUser =
+    data.users.find(
+      u => u.id === id &&
+      u.active !== false
+    ) || null;
+
 }
 
 function showLogin(){
-  document.getElementById("loginScreen").style.display = "flex";
-  document.getElementById("app").style.display = "none";
 
-  const hasUsers = data.users.length > 0;
+  document.getElementById("loginScreen")
+    .style.display = "flex";
 
-  document.getElementById("firstAdminBox").style.display =
-    hasUsers ? "none" : "block";
+  document.getElementById("app")
+    .style.display = "none";
 
-  document.getElementById("loginBox").style.display =
-    hasUsers ? "block" : "none";
+  const hasUsers =
+    data.users.length > 0;
+
+  document.getElementById("firstAdminBox")
+    .style.display =
+      hasUsers ? "none" : "block";
+
+  document.getElementById("loginBox")
+    .style.display =
+      hasUsers ? "block" : "none";
+
 }
 
 function showApp(){
-  document.getElementById("loginScreen").style.display = "none";
-  document.getElementById("app").style.display = "block";
+
+  document.getElementById("loginScreen")
+    .style.display = "none";
+
+  document.getElementById("app")
+    .style.display = "block";
 
   updateUserHeader();
   applyPermissions();
   refreshAll();
 
   showPage(currentPage);
+
 }
 
 function updateUserHeader(){
+
   if(!currentUser)return;
 
-  document.getElementById("currentUserInfo").innerHTML =
-    "👤 " + escapeHtml(currentUser.name) +
-    " · " + escapeHtml(currentUser.role);
+  document.getElementById(
+    "currentUserInfo"
+  ).innerHTML =
+    "👤 " +
+    escapeHtml(currentUser.name) +
+    " · " +
+    escapeHtml(currentUser.role);
+
 }
 
 function login(){
-  const username = document.getElementById("loginUsername").value.trim();
-  const password = document.getElementById("loginPassword").value;
 
-  const user = data.users.find(u =>
-    u.username.toLowerCase() === username.toLowerCase() &&
-    u.password === password &&
-    u.active !== false
-  );
+  const username =
+    document
+      .getElementById("loginUsername")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("loginPassword")
+      .value;
+
+  const user =
+    data.users.find(u =>
+
+      u.username.toLowerCase()
+      === username.toLowerCase() &&
+
+      u.password === password &&
+
+      u.active !== false
+
+    );
 
   if(!user){
+
     document.getElementById("loginMsg").innerHTML =
-      '<div class="alert alert-error">Utilizador ou palavra-passe incorretos.</div>';
+      '<div class="alert alert-error">' +
+      'Utilizador ou palavra-passe incorretos.' +
+      '</div>';
+
     return;
+
   }
 
   currentUser = user;
-  localStorage.setItem(SESSION_KEY,user.id);
 
-  document.getElementById("loginUsername").value = "";
-  document.getElementById("loginPassword").value = "";
-  document.getElementById("loginMsg").innerHTML = "";
+  localStorage.setItem(
+    SESSION_KEY,
+    user.id
+  );
+
+  document.getElementById(
+    "loginUsername"
+  ).value = "";
+
+  document.getElementById(
+    "loginPassword"
+  ).value = "";
+
+  document.getElementById(
+    "loginMsg"
+  ).innerHTML = "";
 
   currentPage = "home";
+
   showApp();
+
 }
 
 function logout(){
-  localStorage.removeItem(SESSION_KEY);
+
+  localStorage.removeItem(
+    SESSION_KEY
+  );
+
   currentUser = null;
+
   showLogin();
+
 }
 
 /* =========================================================
@@ -1010,23 +1536,46 @@ function logout(){
 
 function createFirstAdmin(){
 
-  const name = document.getElementById("firstName").value.trim();
-  const username = document.getElementById("firstUsername").value.trim();
-  const password = document.getElementById("firstPassword").value;
+  const name =
+    document.getElementById("firstName")
+      .value.trim();
+
+  const username =
+    document.getElementById("firstUsername")
+      .value.trim();
+
+  const password =
+    document.getElementById("firstPassword")
+      .value;
 
   if(!name || !username || !password){
-    document.getElementById("firstAdminMsg").innerHTML =
-      '<div class="alert alert-error">Preencha todos os campos.</div>';
+
+    document.getElementById(
+      "firstAdminMsg"
+    ).innerHTML =
+      '<div class="alert alert-error">' +
+      'Preencha todos os campos.' +
+      '</div>';
+
     return;
+
   }
 
   if(password.length < 4){
-    document.getElementById("firstAdminMsg").innerHTML =
-      '<div class="alert alert-error">A palavra-passe deve ter pelo menos 4 caracteres.</div>';
+
+    document.getElementById(
+      "firstAdminMsg"
+    ).innerHTML =
+      '<div class="alert alert-error">' +
+      'A palavra-passe deve ter pelo menos 4 caracteres.' +
+      '</div>';
+
     return;
+
   }
 
   const admin = {
+
     id:generateId("USR"),
     name,
     username,
@@ -1035,15 +1584,22 @@ function createFirstAdmin(){
     establishmentId:"",
     active:true,
     createdAt:new Date().toISOString()
+
   };
 
   data.users.push(admin);
+
   saveData();
 
   currentUser = admin;
-  localStorage.setItem(SESSION_KEY,admin.id);
+
+  localStorage.setItem(
+    SESSION_KEY,
+    admin.id
+  );
 
   showApp();
+
 }
 
 /* =========================================================
@@ -1051,15 +1607,24 @@ function createFirstAdmin(){
 ========================================================= */
 
 function isAdmin(){
-  return currentUser && currentUser.role === "Administrador";
+
+  return currentUser &&
+    currentUser.role === "Administrador";
+
 }
 
 function isInspector(){
-  return currentUser && currentUser.role === "Inspetor";
+
+  return currentUser &&
+    currentUser.role === "Inspetor";
+
 }
 
 function isResponsible(){
-  return currentUser && currentUser.role === "Responsável";
+
+  return currentUser &&
+    currentUser.role === "Responsável";
+
 }
 
 function can(action){
@@ -1068,11 +1633,14 @@ function can(action){
 
   if(isAdmin())return true;
 
-  if(action === "manageUsers")return false;
+  if(action === "manageUsers")
+    return false;
 
-  if(action === "manageEstablishments")return false;
+  if(action === "manageEstablishments")
+    return false;
 
-  if(action === "deleteRecords")return false;
+  if(action === "deleteRecords")
+    return false;
 
   if(action === "createInspection")
     return isInspector();
@@ -1090,92 +1658,148 @@ function can(action){
     return true;
 
   return false;
+
 }
 
 function assignedEstablishmentId(){
+
   return currentUser?.establishmentId || "";
+
 }
 
 function visibleEstablishments(){
 
-  if(isAdmin()){
+  if(isAdmin())
     return data.establishments;
-  }
 
-  const id = assignedEstablishmentId();
+  const id =
+    assignedEstablishmentId();
 
   if(!id)return [];
 
-  return data.establishments.filter(e => e.id === id);
+  return data.establishments
+    .filter(e=>e.id===id);
+
 }
 
 function visibleInspections(){
 
-  if(isAdmin()){
+  if(isAdmin())
     return data.inspections;
-  }
 
-  const id = assignedEstablishmentId();
+  const id =
+    assignedEstablishmentId();
 
-  return data.inspections.filter(i => i.estabelecimentoId === id);
+  return data.inspections
+    .filter(i=>i.estabelecimentoId===id);
+
 }
 
 function visibleTemps(){
 
-  if(isAdmin()){
+  if(isAdmin())
     return data.temps;
-  }
 
-  const id = assignedEstablishmentId();
+  const id =
+    assignedEstablishmentId();
 
-  return data.temps.filter(t => t.estabelecimentoId === id);
+  return data.temps
+    .filter(t=>t.estabelecimentoId===id);
+
 }
 
 function visibleProblems(){
 
-  if(isAdmin()){
+  if(isAdmin())
     return data.problems;
-  }
 
-  const id = assignedEstablishmentId();
+  const id =
+    assignedEstablishmentId();
 
-  return data.problems.filter(p => p.estabelecimentoId === id);
+  return data.problems
+    .filter(p=>p.estabelecimentoId===id);
+
 }
 
 function visibleEvidence(){
 
-  if(isAdmin()){
+  if(isAdmin())
     return data.evidences;
-  }
 
-  const id = assignedEstablishmentId();
+  const id =
+    assignedEstablishmentId();
 
-  return data.evidences.filter(e => e.estabelecimentoId === id);
+  return data.evidences
+    .filter(e=>e.estabelecimentoId===id);
+
 }
 
 function applyPermissions(){
 
-  document.getElementById("usersNav").style.display =
+  document.getElementById(
+    "usersNav"
+  ).style.display =
     can("manageUsers") ? "" : "none";
 
-  document.getElementById("establishmentFormCard").style.display =
-    can("manageEstablishments") ? "" : "none";
+  document.getElementById(
+    "establishmentFormCard"
+  ).style.display =
+    can("manageEstablishments")
+    ? ""
+    : "none";
 
-  document.querySelectorAll('[data-action="save-inspection"]').forEach(btn=>{
-    btn.style.display = can("createInspection") ? "" : "none";
-  });
+  document
+    .querySelectorAll(
+      '[data-action="save-inspection"]'
+    )
+    .forEach(btn=>{
 
-  document.querySelectorAll('[data-action="save-temperature"]').forEach(btn=>{
-    btn.style.display = can("createTemperature") ? "" : "none";
-  });
+      btn.style.display =
+        can("createInspection")
+        ? ""
+        : "none";
 
-  document.querySelectorAll('[data-action="save-problem"]').forEach(btn=>{
-    btn.style.display = can("createProblem") ? "" : "none";
-  });
+    });
 
-  document.querySelectorAll('[data-action="save-evidence"]').forEach(btn=>{
-    btn.style.display = can("createEvidence") ? "" : "none";
-  });
+  document
+    .querySelectorAll(
+      '[data-action="save-temperature"]'
+    )
+    .forEach(btn=>{
+
+      btn.style.display =
+        can("createTemperature")
+        ? ""
+        : "none";
+
+    });
+
+  document
+    .querySelectorAll(
+      '[data-action="save-problem"]'
+    )
+    .forEach(btn=>{
+
+      btn.style.display =
+        can("createProblem")
+        ? ""
+        : "none";
+
+    });
+
+  document
+    .querySelectorAll(
+      '[data-action="save-evidence"]'
+    )
+    .forEach(btn=>{
+
+      btn.style.display =
+        can("createEvidence")
+        ? ""
+        : "none";
+
+    });
+
 }
 
 /* =========================================================
@@ -1186,107 +1810,196 @@ function showPage(page){
 
   if(!currentUser)return;
 
-  if(page === "utilizadores" && !can("manageUsers")){
+  if(
+    page === "utilizadores" &&
+    !can("manageUsers")
+  ){
+
     page = "home";
+
+  }
+
+  if(
+    page === "perfilEstabelecimento" &&
+    !currentProfileEstablishmentId
+  ){
+
+    page = "estabelecimentos";
+
   }
 
   currentPage = page;
 
-  document.querySelectorAll(".page").forEach(p=>{
-    p.classList.remove("active");
-  });
+  document
+    .querySelectorAll(".page")
+    .forEach(p=>{
+      p.classList.remove("active");
+    });
 
-  const target = document.getElementById(page);
+  const target =
+    document.getElementById(page);
 
   if(target){
+
     target.classList.add("active");
+
   }
 
-  document.querySelectorAll(".nav-btn").forEach(btn=>{
-    btn.classList.toggle("active",btn.dataset.page === page);
-  });
+  document
+    .querySelectorAll(".nav-btn")
+    .forEach(btn=>{
+
+      btn.classList.toggle(
+        "active",
+        btn.dataset.page === page
+      );
+
+    });
 
   refreshAll();
+
 }
 
 /* =========================================================
    SELECTS
 ========================================================= */
 
-function fillEstablishmentSelect(id, includeEmpty=false){
+function fillEstablishmentSelect(
+  id,
+  includeEmpty=false
+){
 
-  const select = document.getElementById(id);
+  const select =
+    document.getElementById(id);
+
   if(!select)return;
 
-  const current = select.value;
+  const current =
+    select.value;
 
-  let html = includeEmpty
+  let html =
+    includeEmpty
     ? '<option value="">Nenhum</option>'
     : '<option value="">Selecione...</option>';
 
-  visibleEstablishments().forEach(e=>{
-    html += `<option value="${e.id}">
-      ${escapeHtml(e.nome)}
-    </option>`;
-  });
+  visibleEstablishments()
+    .forEach(e=>{
+
+      html +=
+        `<option value="${e.id}">
+          ${escapeHtml(e.nome)}
+        </option>`;
+
+    });
 
   select.innerHTML = html;
 
-  if([...select.options].some(o=>o.value === current)){
+  if(
+    [...select.options]
+      .some(o=>o.value===current)
+  ){
+
     select.value = current;
+
   }
+
 }
 
 function populateAllEstablishmentSelects(){
 
-  fillEstablishmentSelect("tempEstablishment");
-  fillEstablishmentSelect("inspectionEstablishment");
-  fillEstablishmentSelect("problemEstablishment");
-  fillEstablishmentSelect("evidenceEstablishment");
-  fillEstablishmentSelect("reportEstablishment");
-  fillEstablishmentSelect("userEstablishment",true);
+  fillEstablishmentSelect(
+    "tempEstablishment"
+  );
+
+  fillEstablishmentSelect(
+    "inspectionEstablishment"
+  );
+
+  fillEstablishmentSelect(
+    "problemEstablishment"
+  );
+
+  fillEstablishmentSelect(
+    "evidenceEstablishment"
+  );
+
+  fillEstablishmentSelect(
+    "reportEstablishment"
+  );
+
+  fillEstablishmentSelect(
+    "userEstablishment",
+    true
+  );
+
 }
 
 function populateEvidenceInspectionSelect(){
 
   const establishmentId =
-    document.getElementById("evidenceEstablishment").value;
+    document.getElementById(
+      "evidenceEstablishment"
+    ).value;
 
   const select =
-    document.getElementById("evidenceInspection");
+    document.getElementById(
+      "evidenceInspection"
+    );
 
   select.innerHTML =
     '<option value="">Nenhuma — evidência geral</option>';
 
   visibleInspections()
-    .filter(i => !establishmentId || i.estabelecimentoId === establishmentId)
+    .filter(
+      i =>
+        !establishmentId ||
+        i.estabelecimentoId === establishmentId
+    )
     .forEach(i=>{
-      select.innerHTML += `
-        <option value="${i.id}">
-          ${escapeHtml(i.id)} — ${escapeHtml(i.estabelecimento)}
-        </option>
-      `;
+
+      select.innerHTML +=
+        `<option value="${i.id}">
+          ${escapeHtml(i.id)}
+          —
+          ${escapeHtml(i.estabelecimento)}
+        </option>`;
+
     });
+
 }
 
 function populateReportInspectionSelect(){
 
   const establishmentId =
-    document.getElementById("reportEstablishment").value;
+    document.getElementById(
+      "reportEstablishment"
+    ).value;
 
-  const select = document.getElementById("reportInspection");
+  const select =
+    document.getElementById(
+      "reportInspection"
+    );
 
-  select.innerHTML = '<option value="">Selecione...</option>';
+  select.innerHTML =
+    '<option value="">Selecione...</option>';
 
   visibleInspections()
-    .filter(i => !establishmentId || i.estabelecimentoId === establishmentId)
+    .filter(
+      i =>
+        !establishmentId ||
+        i.estabelecimentoId === establishmentId
+    )
     .forEach(i=>{
-      select.innerHTML += `
-        <option value="${i.id}">
-          ${escapeHtml(i.id)} — ${escapeHtml(i.date)}
-        </option>
-      `;
+
+      select.innerHTML +=
+        `<option value="${i.id}">
+          ${escapeHtml(i.id)}
+          —
+          ${escapeHtml(i.date)}
+        </option>`;
+
     });
+
 }
 
 /* =========================================================
@@ -1295,20 +2008,41 @@ function populateReportInspectionSelect(){
 
 function saveEstablishment(){
 
-  if(!can("manageEstablishments"))return;
+  if(!can("manageEstablishments"))
+    return;
 
-  const nome = document.getElementById("estName").value.trim();
-  const responsavel = document.getElementById("estResponsible").value.trim();
-  const telefone = document.getElementById("estPhone").value.trim();
-  const localizacao = document.getElementById("estLocation").value.trim();
-  const tipo = document.getElementById("estType").value.trim();
+  const nome =
+    document.getElementById("estName")
+      .value.trim();
+
+  const responsavel =
+    document.getElementById("estResponsible")
+      .value.trim();
+
+  const telefone =
+    document.getElementById("estPhone")
+      .value.trim();
+
+  const localizacao =
+    document.getElementById("estLocation")
+      .value.trim();
+
+  const tipo =
+    document.getElementById("estType")
+      .value.trim();
 
   if(!nome){
-    alert("Informe o nome do estabelecimento.");
+
+    alert(
+      "Informe o nome do estabelecimento."
+    );
+
     return;
+
   }
 
   data.establishments.push({
+
     id:generateId("EST"),
     nome,
     responsavel,
@@ -1318,6 +2052,7 @@ function saveEstablishment(){
     createdAt:new Date().toISOString(),
     createdBy:currentUser.id,
     createdByName:currentUser.name
+
   });
 
   saveData();
@@ -1330,20 +2065,1119 @@ function saveEstablishment(){
 
   refreshAll();
 
-  alert("Estabelecimento registado com sucesso.");
+  alert(
+    "Estabelecimento registado com sucesso."
+  );
+
 }
 
 function deleteEstablishment(id){
 
-  if(!can("deleteRecords"))return;
+  if(!can("deleteRecords"))
+    return;
 
-  if(!confirm("Eliminar este estabelecimento?"))return;
+  if(!confirm(
+    "Eliminar este estabelecimento?"
+  ))return;
 
   data.establishments =
-    data.establishments.filter(e=>e.id!==id);
+    data.establishments
+      .filter(e=>e.id!==id);
 
   saveData();
+
+  if(
+    currentProfileEstablishmentId === id
+  ){
+
+    currentProfileEstablishmentId = "";
+    currentPage = "estabelecimentos";
+
+  }
+
   refreshAll();
+
+}
+
+/* =========================================================
+   PERFIL PROFISSIONAL
+========================================================= */
+
+function openEstablishmentProfile(id){
+
+  const establishment =
+    visibleEstablishments()
+      .find(e=>e.id===id);
+
+  if(!establishment){
+
+    alert(
+      "Estabelecimento não disponível."
+    );
+
+    return;
+
+  }
+
+  currentProfileEstablishmentId = id;
+
+  showPage(
+    "perfilEstabelecimento"
+  );
+
+}
+
+function backToEstablishments(){
+
+  currentProfileEstablishmentId = "";
+
+  showPage(
+    "estabelecimentos"
+  );
+
+}
+
+function getEstablishmentRisk(
+  inspections,
+  problems
+){
+
+  if(!inspections.length){
+
+    return {
+      label:"Não avaliado",
+      emoji:"⚪",
+      className:"risk-none",
+      description:
+        "Ainda não existem inspeções suficientes para calcular o nível de risco."
+    };
+
+  }
+
+  const average =
+    inspections.reduce(
+      (sum,i)=>sum + Number(i.percentage || 0),
+      0
+    ) / inspections.length;
+
+  const openProblems =
+    problems.filter(
+      p=>p.status !== "Resolvido"
+    );
+
+  const hasCritical =
+    openProblems.some(
+      p=>p.severity === "Crítica"
+    );
+
+  const hasHigh =
+    openProblems.some(
+      p=>p.severity === "Alta"
+    );
+
+  if(
+    average < 50 ||
+    hasCritical
+  ){
+
+    return {
+      label:"Alto",
+      emoji:"🔴",
+      className:"risk-high",
+      description:
+        "Existem indicadores que exigem atenção prioritária."
+    };
+
+  }
+
+  if(
+    average < 75 ||
+    hasHigh
+  ){
+
+    return {
+      label:"Médio",
+      emoji:"🟡",
+      className:"risk-medium",
+      description:
+        "Existem pontos que devem ser acompanhados e corrigidos."
+    };
+
+  }
+
+  return {
+
+    label:"Baixo",
+    emoji:"🟢",
+    className:"risk-low",
+    description:
+      "Os indicadores atuais apresentam nível de risco baixo."
+
+  };
+
+}
+
+function sortInspectionsNewestFirst(list){
+
+  return list.slice().sort((a,b)=>{
+
+    const dateA =
+      new Date(
+        (a.date || "1970-01-01") +
+        "T" +
+        (a.time || "00:00")
+      );
+
+    const dateB =
+      new Date(
+        (b.date || "1970-01-01") +
+        "T" +
+        (b.time || "00:00")
+      );
+
+    return dateB-dateA;
+
+  });
+
+}
+
+function getProblemSeverityClass(
+  severity
+){
+
+  if(severity === "Crítica")
+    return "profile-severity-critical";
+
+  if(severity === "Alta")
+    return "profile-severity-high";
+
+  if(severity === "Média")
+    return "profile-severity-medium";
+
+  return "profile-severity-low";
+
+}
+
+function renderEstablishmentProfile(){
+
+  const box =
+    document.getElementById(
+      "establishmentProfile"
+    );
+
+  if(!box)return;
+
+  const establishment =
+    visibleEstablishments()
+      .find(
+        e =>
+          e.id ===
+          currentProfileEstablishmentId
+      );
+
+  if(!establishment){
+
+    box.innerHTML =
+      '<div class="card">' +
+      '<div class="empty">' +
+      'Estabelecimento não encontrado.' +
+      '</div>' +
+      '</div>';
+
+    return;
+
+  }
+
+  const inspections =
+    visibleInspections()
+      .filter(
+        i =>
+          i.estabelecimentoId ===
+          establishment.id
+      );
+
+  const problems =
+    visibleProblems()
+      .filter(
+        p =>
+          p.estabelecimentoId ===
+          establishment.id
+      );
+
+  const evidence =
+    visibleEvidence()
+      .filter(
+        e =>
+          e.estabelecimentoId ===
+          establishment.id
+      );
+
+  const temps =
+    visibleTemps()
+      .filter(
+        t =>
+          t.estabelecimentoId ===
+          establishment.id
+      );
+
+  const sortedInspections =
+    sortInspectionsNewestFirst(
+      inspections
+    );
+
+  const lastInspection =
+    sortedInspections[0] || null;
+
+  const average =
+    inspections.length
+    ? Math.round(
+        inspections.reduce(
+          (sum,i)=>
+            sum + Number(i.percentage || 0),
+          0
+        ) / inspections.length
+      )
+    : null;
+
+  const openProblems =
+    problems.filter(
+      p=>p.status !== "Resolvido"
+    );
+
+  const resolvedProblems =
+    problems.filter(
+      p=>p.status === "Resolvido"
+    );
+
+  const risk =
+    getEstablishmentRisk(
+      inspections,
+      problems
+    );
+
+  const allNonConformities = [];
+
+  inspections.forEach(i=>{
+
+    (i.nonConformities || [])
+      .forEach(item=>{
+
+        allNonConformities.push({
+
+          date:i.date,
+          inspectionId:i.id,
+          item
+
+        });
+
+      });
+
+  });
+
+  box.innerHTML = `
+
+    <!-- CABEÇALHO -->
+
+    <div class="profile-header">
+
+      <h1>
+        🏢 ${escapeHtml(establishment.nome)}
+      </h1>
+
+      <p>
+        Perfil profissional do estabelecimento
+      </p>
+
+      <p>
+        ${escapeHtml(
+          establishment.tipo ||
+          "Tipo não informado"
+        )}
+        ·
+        ${escapeHtml(
+          establishment.localizacao ||
+          "Localização não informada"
+        )}
+      </p>
+
+      <div class="profile-actions">
+
+        <button
+          class="secondary"
+          data-action="profile-report"
+          style="background:#fff;color:#0f766e;border:0">
+
+          📄 Gerar relatório
+
+        </button>
+
+        <button
+          class="secondary"
+          data-action="back-establishments">
+
+          ← Estabelecimentos
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- INDICADORES -->
+
+    <div class="profile-kpis">
+
+      <div class="profile-kpi">
+
+        <strong>
+          ${inspections.length}
+        </strong>
+
+        <span>
+          Total de inspeções
+        </span>
+
+      </div>
+
+      <div class="profile-kpi">
+
+        <strong>
+          ${average === null ? "—" : average + "%"}
+        </strong>
+
+        <span>
+          Conformidade média
+        </span>
+
+      </div>
+
+      <div class="profile-kpi">
+
+        <strong>
+          ${openProblems.length}
+        </strong>
+
+        <span>
+          Problemas abertos
+        </span>
+
+      </div>
+
+      <div class="profile-kpi">
+
+        <strong>
+          ${resolvedProblems.length}
+        </strong>
+
+        <span>
+          Problemas resolvidos
+        </span>
+
+      </div>
+
+      <div class="profile-kpi">
+
+        <strong>
+          ${evidence.length}
+        </strong>
+
+        <span>
+          Evidências
+        </span>
+
+      </div>
+
+      <div class="profile-kpi">
+
+        <strong>
+          ${temps.length}
+        </strong>
+
+        <span>
+          Temperaturas
+        </span>
+
+      </div>
+
+    </div>
+
+    <!-- RISCO -->
+
+    <div class="risk-box ${risk.className}">
+
+      <strong>
+        ${risk.emoji} Risco: ${risk.label}
+      </strong>
+
+      <div>
+        ${escapeHtml(risk.description)}
+      </div>
+
+    </div>
+
+    <!-- IDENTIFICAÇÃO -->
+
+    <div class="profile-section">
+
+      <h2>📋 Dados do estabelecimento</h2>
+
+      <div class="profile-info-grid">
+
+        <div class="profile-info-item">
+
+          <small>Nome</small>
+
+          <strong>
+            ${escapeHtml(establishment.nome)}
+          </strong>
+
+        </div>
+
+        <div class="profile-info-item">
+
+          <small>Responsável</small>
+
+          <strong>
+            ${escapeHtml(
+              establishment.responsavel || "—"
+            )}
+          </strong>
+
+        </div>
+
+        <div class="profile-info-item">
+
+          <small>Telefone</small>
+
+          <strong>
+            ${escapeHtml(
+              establishment.telefone || "—"
+            )}
+          </strong>
+
+        </div>
+
+        <div class="profile-info-item">
+
+          <small>Localização</small>
+
+          <strong>
+            ${escapeHtml(
+              establishment.localizacao || "—"
+            )}
+          </strong>
+
+        </div>
+
+        <div class="profile-info-item">
+
+          <small>Tipo</small>
+
+          <strong>
+            ${escapeHtml(
+              establishment.tipo || "—"
+            )}
+          </strong>
+
+        </div>
+
+        <div class="profile-info-item">
+
+          <small>Registado em</small>
+
+          <strong>
+            ${establishment.createdAt
+              ? new Date(
+                  establishment.createdAt
+                ).toLocaleDateString("pt-PT")
+              : "—"}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ÚLTIMA INSPEÇÃO -->
+
+    <div class="profile-section">
+
+      <h2>🔎 Última inspeção</h2>
+
+      ${
+        lastInspection
+        ? `
+
+          <div class="profile-info-grid">
+
+            <div class="profile-info-item">
+              <small>Data</small>
+              <strong>
+                ${escapeHtml(
+                  lastInspection.date
+                )}
+              </strong>
+            </div>
+
+            <div class="profile-info-item">
+              <small>Hora</small>
+              <strong>
+                ${escapeHtml(
+                  lastInspection.time || "—"
+                )}
+              </strong>
+            </div>
+
+            <div class="profile-info-item">
+              <small>Inspetor</small>
+              <strong>
+                ${escapeHtml(
+                  lastInspection.inspetor || "—"
+                )}
+              </strong>
+            </div>
+
+            <div class="profile-info-item">
+              <small>Conformidade</small>
+              <strong>
+                ${Number(
+                  lastInspection.percentage || 0
+                )}%
+              </strong>
+            </div>
+
+            <div class="profile-info-item">
+              <small>Resultado</small>
+              <strong>
+                ${escapeHtml(
+                  lastInspection.resultado || "—"
+                )}
+              </strong>
+            </div>
+
+            <div class="profile-info-item">
+              <small>Não conformidades</small>
+              <strong>
+                ${Number(
+                  lastInspection.no || 0
+                )}
+              </strong>
+            </div>
+
+          </div>
+
+        `
+        : `
+          <div class="profile-empty">
+            Ainda não existe nenhuma inspeção para este estabelecimento.
+          </div>
+        `
+      }
+
+    </div>
+
+    <!-- EVOLUÇÃO -->
+
+    <div class="profile-section">
+
+      <h2>📈 Evolução da conformidade</h2>
+
+      ${
+        sortedInspections.length
+        ? sortedInspections
+            .slice()
+            .reverse()
+            .map((i,index)=>{
+
+              const percentage =
+                Math.max(
+                  0,
+                  Math.min(
+                    100,
+                    Number(i.percentage || 0)
+                  )
+                );
+
+              return `
+
+                <div class="profile-bar-row">
+
+                  <div class="profile-bar-label">
+
+                    <span>
+                      ${escapeHtml(
+                        i.date
+                      )}
+                      · Inspeção ${index+1}
+                    </span>
+
+                    <strong>
+                      ${percentage}%
+                    </strong>
+
+                  </div>
+
+                  <div class="profile-bar">
+
+                    <div
+                      class="profile-bar-fill"
+                      style="width:${percentage}%">
+                    </div>
+
+                  </div>
+
+                </div>
+
+              `;
+
+            }).join("")
+        : `
+          <div class="profile-empty">
+            Sem dados suficientes para mostrar a evolução.
+          </div>
+        `
+      }
+
+    </div>
+
+    <!-- HISTÓRICO DE INSPEÇÕES -->
+
+    <div class="profile-section">
+
+      <h2>🕘 Histórico de inspeções</h2>
+
+      ${
+        sortedInspections.length
+        ? `
+
+          <div class="table-wrap">
+
+            <table>
+
+              <tr>
+                <th>Data</th>
+                <th>Inspetor</th>
+                <th>Conformidade</th>
+                <th>Resultado</th>
+                <th>Não conformidades</th>
+              </tr>
+
+              ${sortedInspections.map(i=>`
+
+                <tr>
+
+                  <td>
+                    ${escapeHtml(i.date)}
+                  </td>
+
+                  <td>
+                    ${escapeHtml(
+                      i.inspetor || "—"
+                    )}
+                  </td>
+
+                  <td>
+                    ${Number(
+                      i.percentage || 0
+                    )}%
+                  </td>
+
+                  <td>
+                    <span class="badge">
+                      ${escapeHtml(
+                        i.resultado || "—"
+                      )}
+                    </span>
+                  </td>
+
+                  <td>
+                    ${Number(i.no || 0)}
+                  </td>
+
+                </tr>
+
+              `).join("")}
+
+            </table>
+
+          </div>
+
+        `
+        : `
+          <div class="profile-empty">
+            Nenhuma inspeção registada.
+          </div>
+        `
+      }
+
+    </div>
+
+    <!-- NÃO CONFORMIDADES -->
+
+    <div class="profile-section">
+
+      <h2>❌ Histórico de não conformidades</h2>
+
+      ${
+        allNonConformities.length
+        ? `
+
+          ${allNonConformities.map(n=>`
+
+            <div class="profile-mini-card">
+
+              <strong>
+                ${escapeHtml(n.item)}
+              </strong>
+
+              <div style="margin-top:6px;color:#667085">
+
+                Inspeção:
+                ${escapeHtml(n.inspectionId)}
+
+                · Data:
+                ${escapeHtml(n.date)}
+
+              </div>
+
+            </div>
+
+          `).join("")}
+
+        `
+        : `
+          <div class="profile-empty">
+            Nenhuma não conformidade identificada nas inspeções.
+          </div>
+        `
+      }
+
+    </div>
+
+    <!-- PROBLEMAS E AÇÕES CORRETIVAS -->
+
+    <div class="profile-section">
+
+      <h2>⚠️ Problemas e ações corretivas</h2>
+
+      ${
+        problems.length
+        ? `
+
+          ${problems
+            .slice()
+            .sort(
+              (a,b)=>
+                new Date(b.date || 0) -
+                new Date(a.date || 0)
+            )
+            .map(p=>`
+
+              <div class="profile-mini-card">
+
+                <div style="
+                  display:flex;
+                  justify-content:space-between;
+                  gap:10px;
+                  flex-wrap:wrap;
+                ">
+
+                  <strong>
+                    ${escapeHtml(
+                      p.description
+                    )}
+                  </strong>
+
+                  <span class="${
+                    getProblemSeverityClass(
+                      p.severity
+                    )
+                  }">
+
+                    ${escapeHtml(
+                      p.severity
+                    )}
+
+                  </span>
+
+                </div>
+
+                <p>
+                  <strong>Data:</strong>
+                  ${escapeHtml(p.date)}
+                </p>
+
+                <p>
+
+                  <strong>Estado:</strong>
+
+                  ${
+                    p.status === "Resolvido"
+                    ? '<span class="profile-status-closed">✓ Resolvido</span>'
+                    : '<span class="profile-status-open">● Aberto</span>'
+                  }
+
+                </p>
+
+                <p>
+
+                  <strong>Ação corretiva / observações:</strong>
+
+                  ${escapeHtml(
+                    p.notes ||
+                    "Nenhuma ação corretiva registada."
+                  )}
+
+                </p>
+
+                ${
+                  isAdmin() || isInspector()
+                  ? `
+
+                    <button
+                      class="warning"
+                      data-toggle-problem="${p.id}">
+
+                      ${
+                        p.status === "Resolvido"
+                        ? "Reabrir problema"
+                        : "Marcar como resolvido"
+                      }
+
+                    </button>
+
+                  `
+                  : ""
+                }
+
+              </div>
+
+            `).join("")}
+
+        `
+        : `
+          <div class="profile-empty">
+            Nenhum problema registado para este estabelecimento.
+          </div>
+        `
+      }
+
+    </div>
+
+    <!-- TEMPERATURAS -->
+
+    <div class="profile-section">
+
+      <h2>🌡️ Histórico de temperaturas</h2>
+
+      ${
+        temps.length
+        ? `
+
+          <div class="table-wrap">
+
+            <table>
+
+              <tr>
+                <th>Data</th>
+                <th>Item / Equipamento</th>
+                <th>Temperatura</th>
+                <th>Observação</th>
+              </tr>
+
+              ${temps
+                .slice()
+                .reverse()
+                .map(t=>`
+
+                  <tr>
+
+                    <td>
+                      ${escapeHtml(t.date)}
+                    </td>
+
+                    <td>
+                      ${escapeHtml(t.item)}
+                    </td>
+
+                    <td>
+                      ${escapeHtml(
+                        String(t.value)
+                      )} °C
+                    </td>
+
+                    <td>
+                      ${escapeHtml(
+                        t.notes || "—"
+                      )}
+                    </td>
+
+                  </tr>
+
+                `).join("")}
+
+            </table>
+
+          </div>
+
+        `
+        : `
+          <div class="profile-empty">
+            Nenhum registo de temperatura.
+          </div>
+        `
+      }
+
+    </div>
+
+    <!-- EVIDÊNCIAS -->
+
+    <div class="profile-section">
+
+      <h2>📸 Evidências registadas</h2>
+
+      ${
+        evidence.length
+        ? `
+
+          <div class="grid">
+
+            ${evidence
+              .slice()
+              .reverse()
+              .map(e=>`
+
+                <div class="profile-mini-card">
+
+                  ${
+                    e.image
+                    ? `
+                      <img
+                        src="${e.image}"
+                        class="evidence-image"
+                        style="width:100%;max-width:100%;height:180px">
+                    `
+                    : `
+                      <div class="empty">
+                        Sem imagem
+                      </div>
+                    `
+                  }
+
+                  <p>
+                    <strong>
+                      ${escapeHtml(
+                        e.description ||
+                        "Evidência"
+                      )}
+                    </strong>
+                  </p>
+
+                  <small>
+
+                    Inspeção:
+                    ${escapeHtml(
+                      e.inspectionId ||
+                      "Geral"
+                    )}
+
+                  </small>
+
+                </div>
+
+              `).join("")}
+
+          </div>
+
+        `
+        : `
+          <div class="profile-empty">
+            Nenhuma evidência registada.
+          </div>
+        `
+      }
+
+    </div>
+
+    <!-- RESUMO FINAL -->
+
+    <div class="profile-section">
+
+      <h2>📊 Resumo profissional</h2>
+
+      <p>
+
+        O estabelecimento possui
+        <strong>${inspections.length}</strong>
+        inspeção(ões) registada(s).
+
+        ${
+          average === null
+          ? " Ainda não existe uma média de conformidade calculada."
+          : ` A conformidade média atual é de
+             <strong>${average}%</strong>.`
+        }
+
+      </p>
+
+      <p>
+
+        Existem
+        <strong>${openProblems.length}</strong>
+        problema(s) aberto(s) e
+        <strong>${resolvedProblems.length}</strong>
+        problema(s) resolvido(s).
+
+      </p>
+
+      <p>
+
+        O nível de risco calculado pelo sistema é:
+        <strong>
+          ${risk.emoji} ${risk.label}
+        </strong>.
+
+      </p>
+
+    </div>
+
+  `;
+
+}
+
+/* =========================================================
+   RELATÓRIO A PARTIR DO PERFIL
+========================================================= */
+
+function openProfileReport(){
+
+  const id =
+    currentProfileEstablishmentId;
+
+  if(!id)return;
+
+  showPage("relatorios");
+
+  const type =
+    document.getElementById(
+      "reportType"
+    );
+
+  type.value =
+    "establishment";
+
+  updateReportControls();
+
+  const establishment =
+    document.getElementById(
+      "reportEstablishment"
+    );
+
+  establishment.value = id;
+
+  generateEstablishmentReport();
+
 }
 
 /* =========================================================
@@ -1352,67 +3186,117 @@ function deleteEstablishment(id){
 
 function saveTemperature(){
 
-  if(!can("createTemperature"))return;
+  if(!can("createTemperature"))
+    return;
 
   const estabelecimentoId =
-    document.getElementById("tempEstablishment").value;
+    document.getElementById(
+      "tempEstablishment"
+    ).value;
 
   const establishment =
-    data.establishments.find(e=>e.id===estabelecimentoId);
+    data.establishments.find(
+      e=>e.id===estabelecimentoId
+    );
 
   if(!establishment){
-    alert("Selecione um estabelecimento.");
+
+    alert(
+      "Selecione um estabelecimento."
+    );
+
     return;
+
   }
 
   const item =
-    document.getElementById("tempItem").value.trim();
+    document.getElementById(
+      "tempItem"
+    ).value.trim();
 
   const value =
-    document.getElementById("tempValue").value;
+    document.getElementById(
+      "tempValue"
+    ).value;
 
   const date =
-    document.getElementById("tempDate").value || today();
+    document.getElementById(
+      "tempDate"
+    ).value || today();
 
   if(!item || value === ""){
-    alert("Preencha o alimento/equipamento e a temperatura.");
+
+    alert(
+      "Preencha o alimento/equipamento e a temperatura."
+    );
+
     return;
+
   }
 
   data.temps.push({
+
     id:generateId("TMP"),
     estabelecimentoId,
     estabelecimento:establishment.nome,
     item,
     value:Number(value),
     date,
-    notes:document.getElementById("tempNotes").value.trim(),
+    notes:
+      document.getElementById(
+        "tempNotes"
+      ).value.trim(),
+
     createdBy:currentUser.id,
     createdByName:currentUser.name,
     createdAt:new Date().toISOString()
+
   });
 
   saveData();
 
-  document.getElementById("tempItem").value="";
-  document.getElementById("tempValue").value="";
-  document.getElementById("tempNotes").value="";
-  document.getElementById("tempDate").value=today();
+  document.getElementById(
+    "tempItem"
+  ).value="";
+
+  document.getElementById(
+    "tempValue"
+  ).value="";
+
+  document.getElementById(
+    "tempNotes"
+  ).value="";
+
+  document.getElementById(
+    "tempDate"
+  ).value=today();
 
   refreshAll();
 
-  alert("Temperatura guardada.");
+  alert(
+    "Temperatura guardada."
+  );
+
 }
 
 function deleteTemperature(id){
 
-  if(!can("deleteRecords"))return;
+  if(!can("deleteRecords"))
+    return;
 
-  if(!confirm("Eliminar este registo?"))return;
+  if(!confirm(
+    "Eliminar este registo?"
+  ))return;
 
-  data.temps=data.temps.filter(t=>t.id!==id);
+  data.temps =
+    data.temps.filter(
+      t=>t.id!==id
+    );
+
   saveData();
+
   refreshAll();
+
 }
 
 /* =========================================================
@@ -1421,14 +3305,34 @@ function deleteTemperature(id){
 
 function renderChecklist(){
 
-  const box = document.getElementById("checklist");
+  const box =
+    document.getElementById(
+      "checklist"
+    );
 
-  box.innerHTML = checklistItems.map((item,index)=>`
-    <label class="check-item">
-      <input type="checkbox" class="check-input" data-index="${index}">
-      <span>${index+1}. ${escapeHtml(item)}</span>
-    </label>
-  `).join("");
+  box.innerHTML =
+    checklistItems
+      .map(
+        (item,index)=>`
+
+          <label class="check-item">
+
+            <input
+              type="checkbox"
+              class="check-input"
+              data-index="${index}">
+
+            <span>
+              ${index+1}.
+              ${escapeHtml(item)}
+            </span>
+
+          </label>
+
+        `
+      )
+      .join("");
+
 }
 
 /* =========================================================
@@ -1437,109 +3341,194 @@ function renderChecklist(){
 
 function saveInspection(){
 
-  if(!can("createInspection"))return;
+  if(!can("createInspection"))
+    return;
 
   const estabelecimentoId =
-    document.getElementById("inspectionEstablishment").value;
+    document.getElementById(
+      "inspectionEstablishment"
+    ).value;
 
   const establishment =
-    data.establishments.find(e=>e.id===estabelecimentoId);
+    data.establishments.find(
+      e=>e.id===estabelecimentoId
+    );
 
   if(!establishment){
-    alert("Selecione um estabelecimento.");
+
+    alert(
+      "Selecione um estabelecimento."
+    );
+
     return;
+
   }
 
   const checks =
-    [...document.querySelectorAll(".check-input")];
+    [
+      ...document.querySelectorAll(
+        ".check-input"
+      )
+    ];
 
   const yes =
-    checks.filter(c=>c.checked).length;
+    checks.filter(
+      c=>c.checked
+    ).length;
 
   const no =
     checks.length - yes;
 
-  const total = checks.length;
+  const total =
+    checks.length;
 
   const percentage =
-    total ? Math.round((yes/total)*100) : 0;
+    total
+    ? Math.round(
+        (yes/total)*100
+      )
+    : 0;
 
   const nonConformities =
-    checklistItems.filter((item,index)=>!checks[index].checked);
+    checklistItems.filter(
+      (item,index)=>
+        !checks[index].checked
+    );
 
   const inspection = {
+
     id:generateId("FSM"),
+
     estabelecimentoId,
-    estabelecimento:establishment.nome,
+
+    estabelecimento:
+      establishment.nome,
+
     responsavel:
-      document.getElementById("inspectionResponsible").value.trim() ||
+      document.getElementById(
+        "inspectionResponsible"
+      ).value.trim() ||
       establishment.responsavel,
+
     inspetor:
-      document.getElementById("inspectionInspector").value.trim() ||
+      document.getElementById(
+        "inspectionInspector"
+      ).value.trim() ||
       currentUser.name,
+
     date:
-      document.getElementById("inspectionDate").value || today(),
+      document.getElementById(
+        "inspectionDate"
+      ).value || today(),
+
     time:
-      document.getElementById("inspectionTime").value || nowTime(),
+      document.getElementById(
+        "inspectionTime"
+      ).value || nowTime(),
+
     notes:
-      document.getElementById("inspectionNotes").value.trim(),
+      document.getElementById(
+        "inspectionNotes"
+      ).value.trim(),
+
     yes,
     no,
     total,
     percentage,
-    resultado:getResult(percentage),
+
+    resultado:
+      getResult(percentage),
+
     status:"concluida",
+
     nonConformities,
+
     createdBy:currentUser.id,
     createdByName:currentUser.name,
     createdByRole:currentUser.role,
     createdAt:new Date().toISOString()
+
   };
 
-  data.inspections.push(inspection);
+  data.inspections.push(
+    inspection
+  );
 
   saveData();
 
-  document.getElementById("inspectionNotes").value="";
-  document.getElementById("inspectionDate").value=today();
-  document.getElementById("inspectionTime").value=nowTime();
+  document.getElementById(
+    "inspectionNotes"
+  ).value="";
 
-  document.querySelectorAll(".check-input")
-    .forEach(c=>c.checked=false);
+  document.getElementById(
+    "inspectionDate"
+  ).value=today();
+
+  document.getElementById(
+    "inspectionTime"
+  ).value=nowTime();
+
+  document
+    .querySelectorAll(
+      ".check-input"
+    )
+    .forEach(
+      c=>c.checked=false
+    );
 
   refreshAll();
 
   alert(
-    "Inspeção concluída.\n\nResultado: " +
+    "Inspeção concluída.\n\n" +
+    "Resultado: " +
     inspection.resultado +
     "\nConformidade: " +
-    percentage + "%"
+    percentage +
+    "%"
   );
+
 }
 
-function getResult(percentage){
+function getResult(
+  percentage
+){
 
-  if(percentage>=90)return "Excelente";
-  if(percentage>=75)return "Bom";
-  if(percentage>=50)return "Atenção necessária";
+  if(percentage>=90)
+    return "Excelente";
+
+  if(percentage>=75)
+    return "Bom";
+
+  if(percentage>=50)
+    return "Atenção necessária";
 
   return "Não conforme";
+
 }
 
 function deleteInspection(id){
 
-  if(!can("deleteRecords"))return;
+  if(!can("deleteRecords"))
+    return;
 
-  if(!confirm("Eliminar esta inspeção?"))return;
+  if(!confirm(
+    "Eliminar esta inspeção?"
+  ))return;
 
   data.inspections =
-    data.inspections.filter(i=>i.id!==id);
+    data.inspections.filter(
+      i=>i.id!==id
+    );
 
   data.evidences =
-    data.evidences.filter(e=>e.inspectionId!==id);
+    data.evidences.filter(
+      e=>e.inspectionId!==id
+    );
 
   saveData();
+
   refreshAll();
+
 }
 
 /* =========================================================
@@ -1548,76 +3537,137 @@ function deleteInspection(id){
 
 function saveProblem(){
 
-  if(!can("createProblem"))return;
+  if(!can("createProblem"))
+    return;
 
   const estabelecimentoId =
-    document.getElementById("problemEstablishment").value;
+    document.getElementById(
+      "problemEstablishment"
+    ).value;
 
   const establishment =
-    data.establishments.find(e=>e.id===estabelecimentoId);
+    data.establishments.find(
+      e=>e.id===estabelecimentoId
+    );
 
   const description =
-    document.getElementById("problemDescription").value.trim();
+    document.getElementById(
+      "problemDescription"
+    ).value.trim();
 
-  if(!establishment || !description){
-    alert("Selecione o estabelecimento e descreva o problema.");
+  if(
+    !establishment ||
+    !description
+  ){
+
+    alert(
+      "Selecione o estabelecimento e descreva o problema."
+    );
+
     return;
+
   }
 
   data.problems.push({
+
     id:generateId("PRB"),
+
     estabelecimentoId,
-    estabelecimento:establishment.nome,
+
+    estabelecimento:
+      establishment.nome,
+
     description,
-    severity:document.getElementById("problemSeverity").value,
-    date:document.getElementById("problemDate").value || today(),
-    notes:document.getElementById("problemNotes").value.trim(),
-    status:document.getElementById("problemStatus").value,
+
+    severity:
+      document.getElementById(
+        "problemSeverity"
+      ).value,
+
+    date:
+      document.getElementById(
+        "problemDate"
+      ).value || today(),
+
+    notes:
+      document.getElementById(
+        "problemNotes"
+      ).value.trim(),
+
+    status:
+      document.getElementById(
+        "problemStatus"
+      ).value,
+
     createdBy:currentUser.id,
     createdByName:currentUser.name,
     createdAt:new Date().toISOString()
+
   });
 
   saveData();
 
-  document.getElementById("problemDescription").value="";
-  document.getElementById("problemNotes").value="";
-  document.getElementById("problemDate").value=today();
+  document.getElementById(
+    "problemDescription"
+  ).value="";
+
+  document.getElementById(
+    "problemNotes"
+  ).value="";
+
+  document.getElementById(
+    "problemDate"
+  ).value=today();
 
   refreshAll();
 
-  alert("Problema registado.");
+  alert(
+    "Problema registado."
+  );
+
 }
 
 function toggleProblem(id){
 
-  if(!isAdmin() && !isInspector())return;
+  if(!isAdmin() && !isInspector())
+    return;
 
   const problem =
-    data.problems.find(p=>p.id===id);
+    data.problems.find(
+      p=>p.id===id
+    );
 
   if(!problem)return;
 
   problem.status =
-    problem.status==="Resolvido"
-      ? "Aberto"
-      : "Resolvido";
+    problem.status === "Resolvido"
+    ? "Aberto"
+    : "Resolvido";
 
   saveData();
+
   refreshAll();
+
 }
 
 function deleteProblem(id){
 
-  if(!can("deleteRecords"))return;
+  if(!can("deleteRecords"))
+    return;
 
-  if(!confirm("Eliminar este problema?"))return;
+  if(!confirm(
+    "Eliminar este problema?"
+  ))return;
 
   data.problems =
-    data.problems.filter(p=>p.id!==id);
+    data.problems.filter(
+      p=>p.id!==id
+    );
 
   saveData();
+
   refreshAll();
+
 }
 
 /* =========================================================
@@ -1626,46 +3676,71 @@ function deleteProblem(id){
 
 function saveEvidence(){
 
-  if(!can("createEvidence"))return;
+  if(!can("createEvidence"))
+    return;
 
   const estabelecimentoId =
-    document.getElementById("evidenceEstablishment").value;
+    document.getElementById(
+      "evidenceEstablishment"
+    ).value;
 
   const establishment =
-    data.establishments.find(e=>e.id===estabelecimentoId);
+    data.establishments.find(
+      e=>e.id===estabelecimentoId
+    );
 
   if(!establishment){
-    alert("Selecione um estabelecimento.");
+
+    alert(
+      "Selecione um estabelecimento."
+    );
+
     return;
+
   }
 
   const file =
-    document.getElementById("evidenceFile").files[0];
+    document.getElementById(
+      "evidenceFile"
+    ).files[0];
 
   const description =
-    document.getElementById("evidenceDescription").value.trim();
+    document.getElementById(
+      "evidenceDescription"
+    ).value.trim();
 
   if(!file && !description){
-    alert("Adicione uma imagem ou descrição.");
+
+    alert(
+      "Adicione uma imagem ou descrição."
+    );
+
     return;
+
   }
 
   const inspectionId =
-    document.getElementById("evidenceInspection").value;
+    document.getElementById(
+      "evidenceInspection"
+    ).value;
 
   if(file){
 
-    const reader = new FileReader();
+    const reader =
+      new FileReader();
 
-    reader.onload = function(){
+    reader.onload=function(){
 
       addEvidence(
+
         estabelecimentoId,
         establishment,
         inspectionId,
         description,
         reader.result
+
       );
+
     };
 
     reader.readAsDataURL(file);
@@ -1673,56 +3748,87 @@ function saveEvidence(){
   }else{
 
     addEvidence(
+
       estabelecimentoId,
       establishment,
       inspectionId,
       description,
       ""
+
     );
+
   }
+
 }
 
 function addEvidence(
+
   estabelecimentoId,
   establishment,
   inspectionId,
   description,
   image
+
 ){
 
   data.evidences.push({
+
     id:generateId("EVD"),
+
     estabelecimentoId,
-    estabelecimento:establishment.nome,
-    inspectionId:inspectionId || "",
+
+    estabelecimento:
+      establishment.nome,
+
+    inspectionId:
+      inspectionId || "",
+
     description,
+
     image,
+
     createdBy:currentUser.id,
     createdByName:currentUser.name,
     createdAt:new Date().toISOString()
+
   });
 
   saveData();
 
-  document.getElementById("evidenceDescription").value="";
-  document.getElementById("evidenceFile").value="";
+  document.getElementById(
+    "evidenceDescription"
+  ).value="";
+
+  document.getElementById(
+    "evidenceFile"
+  ).value="";
 
   refreshAll();
 
-  alert("Evidência guardada.");
+  alert(
+    "Evidência guardada."
+  );
+
 }
 
 function deleteEvidence(id){
 
-  if(!can("deleteRecords"))return;
+  if(!can("deleteRecords"))
+    return;
 
-  if(!confirm("Eliminar esta evidência?"))return;
+  if(!confirm(
+    "Eliminar esta evidência?"
+  ))return;
 
   data.evidences =
-    data.evidences.filter(e=>e.id!==id);
+    data.evidences.filter(
+      e=>e.id!==id
+    );
 
   saveData();
+
   refreshAll();
+
 }
 
 /* =========================================================
@@ -1731,52 +3837,93 @@ function deleteEvidence(id){
 
 function saveUser(){
 
-  if(!can("manageUsers"))return;
+  if(!can("manageUsers"))
+    return;
 
   const name =
-    document.getElementById("userName").value.trim();
+    document.getElementById(
+      "userName"
+    ).value.trim();
 
   const username =
-    document.getElementById("userUsername").value.trim();
+    document.getElementById(
+      "userUsername"
+    ).value.trim();
 
   const password =
-    document.getElementById("userPassword").value;
+    document.getElementById(
+      "userPassword"
+    ).value;
 
   const role =
-    document.getElementById("userRole").value;
+    document.getElementById(
+      "userRole"
+    ).value;
 
   const establishmentId =
-    document.getElementById("userEstablishment").value;
+    document.getElementById(
+      "userEstablishment"
+    ).value;
 
-  if(!name || !username || !password){
-    alert("Preencha nome, utilizador e palavra-passe.");
+  if(
+    !name ||
+    !username ||
+    !password
+  ){
+
+    alert(
+      "Preencha nome, utilizador e palavra-passe."
+    );
+
     return;
+
   }
 
-  if(password.length < 4){
-    alert("A palavra-passe deve ter pelo menos 4 caracteres.");
+  if(password.length<4){
+
+    alert(
+      "A palavra-passe deve ter pelo menos 4 caracteres."
+    );
+
     return;
+
   }
 
   const exists =
-    data.users.some(u =>
-      u.username.toLowerCase() === username.toLowerCase()
+    data.users.some(
+      u =>
+        u.username.toLowerCase()
+        === username.toLowerCase()
     );
 
   if(exists){
-    alert("Este utilizador já existe.");
+
+    alert(
+      "Este utilizador já existe."
+    );
+
     return;
+
   }
 
   if(
-    (role==="Responsável" || role==="Inspetor") &&
+    (
+      role==="Responsável" ||
+      role==="Inspetor"
+    ) &&
     !establishmentId
   ){
-    alert("Associe o utilizador a um estabelecimento.");
+
+    alert(
+      "Associe o utilizador a um estabelecimento."
+    );
+
     return;
+
   }
 
   data.users.push({
+
     id:generateId("USR"),
     name,
     username,
@@ -1786,58 +3933,101 @@ function saveUser(){
     active:true,
     createdAt:new Date().toISOString(),
     createdBy:currentUser.id
+
   });
 
   saveData();
 
-  document.getElementById("userName").value="";
-  document.getElementById("userUsername").value="";
-  document.getElementById("userPassword").value="";
+  document.getElementById(
+    "userName"
+  ).value="";
+
+  document.getElementById(
+    "userUsername"
+  ).value="";
+
+  document.getElementById(
+    "userPassword"
+  ).value="";
 
   refreshAll();
 
-  alert("Utilizador criado com sucesso.");
+  alert(
+    "Utilizador criado com sucesso."
+  );
+
 }
 
 function toggleUser(id){
 
-  if(!can("manageUsers"))return;
+  if(!can("manageUsers"))
+    return;
 
-  const user = data.users.find(u=>u.id===id);
+  const user =
+    data.users.find(
+      u=>u.id===id
+    );
 
   if(!user)return;
 
-  if(user.id===currentUser.id){
-    alert("Não pode desativar o seu próprio utilizador.");
+  if(
+    user.id === currentUser.id
+  ){
+
+    alert(
+      "Não pode desativar o seu próprio utilizador."
+    );
+
     return;
+
   }
 
-  user.active = user.active === false;
+  user.active =
+    user.active === false;
 
   saveData();
+
   refreshAll();
+
 }
 
 function deleteUser(id){
 
-  if(!can("manageUsers"))return;
+  if(!can("manageUsers"))
+    return;
 
-  const user=data.users.find(u=>u.id===id);
+  const user =
+    data.users.find(
+      u=>u.id===id
+    );
 
   if(!user)return;
 
-  if(user.id===currentUser.id){
-    alert("Não pode eliminar o seu próprio utilizador.");
+  if(
+    user.id === currentUser.id
+  ){
+
+    alert(
+      "Não pode eliminar o seu próprio utilizador."
+    );
+
     return;
+
   }
 
-  if(!confirm("Eliminar este utilizador?"))return;
+  if(!confirm(
+    "Eliminar este utilizador?"
+  ))return;
 
   data.users =
-    data.users.filter(u=>u.id!==id);
+    data.users.filter(
+      u=>u.id!==id
+    );
 
   saveData();
+
   refreshAll();
+
 }
 
 /* =========================================================
@@ -1847,201 +4037,404 @@ function deleteUser(id){
 function generateReport(){
 
   const type =
-    document.getElementById("reportType").value;
+    document.getElementById(
+      "reportType"
+    ).value;
 
   const establishmentId =
-    document.getElementById("reportEstablishment").value;
+    document.getElementById(
+      "reportEstablishment"
+    ).value;
 
   if(!establishmentId){
-    alert("Selecione um estabelecimento.");
+
+    alert(
+      "Selecione um estabelecimento."
+    );
+
     return;
+
   }
 
   if(type==="inspection"){
+
     generateInspectionReport();
+
   }else{
+
     generateEstablishmentReport();
+
   }
+
 }
 
 function generateInspectionReport(){
 
   const id =
-    document.getElementById("reportInspection").value;
+    document.getElementById(
+      "reportInspection"
+    ).value;
 
   const inspection =
-    visibleInspections().find(i=>i.id===id);
+    visibleInspections()
+      .find(
+        i=>i.id===id
+      );
 
   if(!inspection){
-    alert("Selecione uma inspeção.");
+
+    alert(
+      "Selecione uma inspeção."
+    );
+
     return;
+
   }
 
   const evidence =
-    visibleEvidence().filter(e=>e.inspectionId===inspection.id);
+    visibleEvidence()
+      .filter(
+        e=>e.inspectionId===inspection.id
+      );
 
   const temps =
-    visibleTemps().filter(t=>
-      t.estabelecimentoId===inspection.estabelecimentoId &&
-      t.date===inspection.date
-    );
+    visibleTemps()
+      .filter(
+        t =>
+          t.estabelecimentoId ===
+          inspection.estabelecimentoId &&
+          t.date ===
+          inspection.date
+      );
 
   const problems =
-    visibleProblems().filter(p=>
-      p.estabelecimentoId===inspection.estabelecimentoId &&
-      p.date===inspection.date
-    );
+    visibleProblems()
+      .filter(
+        p =>
+          p.estabelecimentoId ===
+          inspection.estabelecimentoId &&
+          p.date ===
+          inspection.date
+      );
 
-  document.getElementById("reportPreview").innerHTML = `
+  document.getElementById(
+    "reportPreview"
+  ).innerHTML = `
+
     <div class="report print-area">
 
       <div class="report-title">
+
         <h1>FOODSAFE MOZ</h1>
-        <h2>RELATÓRIO DE INSPEÇÃO DE SEGURANÇA ALIMENTAR</h2>
-        <p>Alimentos seguros, famílias protegidas</p>
+
+        <h2>
+          RELATÓRIO DE INSPEÇÃO DE SEGURANÇA ALIMENTAR
+        </h2>
+
+        <p>
+          Alimentos seguros, famílias protegidas
+        </p>
+
       </div>
 
       <hr>
 
       <div class="report-section">
+
         <h3>1. Identificação</h3>
 
-        <p><strong>Estabelecimento:</strong>
-        ${escapeHtml(inspection.estabelecimento)}</p>
+        <p>
+          <strong>Estabelecimento:</strong>
+          ${escapeHtml(
+            inspection.estabelecimento
+          )}
+        </p>
 
-        <p><strong>Responsável:</strong>
-        ${escapeHtml(inspection.responsavel || "—")}</p>
+        <p>
+          <strong>Responsável:</strong>
+          ${escapeHtml(
+            inspection.responsavel || "—"
+          )}
+        </p>
 
-        <p><strong>Inspetor:</strong>
-        ${escapeHtml(inspection.inspetor || "—")}</p>
+        <p>
+          <strong>Inspetor:</strong>
+          ${escapeHtml(
+            inspection.inspetor || "—"
+          )}
+        </p>
 
-        <p><strong>ID da inspeção:</strong>
-        ${escapeHtml(inspection.numeroInspecao || inspection.id)}</p>
+        <p>
+          <strong>ID da inspeção:</strong>
+          ${escapeHtml(
+            inspection.numeroInspecao ||
+            inspection.id
+          )}
+        </p>
 
-        <p><strong>Data:</strong>
-        ${escapeHtml(inspection.date)}</p>
+        <p>
+          <strong>Data:</strong>
+          ${escapeHtml(
+            inspection.date
+          )}
+        </p>
 
-        <p><strong>Hora:</strong>
-        ${escapeHtml(inspection.time)}</p>
+        <p>
+          <strong>Hora:</strong>
+          ${escapeHtml(
+            inspection.time
+          )}
+        </p>
 
-        <p><strong>Relatório gerado por:</strong>
-        ${escapeHtml(currentUser.name)}</p>
+        <p>
+          <strong>Relatório gerado por:</strong>
+          ${escapeHtml(
+            currentUser.name
+          )}
+        </p>
+
       </div>
 
       <div class="report-section">
+
         <h3>2. Resultado</h3>
 
-        <p><strong>Conformidades:</strong>
-        ${inspection.yes}/${inspection.total}</p>
+        <p>
+          <strong>Conformidades:</strong>
+          ${inspection.yes}/${inspection.total}
+        </p>
 
-        <p><strong>Não conformidades:</strong>
-        ${inspection.no}</p>
+        <p>
+          <strong>Não conformidades:</strong>
+          ${inspection.no}
+        </p>
 
-        <p><strong>Percentagem de conformidade:</strong>
-        ${inspection.percentage}%</p>
+        <p>
+          <strong>Percentagem de conformidade:</strong>
+          ${inspection.percentage}%
+        </p>
 
-        <p><strong>Resultado:</strong>
-        ${escapeHtml(inspection.resultado)}</p>
+        <p>
+          <strong>Resultado:</strong>
+          ${escapeHtml(
+            inspection.resultado
+          )}
+        </p>
+
       </div>
 
       <div class="report-section">
-        <h3>3. Não conformidades identificadas</h3>
+
+        <h3>
+          3. Não conformidades identificadas
+        </h3>
 
         ${
           inspection.nonConformities?.length
-          ? `<ol>${inspection.nonConformities.map(n=>
-              `<li>${escapeHtml(n)}</li>`
-            ).join("")}</ol>`
+
+          ? `<ol>
+              ${
+                inspection.nonConformities
+                  .map(
+                    n =>
+                      `<li>
+                        ${escapeHtml(n)}
+                      </li>`
+                  )
+                  .join("")
+              }
+             </ol>`
+
           : "<p>Nenhuma não conformidade identificada.</p>"
         }
+
       </div>
 
       <div class="report-section">
+
         <h3>4. Observações</h3>
-        <p>${escapeHtml(inspection.notes || "Sem observações.")}</p>
+
+        <p>
+          ${escapeHtml(
+            inspection.notes ||
+            "Sem observações."
+          )}
+        </p>
+
       </div>
 
       <div class="report-section">
+
         <h3>5. Evidências</h3>
 
         ${
           evidence.length
+
           ? evidence.map(e=>`
+
               <div style="margin-bottom:15px">
-                <p><strong>${escapeHtml(e.description || "Evidência")}</strong></p>
+
+                <p>
+                  <strong>
+                    ${escapeHtml(
+                      e.description ||
+                      "Evidência"
+                    )}
+                  </strong>
+                </p>
+
                 ${
                   e.image
-                  ? `<img src="${e.image}" class="evidence-image">`
+                  ? `
+                    <img
+                      src="${e.image}"
+                      class="evidence-image">
+                  `
                   : ""
                 }
+
               </div>
+
             `).join("")
+
           : "<p>Não existem evidências associadas.</p>"
         }
+
       </div>
 
       <div class="report-section">
-        <h3>6. Temperaturas registadas</h3>
+
+        <h3>
+          6. Temperaturas registadas
+        </h3>
 
         ${
           temps.length
+
           ? `
+
             <table>
+
               <tr>
                 <th>Item/Equipamento</th>
                 <th>Temperatura</th>
                 <th>Observação</th>
               </tr>
+
               ${temps.map(t=>`
+
                 <tr>
-                  <td>${escapeHtml(t.item)}</td>
-                  <td>${escapeHtml(String(t.value))} °C</td>
-                  <td>${escapeHtml(t.notes || "—")}</td>
+
+                  <td>
+                    ${escapeHtml(t.item)}
+                  </td>
+
+                  <td>
+                    ${escapeHtml(
+                      String(t.value)
+                    )} °C
+                  </td>
+
+                  <td>
+                    ${escapeHtml(
+                      t.notes || "—"
+                    )}
+                  </td>
+
                 </tr>
+
               `).join("")}
+
             </table>
+
           `
+
           : "<p>Não existem registos de temperatura nesta data.</p>"
         }
+
       </div>
 
       <div class="report-section">
-        <h3>7. Problemas registados</h3>
+
+        <h3>
+          7. Problemas registados
+        </h3>
 
         ${
           problems.length
+
           ? `
+
             <table>
+
               <tr>
                 <th>Problema</th>
                 <th>Gravidade</th>
                 <th>Estado</th>
               </tr>
+
               ${problems.map(p=>`
+
                 <tr>
-                  <td>${escapeHtml(p.description)}</td>
-                  <td>${escapeHtml(p.severity)}</td>
-                  <td>${escapeHtml(p.status)}</td>
+
+                  <td>
+                    ${escapeHtml(
+                      p.description
+                    )}
+                  </td>
+
+                  <td>
+                    ${escapeHtml(
+                      p.severity
+                    )}
+                  </td>
+
+                  <td>
+                    ${escapeHtml(
+                      p.status
+                    )}
+                  </td>
+
                 </tr>
+
               `).join("")}
+
             </table>
+
           `
+
           : "<p>Nenhum problema registado nesta data.</p>"
         }
+
       </div>
 
       <div class="report-section">
+
         <h3>8. Conclusão</h3>
 
         <p>
-          A inspeção apresentou um nível de conformidade de
-          <strong>${inspection.percentage}%</strong>,
+
+          A inspeção apresentou um nível
+          de conformidade de
+
+          <strong>
+            ${inspection.percentage}%
+          </strong>,
+
           correspondendo ao resultado
-          <strong>${escapeHtml(inspection.resultado)}</strong>.
+
+          <strong>
+            ${escapeHtml(
+              inspection.resultado
+            )}
+          </strong>.
+
         </p>
+
       </div>
 
       <div class="signature-grid">
+
         <div class="signature">
           Inspetor
         </div>
@@ -2049,155 +4442,305 @@ function generateInspectionReport(){
         <div class="signature">
           Responsável do estabelecimento
         </div>
+
       </div>
 
     </div>
+
   `;
+
 }
 
 function generateEstablishmentReport(){
 
   const establishmentId =
-    document.getElementById("reportEstablishment").value;
+    document.getElementById(
+      "reportEstablishment"
+    ).value;
 
   const establishment =
-    visibleEstablishments().find(e=>e.id===establishmentId);
+    visibleEstablishments()
+      .find(
+        e=>e.id===establishmentId
+      );
 
   if(!establishment)return;
 
   const inspections =
     visibleInspections()
-      .filter(i=>i.estabelecimentoId===establishmentId);
+      .filter(
+        i =>
+          i.estabelecimentoId ===
+          establishmentId
+      );
 
   const problems =
     visibleProblems()
-      .filter(p=>p.estabelecimentoId===establishmentId);
+      .filter(
+        p =>
+          p.estabelecimentoId ===
+          establishmentId
+      );
 
   const evidence =
     visibleEvidence()
-      .filter(e=>e.estabelecimentoId===establishmentId);
+      .filter(
+        e =>
+          e.estabelecimentoId ===
+          establishmentId
+      );
 
   const temps =
     visibleTemps()
-      .filter(t=>t.estabelecimentoId===establishmentId);
+      .filter(
+        t =>
+          t.estabelecimentoId ===
+          establishmentId
+      );
 
   const average =
     inspections.length
+
     ? Math.round(
-        inspections.reduce((sum,i)=>sum+i.percentage,0)
-        / inspections.length
+        inspections.reduce(
+          (sum,i)=>
+            sum +
+            Number(
+              i.percentage || 0
+            ),
+          0
+        ) /
+        inspections.length
       )
+
     : 0;
 
-  document.getElementById("reportPreview").innerHTML = `
+  document.getElementById(
+    "reportPreview"
+  ).innerHTML = `
+
     <div class="report print-area">
 
       <div class="report-title">
+
         <h1>FOODSAFE MOZ</h1>
-        <h2>RELATÓRIO DO ESTABELECIMENTO</h2>
-        <p>Alimentos seguros, famílias protegidas</p>
+
+        <h2>
+          RELATÓRIO DO ESTABELECIMENTO
+        </h2>
+
+        <p>
+          Alimentos seguros, famílias protegidas
+        </p>
+
       </div>
 
       <hr>
 
       <div class="report-section">
+
         <h3>1. Identificação</h3>
 
-        <p><strong>Estabelecimento:</strong>
-        ${escapeHtml(establishment.nome)}</p>
+        <p>
+          <strong>Estabelecimento:</strong>
+          ${escapeHtml(
+            establishment.nome
+          )}
+        </p>
 
-        <p><strong>Responsável:</strong>
-        ${escapeHtml(establishment.responsavel || "—")}</p>
+        <p>
+          <strong>Responsável:</strong>
+          ${escapeHtml(
+            establishment.responsavel ||
+            "—"
+          )}
+        </p>
 
-        <p><strong>Telefone:</strong>
-        ${escapeHtml(establishment.telefone || "—")}</p>
+        <p>
+          <strong>Telefone:</strong>
+          ${escapeHtml(
+            establishment.telefone ||
+            "—"
+          )}
+        </p>
 
-        <p><strong>Localização:</strong>
-        ${escapeHtml(establishment.localizacao || "—")}</p>
+        <p>
+          <strong>Localização:</strong>
+          ${escapeHtml(
+            establishment.localizacao ||
+            "—"
+          )}
+        </p>
 
-        <p><strong>Tipo:</strong>
-        ${escapeHtml(establishment.tipo || "—")}</p>
+        <p>
+          <strong>Tipo:</strong>
+          ${escapeHtml(
+            establishment.tipo ||
+            "—"
+          )}
+        </p>
+
       </div>
 
       <div class="report-section">
+
         <h3>2. Resumo</h3>
 
-        <p><strong>Total de inspeções:</strong>
-        ${inspections.length}</p>
+        <p>
+          <strong>Total de inspeções:</strong>
+          ${inspections.length}
+        </p>
 
-        <p><strong>Conformidade média:</strong>
-        ${average}%</p>
+        <p>
+          <strong>Conformidade média:</strong>
+          ${average}%
+        </p>
 
-        <p><strong>Problemas:</strong>
-        ${problems.length}</p>
+        <p>
+          <strong>Problemas:</strong>
+          ${problems.length}
+        </p>
 
-        <p><strong>Evidências:</strong>
-        ${evidence.length}</p>
+        <p>
+          <strong>Evidências:</strong>
+          ${evidence.length}
+        </p>
 
-        <p><strong>Registos de temperatura:</strong>
-        ${temps.length}</p>
+        <p>
+          <strong>Registos de temperatura:</strong>
+          ${temps.length}
+        </p>
+
       </div>
 
       <div class="report-section">
-        <h3>3. Histórico de inspeções</h3>
+
+        <h3>
+          3. Histórico de inspeções
+        </h3>
 
         ${
           inspections.length
+
           ? `
+
             <table>
+
               <tr>
                 <th>ID</th>
                 <th>Data</th>
                 <th>Conformidade</th>
                 <th>Resultado</th>
               </tr>
+
               ${inspections.map(i=>`
+
                 <tr>
-                  <td>${escapeHtml(i.id)}</td>
-                  <td>${escapeHtml(i.date)}</td>
-                  <td>${i.percentage}%</td>
-                  <td>${escapeHtml(i.resultado)}</td>
+
+                  <td>
+                    ${escapeHtml(i.id)}
+                  </td>
+
+                  <td>
+                    ${escapeHtml(i.date)}
+                  </td>
+
+                  <td>
+                    ${i.percentage}%
+                  </td>
+
+                  <td>
+                    ${escapeHtml(
+                      i.resultado
+                    )}
+                  </td>
+
                 </tr>
+
               `).join("")}
+
             </table>
+
           `
+
           : "<p>Sem inspeções.</p>"
         }
+
       </div>
 
       <div class="report-section">
+
         <h3>4. Problemas</h3>
 
         ${
           problems.length
+
           ? problems.map(p=>`
-            <p>
-              <strong>${escapeHtml(p.description)}</strong>
-              — ${escapeHtml(p.severity)}
-              — ${escapeHtml(p.status)}
-            </p>
-          `).join("")
+
+              <p>
+
+                <strong>
+                  ${escapeHtml(
+                    p.description
+                  )}
+                </strong>
+
+                —
+                ${escapeHtml(
+                  p.severity
+                )}
+
+                —
+                ${escapeHtml(
+                  p.status
+                )}
+
+              </p>
+
+            `).join("")
+
           : "<p>Nenhum problema registado.</p>"
         }
+
       </div>
 
       <div class="report-section">
+
         <h3>5. Conclusão</h3>
 
         <p>
+
           O estabelecimento possui
-          <strong>${inspections.length}</strong>
-          inspeção(ões) registada(s), com uma conformidade média de
-          <strong>${average}%</strong>.
+
+          <strong>
+            ${inspections.length}
+          </strong>
+
+          inspeção(ões) registada(s),
+          com uma conformidade média de
+
+          <strong>
+            ${average}%
+          </strong>.
+
         </p>
+
       </div>
 
       <p style="margin-top:50px">
-        <strong>Relatório gerado por:</strong>
-        ${escapeHtml(currentUser.name)}
+
+        <strong>
+          Relatório gerado por:
+        </strong>
+
+        ${escapeHtml(
+          currentUser.name
+        )}
+
       </p>
 
       <div class="signature-grid">
+
         <div class="signature">
           FoodSafe Moz
         </div>
@@ -2205,14 +4748,19 @@ function generateEstablishmentReport(){
         <div class="signature">
           Responsável do estabelecimento
         </div>
+
       </div>
 
     </div>
+
   `;
+
 }
 
 function printReport(){
+
   window.print();
+
 }
 
 /* =========================================================
@@ -2221,402 +4769,895 @@ function printReport(){
 
 function renderEstablishments(){
 
-  const box=document.getElementById("establishmentList");
+  const box =
+    document.getElementById(
+      "establishmentList"
+    );
 
-  const list=visibleEstablishments();
+  const list =
+    visibleEstablishments();
 
   if(!list.length){
-    box.innerHTML='<div class="empty">Nenhum estabelecimento disponível.</div>';
+
+    box.innerHTML =
+      '<div class="empty">' +
+      'Nenhum estabelecimento disponível.' +
+      '</div>';
+
     return;
+
   }
 
-  box.innerHTML=list.map(e=>{
+  box.innerHTML =
+    list.map(e=>{
 
-    const inspections =
-      visibleInspections().filter(i=>i.estabelecimentoId===e.id).length;
+      const inspections =
+        visibleInspections()
+          .filter(
+            i =>
+              i.estabelecimentoId === e.id
+          )
+          .length;
 
-    const problems =
-      visibleProblems().filter(p=>p.estabelecimentoId===e.id).length;
+      const problems =
+        visibleProblems()
+          .filter(
+            p =>
+              p.estabelecimentoId === e.id
+          )
+          .length;
 
-    const evidence =
-      visibleEvidence().filter(x=>x.estabelecimentoId===e.id).length;
+      const evidence =
+        visibleEvidence()
+          .filter(
+            x =>
+              x.estabelecimentoId === e.id
+          )
+          .length;
 
-    return `
-      <div class="card">
-        <h3>🏢 ${escapeHtml(e.nome)}</h3>
+      return `
 
-        <p><strong>Responsável:</strong>
-        ${escapeHtml(e.responsavel || "—")}</p>
+        <div class="card">
 
-        <p><strong>Telefone:</strong>
-        ${escapeHtml(e.telefone || "—")}</p>
+          <h3>
+            🏢 ${escapeHtml(e.nome)}
+          </h3>
 
-        <p><strong>Localização:</strong>
-        ${escapeHtml(e.localizacao || "—")}</p>
+          <p>
 
-        <p><strong>Tipo:</strong>
-        ${escapeHtml(e.tipo || "—")}</p>
+            <strong>
+              Responsável:
+            </strong>
 
-        <p>
-          <span class="badge">${inspections} inspeções</span>
-          <span class="badge">${problems} problemas</span>
-          <span class="badge">${evidence} evidências</span>
-        </p>
+            ${escapeHtml(
+              e.responsavel || "—"
+            )}
 
-        ${
-          can("deleteRecords")
-          ? `
-            <button class="danger"
-              data-delete-est="${e.id}">
-              Eliminar
+          </p>
+
+          <p>
+
+            <strong>
+              Telefone:
+            </strong>
+
+            ${escapeHtml(
+              e.telefone || "—"
+            )}
+
+          </p>
+
+          <p>
+
+            <strong>
+              Localização:
+            </strong>
+
+            ${escapeHtml(
+              e.localizacao || "—"
+            )}
+
+          </p>
+
+          <p>
+
+            <strong>
+              Tipo:
+            </strong>
+
+            ${escapeHtml(
+              e.tipo || "—"
+            )}
+
+          </p>
+
+          <p>
+
+            <span class="badge">
+              ${inspections} inspeções
+            </span>
+
+            <span class="badge">
+              ${problems} problemas
+            </span>
+
+            <span class="badge">
+              ${evidence} evidências
+            </span>
+
+          </p>
+
+          <div style="
+            display:flex;
+            flex-wrap:wrap;
+            gap:8px;
+            margin-top:12px;
+          ">
+
+            <button
+              class="primary"
+              style="width:auto"
+              data-profile-est="${e.id}">
+
+              👤 Ver perfil
+
             </button>
-          `
-          : ""
-        }
-      </div>
-    `;
 
-  }).join("");
+            ${
+              can("deleteRecords")
+
+              ? `
+
+                <button
+                  class="danger"
+                  data-delete-est="${e.id}">
+
+                  Eliminar
+
+                </button>
+
+              `
+
+              : ""
+            }
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
 }
 
 function renderTemperatures(){
 
-  const box=document.getElementById("temperatureList");
-  const list=visibleTemps();
+  const box =
+    document.getElementById(
+      "temperatureList"
+    );
+
+  const list =
+    visibleTemps();
 
   if(!list.length){
-    box.innerHTML='<div class="empty">Nenhum registo.</div>';
+
+    box.innerHTML =
+      '<div class="empty">Nenhum registo.</div>';
+
     return;
+
   }
 
-  box.innerHTML=`
+  box.innerHTML = `
+
     <div class="table-wrap">
+
       <table>
+
         <tr>
+
           <th>Estabelecimento</th>
           <th>Item</th>
           <th>Temperatura</th>
           <th>Data</th>
           <th>Observação</th>
           <th>Ação</th>
+
         </tr>
 
-        ${list.slice().reverse().map(t=>`
-          <tr>
-            <td>${escapeHtml(t.estabelecimento)}</td>
-            <td>${escapeHtml(t.item)}</td>
-            <td>${escapeHtml(String(t.value))} °C</td>
-            <td>${escapeHtml(t.date)}</td>
-            <td>${escapeHtml(t.notes || "—")}</td>
-            <td>
-              ${
-                can("deleteRecords")
-                ? `<button class="danger" data-delete-temp="${t.id}">Eliminar</button>`
-                : "—"
-              }
-            </td>
-          </tr>
-        `).join("")}
+        ${
+          list
+            .slice()
+            .reverse()
+            .map(t=>`
+
+              <tr>
+
+                <td>
+                  ${escapeHtml(
+                    t.estabelecimento
+                  )}
+                </td>
+
+                <td>
+                  ${escapeHtml(t.item)}
+                </td>
+
+                <td>
+                  ${escapeHtml(
+                    String(t.value)
+                  )} °C
+                </td>
+
+                <td>
+                  ${escapeHtml(t.date)}
+                </td>
+
+                <td>
+                  ${escapeHtml(
+                    t.notes || "—"
+                  )}
+                </td>
+
+                <td>
+
+                  ${
+                    can("deleteRecords")
+
+                    ? `
+
+                      <button
+                        class="danger"
+                        data-delete-temp="${t.id}">
+
+                        Eliminar
+
+                      </button>
+
+                    `
+
+                    : "—"
+                  }
+
+                </td>
+
+              </tr>
+
+            `)
+            .join("")
+        }
 
       </table>
+
     </div>
+
   `;
+
 }
 
 function renderInspections(){
 
-  const box=document.getElementById("inspectionList");
-  const list=visibleInspections();
+  const box =
+    document.getElementById(
+      "inspectionList"
+    );
+
+  const list =
+    visibleInspections();
 
   if(!list.length){
-    box.innerHTML='<div class="empty">Nenhuma inspeção realizada.</div>';
+
+    box.innerHTML =
+      '<div class="empty">' +
+      'Nenhuma inspeção realizada.' +
+      '</div>';
+
     return;
+
   }
 
-  box.innerHTML=list.slice().reverse().map(i=>{
+  box.innerHTML =
+    list
+      .slice()
+      .reverse()
+      .map(i=>{
 
-    const evidenceCount =
-      visibleEvidence().filter(e=>e.inspectionId===i.id).length;
+        const evidenceCount =
+          visibleEvidence()
+            .filter(
+              e =>
+                e.inspectionId ===
+                i.id
+            )
+            .length;
 
-    return `
-      <div class="card">
+        return `
 
-        <h3>✅ ${escapeHtml(i.estabelecimento)}</h3>
+          <div class="card">
 
-        <p>
-          <strong>ID:</strong>
-          ${escapeHtml(i.numeroInspecao || i.id)}
-        </p>
+            <h3>
+              ✅ ${escapeHtml(
+                i.estabelecimento
+              )}
+            </h3>
 
-        <p>
-          <strong>Data:</strong> ${escapeHtml(i.date)}
-          · <strong>Hora:</strong> ${escapeHtml(i.time)}
-        </p>
+            <p>
 
-        <p>
-          <strong>Inspetor:</strong>
-          ${escapeHtml(i.inspetor || "—")}
-        </p>
+              <strong>ID:</strong>
 
-        <p>
-          <strong>Conformidade:</strong>
-          ${i.percentage}%
-        </p>
+              ${escapeHtml(
+                i.numeroInspecao ||
+                i.id
+              )}
 
-        <p>
-          <strong>Resultado:</strong>
-          <span class="badge">${escapeHtml(i.resultado)}</span>
-        </p>
+            </p>
 
-        <p>
-          <strong>Evidências associadas:</strong>
-          ${evidenceCount}
-        </p>
+            <p>
 
-        <p>
-          <strong>Não conformidades:</strong>
-          ${i.no}
-        </p>
+              <strong>Data:</strong>
+              ${escapeHtml(i.date)}
 
-        ${
-          i.nonConformities?.length
-          ? `
-            <details>
-              <summary>Ver não conformidades</summary>
-              <ol>
-                ${i.nonConformities.map(n=>
-                  `<li>${escapeHtml(n)}</li>`
-                ).join("")}
-              </ol>
-            </details>
-          `
-          : ""
-        }
+              ·
 
-        ${
-          can("deleteRecords")
-          ? `
-            <button class="danger"
-              data-delete-inspection="${i.id}">
-              Eliminar
-            </button>
-          `
-          : ""
-        }
+              <strong>Hora:</strong>
+              ${escapeHtml(i.time)}
 
-      </div>
-    `;
+            </p>
 
-  }).join("");
+            <p>
+
+              <strong>Inspetor:</strong>
+
+              ${escapeHtml(
+                i.inspetor || "—"
+              )}
+
+            </p>
+
+            <p>
+
+              <strong>
+                Conformidade:
+              </strong>
+
+              ${i.percentage}%
+
+            </p>
+
+            <p>
+
+              <strong>
+                Resultado:
+              </strong>
+
+              <span class="badge">
+
+                ${escapeHtml(
+                  i.resultado
+                )}
+
+              </span>
+
+            </p>
+
+            <p>
+
+              <strong>
+                Evidências associadas:
+              </strong>
+
+              ${evidenceCount}
+
+            </p>
+
+            <p>
+
+              <strong>
+                Não conformidades:
+              </strong>
+
+              ${i.no}
+
+            </p>
+
+            ${
+              i.nonConformities?.length
+
+              ? `
+
+                <details>
+
+                  <summary>
+                    Ver não conformidades
+                  </summary>
+
+                  <ol>
+
+                    ${
+                      i.nonConformities
+                        .map(
+                          n =>
+                            `<li>
+                              ${escapeHtml(n)}
+                            </li>`
+                        )
+                        .join("")
+                    }
+
+                  </ol>
+
+                </details>
+
+              `
+
+              : ""
+            }
+
+            ${
+              can("deleteRecords")
+
+              ? `
+
+                <button
+                  class="danger"
+                  data-delete-inspection="${i.id}">
+
+                  Eliminar
+
+                </button>
+
+              `
+
+              : ""
+            }
+
+          </div>
+
+        `;
+
+      })
+      .join("");
+
 }
 
 function renderProblems(){
 
-  const box=document.getElementById("problemList");
-  const list=visibleProblems();
+  const box =
+    document.getElementById(
+      "problemList"
+    );
+
+  const list =
+    visibleProblems();
 
   if(!list.length){
-    box.innerHTML='<div class="empty">Nenhum problema registado.</div>';
+
+    box.innerHTML =
+      '<div class="empty">' +
+      'Nenhum problema registado.' +
+      '</div>';
+
     return;
+
   }
 
-  box.innerHTML=list.slice().reverse().map(p=>`
+  box.innerHTML =
+    list
+      .slice()
+      .reverse()
+      .map(p=>`
 
-    <div class="card">
+        <div class="card">
 
-      <h3>⚠️ ${escapeHtml(p.description)}</h3>
+          <h3>
+            ⚠️ ${escapeHtml(
+              p.description
+            )}
+          </h3>
 
-      <p>
-        <strong>Estabelecimento:</strong>
-        ${escapeHtml(p.estabelecimento)}
-      </p>
+          <p>
 
-      <p>
-        <strong>Gravidade:</strong>
-        <span class="badge">${escapeHtml(p.severity)}</span>
-      </p>
+            <strong>
+              Estabelecimento:
+            </strong>
 
-      <p>
-        <strong>Data:</strong>
-        ${escapeHtml(p.date)}
-      </p>
+            ${escapeHtml(
+              p.estabelecimento
+            )}
 
-      <p>
-        <strong>Estado:</strong>
-        ${escapeHtml(p.status)}
-      </p>
+          </p>
 
-      <p>
-        ${escapeHtml(p.notes || "Sem observações.")}
-      </p>
+          <p>
 
-      ${
-        isAdmin() || isInspector()
-        ? `
-          <button class="warning"
-            data-toggle-problem="${p.id}">
-            ${p.status==="Resolvido" ? "Reabrir" : "Marcar como resolvido"}
-          </button>
-        `
-        : ""
-      }
+            <strong>
+              Gravidade:
+            </strong>
 
-      ${
-        can("deleteRecords")
-        ? `
-          <button class="danger"
-            data-delete-problem="${p.id}">
-            Eliminar
-          </button>
-        `
-        : ""
-      }
+            <span class="badge">
 
-    </div>
+              ${escapeHtml(
+                p.severity
+              )}
 
-  `).join("");
+            </span>
+
+          </p>
+
+          <p>
+
+            <strong>
+              Data:
+            </strong>
+
+            ${escapeHtml(p.date)}
+
+          </p>
+
+          <p>
+
+            <strong>
+              Estado:
+            </strong>
+
+            ${escapeHtml(p.status)}
+
+          </p>
+
+          <p>
+            ${escapeHtml(
+              p.notes ||
+              "Sem observações."
+            )}
+          </p>
+
+          ${
+            isAdmin() || isInspector()
+
+            ? `
+
+              <button
+                class="warning"
+                data-toggle-problem="${p.id}">
+
+                ${
+                  p.status==="Resolvido"
+                  ? "Reabrir"
+                  : "Marcar como resolvido"
+                }
+
+              </button>
+
+            `
+
+            : ""
+          }
+
+          ${
+            can("deleteRecords")
+
+            ? `
+
+              <button
+                class="danger"
+                data-delete-problem="${p.id}">
+
+                Eliminar
+
+              </button>
+
+            `
+
+            : ""
+          }
+
+        </div>
+
+      `)
+      .join("");
+
 }
 
 function renderEvidence(){
 
-  const box=document.getElementById("evidenceList");
-  const list=visibleEvidence();
+  const box =
+    document.getElementById(
+      "evidenceList"
+    );
+
+  const list =
+    visibleEvidence();
 
   if(!list.length){
-    box.innerHTML='<div class="empty">Nenhuma evidência registada.</div>';
+
+    box.innerHTML =
+      '<div class="empty">' +
+      'Nenhuma evidência registada.' +
+      '</div>';
+
     return;
+
   }
 
-  box.innerHTML=list.slice().reverse().map(e=>`
+  box.innerHTML =
+    list
+      .slice()
+      .reverse()
+      .map(e=>`
 
-    <div class="card">
+        <div class="card">
 
-      <h3>📸 ${escapeHtml(e.estabelecimento)}</h3>
+          <h3>
+            📸 ${escapeHtml(
+              e.estabelecimento
+            )}
+          </h3>
 
-      <p>
-        <strong>Descrição:</strong>
-        ${escapeHtml(e.description || "—")}
-      </p>
+          <p>
 
-      <p>
-        <strong>Inspeção:</strong>
-        ${escapeHtml(e.inspectionId || "Evidência geral")}
-      </p>
+            <strong>
+              Descrição:
+            </strong>
 
-      ${
-        e.image
-        ? `<img src="${e.image}" class="evidence-image">`
-        : ""
-      }
+            ${escapeHtml(
+              e.description || "—"
+            )}
 
-      <p>
-        <small>
-          Registado por:
-          ${escapeHtml(e.createdByName || "Registo anterior")}
-        </small>
-      </p>
+          </p>
 
-      ${
-        can("deleteRecords")
-        ? `
-          <br>
-          <button class="danger"
-            data-delete-evidence="${e.id}">
-            Eliminar
-          </button>
-        `
-        : ""
-      }
+          <p>
 
-    </div>
+            <strong>
+              Inspeção:
+            </strong>
 
-  `).join("");
+            ${escapeHtml(
+              e.inspectionId ||
+              "Evidência geral"
+            )}
+
+          </p>
+
+          ${
+            e.image
+
+            ? `
+              <img
+                src="${e.image}"
+                class="evidence-image">
+            `
+
+            : ""
+          }
+
+          <p>
+
+            <small>
+
+              Registado por:
+              ${escapeHtml(
+                e.createdByName ||
+                "Registo anterior"
+              )}
+
+            </small>
+
+          </p>
+
+          ${
+            can("deleteRecords")
+
+            ? `
+
+              <br>
+
+              <button
+                class="danger"
+                data-delete-evidence="${e.id}">
+
+                Eliminar
+
+              </button>
+
+            `
+
+            : ""
+          }
+
+        </div>
+
+      `)
+      .join("");
+
 }
 
 function renderUsers(){
 
-  const box=document.getElementById("userList");
+  const box =
+    document.getElementById(
+      "userList"
+    );
 
   if(!isAdmin()){
-    box.innerHTML='<div class="empty">Acesso restrito ao Administrador.</div>';
+
+    box.innerHTML =
+      '<div class="empty">' +
+      'Acesso restrito ao Administrador.' +
+      '</div>';
+
     return;
+
   }
 
   if(!data.users.length){
-    box.innerHTML='<div class="empty">Nenhum utilizador.</div>';
+
+    box.innerHTML =
+      '<div class="empty">' +
+      'Nenhum utilizador.' +
+      '</div>';
+
     return;
+
   }
 
-  box.innerHTML=`
+  box.innerHTML = `
+
     <div class="table-wrap">
+
       <table>
+
         <tr>
+
           <th>Nome</th>
           <th>Utilizador</th>
           <th>Perfil</th>
           <th>Estabelecimento</th>
           <th>Estado</th>
           <th>Ações</th>
+
         </tr>
 
-        ${data.users.map(u=>{
+        ${
+          data.users
+            .map(u=>{
 
-          const est =
-            data.establishments.find(e=>e.id===u.establishmentId);
+              const est =
+                data.establishments
+                  .find(
+                    e =>
+                      e.id ===
+                      u.establishmentId
+                  );
 
-          let badge="badge";
+              let badge =
+                "badge";
 
-          if(u.role==="Administrador")
-            badge="badge badge-admin";
+              if(
+                u.role ===
+                "Administrador"
+              ){
 
-          if(u.role==="Inspetor")
-            badge="badge badge-inspector";
+                badge =
+                  "badge badge-admin";
 
-          if(u.role==="Responsável")
-            badge="badge badge-responsavel";
+              }
 
-          return `
-            <tr>
-              <td>${escapeHtml(u.name)}</td>
-              <td>${escapeHtml(u.username)}</td>
-              <td>
-                <span class="${badge}">
-                  ${escapeHtml(u.role)}
-                </span>
-              </td>
-              <td>
-                ${escapeHtml(est?.nome || "Todos / Nenhum")}
-              </td>
-              <td>
-                ${u.active===false ? "Desativado" : "Ativo"}
-              </td>
-              <td>
+              if(
+                u.role ===
+                "Inspetor"
+              ){
 
-                ${
-                  u.id!==currentUser.id
-                  ? `
-                    <button class="warning"
-                      data-toggle-user="${u.id}">
-                      ${u.active===false ? "Ativar" : "Desativar"}
-                    </button>
+                badge =
+                  "badge badge-inspector";
 
-                    <button class="danger"
-                      data-delete-user="${u.id}">
-                      Eliminar
-                    </button>
-                  `
-                  : "Utilizador atual"
-                }
+              }
 
-              </td>
-            </tr>
-          `;
+              if(
+                u.role ===
+                "Responsável"
+              ){
 
-        }).join("")}
+                badge =
+                  "badge badge-responsavel";
+
+              }
+
+              return `
+
+                <tr>
+
+                  <td>
+                    ${escapeHtml(
+                      u.name
+                    )}
+                  </td>
+
+                  <td>
+                    ${escapeHtml(
+                      u.username
+                    )}
+                  </td>
+
+                  <td>
+
+                    <span class="${badge}">
+
+                      ${escapeHtml(
+                        u.role
+                      )}
+
+                    </span>
+
+                  </td>
+
+                  <td>
+
+                    ${escapeHtml(
+                      est?.nome ||
+                      "Todos / Nenhum"
+                    )}
+
+                  </td>
+
+                  <td>
+
+                    ${
+                      u.active === false
+                      ? "Desativado"
+                      : "Ativo"
+                    }
+
+                  </td>
+
+                  <td>
+
+                    ${
+                      u.id !== currentUser.id
+
+                      ? `
+
+                        <button
+                          class="warning"
+                          data-toggle-user="${u.id}">
+
+                          ${
+                            u.active===false
+                            ? "Ativar"
+                            : "Desativar"
+                          }
+
+                        </button>
+
+                        <button
+                          class="danger"
+                          data-delete-user="${u.id}">
+
+                          Eliminar
+
+                        </button>
+
+                      `
+
+                      : "Utilizador atual"
+                    }
+
+                  </td>
+
+                </tr>
+
+              `;
+
+            })
+            .join("")
+        }
 
       </table>
+
     </div>
+
   `;
+
 }
 
 /* =========================================================
@@ -2625,44 +5666,78 @@ function renderUsers(){
 
 function renderDashboard(){
 
-  const inspections=visibleInspections();
+  const inspections =
+    visibleInspections();
 
-  const average=inspections.length
+  const average =
+    inspections.length
+
     ? Math.round(
-        inspections.reduce((sum,i)=>sum+i.percentage,0)
-        / inspections.length
+
+        inspections.reduce(
+          (sum,i)=>
+            sum +
+            Number(
+              i.percentage || 0
+            ),
+          0
+        ) /
+        inspections.length
+
       )
+
     : 0;
 
-  document.getElementById("dashEst").textContent =
+  document.getElementById(
+    "dashEst"
+  ).textContent =
     visibleEstablishments().length;
 
-  document.getElementById("dashIns").textContent =
+  document.getElementById(
+    "dashIns"
+  ).textContent =
     inspections.length;
 
-  document.getElementById("dashTemp").textContent =
+  document.getElementById(
+    "dashTemp"
+  ).textContent =
     visibleTemps().length;
 
-  document.getElementById("dashProb").textContent =
+  document.getElementById(
+    "dashProb"
+  ).textContent =
     visibleProblems().length;
 
-  document.getElementById("dashEv").textContent =
+  document.getElementById(
+    "dashEv"
+  ).textContent =
     visibleEvidence().length;
 
-  document.getElementById("dashCompliance").textContent =
+  document.getElementById(
+    "dashCompliance"
+  ).textContent =
     average + "%";
 
-  document.getElementById("homeEstablishments").textContent =
+  document.getElementById(
+    "homeEstablishments"
+  ).textContent =
     visibleEstablishments().length;
 
-  document.getElementById("homeInspections").textContent =
+  document.getElementById(
+    "homeInspections"
+  ).textContent =
     inspections.length;
 
-  document.getElementById("homeProblems").textContent =
+  document.getElementById(
+    "homeProblems"
+  ).textContent =
     visibleProblems().length;
 
-  document.getElementById("homeEvidence").textContent =
+  document.getElementById(
+    "homeEvidence"
+  ).textContent =
     visibleEvidence().length;
+
 }
 
 /* =========================================================
@@ -2671,66 +5746,120 @@ function renderDashboard(){
 
 function renderHistory(){
 
-  const box=document.getElementById("historyList");
+  const box =
+    document.getElementById(
+      "historyList"
+    );
 
   const events=[];
 
-  visibleInspections().forEach(i=>{
-    events.push({
-      date:i.createdAt,
-      type:"Inspeção",
-      text:`Inspeção realizada em ${i.estabelecimento}`
-    });
-  });
+  visibleInspections()
+    .forEach(i=>{
 
-  visibleTemps().forEach(t=>{
-    events.push({
-      date:t.createdAt,
-      type:"Temperatura",
-      text:`Temperatura registada: ${t.item}`
-    });
-  });
+      events.push({
 
-  visibleProblems().forEach(p=>{
-    events.push({
-      date:p.createdAt,
-      type:"Problema",
-      text:`Problema: ${p.description}`
-    });
-  });
+        date:i.createdAt,
 
-  visibleEvidence().forEach(e=>{
-    events.push({
-      date:e.createdAt,
-      type:"Evidência",
-      text:`Evidência registada em ${e.estabelecimento}`
-    });
-  });
+        type:"Inspeção",
 
-  events.sort((a,b)=>
-    new Date(b.date)-new Date(a.date)
+        text:
+          `Inspeção realizada em ${i.estabelecimento}`
+
+      });
+
+    });
+
+  visibleTemps()
+    .forEach(t=>{
+
+      events.push({
+
+        date:t.createdAt,
+
+        type:"Temperatura",
+
+        text:
+          `Temperatura registada: ${t.item}`
+
+      });
+
+    });
+
+  visibleProblems()
+    .forEach(p=>{
+
+      events.push({
+
+        date:p.createdAt,
+
+        type:"Problema",
+
+        text:
+          `Problema: ${p.description}`
+
+      });
+
+    });
+
+  visibleEvidence()
+    .forEach(e=>{
+
+      events.push({
+
+        date:e.createdAt,
+
+        type:"Evidência",
+
+        text:
+          `Evidência registada em ${e.estabelecimento}`
+
+      });
+
+    });
+
+  events.sort(
+    (a,b)=>
+      new Date(b.date) -
+      new Date(a.date)
   );
 
   if(!events.length){
-    box.innerHTML='<div class="empty">Ainda não existem eventos.</div>';
+
+    box.innerHTML =
+      '<div class="empty">' +
+      'Ainda não existem eventos.' +
+      '</div>';
+
     return;
+
   }
 
-  box.innerHTML=events.map(e=>`
+  box.innerHTML =
+    events
+      .map(e=>`
 
-    <div class="card">
+        <div class="card">
 
-      <strong>${escapeHtml(e.type)}</strong>
+          <strong>
+            ${escapeHtml(e.type)}
+          </strong>
 
-      <p>${escapeHtml(e.text)}</p>
+          <p>
+            ${escapeHtml(e.text)}
+          </p>
 
-      <small>
-        ${new Date(e.date).toLocaleString("pt-PT")}
-      </small>
+          <small>
+            ${
+              new Date(e.date)
+                .toLocaleString("pt-PT")
+            }
+          </small>
 
-    </div>
+        </div>
 
-  `).join("");
+      `)
+      .join("");
+
 }
 
 /* =========================================================
@@ -2740,12 +5869,19 @@ function renderHistory(){
 function updateReportControls(){
 
   const type =
-    document.getElementById("reportType").value;
+    document.getElementById(
+      "reportType"
+    ).value;
 
-  document.getElementById("reportInspectionField").style.display =
-    type==="inspection" ? "" : "none";
+  document.getElementById(
+    "reportInspectionField"
+  ).style.display =
+    type === "inspection"
+    ? ""
+    : "none";
 
   populateReportInspectionSelect();
+
 }
 
 /* =========================================================
@@ -2761,15 +5897,32 @@ function refreshAll(){
   updateReportControls();
 
   renderEstablishments();
+
   renderTemperatures();
+
   renderInspections();
+
   renderProblems();
+
   renderEvidence();
+
   renderDashboard();
+
   renderHistory();
+
   renderUsers();
 
+  if(
+    currentPage ===
+    "perfilEstabelecimento"
+  ){
+
+    renderEstablishmentProfile();
+
+  }
+
   applyPermissions();
+
 }
 
 /* =========================================================
@@ -2779,131 +5932,277 @@ function refreshAll(){
 function escapeHtml(value){
 
   return String(value ?? "")
+
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;")
     .replace(/"/g,"&quot;")
     .replace(/'/g,"&#039;");
+
 }
 
 /* =========================================================
    EVENTOS
 ========================================================= */
 
-document.addEventListener("click",function(event){
+document.addEventListener(
+  "click",
+  function(event){
 
-  const target=event.target;
+    const target =
+      event.target;
 
-  if(target.dataset.page){
-    showPage(target.dataset.page);
-    return;
+    if(target.dataset.page){
+
+      showPage(
+        target.dataset.page
+      );
+
+      return;
+
+    }
+
+    if(target.dataset.action){
+
+      const action =
+        target.dataset.action;
+
+      if(action==="login")
+        login();
+
+      if(action==="logout")
+        logout();
+
+      if(action==="create-first-admin")
+        createFirstAdmin();
+
+      if(action==="save-establishment")
+        saveEstablishment();
+
+      if(action==="save-temperature")
+        saveTemperature();
+
+      if(action==="save-inspection")
+        saveInspection();
+
+      if(action==="save-problem")
+        saveProblem();
+
+      if(action==="save-evidence")
+        saveEvidence();
+
+      if(action==="save-user")
+        saveUser();
+
+      if(action==="generate-report")
+        generateReport();
+
+      if(action==="print-report")
+        printReport();
+
+      if(action==="back-establishments")
+        backToEstablishments();
+
+      if(action==="profile-report")
+        openProfileReport();
+
+      return;
+
+    }
+
+    if(target.dataset.profileEst){
+
+      openEstablishmentProfile(
+        target.dataset.profileEst
+      );
+
+      return;
+
+    }
+
+    if(target.dataset.deleteEst){
+
+      deleteEstablishment(
+        target.dataset.deleteEst
+      );
+
+      return;
+
+    }
+
+    if(target.dataset.deleteTemp){
+
+      deleteTemperature(
+        target.dataset.deleteTemp
+      );
+
+      return;
+
+    }
+
+    if(target.dataset.deleteInspection){
+
+      deleteInspection(
+        target.dataset.deleteInspection
+      );
+
+      return;
+
+    }
+
+    if(target.dataset.deleteProblem){
+
+      deleteProblem(
+        target.dataset.deleteProblem
+      );
+
+      return;
+
+    }
+
+    if(target.dataset.toggleProblem){
+
+      toggleProblem(
+        target.dataset.toggleProblem
+      );
+
+      return;
+
+    }
+
+    if(target.dataset.deleteEvidence){
+
+      deleteEvidence(
+        target.dataset.deleteEvidence
+      );
+
+      return;
+
+    }
+
+    if(target.dataset.toggleUser){
+
+      toggleUser(
+        target.dataset.toggleUser
+      );
+
+      return;
+
+    }
+
+    if(target.dataset.deleteUser){
+
+      deleteUser(
+        target.dataset.deleteUser
+      );
+
+      return;
+
+    }
+
   }
+);
 
-  if(target.dataset.action){
+/* =========================================================
+   SELECTS
+========================================================= */
 
-    const action=target.dataset.action;
+document
+  .getElementById(
+    "evidenceEstablishment"
+  )
+  .addEventListener(
+    "change",
+    populateEvidenceInspectionSelect
+  );
 
-    if(action==="login")login();
-    if(action==="logout")logout();
-    if(action==="create-first-admin")createFirstAdmin();
-    if(action==="save-establishment")saveEstablishment();
-    if(action==="save-temperature")saveTemperature();
-    if(action==="save-inspection")saveInspection();
-    if(action==="save-problem")saveProblem();
-    if(action==="save-evidence")saveEvidence();
-    if(action==="save-user")saveUser();
-    if(action==="generate-report")generateReport();
-    if(action==="print-report")printReport();
+document
+  .getElementById(
+    "reportEstablishment"
+  )
+  .addEventListener(
+    "change",
+    populateReportInspectionSelect
+  );
 
-    return;
-  }
-
-  if(target.dataset.deleteEst){
-    deleteEstablishment(target.dataset.deleteEst);
-    return;
-  }
-
-  if(target.dataset.deleteTemp){
-    deleteTemperature(target.dataset.deleteTemp);
-    return;
-  }
-
-  if(target.dataset.deleteInspection){
-    deleteInspection(target.dataset.deleteInspection);
-    return;
-  }
-
-  if(target.dataset.deleteProblem){
-    deleteProblem(target.dataset.deleteProblem);
-    return;
-  }
-
-  if(target.dataset.toggleProblem){
-    toggleProblem(target.dataset.toggleProblem);
-    return;
-  }
-
-  if(target.dataset.deleteEvidence){
-    deleteEvidence(target.dataset.deleteEvidence);
-    return;
-  }
-
-  if(target.dataset.toggleUser){
-    toggleUser(target.dataset.toggleUser);
-    return;
-  }
-
-  if(target.dataset.deleteUser){
-    deleteUser(target.dataset.deleteUser);
-    return;
-  }
-
-});
-
-document.getElementById("evidenceEstablishment")
-  .addEventListener("change",populateEvidenceInspectionSelect);
-
-document.getElementById("reportEstablishment")
-  .addEventListener("change",populateReportInspectionSelect);
-
-document.getElementById("reportType")
-  .addEventListener("change",updateReportControls);
+document
+  .getElementById(
+    "reportType"
+  )
+  .addEventListener(
+    "change",
+    updateReportControls
+  );
 
 /* =========================================================
    TECLADO — LOGIN
 ========================================================= */
 
-document.addEventListener("keydown",function(event){
+document.addEventListener(
+  "keydown",
+  function(event){
 
-  if(event.key==="Enter"){
+    if(event.key==="Enter"){
 
-    if(
-      document.getElementById("loginScreen").style.display !== "none" &&
-      data.users.length
-    ){
-      login();
+      if(
+
+        document
+          .getElementById(
+            "loginScreen"
+          )
+          .style.display !== "none" &&
+
+        data.users.length
+
+      ){
+
+        login();
+
+      }
+
     }
-  }
 
-});
+  }
+);
 
 /* =========================================================
    START
 ========================================================= */
 
 loadData();
+
 loadSession();
+
 renderChecklist();
 
-document.getElementById("tempDate").value=today();
-document.getElementById("inspectionDate").value=today();
-document.getElementById("inspectionTime").value=nowTime();
-document.getElementById("problemDate").value=today();
+document.getElementById(
+  "tempDate"
+).value =
+  today();
+
+document.getElementById(
+  "inspectionDate"
+).value =
+  today();
+
+document.getElementById(
+  "inspectionTime"
+).value =
+  nowTime();
+
+document.getElementById(
+  "problemDate"
+).value =
+  today();
 
 if(currentUser){
+
   showApp();
+
 }else{
+
   showLogin();
+
 }
 
 </script>
