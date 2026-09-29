@@ -883,8 +883,10 @@ th{
     <h2>Inspeção / Checklist</h2>
 
     <label>Estabelecimento</label>
+
+    <!-- CORRIGIDO: agora a função é realmente executada -->
     <select id="inspectionEstablishment"
-      onchange="syncInspectionEstablishment"></select>
+      onchange="syncInspectionEstablishment()"></select>
 
     <label>Nome do estabelecimento</label>
     <input id="inspectionName">
@@ -1456,6 +1458,10 @@ function normalizeData(){
 
     }
 
+    if(!i.reportVersion){
+      i.reportVersion="1.0";
+    }
+
   });
 
   db.problems.forEach(p=>{
@@ -1773,10 +1779,14 @@ function updateInspectionScore(){
 
 function syncInspectionEstablishment(){
 
-  const id=
+  const select=
     document.getElementById(
       "inspectionEstablishment"
-    ).value;
+    );
+
+  if(!select)return;
+
+  const id=select.value;
 
   const e=
     db.establishments.find(x=>x.id===id);
@@ -1809,6 +1819,15 @@ function resetInspectionForm(){
   document.getElementById(
     "inspectionDate"
   ).value=today();
+
+  const select=
+    document.getElementById(
+      "inspectionEstablishment"
+    );
+
+  if(select){
+    select.value="";
+  }
 
   document.querySelectorAll(".check-item")
     .forEach(c=>c.checked=false);
@@ -1886,7 +1905,7 @@ function saveInspection(){
     score,
     classification,
     reportNumber:generateReportNumber(),
-    reportVersion:"1.0",
+    reportVersion:"1.1",
     createdAt:new Date().toISOString()
   };
 
@@ -3989,7 +4008,7 @@ function renderHome(){
 }
 
 /* =====================================================
-   RELATÓRIOS PROFISSIONAIS — NOVA VERSÃO
+   RELATÓRIOS PROFISSIONAIS
 ===================================================== */
 
 function generateReportNumber(){
@@ -4014,7 +4033,18 @@ function generateReportNumber(){
     String(d.getSeconds())
     .padStart(2,"0");
 
-  return `FSM-${y}${m}${day}-${time}`;
+  /*
+    Pequeno identificador adicional.
+    Evita que duas inspeções guardadas no mesmo segundo
+    recebam exatamente o mesmo número.
+  */
+  const unique=
+    Math.random()
+      .toString(36)
+      .slice(2,6)
+      .toUpperCase();
+
+  return `FSM-${y}${m}${day}-${time}-${unique}`;
 }
 
 function getInspectionReportNumber(inspection){
@@ -4024,7 +4054,10 @@ function getInspectionReportNumber(inspection){
   }
 
   inspection.reportNumber=generateReportNumber();
-  inspection.reportVersion=inspection.reportVersion||"1.0";
+
+  if(!inspection.reportVersion){
+    inspection.reportVersion="1.0";
+  }
 
   saveDB();
 
@@ -4137,13 +4170,17 @@ function generateReportForInspection(id){
 
   if(!inspection)return;
 
-  /*
-    O número passa a ficar gravado na própria inspeção.
-    Assim, abrir o mesmo relatório várias vezes não cria
-    números diferentes.
-  */
   const reportNumber=
     getInspectionReportNumber(inspection);
+
+  /*
+    Mantém a versão antiga do relatório para inspeções
+    já existentes. Novas inspeções usam 1.1.
+  */
+  if(!inspection.reportVersion){
+    inspection.reportVersion="1.0";
+    saveDB();
+  }
 
   const e=
     db.establishments.find(
@@ -4170,12 +4207,8 @@ function generateReportForInspection(id){
     };
 
   /*
-    IMPORTANTE:
     Num relatório específico de inspeção entram apenas
     problemas ligados àquela inspeção.
-
-    Problemas antigos sem inspectionId não são atribuídos
-    artificialmente a esta inspeção.
   */
   const problems=
     db.problems.filter(
