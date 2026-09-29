@@ -305,7 +305,7 @@ th{
 .modal-box{
   background:white;
   width:100%;
-  max-width:900px;
+  max-width:950px;
   max-height:94vh;
   overflow:auto;
   border-radius:18px;
@@ -329,11 +329,13 @@ th{
   margin-top:12px;
 }
 
-.report-section{
-  border:1px solid #e2e8f0;
-  border-radius:12px;
-  padding:16px;
-  margin:12px 0;
+/* ==============================
+   RELATÓRIO PROFISSIONAL
+============================== */
+
+.report-document{
+  background:white;
+  color:#172033;
 }
 
 .report-header{
@@ -352,21 +354,51 @@ th{
 
 .report-header h2{
   margin:8px 0;
+  font-size:21px;
+}
+
+.report-header p{
+  margin:6px 0;
+  color:#64748b;
 }
 
 .report-number{
   display:inline-block;
   margin-top:12px;
-  padding:7px 12px;
+  padding:8px 14px;
   border-radius:8px;
   background:#f1f5f9;
   font-weight:800;
   font-size:13px;
 }
 
+.report-control{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin:14px 0;
+}
+
+.report-control-box{
+  border:1px solid #cbd5e1;
+  border-radius:10px;
+  padding:10px;
+  background:#f8fafc;
+}
+
+.report-control-box small{
+  display:block;
+  color:#64748b;
+  margin-bottom:4px;
+}
+
+.report-control-box strong{
+  display:block;
+}
+
 .report-summary{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(6,1fr);
   gap:10px;
   margin:15px 0;
 }
@@ -376,6 +408,7 @@ th{
   border-radius:10px;
   padding:12px;
   text-align:center;
+  background:#fff;
 }
 
 .report-summary-box strong{
@@ -384,9 +417,28 @@ th{
   margin-top:5px;
 }
 
+.report-summary-box small{
+  color:#64748b;
+}
+
+.report-section{
+  border:1px solid #dbe3ea;
+  border-radius:12px;
+  padding:16px;
+  margin:12px 0;
+}
+
+.report-section h3{
+  margin-top:0;
+  color:#0f766e;
+  border-bottom:1px solid #e2e8f0;
+  padding-bottom:8px;
+}
+
 .report-table{
   width:100%;
   min-width:0;
+  border-collapse:collapse;
 }
 
 .report-table th,
@@ -394,10 +446,70 @@ th{
   border:1px solid #cbd5e1;
 }
 
+.report-table th{
+  background:#f8fafc;
+}
+
+.report-conform{
+  background:#f0fdf4;
+}
+
+.report-nonconform{
+  background:#fff1f2;
+}
+
+.report-action-critical{
+  border-left:5px solid #dc2626;
+}
+
+.report-action-high{
+  border-left:5px solid #ea580c;
+}
+
+.report-action-medium{
+  border-left:5px solid #d97706;
+}
+
+.report-action-low{
+  border-left:5px solid #16a34a;
+}
+
+.report-action-card{
+  padding:13px;
+  border:1px solid #cbd5e1;
+  border-radius:10px;
+  margin:10px 0;
+  background:white;
+}
+
+.report-action-card h4{
+  margin:0 0 8px;
+}
+
+.report-action-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+}
+
+.report-conclusion{
+  border-left:5px solid #0f766e;
+  background:#f0fdfa;
+  padding:15px;
+  border-radius:10px;
+}
+
 .signature-box{
-  min-height:100px;
-  padding-top:40px;
+  min-height:120px;
+  padding-top:50px;
   text-align:center;
+}
+
+.signature-line{
+  border-top:1px solid #172033;
+  padding-top:8px;
+  margin:0 auto;
+  max-width:320px;
 }
 
 .report-footer{
@@ -417,13 +529,58 @@ th{
   border:1px solid #cbd5e1;
 }
 
+.report-photo-card{
+  break-inside:avoid;
+}
+
+.report-photo-caption{
+  margin-top:6px;
+  font-size:12px;
+}
+
+.report-progress{
+  width:100%;
+  height:16px;
+  background:#e2e8f0;
+  border-radius:20px;
+  overflow:hidden;
+  margin:8px 0;
+}
+
+.report-progress div{
+  height:100%;
+  background:#0f766e;
+}
+
+.report-note{
+  padding:10px 12px;
+  border-radius:8px;
+  background:#f8fafc;
+  color:#475569;
+  font-size:12px;
+}
+
+@media(max-width:950px){
+  .report-summary{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .report-control{
+    grid-template-columns:1fr 1fr 1fr;
+  }
+}
+
 @media(max-width:800px){
   .grid,.stats{
     grid-template-columns:1fr 1fr;
   }
 
   .report-summary{
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:1fr 1fr 1fr;
+  }
+
+  .report-control{
+    grid-template-columns:1fr;
   }
 }
 
@@ -447,16 +604,39 @@ th{
   .report-summary{
     grid-template-columns:1fr 1fr;
   }
+
+  .report-action-grid{
+    grid-template-columns:1fr;
+  }
+
+  .report-header{
+    padding:18px 12px;
+  }
+
+  .report-header h1{
+    font-size:25px;
+  }
+
+  .report-header h2{
+    font-size:18px;
+  }
 }
 
 @media print{
+
   @page{
     size:A4;
     margin:12mm;
   }
 
+  html,body{
+    background:white!important;
+    margin:0!important;
+    padding:0!important;
+  }
+
   body{
-    background:white;
+    color:#000;
   }
 
   body *{
@@ -474,6 +654,7 @@ th{
     background:white;
     display:block!important;
     padding:0;
+    margin:0;
   }
 
   #reportModal .modal-box{
@@ -485,6 +666,7 @@ th{
     box-shadow:none;
     border-radius:0;
     padding:0;
+    margin:0;
   }
 
   #reportContent{
@@ -497,10 +679,22 @@ th{
 
   .report-section{
     break-inside:avoid;
+    page-break-inside:avoid;
   }
 
   .report-header{
     break-inside:avoid;
+    page-break-inside:avoid;
+  }
+
+  .report-control{
+    break-inside:avoid;
+    page-break-inside:avoid;
+  }
+
+  .report-summary{
+    break-inside:avoid;
+    page-break-inside:avoid;
   }
 
   table{
@@ -509,10 +703,29 @@ th{
 
   tr{
     page-break-inside:avoid;
+    page-break-after:auto;
+  }
+
+  thead{
+    display:table-header-group;
   }
 
   .report-photo{
-    max-height:190px;
+    max-height:180px;
+  }
+
+  .report-photo-card{
+    break-inside:avoid;
+    page-break-inside:avoid;
+  }
+
+  .report-action-card{
+    break-inside:avoid;
+    page-break-inside:avoid;
+  }
+
+  .report-footer{
+    break-inside:avoid;
   }
 }
 </style>
@@ -579,41 +792,15 @@ th{
 
 <nav class="nav">
 
-  <button data-page="home" onclick="go('home')">
-    Início
-  </button>
-
-  <button data-page="temperatura" onclick="go('temperatura')">
-    Temperatura
-  </button>
-
-  <button data-page="inspecao" onclick="go('inspecao')">
-    Inspeção
-  </button>
-
-  <button data-page="problemas" onclick="go('problemas')">
-    Problemas
-  </button>
-
-  <button data-page="evidencias" onclick="go('evidencias')">
-    Evidências
-  </button>
-
-  <button data-page="dashboard" onclick="go('dashboard')">
-    Dashboard
-  </button>
-
-  <button data-page="historico" onclick="go('historico')">
-    Histórico
-  </button>
-
-  <button data-page="estabelecimentos" onclick="go('estabelecimentos')">
-    Estabelecimentos
-  </button>
-
-  <button data-page="perfil" onclick="go('perfil')">
-    Perfil
-  </button>
+  <button data-page="home" onclick="go('home')">Início</button>
+  <button data-page="temperatura" onclick="go('temperatura')">Temperatura</button>
+  <button data-page="inspecao" onclick="go('inspecao')">Inspeção</button>
+  <button data-page="problemas" onclick="go('problemas')">Problemas</button>
+  <button data-page="evidencias" onclick="go('evidencias')">Evidências</button>
+  <button data-page="dashboard" onclick="go('dashboard')">Dashboard</button>
+  <button data-page="historico" onclick="go('historico')">Histórico</button>
+  <button data-page="estabelecimentos" onclick="go('estabelecimentos')">Estabelecimentos</button>
+  <button data-page="perfil" onclick="go('perfil')">Perfil</button>
 
 </nav>
 
@@ -697,8 +884,7 @@ th{
 
     <label>Estabelecimento</label>
     <select id="inspectionEstablishment"
-      onchange="syncInspectionEstablishment()">
-    </select>
+      onchange="syncInspectionEstablishment"></select>
 
     <label>Nome do estabelecimento</label>
     <input id="inspectionName">
@@ -815,11 +1001,8 @@ th{
   </div>
 
   <div class="card">
-
     <h3>Registo de não conformidades</h3>
-
     <div id="problemsTable"></div>
-
   </div>
 
 </section>
@@ -904,11 +1087,8 @@ th{
 <section id="page-historico" class="page">
 
   <div class="card">
-
     <h2>Histórico de Inspeções</h2>
-
     <div id="historyTable"></div>
-
   </div>
 
 </section>
@@ -984,8 +1164,6 @@ th{
 </main>
 </div>
 
-<!-- MODAL AÇÃO CORRETIVA -->
-
 <div id="actionModal" class="modal">
 
   <div class="modal-box">
@@ -1006,8 +1184,6 @@ th{
   </div>
 
 </div>
-
-<!-- MODAL RELATÓRIO -->
 
 <div id="reportModal" class="modal">
 
@@ -1105,6 +1281,22 @@ function formatDate(date){
   return date;
 }
 
+function formatDateTime(){
+  const d=new Date();
+
+  return (
+    String(d.getDate()).padStart(2,"0")+
+    "/"+
+    String(d.getMonth()+1).padStart(2,"0")+
+    "/"+
+    d.getFullYear()+
+    " "+
+    String(d.getHours()).padStart(2,"0")+
+    ":"+
+    String(d.getMinutes()).padStart(2,"0")
+  );
+}
+
 function normalizeText(value){
   return String(value||"").trim().toLowerCase()
     .normalize("NFD")
@@ -1194,7 +1386,6 @@ function migrateOldData(){
       if(Array.isArray(arr)){
         db.inspections=arr;
       }
-
     }
 
     if(oldTemps&&!db.temps.length){
@@ -1204,7 +1395,6 @@ function migrateOldData(){
       if(Array.isArray(arr)){
         db.temps=arr;
       }
-
     }
 
     if(oldProblems&&!db.problems.length){
@@ -1214,7 +1404,6 @@ function migrateOldData(){
       if(Array.isArray(arr)){
         db.problems=arr;
       }
-
     }
 
     if(oldEvidence&&!db.evidences.length){
@@ -1224,7 +1413,6 @@ function migrateOldData(){
       if(Array.isArray(arr)){
         db.evidences=arr;
       }
-
     }
 
   }catch(e){}
@@ -1238,7 +1426,6 @@ function normalizeData(){
     if(!e.id)e.id=uid("est");
 
     e.name=e.name||"Estabelecimento sem nome";
-
     e.createdAt=e.createdAt||today();
 
   });
@@ -1690,8 +1877,7 @@ function saveInspection(){
 
   const inspection={
     id:uid("insp"),
-    establishmentId:
-      establishmentId||"",
+    establishmentId:establishmentId||"",
     establishmentName,
     responsible,
     date,
@@ -1699,6 +1885,8 @@ function saveInspection(){
     checklist:checks,
     score,
     classification,
+    reportNumber:generateReportNumber(),
+    reportVersion:"1.0",
     createdAt:new Date().toISOString()
   };
 
@@ -1748,7 +1936,8 @@ function saveInspection(){
   alert(
     "Inspeção guardada com sucesso.\n\n"+
     "Conformidade: "+score+"%\n"+
-    "Classificação: "+classification
+    "Classificação: "+classification+
+    "\nNº do relatório: "+inspection.reportNumber
   );
 
   resetInspectionForm();
@@ -1909,28 +2098,22 @@ function getProblemStatusClass(problem){
 }
 
 function getOverdueProblems(){
-
-  return db.problems.filter(
-    isProblemOverdue
-  );
+  return db.problems.filter(isProblemOverdue);
 }
 
 function getOpenProblems(){
-
   return db.problems.filter(
     p=>p.status!=="Resolvido"
   );
 }
 
 function getResolvedProblems(){
-
   return db.problems.filter(
     p=>p.status==="Resolvido"
   );
 }
 
 function getProblemsInTreatment(){
-
   return db.problems.filter(
     p=>p.status==="Em tratamento"
   );
@@ -2025,21 +2208,10 @@ function saveProblem(){
     "Problema registado com sucesso."
   );
 
-  document.getElementById(
-    "problemTitle"
-  ).value="";
-
-  document.getElementById(
-    "problemResponsible"
-  ).value="";
-
-  document.getElementById(
-    "problemDeadline"
-  ).value="";
-
-  document.getElementById(
-    "problemAction"
-  ).value="";
+  document.getElementById("problemTitle").value="";
+  document.getElementById("problemResponsible").value="";
+  document.getElementById("problemDeadline").value="";
+  document.getElementById("problemAction").value="";
 
   renderAll();
 }
@@ -2089,10 +2261,6 @@ function changeProblemStatus(id){
 
 }
 
-/* ==============================
-   GESTÃO PROFISSIONAL
-============================== */
-
 function openAction(id){
 
   const p=
@@ -2104,8 +2272,7 @@ function openAction(id){
 
   currentActionId=id;
 
-  const overdue=
-    isProblemOverdue(p);
+  const overdue=isProblemOverdue(p);
 
   document.getElementById(
     "actionModalContent"
@@ -2120,53 +2287,35 @@ function openAction(id){
         disabled
       >
 
-      <label>
-        Problema / não conformidade
-      </label>
+      <label>Problema / não conformidade</label>
 
       <textarea disabled>${esc(p.title)}</textarea>
 
       <div class="grid">
 
         <div>
-
           <label>Severidade</label>
 
           <select id="actionSeverity">
 
-            <option ${p.severity==="Baixa"?"selected":""}>
-              Baixa
-            </option>
-
-            <option ${p.severity==="Média"?"selected":""}>
-              Média
-            </option>
-
-            <option ${p.severity==="Alta"?"selected":""}>
-              Alta
-            </option>
-
-            <option ${p.severity==="Crítica"?"selected":""}>
-              Crítica
-            </option>
+            <option ${p.severity==="Baixa"?"selected":""}>Baixa</option>
+            <option ${p.severity==="Média"?"selected":""}>Média</option>
+            <option ${p.severity==="Alta"?"selected":""}>Alta</option>
+            <option ${p.severity==="Crítica"?"selected":""}>Crítica</option>
 
           </select>
-
         </div>
 
         <div>
-
           <label>Responsável</label>
 
           <input
             id="actionResponsible"
             value="${esc(p.responsible)}"
           >
-
         </div>
 
         <div>
-
           <label>Prazo</label>
 
           <input
@@ -2174,29 +2323,18 @@ function openAction(id){
             type="date"
             value="${esc(p.deadline)}"
           >
-
         </div>
 
         <div>
-
           <label>Estado</label>
 
           <select id="actionStatus">
 
-            <option ${p.status==="Aberto"?"selected":""}>
-              Aberto
-            </option>
-
-            <option ${p.status==="Em tratamento"?"selected":""}>
-              Em tratamento
-            </option>
-
-            <option ${p.status==="Resolvido"?"selected":""}>
-              Resolvido
-            </option>
+            <option ${p.status==="Aberto"?"selected":""}>Aberto</option>
+            <option ${p.status==="Em tratamento"?"selected":""}>Em tratamento</option>
+            <option ${p.status==="Resolvido"?"selected":""}>Resolvido</option>
 
           </select>
-
         </div>
 
       </div>
@@ -2234,27 +2372,19 @@ function openAction(id){
           class="alert"
           style="background:#fee2e2;color:#991b1b"
         >
-
           ⚠️ Esta ação está atrasada.
           O prazo é ${formatDate(p.deadline)}.
-
         </div>
 
       `:""}
 
       <div class="actions">
 
-        <button
-          class="success"
-          onclick="saveAction()"
-        >
+        <button class="success" onclick="saveAction()">
           Guardar alterações
         </button>
 
-        <button
-          class="secondary"
-          onclick="closeActionModal()"
-        >
+        <button class="secondary" onclick="closeActionModal()">
           Cancelar
         </button>
 
@@ -2348,26 +2478,12 @@ function renderProblems(){
   const resolved=getResolvedProblems();
   const overdue=getOverdueProblems();
 
-  document.getElementById(
-    "problemOpen"
-  ).textContent=open.length;
+  document.getElementById("problemOpen").textContent=open.length;
+  document.getElementById("problemTreatment").textContent=treatment.length;
+  document.getElementById("problemResolved").textContent=resolved.length;
+  document.getElementById("problemOverdue").textContent=overdue.length;
 
-  document.getElementById(
-    "problemTreatment"
-  ).textContent=treatment.length;
-
-  document.getElementById(
-    "problemResolved"
-  ).textContent=resolved.length;
-
-  document.getElementById(
-    "problemOverdue"
-  ).textContent=overdue.length;
-
-  const box=
-    document.getElementById(
-      "problemsTable"
-    );
+  const box=document.getElementById("problemsTable");
 
   if(!db.problems.length){
 
@@ -2379,10 +2495,7 @@ function renderProblems(){
 
   const rows=[...db.problems].sort((a,b)=>{
 
-    if(
-      isProblemOverdue(a)!==
-      isProblemOverdue(b)
-    ){
+    if(isProblemOverdue(a)!==isProblemOverdue(b)){
       return isProblemOverdue(a)?-1:1;
     }
 
@@ -2421,23 +2534,22 @@ function renderProblems(){
             <tr class="${isProblemOverdue(p)?"overdue":""}">
 
               <td>${formatDate(p.date)}</td>
-
               <td>${esc(p.establishmentName)}</td>
-
               <td>${esc(p.title)}</td>
 
-              <td>${esc(p.severity)}</td>
+              <td>
+                <span class="badge ${getSeverityClass(p.severity)}">
+                  ${esc(p.severity)}
+                </span>
+              </td>
 
               <td>${esc(p.responsible||"—")}</td>
-
               <td>${formatDate(p.deadline)}</td>
 
               <td>
-
                 <span class="badge ${getProblemStatusClass(p)}">
                   ${esc(getProblemStatusLabel(p))}
                 </span>
-
               </td>
 
               <td>${formatDate(p.resolutionDate)}</td>
@@ -2445,14 +2557,11 @@ function renderProblems(){
               <td>${esc(p.action||"—")}</td>
 
               <td>
-
                 <button
                   class="primary small"
-                  onclick="openAction('${p.id}')"
-                >
+                  onclick="openAction('${p.id}')">
                   Gerir ação
                 </button>
-
               </td>
 
             </tr>
@@ -2507,16 +2616,10 @@ function saveEvidence(){
     db.evidences.push({
 
       id:uid("ev"),
-
       establishmentId,
-
-      establishmentName:
-        e?e.name:"",
-
+      establishmentName:e?e.name:"",
       description,
-
       photo:reader.result,
-
       date:today()
 
     });
@@ -2574,7 +2677,6 @@ function saveEstablishment(){
   db.establishments.push({
 
     id:uid("est"),
-
     name,
 
     type:
@@ -2707,8 +2809,7 @@ function fillEstablishmentSelects(){
 
   configs.forEach(id=>{
 
-    const select=
-      document.getElementById(id);
+    const select=document.getElementById(id);
 
     if(!select)return;
 
@@ -2720,11 +2821,7 @@ function fillEstablishmentSelects(){
         `<option value="${esc(e.id)}">${esc(e.name)}</option>`
       ).join("");
 
-    if(
-      db.establishments.some(
-        e=>e.id===old
-      )
-    ){
+    if(db.establishments.some(e=>e.id===old)){
       select.value=old;
     }
 
@@ -2853,11 +2950,7 @@ function renderEstablishments(){
               </strong>
 
               <div class="progress">
-
-                <div
-                  style="width:${Math.round(avg)}%"
-                ></div>
-
+                <div style="width:${Math.round(avg)}%"></div>
               </div>
 
               ${Math.round(avg)}%
@@ -2881,47 +2974,35 @@ function renderEstablishments(){
           </div>
 
           <p>
-
             Inspeções:
             <strong>${inspections.length}</strong>
             |
-
             Problemas:
             <strong>${problems.length}</strong>
             |
-
             Atrasados:
             <strong>${overdue}</strong>
-
           </p>
 
           <div class="actions">
 
-            <button
-              class="primary"
-              onclick="openProfile('${e.id}')"
-            >
+            <button class="primary"
+              onclick="openProfile('${e.id}')">
               Ver perfil
             </button>
 
-            <button
-              class="success"
-              onclick="startInspectionFor('${e.id}')"
-            >
+            <button class="success"
+              onclick="startInspectionFor('${e.id}')">
               Nova inspeção
             </button>
 
-            <button
-              class="secondary"
-              onclick="goToProblemsFor('${e.id}')"
-            >
+            <button class="secondary"
+              onclick="goToProblemsFor('${e.id}')">
               Problemas
             </button>
 
-            <button
-              class="danger"
-              onclick="deleteEstablishment('${e.id}')"
-            >
+            <button class="danger"
+              onclick="deleteEstablishment('${e.id}')">
               Excluir
             </button>
 
@@ -3044,31 +3125,23 @@ function renderProfile(id){
 
     <div class="actions no-print">
 
-      <button
-        class="secondary"
-        onclick="go('estabelecimentos')"
-      >
+      <button class="secondary"
+        onclick="go('estabelecimentos')">
         ← Estabelecimentos
       </button>
 
-      <button
-        class="success"
-        onclick="startInspectionFor('${e.id}')"
-      >
+      <button class="success"
+        onclick="startInspectionFor('${e.id}')">
         Nova inspeção
       </button>
 
-      <button
-        class="warning"
-        onclick="goToProblemsFor('${e.id}')"
-      >
+      <button class="warning"
+        onclick="goToProblemsFor('${e.id}')">
         Ações corretivas
       </button>
 
-      <button
-        class="primary"
-        onclick="generateReportForEstablishment('${e.id}')"
-      >
+      <button class="primary"
+        onclick="generateReportForEstablishment('${e.id}')">
         Relatório profissional
       </button>
 
@@ -3079,10 +3152,7 @@ function renderProfile(id){
       <h2>${esc(e.name)}</h2>
 
       <p>
-        ${esc(
-          e.type||
-          "Tipo não informado"
-        )}
+        ${esc(e.type||"Tipo não informado")}
       </p>
 
       <div class="grid">
@@ -3215,6 +3285,16 @@ function renderProfile(id){
           ${esc(latest.classification)}
         </span>
 
+        <div class="actions">
+
+          <button
+            class="primary small"
+            onclick="generateReportForInspection('${latest.id}')">
+            Abrir relatório
+          </button>
+
+        </div>
+
       `:
 
       `<div class="empty">
@@ -3291,6 +3371,7 @@ function renderProfile(id){
                 <th>Responsável</th>
                 <th>Conformidade</th>
                 <th>Classificação</th>
+                <th>Nº relatório</th>
                 <th></th>
               </tr>
 
@@ -3302,28 +3383,21 @@ function renderProfile(id){
 
                 <tr>
 
-                  <td>
-                    ${formatDate(i.date)}
-                  </td>
+                  <td>${formatDate(i.date)}</td>
 
-                  <td>
-                    ${esc(i.responsible||"—")}
-                  </td>
+                  <td>${esc(i.responsible||"—")}</td>
 
-                  <td>
-                    ${i.score}%
-                  </td>
+                  <td>${i.score}%</td>
 
-                  <td>
-                    ${esc(i.classification)}
-                  </td>
+                  <td>${esc(i.classification)}</td>
+
+                  <td>${esc(getInspectionReportNumber(i))}</td>
 
                   <td>
 
                     <button
                       class="primary small"
-                      onclick="generateReportForInspection('${i.id}')"
-                    >
+                      onclick="generateReportForInspection('${i.id}')">
                       Relatório
                     </button>
 
@@ -3377,48 +3451,34 @@ function renderProfile(id){
 
               ${problems.map(p=>`
 
-                <tr
-                  class="${isProblemOverdue(p)?"overdue":""}"
-                >
+                <tr class="${isProblemOverdue(p)?"overdue":""}">
+
+                  <td>${esc(p.title)}</td>
 
                   <td>
-                    ${esc(p.title)}
+                    <span class="badge ${getSeverityClass(p.severity)}">
+                      ${esc(p.severity)}
+                    </span>
                   </td>
 
-                  <td>
-                    ${esc(p.severity)}
-                  </td>
+                  <td>${esc(p.responsible||"—")}</td>
+                  <td>${formatDate(p.deadline)}</td>
 
                   <td>
-                    ${esc(p.responsible||"—")}
-                  </td>
-
-                  <td>
-                    ${formatDate(p.deadline)}
-                  </td>
-
-                  <td>
-
                     <span class="badge ${getProblemStatusClass(p)}">
                       ${esc(getProblemStatusLabel(p))}
                     </span>
-
                   </td>
 
-                  <td>
-                    ${formatDate(p.resolutionDate)}
-                  </td>
+                  <td>${formatDate(p.resolutionDate)}</td>
 
-                  <td>
-                    ${esc(p.action||"—")}
-                  </td>
+                  <td>${esc(p.action||"—")}</td>
 
                   <td>
 
                     <button
                       class="primary small"
-                      onclick="openAction('${p.id}')"
-                    >
+                      onclick="openAction('${p.id}')">
                       Gerir
                     </button>
 
@@ -3470,17 +3530,9 @@ function renderProfile(id){
 
                 <tr>
 
-                  <td>
-                    ${formatDate(t.date)}
-                  </td>
-
-                  <td>
-                    ${esc(t.item)}
-                  </td>
-
-                  <td>
-                    ${t.value} °C
-                  </td>
+                  <td>${formatDate(t.date)}</td>
+                  <td>${esc(t.item)}</td>
+                  <td>${t.value} °C</td>
 
                   <td>
 
@@ -3652,21 +3704,10 @@ function renderTemperatureTable(){
 
             <tr>
 
-              <td>
-                ${formatDate(t.date)}
-              </td>
-
-              <td>
-                ${esc(t.establishmentName)}
-              </td>
-
-              <td>
-                ${esc(t.item)}
-              </td>
-
-              <td>
-                ${t.value} °C
-              </td>
+              <td>${formatDate(t.date)}</td>
+              <td>${esc(t.establishmentName)}</td>
+              <td>${esc(t.item)}</td>
+              <td>${t.value} °C</td>
 
               <td>
 
@@ -3708,29 +3749,19 @@ function renderDashboard(){
   const overdue=
     getOverdueProblems();
 
-  document.getElementById(
-    "dashEstablishments"
-  ).textContent=
+  document.getElementById("dashEstablishments").textContent=
     db.establishments.length;
 
-  document.getElementById(
-    "dashInspections"
-  ).textContent=
+  document.getElementById("dashInspections").textContent=
     db.inspections.length;
 
-  document.getElementById(
-    "dashOpen"
-  ).textContent=
+  document.getElementById("dashOpen").textContent=
     getOpenProblems().length;
 
-  document.getElementById(
-    "dashOverdue"
-  ).textContent=
+  document.getElementById("dashOverdue").textContent=
     overdue.length;
 
-  document.getElementById(
-    "dashAverage"
-  ).textContent=
+  document.getElementById("dashAverage").textContent=
     Math.round(avg)+"%";
 
   document.getElementById(
@@ -3741,30 +3772,22 @@ function renderDashboard(){
 
       <div class="stat">
         Abertas
-        <strong>
-          ${getOpenProblems().length}
-        </strong>
+        <strong>${getOpenProblems().length}</strong>
       </div>
 
       <div class="stat">
         Em tratamento
-        <strong>
-          ${getProblemsInTreatment().length}
-        </strong>
+        <strong>${getProblemsInTreatment().length}</strong>
       </div>
 
       <div class="stat">
         Resolvidas
-        <strong>
-          ${getResolvedProblems().length}
-        </strong>
+        <strong>${getResolvedProblems().length}</strong>
       </div>
 
       <div class="stat">
         Atrasadas
-        <strong>
-          ${overdue.length}
-        </strong>
+        <strong>${overdue.length}</strong>
       </div>
 
     </div>
@@ -3810,8 +3833,7 @@ function renderDashboard(){
 
         <button
           class="primary small"
-          onclick="openAction('${p.id}')"
-        >
+          onclick="openAction('${p.id}')">
           Gerir ação
         </button>
 
@@ -3858,6 +3880,7 @@ function renderHistory(){
             <th>Responsável</th>
             <th>Conformidade</th>
             <th>Classificação</th>
+            <th>Nº relatório</th>
             <th></th>
           </tr>
 
@@ -3869,32 +3892,23 @@ function renderHistory(){
 
             <tr>
 
-              <td>
-                ${formatDate(i.date)}
-              </td>
+              <td>${formatDate(i.date)}</td>
 
-              <td>
-                ${esc(i.establishmentName)}
-              </td>
+              <td>${esc(i.establishmentName)}</td>
 
-              <td>
-                ${esc(i.responsible||"—")}
-              </td>
+              <td>${esc(i.responsible||"—")}</td>
 
-              <td>
-                ${i.score}%
-              </td>
+              <td>${i.score}%</td>
 
-              <td>
-                ${esc(i.classification)}
-              </td>
+              <td>${esc(i.classification)}</td>
+
+              <td>${esc(getInspectionReportNumber(i))}</td>
 
               <td>
 
                 <button
                   class="primary small"
-                  onclick="generateReportForInspection('${i.id}')"
-                >
+                  onclick="generateReportForInspection('${i.id}')">
                   Relatório
                 </button>
 
@@ -3916,24 +3930,16 @@ function renderHistory(){
 
 function renderHome(){
 
-  document.getElementById(
-    "homeEstablishments"
-  ).textContent=
+  document.getElementById("homeEstablishments").textContent=
     db.establishments.length;
 
-  document.getElementById(
-    "homeInspections"
-  ).textContent=
+  document.getElementById("homeInspections").textContent=
     db.inspections.length;
 
-  document.getElementById(
-    "homeOpenProblems"
-  ).textContent=
+  document.getElementById("homeOpenProblems").textContent=
     getOpenProblems().length;
 
-  document.getElementById(
-    "homeOverdue"
-  ).textContent=
+  document.getElementById("homeOverdue").textContent=
     getOverdueProblems().length;
 
   const box=
@@ -3972,8 +3978,7 @@ function renderHome(){
 
         <button
           class="primary small"
-          onclick="openAction('${p.id}')"
-        >
+          onclick="openAction('${p.id}')">
           Gerir ação
         </button>
 
@@ -3983,9 +3988,9 @@ function renderHome(){
 
 }
 
-/* ==============================
-   RELATÓRIOS PROFISSIONAIS
-============================== */
+/* =====================================================
+   RELATÓRIOS PROFISSIONAIS — NOVA VERSÃO
+===================================================== */
 
 function generateReportNumber(){
 
@@ -4010,7 +4015,20 @@ function generateReportNumber(){
     .padStart(2,"0");
 
   return `FSM-${y}${m}${day}-${time}`;
+}
 
+function getInspectionReportNumber(inspection){
+
+  if(inspection.reportNumber){
+    return inspection.reportNumber;
+  }
+
+  inspection.reportNumber=generateReportNumber();
+  inspection.reportVersion=inspection.reportVersion||"1.0";
+
+  saveDB();
+
+  return inspection.reportNumber;
 }
 
 function getClassificationClass(classification){
@@ -4025,7 +4043,6 @@ function getClassificationClass(classification){
     return "red";
 
   return "gray";
-
 }
 
 function getSeverityClass(severity){
@@ -4040,7 +4057,20 @@ function getSeverityClass(severity){
     return "yellow";
 
   return "green";
+}
 
+function getReportActionClass(severity){
+
+  if(severity==="Crítica")
+    return "report-action-critical";
+
+  if(severity==="Alta")
+    return "report-action-high";
+
+  if(severity==="Média")
+    return "report-action-medium";
+
+  return "report-action-low";
 }
 
 function generateReportForEstablishment(id){
@@ -4064,9 +4094,7 @@ function generateReportForEstablishment(id){
 
   if(latest){
 
-    generateReportForInspection(
-      latest.id
-    );
+    generateReportForInspection(latest.id);
 
     return;
   }
@@ -4098,7 +4126,6 @@ function generateReportForEstablishment(id){
   document.getElementById(
     "reportModal"
   ).classList.add("open");
-
 }
 
 function generateReportForInspection(id){
@@ -4109,6 +4136,14 @@ function generateReportForInspection(id){
     );
 
   if(!inspection)return;
+
+  /*
+    O número passa a ficar gravado na própria inspeção.
+    Assim, abrir o mesmo relatório várias vezes não cria
+    números diferentes.
+  */
+  const reportNumber=
+    getInspectionReportNumber(inspection);
 
   const e=
     db.establishments.find(
@@ -4125,15 +4160,26 @@ function generateReportForInspection(id){
     e||
     {
       id:"",
-      name:inspection.establishmentName
+      name:inspection.establishmentName,
+      type:"",
+      address:"",
+      bairro:"",
+      distrito:"",
+      responsible:"",
+      phone:""
     };
 
+  /*
+    IMPORTANTE:
+    Num relatório específico de inspeção entram apenas
+    problemas ligados àquela inspeção.
+
+    Problemas antigos sem inspectionId não são atribuídos
+    artificialmente a esta inspeção.
+  */
   const problems=
-    getProblemsForEstablishment(
-      establishment
-    ).filter(
+    db.problems.filter(
       p=>
-        !p.inspectionId||
         p.inspectionId===inspection.id
     );
 
@@ -4161,13 +4207,13 @@ function generateReportForInspection(id){
       problems,
       temps,
       evidence,
-      risk
+      risk,
+      reportNumber
     );
 
   document.getElementById(
     "reportModal"
   ).classList.add("open");
-
 }
 
 function generateReportHTML(
@@ -4176,15 +4222,21 @@ function generateReportHTML(
   problems,
   temps,
   evidence,
-  risk
+  risk,
+  existingReportNumber=""
 ){
 
   const reportNumber=
-    generateReportNumber();
+    existingReportNumber||
+    (
+      inspection?
+      getInspectionReportNumber(inspection):
+      generateReportNumber()
+    );
 
   const avg=
     inspection?
-    inspection.score:
+    Number(inspection.score||0):
     0;
 
   const classification=
@@ -4223,306 +4275,270 @@ function generateReportHTML(
       isProblemOverdue
     ).length;
 
+  const reportDate=
+    formatDateTime();
+
+  const inspector=
+    inspection?
+    inspection.responsible||"Não informado":
+    "Não informado";
+
+  const establishmentResponsible=
+    e.responsible||"Não informado";
+
+  const complianceText=
+    avg>=80?
+    "O resultado global da checklist encontra-se na faixa de conformidade.":
+    avg>=60?
+    "O resultado global indica conformidade parcial e requer acompanhamento das não conformidades identificadas.":
+    "O resultado global indica não conformidade e requer medidas corretivas prioritárias.";
+
+  const conclusionExtra=
+    openProblems>0?
+    `Permanecem ${openProblems} ação(ões) corretiva(s) não resolvida(s) associada(s) diretamente a esta inspeção.`:
+    "Todas as ações corretivas diretamente associadas a esta inspeção encontram-se resolvidas ou não foram registadas.";
+
   return `
 
-    <div class="report-header">
+    <div class="report-document">
 
-      <h1>FoodSafe Moz</h1>
+      <div class="report-header">
 
-      <h2>
-        Relatório Profissional de Segurança Alimentar
-      </h2>
+        <h1>FoodSafe Moz</h1>
 
-      <p>
-        Alimentos seguros, famílias protegidas
-      </p>
+        <h2>
+          RELATÓRIO DE INSPEÇÃO DE SEGURANÇA ALIMENTAR
+        </h2>
 
-      <div class="report-number">
-        Nº ${esc(reportNumber)}
-      </div>
+        <p>
+          Alimentos seguros, famílias protegidas
+        </p>
 
-    </div>
-
-    <div class="report-summary">
-
-      <div class="report-summary-box">
-
-        Conformidade
-
-        <strong>
-          ${inspection?avg+"%":"—"}
-        </strong>
+        <div class="report-number">
+          Nº ${esc(reportNumber)}
+        </div>
 
       </div>
 
-      <div class="report-summary-box">
+      <div class="report-control">
 
-        Classificação
+        <div class="report-control-box">
 
-        <strong style="font-size:15px">
+          <small>Número do documento</small>
 
-          ${
-            inspection?
-            `<span class="badge ${
-              getClassificationClass(
-                classification
-              )
+          <strong>
+            ${esc(reportNumber)}
+          </strong>
+
+        </div>
+
+        <div class="report-control-box">
+
+          <small>Versão</small>
+
+          <strong>
+            ${esc(
+              inspection?
+              inspection.reportVersion||"1.0":
+              "1.0"
+            )}
+          </strong>
+
+        </div>
+
+        <div class="report-control-box">
+
+          <small>Gerado em</small>
+
+          <strong>
+            ${esc(reportDate)}
+          </strong>
+
+        </div>
+
+      </div>
+
+      <div class="report-summary">
+
+        <div class="report-summary-box">
+
+          <small>Conformidade</small>
+
+          <strong>
+            ${inspection?avg+"%":"—"}
+          </strong>
+
+        </div>
+
+        <div class="report-summary-box">
+
+          <small>Classificação</small>
+
+          <strong style="font-size:14px">
+
+            ${
+              inspection?
+              `<span class="badge ${
+                getClassificationClass(
+                  classification
+                )
+              }">
+                ${esc(classification)}
+              </span>`:
+              "—"
+            }
+
+          </strong>
+
+        </div>
+
+        <div class="report-summary-box">
+
+          <small>Nível de risco</small>
+
+          <strong style="font-size:14px">
+
+            <span class="badge ${risk.cls}">
+              ${esc(risk.label)}
+            </span>
+
+          </strong>
+
+        </div>
+
+        <div class="report-summary-box">
+
+          <small>Conformes</small>
+
+          <strong>
+            ${conformes}
+          </strong>
+
+        </div>
+
+        <div class="report-summary-box">
+
+          <small>Não conformes</small>
+
+          <strong>
+            ${nonConformes}
+          </strong>
+
+        </div>
+
+        <div class="report-summary-box">
+
+          <small>Ações abertas</small>
+
+          <strong>
+            ${openProblems}
+          </strong>
+
+        </div>
+
+      </div>
+
+      ${
+        inspection?
+
+        `
+
+        <div class="report-section">
+
+          <h3>
+            1. Resultado global da inspeção
+          </h3>
+
+          <div>
+
+            <strong>
+              Conformidade: ${avg}%
+            </strong>
+
+            <div class="report-progress">
+
+              <div
+                style="width:${Math.max(0,Math.min(100,avg))}%"
+              ></div>
+
+            </div>
+
+          </div>
+
+          <p>
+
+            <span class="badge ${
+              getClassificationClass(classification)
             }">
+
               ${esc(classification)}
-            </span>`:
-            "—"
-          }
 
-        </strong>
+            </span>
 
-      </div>
+          </p>
 
-      <div class="report-summary-box">
+          <div class="report-note">
 
-        Risco
+            ${esc(complianceText)}
 
-        <strong style="font-size:15px">
+          </div>
 
-          <span class="badge ${risk.cls}">
-            ${esc(risk.label)}
-          </span>
+        </div>
 
-        </strong>
+        `
 
-      </div>
+        :
 
-      <div class="report-summary-box">
+        ""
 
-        Não conformidades
-
-        <strong>
-          ${nonConformes}
-        </strong>
-
-      </div>
-
-    </div>
-
-    <div class="report-section">
-
-      <h3>
-        1. Identificação do estabelecimento
-      </h3>
-
-      <table class="report-table">
-
-        <tbody>
-
-          <tr>
-            <th>Nome</th>
-            <td>${esc(e.name)}</td>
-          </tr>
-
-          <tr>
-            <th>Tipo</th>
-            <td>${esc(e.type||"—")}</td>
-          </tr>
-
-          <tr>
-            <th>Endereço</th>
-            <td>${esc(e.address||"—")}</td>
-          </tr>
-
-          <tr>
-            <th>Bairro</th>
-            <td>${esc(e.bairro||"—")}</td>
-          </tr>
-
-          <tr>
-            <th>Distrito</th>
-            <td>${esc(e.distrito||"—")}</td>
-          </tr>
-
-          <tr>
-            <th>Responsável</th>
-            <td>${esc(e.responsible||"—")}</td>
-          </tr>
-
-          <tr>
-            <th>Telefone</th>
-            <td>${esc(e.phone||"—")}</td>
-          </tr>
-
-        </tbody>
-
-      </table>
-
-    </div>
-
-    <div class="report-section">
-
-      <h3>
-        2. Dados da inspeção
-      </h3>
-
-      <table class="report-table">
-
-        <tbody>
-
-          <tr>
-            <th>Número do relatório</th>
-            <td>${esc(reportNumber)}</td>
-          </tr>
-
-          <tr>
-            <th>Data da inspeção</th>
-            <td>
-              ${
-                inspection?
-                formatDate(inspection.date):
-                "Não realizada"
-              }
-            </td>
-          </tr>
-
-          <tr>
-            <th>Responsável pela inspeção</th>
-            <td>
-              ${
-                inspection?
-                esc(inspection.responsible||"—"):
-                "—"
-              }
-            </td>
-          </tr>
-
-          <tr>
-            <th>Conformidade</th>
-            <td>
-              ${
-                inspection?
-                avg+"%":
-                "—"
-              }
-            </td>
-          </tr>
-
-          <tr>
-            <th>Classificação</th>
-            <td>
-              ${
-                inspection?
-                esc(classification):
-                "Sem inspeção"
-              }
-            </td>
-          </tr>
-
-          <tr>
-            <th>Nível de risco</th>
-            <td>
-              <span class="badge ${risk.cls}">
-                ${esc(risk.label)}
-              </span>
-            </td>
-          </tr>
-
-        </tbody>
-
-      </table>
-
-    </div>
-
-    ${
-      inspection?
-
-      `
+      }
 
       <div class="report-section">
 
         <h3>
-          3. Resultado da checklist
+          ${inspection?
+          "2. Identificação do estabelecimento":
+          "1. Identificação do estabelecimento"}
         </h3>
-
-        <p>
-          <strong>
-            Itens conformes:
-          </strong>
-          ${conformes}
-        </p>
-
-        <p>
-          <strong>
-            Itens não conformes:
-          </strong>
-          ${nonConformes}
-        </p>
 
         <table class="report-table">
 
-          <thead>
-
-            <tr>
-
-              <th>
-                Nº
-              </th>
-
-              <th>
-                Item de verificação
-              </th>
-
-              <th>
-                Resultado
-              </th>
-
-            </tr>
-
-          </thead>
-
           <tbody>
 
-            ${
-              checklist.length?
+            <tr>
+              <th>Nome</th>
+              <td>${esc(e.name)}</td>
+            </tr>
 
-              checklist.map((c,i)=>`
+            <tr>
+              <th>Tipo</th>
+              <td>${esc(e.type||"—")}</td>
+            </tr>
 
-                <tr>
+            <tr>
+              <th>Endereço</th>
+              <td>${esc(e.address||"—")}</td>
+            </tr>
 
-                  <td>
-                    ${i+1}
-                  </td>
+            <tr>
+              <th>Bairro</th>
+              <td>${esc(e.bairro||"—")}</td>
+            </tr>
 
-                  <td>
-                    ${esc(c.item)}
-                  </td>
+            <tr>
+              <th>Distrito</th>
+              <td>${esc(e.distrito||"—")}</td>
+            </tr>
 
-                  <td>
+            <tr>
+              <th>Responsável</th>
+              <td>${esc(e.responsible||"—")}</td>
+            </tr>
 
-                    <span class="badge ${
-                      c.checked?
-                      "green":
-                      "red"
-                    }">
-
-                      ${
-                        c.checked?
-                        "Conforme":
-                        "Não conforme"
-                      }
-
-                    </span>
-
-                  </td>
-
-                </tr>
-
-              `).join("")
-
-              :
-
-              `<tr>
-                <td colspan="3">
-                  Sem dados de checklist.
-                </td>
-              </tr>`
-
-            }
+            <tr>
+              <th>Telefone</th>
+              <td>${esc(e.phone||"—")}</td>
+            </tr>
 
           </tbody>
 
@@ -4530,53 +4546,108 @@ function generateReportHTML(
 
       </div>
 
-      `
+      <div class="report-section">
 
-      :
+        <h3>
+          ${inspection?
+          "3. Dados da inspeção":
+          "2. Dados do relatório"}
+        </h3>
 
-      ""
+        <table class="report-table">
 
-    }
+          <tbody>
 
-    <div class="report-section">
+            <tr>
+              <th>Número do relatório</th>
+              <td>${esc(reportNumber)}</td>
+            </tr>
 
-      <h3>
-        ${
-          inspection?
-          "4. Não conformidades e ações corretivas":
-          "3. Não conformidades e ações corretivas"
-        }
-      </h3>
+            <tr>
+              <th>Data da inspeção</th>
+              <td>
+                ${
+                  inspection?
+                  formatDate(inspection.date):
+                  "Não realizada"
+                }
+              </td>
+            </tr>
 
-      <p>
+            <tr>
+              <th>Responsável pela inspeção</th>
+              <td>${esc(inspector)}</td>
+            </tr>
 
-        <strong>
-          Abertas:
-        </strong>
-        ${openProblems}
+            <tr>
+              <th>Responsável do estabelecimento</th>
+              <td>${esc(establishmentResponsible)}</td>
+            </tr>
 
-        &nbsp; | &nbsp;
+            <tr>
+              <th>Conformidade</th>
+              <td>${inspection?avg+"%":"—"}</td>
+            </tr>
 
-        <strong>
-          Resolvidas:
-        </strong>
-        ${resolvedProblems}
+            <tr>
+              <th>Classificação</th>
+              <td>
+                ${
+                  inspection?
+                  esc(classification):
+                  "Sem inspeção"
+                }
+              </td>
+            </tr>
 
-        &nbsp; | &nbsp;
+            <tr>
+              <th>Nível de risco</th>
+              <td>
+                <span class="badge ${risk.cls}">
+                  ${esc(risk.label)}
+                </span>
+              </td>
+            </tr>
 
-        <strong>
-          Atrasadas:
-        </strong>
-        ${overdueProblems}
+          </tbody>
 
-      </p>
+        </table>
+
+      </div>
 
       ${
-        problems.length?
+        inspection?
 
         `
 
-        <div class="table-wrap">
+        <div class="report-section">
+
+          <h3>
+            4. Resultado da checklist
+          </h3>
+
+          <p>
+
+            <strong>
+              Total de itens:
+            </strong>
+            ${checklist.length}
+
+            &nbsp; | &nbsp;
+
+            <strong>
+              Conformes:
+            </strong>
+            ${conformes}
+
+            &nbsp; | &nbsp;
+
+            <strong>
+              Não conformes:
+            </strong>
+            ${nonConformes}
+
+          </p>
 
           <table class="report-table">
 
@@ -4584,33 +4655,11 @@ function generateReportHTML(
 
               <tr>
 
-                <th>
-                  Problema
-                </th>
+                <th>Nº</th>
 
-                <th>
-                  Severidade
-                </th>
+                <th>Item de verificação</th>
 
-                <th>
-                  Responsável
-                </th>
-
-                <th>
-                  Prazo
-                </th>
-
-                <th>
-                  Estado
-                </th>
-
-                <th>
-                  Resolução
-                </th>
-
-                <th>
-                  Ação corretiva
-                </th>
+                <th>Resultado</th>
 
               </tr>
 
@@ -4619,69 +4668,55 @@ function generateReportHTML(
             <tbody>
 
               ${
-                problems.map(p=>`
+                checklist.length?
 
-                  <tr>
+                checklist.map((c,i)=>`
+
+                  <tr class="${
+                    c.checked?
+                    "report-conform":
+                    "report-nonconform"
+                  }">
 
                     <td>
-                      ${esc(p.title)}
+                      ${i+1}
+                    </td>
+
+                    <td>
+                      ${esc(c.item)}
                     </td>
 
                     <td>
 
                       <span class="badge ${
-                        getSeverityClass(
-                          p.severity
-                        )
+                        c.checked?
+                        "green":
+                        "red"
                       }">
 
-                        ${esc(p.severity)}
+                        ${
+                          c.checked?
+                          "Conforme":
+                          "Não conforme"
+                        }
 
                       </span>
 
-                    </td>
-
-                    <td>
-                      ${esc(
-                        p.responsible||"—"
-                      )}
-                    </td>
-
-                    <td>
-                      ${formatDate(
-                        p.deadline
-                      )}
-                    </td>
-
-                    <td>
-
-                      <span class="badge ${
-                        getProblemStatusClass(p)
-                      }">
-
-                        ${esc(
-                          getProblemStatusLabel(p)
-                        )}
-
-                      </span>
-
-                    </td>
-
-                    <td>
-                      ${formatDate(
-                        p.resolutionDate
-                      )}
-                    </td>
-
-                    <td>
-                      ${esc(
-                        p.action||"—"
-                      )}
                     </td>
 
                   </tr>
 
                 `).join("")
+
+                :
+
+                `
+                <tr>
+                  <td colspan="3">
+                    Sem dados de checklist.
+                  </td>
+                </tr>
+                `
 
               }
 
@@ -4695,271 +4730,378 @@ function generateReportHTML(
 
         :
 
-        `
-        <p>
-          Não foram registadas não conformidades.
-        </p>
-        `
+        ""
 
       }
 
-    </div>
+      <div class="report-section">
 
-    <div class="report-section">
+        <h3>
+          ${inspection?
+          "5. Não conformidades e ações corretivas":
+          "3. Não conformidades e ações corretivas"}
+        </h3>
 
-      <h3>
-        ${
-          inspection?
-          "5. Controlo de temperaturas":
-          "4. Controlo de temperaturas"
-        }
-      </h3>
+        <div class="report-control">
 
-      ${
-        temps.length?
+          <div class="report-control-box">
+            <small>Abertas</small>
+            <strong>${openProblems}</strong>
+          </div>
 
-        `
+          <div class="report-control-box">
+            <small>Resolvidas</small>
+            <strong>${resolvedProblems}</strong>
+          </div>
 
-        <table class="report-table">
-
-          <thead>
-
-            <tr>
-
-              <th>
-                Data
-              </th>
-
-              <th>
-                Item / equipamento
-              </th>
-
-              <th>
-                Temperatura
-              </th>
-
-              <th>
-                Avaliação
-              </th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            ${
-              temps.map(t=>`
-
-                <tr>
-
-                  <td>
-                    ${formatDate(t.date)}
-                  </td>
-
-                  <td>
-                    ${esc(t.item)}
-                  </td>
-
-                  <td>
-                    ${t.value} °C
-                  </td>
-
-                  <td>
-
-                    <span class="badge ${
-                      t.evaluation==="Adequada"?
-                      "green":
-                      t.evaluation==="Atenção"?
-                      "yellow":
-                      "red"
-                    }">
-
-                      ${esc(t.evaluation)}
-
-                    </span>
-
-                  </td>
-
-                </tr>
-
-              `).join("")
-
-            }
-
-          </tbody>
-
-        </table>
-
-        `
-
-        :
-
-        `
-        <p>
-          Nenhum registo de temperatura disponível.
-        </p>
-        `
-
-      }
-
-    </div>
-
-    <div class="report-section">
-
-      <h3>
-        ${
-          inspection?
-          "6. Evidências fotográficas":
-          "5. Evidências fotográficas"
-        }
-      </h3>
-
-      ${
-        evidence.length?
-
-        `
-
-        <div class="photo-grid">
-
-          ${
-            evidence.map(x=>`
-
-              <div>
-
-                <img
-                  class="report-photo"
-                  src="${x.photo}"
-                  alt="${esc(x.description)}"
-                >
-
-                <p>
-                  <strong>
-                    ${esc(x.description)}
-                  </strong>
-                </p>
-
-                <small>
-                  Data:
-                  ${formatDate(x.date)}
-                </small>
-
-              </div>
-
-            `).join("")
-
-          }
+          <div class="report-control-box">
+            <small>Atrasadas</small>
+            <strong>${overdueProblems}</strong>
+          </div>
 
         </div>
 
-        `
+        ${
+          problems.length?
 
-        :
+          problems.map(p=>`
 
-        `
+            <div class="report-action-card ${
+              getReportActionClass(p.severity)
+            }">
+
+              <h4>
+                ${esc(p.title)}
+              </h4>
+
+              <div class="report-action-grid">
+
+                <div>
+                  <strong>Severidade:</strong><br>
+                  <span class="badge ${getSeverityClass(p.severity)}">
+                    ${esc(p.severity)}
+                  </span>
+                </div>
+
+                <div>
+                  <strong>Estado:</strong><br>
+                  <span class="badge ${getProblemStatusClass(p)}">
+                    ${esc(getProblemStatusLabel(p))}
+                  </span>
+                </div>
+
+                <div>
+                  <strong>Responsável:</strong><br>
+                  ${esc(p.responsible||"Não definido")}
+                </div>
+
+                <div>
+                  <strong>Prazo:</strong><br>
+                  ${formatDate(p.deadline)}
+                </div>
+
+                <div>
+                  <strong>Data de resolução:</strong><br>
+                  ${formatDate(p.resolutionDate)}
+                </div>
+
+              </div>
+
+              <p>
+
+                <strong>
+                  Ação corretiva:
+                </strong>
+
+                <br>
+
+                ${esc(
+                  p.action||
+                  "Nenhuma ação corretiva definida."
+                )}
+
+              </p>
+
+            </div>
+
+          `).join("")
+
+          :
+
+          `
+          <div class="report-note">
+            Não foram registadas não conformidades
+            diretamente associadas a esta inspeção.
+          </div>
+          `
+
+        }
+
+      </div>
+
+      <div class="report-section">
+
+        <h3>
+          ${inspection?
+          "6. Controlo de temperaturas":
+          "4. Controlo de temperaturas"}
+        </h3>
+
+        <div class="report-note">
+          Os registos abaixo correspondem aos registos
+          de temperatura disponíveis para este estabelecimento.
+        </div>
+
+        ${
+          temps.length?
+
+          `
+
+          <table class="report-table">
+
+            <thead>
+
+              <tr>
+
+                <th>Data</th>
+                <th>Item / equipamento</th>
+                <th>Temperatura</th>
+                <th>Avaliação</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              ${
+                temps.map(t=>`
+
+                  <tr>
+
+                    <td>
+                      ${formatDate(t.date)}
+                    </td>
+
+                    <td>
+                      ${esc(t.item)}
+                    </td>
+
+                    <td>
+                      ${t.value} °C
+                    </td>
+
+                    <td>
+
+                      <span class="badge ${
+                        t.evaluation==="Adequada"?
+                        "green":
+                        t.evaluation==="Atenção"?
+                        "yellow":
+                        "red"
+                      }">
+
+                        ${esc(t.evaluation)}
+
+                      </span>
+
+                    </td>
+
+                  </tr>
+
+                `).join("")
+              }
+
+            </tbody>
+
+          </table>
+
+          `
+
+          :
+
+          `
+          <p>
+            Nenhum registo de temperatura disponível.
+          </p>
+          `
+
+        }
+
+      </div>
+
+      <div class="report-section">
+
+        <h3>
+          ${inspection?
+          "7. Evidências fotográficas":
+          "5. Evidências fotográficas"}
+        </h3>
+
+        <div class="report-note">
+          Evidências disponíveis no sistema para este estabelecimento.
+        </div>
+
+        ${
+          evidence.length?
+
+          `
+
+          <div class="photo-grid">
+
+            ${
+              evidence.map(x=>`
+
+                <div class="report-photo-card">
+
+                  <img
+                    class="report-photo"
+                    src="${x.photo}"
+                    alt="${esc(x.description)}"
+                  >
+
+                  <div class="report-photo-caption">
+
+                    <strong>
+                      ${esc(x.description)}
+                    </strong>
+
+                    <br>
+
+                    <small>
+                      Data:
+                      ${formatDate(x.date)}
+                    </small>
+
+                  </div>
+
+                </div>
+
+              `).join("")
+            }
+
+          </div>
+
+          `
+
+          :
+
+          `
+          <p>
+            Nenhuma evidência fotográfica disponível.
+          </p>
+          `
+
+        }
+
+      </div>
+
+      <div class="report-section">
+
+        <h3>
+          ${inspection?
+          "8. Observações":
+          "6. Observações"}
+        </h3>
+
         <p>
-          Nenhuma evidência fotográfica disponível.
+
+          ${
+            inspection?
+            esc(
+              inspection.observation||
+              "Nenhuma observação registada."
+            ):
+            "Não existe inspeção associada a este relatório."
+          }
+
         </p>
-        `
 
-      }
-
-    </div>
-
-    <div class="report-section">
-
-      <h3>
-        ${
-          inspection?
-          "7. Observações":
-          "6. Observações"
-        }
-      </h3>
-
-      <p>
-
-        ${
-          inspection?
-          esc(
-            inspection.observation||
-            "Nenhuma observação registada."
-          ):
-          "Não existe inspeção associada a este relatório."
-        }
-
-      </p>
-
-    </div>
-
-    <div class="report-section">
-
-      <h3>
-        ${
-          inspection?
-          "8. Conclusão":
-          "7. Conclusão"
-        }
-      </h3>
+      </div>
 
       ${
         inspection?
 
         `
 
-        <p>
+        <div class="report-section">
 
-          A inspeção realizada em
-          <strong>
-            ${formatDate(inspection.date)}
-          </strong>
-          apresentou uma conformidade de
-          <strong>
-            ${avg}%
-          </strong>,
+          <h3>
+            9. Conclusão da inspeção
+          </h3>
 
-          sendo classificada como
-          <strong>
-            ${esc(classification)}
-          </strong>.
+          <div class="report-conclusion">
 
-        </p>
+            <p>
 
-        <p>
+              A inspeção realizada em
+              <strong>
+                ${formatDate(inspection.date)}
+              </strong>
+              apresentou uma conformidade global de
+              <strong>
+                ${avg}%
+              </strong>,
 
-          O sistema identificou
-          <strong>
-            ${nonConformes}
-          </strong>
-          item(ns) não conforme(s)
-          na checklist.
+              sendo classificada como
+              <strong>
+                ${esc(classification)}
+              </strong>.
 
-        </p>
+            </p>
 
-        ${
-          openProblems?
+            <p>
 
-          `<p>
+              Foram avaliados
+              <strong>
+                ${checklist.length}
+              </strong>
+              item(ns), dos quais
+              <strong>
+                ${conformes}
+              </strong>
+              foram considerados conformes e
+              <strong>
+                ${nonConformes}
+              </strong>
+              não conformes.
 
-            Permanecem
-            <strong>
-              ${openProblems}
-            </strong>
-            problema(s) ou ação(ões)
-            corretiva(s) não resolvida(s).
+            </p>
 
-          </p>`
+            <p>
 
-          :
+              ${esc(conclusionExtra)}
 
-          `<p>
+            </p>
 
-            Não existem ações corretivas
-            abertas associadas aos registos
-            apresentados neste relatório.
+            ${
+              overdueProblems?
 
-          </p>`
+              `
+              <p>
 
-        }
+                <strong>
+                  Atenção:
+                </strong>
+
+                existem
+                ${overdueProblems}
+                ação(ões) corretiva(s)
+                diretamente associada(s) a esta inspeção
+                cujo prazo se encontra ultrapassado.
+
+              </p>
+              `
+
+              :
+
+              ""
+
+            }
+
+          </div>
+
+        </div>
 
         `
 
@@ -4967,92 +5109,103 @@ function generateReportHTML(
 
         `
 
-        <p>
+        <div class="report-section">
 
-          Este documento apresenta o resumo
-          dos registos disponíveis para o
-          estabelecimento no sistema FoodSafe Moz.
+          <h3>
+            7. Conclusão
+          </h3>
 
-        </p>
+          <div class="report-conclusion">
+
+            <p>
+              Este documento apresenta os registos
+              disponíveis para o estabelecimento no
+              sistema FoodSafe Moz.
+            </p>
+
+          </div>
+
+        </div>
 
         `
 
       }
 
-    </div>
+      <div class="report-section">
 
-    <div class="report-section">
+        <h3>
+          ${inspection?
+          "10. Assinaturas":
+          "8. Assinaturas"}
+        </h3>
 
-      <h3>
-        ${
-          inspection?
-          "9. Assinaturas":
-          "8. Assinaturas"
-        }
-      </h3>
+        <div class="grid">
 
-      <div class="grid">
+          <div class="signature-box">
 
-        <div class="signature-box">
+            <div class="signature-line">
+              &nbsp;
+            </div>
 
-          ______________________________
+            <br>
 
-          <br><br>
+            <strong>
+              Responsável pela inspeção
+            </strong>
 
-          <strong>
-            Responsável pela inspeção
-          </strong>
+            <br>
 
-          <br>
+            ${esc(inspector)}
 
-          ${
-            inspection?
-            esc(
-              inspection.responsible||""
-            ):
-            ""
-          }
+          </div>
 
-        </div>
+          <div class="signature-box">
 
-        <div class="signature-box">
+            <div class="signature-line">
+              &nbsp;
+            </div>
 
-          ______________________________
+            <br>
 
-          <br><br>
+            <strong>
+              Responsável do estabelecimento
+            </strong>
 
-          <strong>
-            Responsável do estabelecimento
-          </strong>
+            <br>
 
-          <br>
+            ${esc(establishmentResponsible)}
 
-          ${esc(e.responsible||"")}
+          </div>
 
         </div>
 
       </div>
 
-    </div>
+      <div class="report-footer">
 
-    <div class="report-footer">
+        <strong>
+          FoodSafe Moz
+        </strong>
 
-      <strong>
-        FoodSafe Moz
-      </strong>
+        <br>
 
-      <br>
+        Alimentos seguros, famílias protegidas
 
-      Alimentos seguros, famílias protegidas
+        <br><br>
 
-      <br>
+        Nº do relatório:
+        ${esc(reportNumber)}
 
-      Relatório gerado em
-      ${formatDate(today())}
+        <br>
 
-      <br>
+        Documento gerado em:
+        ${esc(reportDate)}
 
-      Documento gerado pelo sistema FoodSafe Moz.
+        <br>
+
+        Documento gerado pelo sistema FoodSafe Moz.
+
+      </div>
 
     </div>
 
@@ -5113,9 +5266,11 @@ function renderAll(){
       profile &&
       profile.classList.contains("active")
     ){
+
       renderProfile(
         currentProfileId
       );
+
     }
 
   }
