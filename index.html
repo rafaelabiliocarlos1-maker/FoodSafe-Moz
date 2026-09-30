@@ -2,4379 +2,2541 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <meta name="theme-color" content="#0f766e">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <title>FoodSafe Moz</title>
 
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#f1f5f9;color:#172033}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer;border:0;border-radius:10px;padding:11px 15px;font-weight:700}
-
-.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#0f766e,#115e59)}
-.login-box{width:100%;max-width:430px;background:white;border-radius:20px;padding:28px;box-shadow:0 20px 50px rgba(0,0,0,.2)}
-.logo{text-align:center;margin-bottom:24px}
-.logo h1{margin:0;color:#0f766e;font-size:30px}
-.logo p{margin:6px 0;color:#64748b}
-
-label{display:block;font-weight:700;margin:12px 0 6px}
-input,select,textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;color:#172033}
-textarea{min-height:100px;resize:vertical}
-
-.primary{background:#0f766e;color:white}
-.secondary{background:#e2e8f0;color:#172033}
-.success{background:#15803d;color:white}
-.warning{background:#d97706;color:white}
-.danger{background:#dc2626;color:white}
-.info{background:#2563eb;color:white}
-
-.small{padding:7px 10px;font-size:13px}
-.full{width:100%;margin-top:16px}
-.hidden{display:none!important}
-
-.topbar{background:#0f766e;color:white;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:20}
-.topbar h1{font-size:20px;margin:0}
-
-.nav{background:white;display:flex;gap:6px;overflow-x:auto;padding:8px;border-bottom:1px solid #cbd5e1;position:sticky;top:57px;z-index:19}
-.nav button{white-space:nowrap;background:#f1f5f9;color:#334155}
-.nav button.active{background:#0f766e;color:white}
-
-.container{max-width:1250px;margin:auto;padding:20px}
-.page{display:none}
-.page.active{display:block}
-h2{margin-top:0}
-
-.card{background:white;border-radius:16px;padding:18px;margin-bottom:18px;box-shadow:0 2px 10px rgba(15,23,42,.06)}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-
-.stat{background:white;border-radius:15px;padding:18px;box-shadow:0 2px 8px rgba(15,23,42,.06)}
-.stat strong{display:block;font-size:28px;margin-top:6px}
-.muted{color:#64748b}
-
-.badge{display:inline-block;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:800}
-.green{background:#dcfce7;color:#166534}
-.yellow{background:#fef3c7;color:#92400e}
-.red{background:#fee2e2;color:#991b1b}
-.gray{background:#e2e8f0;color:#475569}
-.blue{background:#dbeafe;color:#1d4ed8}
-
-.progress{width:100%;height:12px;background:#e2e8f0;border-radius:20px;overflow:hidden;margin:10px 0}
-.progress div{height:100%;background:#0f766e}
-
-.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:800px}
-th,td{padding:10px;border-bottom:1px solid #e2e8f0;text-align:left;vertical-align:top}
-th{background:#f8fafc}
-
-.overdue{background:#fff1f2}
-.alert{padding:14px;border-radius:12px;background:#fef3c7;color:#92400e;margin:12px 0}
-.empty{padding:25px;text-align:center;color:#64748b}
-
-.checklist-item{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid #e2e8f0;border-radius:10px;margin:7px 0}
-.checklist-item input{width:auto}
-
-.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.photo-grid img{width:100%;height:180px;object-fit:cover;border-radius:12px}
-
-.modal{position:fixed;inset:0;background:rgba(15,23,42,.65);display:none;align-items:center;justify-content:center;padding:15px;z-index:100}
-.modal.open{display:flex}
-.modal-box{background:white;width:100%;max-width:950px;max-height:94vh;overflow:auto;border-radius:18px;padding:20px}
-.modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid #e2e8f0;padding-bottom:12px;margin-bottom:15px}
-.action-box{border:1px solid #cbd5e1;border-radius:14px;padding:15px;margin-top:12px}
-
-.action-status-box{
-border-radius:12px;
-padding:14px;
-margin:12px 0;
-background:#f8fafc;
-border:1px solid #e2e8f0
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
-
-.action-history{
-margin-top:15px;
-padding:12px;
-border-left:4px solid #0f766e;
-background:#f8fafc;
-border-radius:8px
-}
-
-.report-document{background:white;color:#172033}
-.report-header{text-align:center;border:2px solid #0f766e;padding:24px;border-radius:14px;margin-bottom:16px}
-.report-header h1{margin:0;color:#0f766e;font-size:30px}
-.report-header h2{margin:8px 0;font-size:21px}
-.report-header p{margin:6px 0;color:#64748b}
-
-.report-number{display:inline-block;margin-top:12px;padding:8px 14px;border-radius:8px;background:#f1f5f9;font-weight:800;font-size:13px}
-
-.report-control{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
-.report-control-box{border:1px solid #cbd5e1;border-radius:10px;padding:10px;background:#f8fafc}
-.report-control-box small{display:block;color:#64748b;margin-bottom:4px}
-.report-control-box strong{display:block}
-
-.report-summary{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:15px 0}
-.report-summary-box{border:1px solid #cbd5e1;border-radius:10px;padding:12px;text-align:center;background:#fff}
-.report-summary-box strong{display:block;font-size:22px;margin-top:5px}
-.report-summary-box small{color:#64748b}
-
-.report-section{border:1px solid #dbe3ea;border-radius:12px;padding:16px;margin:12px 0}
-.report-section h3{margin-top:0;color:#0f766e;border-bottom:1px solid #e2e8f0;padding-bottom:8px}
-
-.report-table{width:100%;min-width:0;border-collapse:collapse}
-.report-table th,.report-table td{border:1px solid #cbd5e1}
-.report-table th{background:#f8fafc}
-
-.report-conform{background:#f0fdf4}
-.report-nonconform{background:#fff1f2}
-
-.report-action-critical{border-left:5px solid #dc2626}
-.report-action-high{border-left:5px solid #ea580c}
-.report-action-medium{border-left:5px solid #d97706}
-.report-action-low{border-left:5px solid #16a34a}
-
-.report-action-card{padding:13px;border:1px solid #cbd5e1;border-radius:10px;margin:10px 0;background:white}
-.report-action-card h4{margin:0 0 8px}
-.report-action-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-
-.report-conclusion{border-left:5px solid #0f766e;background:#f0fdfa;padding:15px;border-radius:10px}
-
-.signature-box{min-height:120px;padding-top:50px;text-align:center}
-.signature-line{border-top:1px solid #172033;padding-top:8px;margin:0 auto;max-width:320px}
-
-.report-footer{margin-top:25px;padding-top:15px;border-top:1px solid #cbd5e1;text-align:center;color:#64748b;font-size:12px}
-
-.report-photo{width:100%;height:200px;object-fit:cover;border-radius:10px;border:1px solid #cbd5e1}
-.report-photo-card{break-inside:avoid}
-.report-photo-caption{margin-top:6px;font-size:12px}
-
-.report-progress{width:100%;height:16px;background:#e2e8f0;border-radius:20px;overflow:hidden;margin:8px 0}
-.report-progress div{height:100%;background:#0f766e}
-
-.report-note{padding:10px 12px;border-radius:8px;background:#f8fafc;color:#475569;font-size:12px}
-
-@media(max-width:950px){
-.report-summary{grid-template-columns:repeat(3,1fr)}
-}
-
-@media(max-width:800px){
-.grid,.stats{grid-template-columns:1fr 1fr}
-.report-summary{grid-template-columns:repeat(3,1fr)}
-.report-control{grid-template-columns:1fr}
-}
-
-@media(max-width:560px){
-.grid,.stats{grid-template-columns:1fr}
-.container{padding:12px}
-.topbar{padding:12px}
-.photo-grid{grid-template-columns:1fr 1fr}
-.report-summary{grid-template-columns:1fr 1fr}
-.report-action-grid{grid-template-columns:1fr}
-.report-header{padding:18px 12px}
-.report-header h1{font-size:25px}
-.report-header h2{font-size:18px}
-}
-
-@media print{
-@page{size:A4;margin:12mm}
 
 html,body{
-background:white!important;
-margin:0!important;
-padding:0!important
+  margin:0;
+  padding:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  background:#f4f7f7;
+  color:#17202a;
 }
 
-body{color:#000}
-body *{visibility:hidden}
-
-#reportModal,#reportModal *{
-visibility:visible
+body{
+  min-height:100vh;
 }
 
-#reportModal{
-position:absolute;
-inset:0;
-background:white;
-display:block!important;
-padding:0;
-margin:0
+button,
+input,
+select,
+textarea{
+  font:inherit;
 }
 
-#reportModal .modal-box{
-position:static;
-max-width:none;
-max-height:none;
-width:100%;
-overflow:visible;
-box-shadow:none;
-border-radius:0;
-padding:0;
-margin:0
+button{
+  cursor:pointer;
 }
 
-#reportContent{width:100%}
-.no-print{display:none!important}
-
-.report-section,.report-header,.report-control,.report-summary{
-break-inside:avoid;
-page-break-inside:avoid
+.app{
+  min-height:100vh;
+  padding-bottom:85px;
 }
 
-table{page-break-inside:auto}
-tr{page-break-inside:avoid;page-break-after:auto}
-thead{display:table-header-group}
-
-.report-photo{max-height:180px}
-.report-photo-card,.report-action-card,.report-footer{
-break-inside:avoid;
-page-break-inside:avoid
+header{
+  background:#0f766e;
+  color:white;
+  padding:18px 16px;
+  position:sticky;
+  top:0;
+  z-index:100;
+  box-shadow:0 2px 10px rgba(0,0,0,.12);
 }
+
+.header-title{
+  font-size:21px;
+  font-weight:800;
+}
+
+.header-subtitle{
+  font-size:12px;
+  opacity:.9;
+  margin-top:3px;
+}
+
+main{
+  max-width:900px;
+  margin:auto;
+  padding:16px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+h1{
+  font-size:24px;
+  margin:5px 0 8px;
+}
+
+h2{
+  font-size:19px;
+  margin:5px 0 14px;
+}
+
+h3{
+  font-size:16px;
+  margin:0 0 8px;
+}
+
+p{
+  line-height:1.5;
+}
+
+.card{
+  background:white;
+  border-radius:16px;
+  padding:16px;
+  margin-bottom:14px;
+  box-shadow:0 2px 10px rgba(0,0,0,.07);
+}
+
+.hero{
+  background:linear-gradient(135deg,#0f766e,#115e59);
+  color:white;
+  border-radius:20px;
+  padding:22px;
+  margin-bottom:16px;
+}
+
+.hero h1{
+  margin:0 0 8px;
+}
+
+.hero p{
+  margin:0;
+  opacity:.93;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.grid3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.stat{
+  background:white;
+  padding:15px;
+  border-radius:15px;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+
+.stat-value{
+  font-size:25px;
+  font-weight:800;
+  color:#0f766e;
+}
+
+.stat-label{
+  font-size:12px;
+  color:#667085;
+  margin-top:4px;
+}
+
+label{
+  display:block;
+  font-weight:700;
+  font-size:13px;
+  margin:12px 0 6px;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  border:1px solid #d5dddd;
+  border-radius:11px;
+  padding:12px;
+  background:white;
+  color:#17202a;
+  outline:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:#0f766e;
+  box-shadow:0 0 0 3px rgba(15,118,110,.1);
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.btn{
+  border:0;
+  border-radius:11px;
+  padding:12px 15px;
+  font-weight:750;
+  margin-top:10px;
+  min-height:44px;
+}
+
+.btn-primary{
+  background:#0f766e;
+  color:white;
+}
+
+.btn-secondary{
+  background:#e7f3f1;
+  color:#0f766e;
+}
+
+.btn-danger{
+  background:#fee2e2;
+  color:#b91c1c;
+}
+
+.btn-warning{
+  background:#fff7d6;
+  color:#8a6100;
+}
+
+.btn-small{
+  padding:9px 11px;
+  min-height:38px;
+  font-size:13px;
+}
+
+.full{
+  width:100%;
+}
+
+.row{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.row > *{
+  flex:1;
+  min-width:130px;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+}
+
+.green{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.yellow{
+  background:#fef3c7;
+  color:#92400e;
+}
+
+.red{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.gray{
+  background:#eef2f4;
+  color:#475467;
+}
+
+.check-item{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:13px 0;
+  border-bottom:1px solid #edf0f0;
+}
+
+.check-item:last-child{
+  border-bottom:0;
+}
+
+.check-item input{
+  width:22px;
+  height:22px;
+  flex:0 0 auto;
+  accent-color:#0f766e;
+}
+
+.check-item span{
+  flex:1;
+  font-size:14px;
+}
+
+.result-box{
+  margin-top:14px;
+  padding:15px;
+  border-radius:13px;
+  font-weight:700;
+}
+
+.list-item{
+  padding:14px 0;
+  border-bottom:1px solid #edf0f0;
+}
+
+.list-item:last-child{
+  border-bottom:0;
+}
+
+.muted{
+  color:#667085;
+  font-size:13px;
+}
+
+.empty{
+  text-align:center;
+  padding:28px 15px;
+  color:#667085;
+}
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:76px;
+  background:white;
+  border-top:1px solid #dde5e5;
+  display:flex;
+  overflow-x:auto;
+  z-index:200;
+  box-shadow:0 -2px 12px rgba(0,0,0,.08);
+}
+
+.nav-btn{
+  flex:1 0 82px;
+  border:0;
+  background:white;
+  color:#667085;
+  font-size:11px;
+  padding:7px 4px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+}
+
+.nav-btn .icon{
+  font-size:20px;
+}
+
+.nav-btn.active{
+  color:#0f766e;
+  font-weight:800;
+  background:#f0fdfa;
+}
+
+.profile-header{
+  background:linear-gradient(135deg,#0f766e,#115e59);
+  color:white;
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:14px;
+}
+
+.profile-name{
+  font-size:22px;
+  font-weight:800;
+}
+
+.profile-location{
+  opacity:.9;
+  margin-top:4px;
+}
+
+.risk{
+  margin-top:14px;
+  padding:11px;
+  border-radius:11px;
+  background:rgba(255,255,255,.16);
+}
+
+.progress{
+  width:100%;
+  height:10px;
+  background:#e8eeee;
+  border-radius:999px;
+  overflow:hidden;
+  margin-top:8px;
+}
+
+.progress-bar{
+  height:100%;
+  background:#0f766e;
+  width:0;
+  transition:width .3s ease;
+}
+
+.profile-section{
+  margin-top:18px;
+}
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+}
+
+th,td{
+  padding:10px 8px;
+  border-bottom:1px solid #e8eeee;
+  text-align:left;
+}
+
+th{
+  background:#f6f9f9;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.48);
+  z-index:500;
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  background:white;
+  width:100%;
+  max-width:700px;
+  max-height:90vh;
+  overflow:auto;
+  border-radius:20px 20px 0 0;
+  padding:20px;
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:92px;
+  transform:translateX(-50%);
+  background:#17202a;
+  color:white;
+  padding:12px 17px;
+  border-radius:12px;
+  z-index:1000;
+  display:none;
+  max-width:90%;
+  text-align:center;
+  font-size:13px;
+}
+
+.toast.show{
+  display:block;
+}
+
+@media(min-width:700px){
+  .grid{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  .bottom-nav{
+    max-width:900px;
+    left:50%;
+    transform:translateX(-50%);
+    border-radius:16px 16px 0 0;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div id="loginScreen" class="login">
-<div class="login-box">
+<div class="app">
 
-<div class="logo">
-<h1>FoodSafe Moz</h1>
-<p>Alimentos seguros, famílias protegidas</p>
-</div>
-
-<div id="loginForm">
-
-<label>Nome de utilizador</label>
-<input id="username" autocomplete="username">
-
-<label>Palavra-passe</label>
-<input id="password" type="password" autocomplete="current-password">
-
-<button class="primary full" onclick="login()">Entrar</button>
-<button class="secondary full" onclick="showRecovery()">Esqueci a palavra-passe</button>
-
-</div>
-
-<div id="recoveryForm" class="hidden">
-
-<h3>Recuperar conta</h3>
-
-<label>E-mail</label>
-<input id="recoveryEmail" type="email">
-
-<label>Novo nome de utilizador</label>
-<input id="newUsername">
-
-<label>Nova palavra-passe</label>
-<input id="newPassword" type="password">
-
-<button class="primary full" onclick="recoverAccount()">Atualizar conta</button>
-<button class="secondary full" onclick="showLogin()">Voltar</button>
-
-</div>
-
-</div>
-</div>
-
-
-<div id="app" class="hidden">
-
-<header class="topbar">
-<h1>FoodSafe Moz</h1>
-<button class="secondary small" onclick="logout()">Sair</button>
+<header>
+  <div class="header-title">FoodSafe Moz</div>
+  <div class="header-subtitle">Alimentos seguros, famílias protegidas</div>
 </header>
 
-<nav class="nav">
+<main>
 
-<button data-page="home" onclick="go('home')">Início</button>
-<button data-page="temperatura" onclick="go('temperatura')">Temperatura</button>
-<button data-page="inspecao" onclick="go('inspecao')">Inspeção</button>
-<button data-page="problemas" onclick="go('problemas')">Problemas</button>
-<button data-page="evidencias" onclick="go('evidencias')">Evidências</button>
-<button data-page="dashboard" onclick="go('dashboard')">Dashboard</button>
-<button data-page="historico" onclick="go('historico')">Histórico</button>
-<button data-page="estabelecimentos" onclick="go('estabelecimentos')">Estabelecimentos</button>
-<button data-page="perfil" onclick="go('perfil')">Perfil</button>
+<!-- INÍCIO -->
+<section id="page-home" class="page active">
+
+  <div class="hero">
+    <h1>FoodSafe Moz</h1>
+    <p>Sistema digital de apoio à inspeção e segurança alimentar.</p>
+  </div>
+
+  <div class="grid">
+    <div class="stat">
+      <div class="stat-value" id="homeInspections">0</div>
+      <div class="stat-label">Inspeções</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-value" id="homeProblems">0</div>
+      <div class="stat-label">Problemas</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-value" id="homeEstablishments">0</div>
+      <div class="stat-label">Estabelecimentos</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-value" id="homeCompliance">0%</div>
+      <div class="stat-label">Conformidade média</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Acesso rápido</h2>
+
+    <div class="row">
+      <button class="btn btn-primary" onclick="showPage('temperatura')">
+        🌡️ Temperatura
+      </button>
+
+      <button class="btn btn-secondary" onclick="showPage('checklist')">
+        ☑️ Checklist
+      </button>
+    </div>
+
+    <div class="row">
+      <button class="btn btn-secondary" onclick="showPage('problemas')">
+        ⚠️ Problemas
+      </button>
+
+      <button class="btn btn-secondary" onclick="showPage('estabelecimentos')">
+        🏢 Estabelecimentos
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Como funciona</h2>
+    <p class="muted">
+      Registe estabelecimentos, realize inspeções, avalie temperaturas,
+      utilize o checklist, registe problemas e acompanhe a evolução da
+      conformidade através do histórico e dos perfis profissionais.
+    </p>
+  </div>
+
+</section>
+
+
+<!-- TEMPERATURA -->
+<section id="page-temperatura" class="page">
+
+  <h1>Temperatura</h1>
+
+  <div class="card">
+    <h2>Avaliação de temperatura</h2>
+
+    <label>Tipo de alimento</label>
+    <input id="tempFood" placeholder="Ex.: Frango cozido">
+
+    <label>Temperatura medida (°C)</label>
+    <input id="tempValue" type="number" step="0.1" placeholder="Ex.: 5">
+
+    <label>Tipo de controlo</label>
+    <select id="tempType">
+      <option value="refrigerado">Refrigerado</option>
+      <option value="congelado">Congelado</option>
+      <option value="quente">Quente</option>
+    </select>
+
+    <button class="btn btn-primary full" onclick="evaluateTemperature()">
+      Avaliar temperatura
+    </button>
+
+    <div id="temperatureResult"></div>
+  </div>
+
+  <div class="card">
+    <h2>Registos de temperatura</h2>
+    <div id="temperatureHistory"></div>
+  </div>
+
+</section>
+
+
+<!-- CHECKLIST -->
+<section id="page-checklist" class="page">
+
+  <h1>Checklist</h1>
+
+  <div class="card">
+
+    <label>Nome do estabelecimento</label>
+    <input id="inspectionEstablishment" placeholder="Nome do estabelecimento">
+
+    <label>Responsável</label>
+    <input id="inspectionResponsible" placeholder="Nome do responsável">
+
+    <label>Data</label>
+    <input id="inspectionDate" type="date">
+
+  </div>
+
+  <div class="card">
+
+    <h2>Itens de inspeção</h2>
+
+    <div class="check-item">
+      <input type="checkbox" class="check" data-weight="1">
+      <span>Instalações limpas e organizadas</span>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" class="check" data-weight="1">
+      <span>Superfícies em condições adequadas</span>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" class="check" data-weight="1">
+      <span>Manipuladores com higiene adequada</span>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" class="check" data-weight="1">
+      <span>Água utilizada é adequada</span>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" class="check" data-weight="1">
+      <span>Alimentos armazenados corretamente</span>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" class="check" data-weight="1">
+      <span>Temperaturas controladas</span>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" class="check" data-weight="1">
+      <span>Prevenção de contaminação cruzada</span>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" class="check" data-weight="1">
+      <span>Produtos identificados e dentro do prazo</span>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" class="check" data-weight="1">
+      <span>Resíduos eliminados adequadamente</span>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" class="check" data-weight="1">
+      <span>Equipamentos em condições adequadas</span>
+    </div>
+
+    <button class="btn btn-primary full" onclick="saveInspection()">
+      Guardar inspeção
+    </button>
+
+    <div id="checklistResult"></div>
+
+  </div>
+
+</section>
+
+
+<!-- PROBLEMAS -->
+<section id="page-problemas" class="page">
+
+  <h1>Problemas</h1>
+
+  <div class="card">
+
+    <h2>Registar problema</h2>
+
+    <label>Estabelecimento</label>
+    <input id="problemEstablishment" placeholder="Nome do estabelecimento">
+
+    <label>Problema encontrado</label>
+    <textarea id="problemDescription" placeholder="Descreva a não conformidade"></textarea>
+
+    <label>Responsável</label>
+    <input id="problemResponsible" placeholder="Responsável pela correção">
+
+    <label>Ação corretiva</label>
+    <textarea id="problemAction" placeholder="Descreva a ação corretiva"></textarea>
+
+    <label>Estado</label>
+    <select id="problemStatus">
+      <option value="Pendente">Pendente</option>
+      <option value="Em tratamento">Em tratamento</option>
+      <option value="Resolvido">Resolvido</option>
+    </select>
+
+    <button class="btn btn-primary full" onclick="saveProblem()">
+      Registar problema
+    </button>
+
+    <div id="problemResult"></div>
+
+  </div>
+
+  <div class="card">
+    <h2>Problemas registados</h2>
+    <div id="problemsList"></div>
+  </div>
+
+</section>
+
+
+<!-- EVIDÊNCIAS -->
+<section id="page-evidencias" class="page">
+
+  <h1>Evidências</h1>
+
+  <div class="card">
+
+    <h2>Registar evidência</h2>
+
+    <label>Estabelecimento</label>
+    <input id="evidenceEstablishment" placeholder="Nome do estabelecimento">
+
+    <label>Descrição</label>
+    <textarea id="evidenceDescription" placeholder="Descrição da evidência"></textarea>
+
+    <label>Fotografia</label>
+    <input id="evidencePhoto" type="file" accept="image/*" capture="environment">
+
+    <button class="btn btn-primary full" onclick="saveEvidence()">
+      Guardar evidência
+    </button>
+
+    <div id="evidenceResult"></div>
+
+  </div>
+
+  <div class="card">
+    <h2>Evidências registadas</h2>
+    <div id="evidenceList"></div>
+  </div>
+
+</section>
+
+
+<!-- DASHBOARD -->
+<section id="page-dashboard" class="page">
+
+  <h1>Dashboard</h1>
+
+  <div class="grid">
+
+    <div class="stat">
+      <div class="stat-value" id="dashInspections">0</div>
+      <div class="stat-label">Inspeções</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-value" id="dashProblems">0</div>
+      <div class="stat-label">Problemas</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-value" id="dashResolved">0</div>
+      <div class="stat-label">Resolvidos</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-value" id="dashCompliance">0%</div>
+      <div class="stat-label">Conformidade</div>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h2>Estado dos problemas</h2>
+    <div id="problemDashboard"></div>
+  </div>
+
+  <div class="card">
+    <h2>Resumo das inspeções</h2>
+    <div id="inspectionDashboard"></div>
+  </div>
+
+</section>
+
+
+<!-- HISTÓRICO -->
+<section id="page-historico" class="page">
+
+  <h1>Histórico</h1>
+
+  <div class="card">
+    <h2>Inspeções realizadas</h2>
+    <div id="historyList"></div>
+  </div>
+
+</section>
+
+
+<!-- ESTABELECIMENTOS -->
+<section id="page-estabelecimentos" class="page">
+
+  <h1>Estabelecimentos</h1>
+
+  <div class="card">
+
+    <h2>Novo estabelecimento</h2>
+
+    <label>Nome do estabelecimento</label>
+    <input id="estName" placeholder="Ex.: Restaurante Exemplo">
+
+    <label>Localização</label>
+    <input id="estLocation" placeholder="Ex.: Nampula">
+
+    <label>Responsável</label>
+    <input id="estResponsible" placeholder="Nome do responsável">
+
+    <label>Contacto</label>
+    <input id="estContact" placeholder="Telefone ou outro contacto">
+
+    <label>Tipo de estabelecimento</label>
+    <input id="estType" placeholder="Ex.: Restaurante">
+
+    <button class="btn btn-primary full" onclick="saveEstablishment()">
+      Cadastrar estabelecimento
+    </button>
+
+    <div id="establishmentResult"></div>
+
+  </div>
+
+  <div class="card">
+
+    <h2>Estabelecimentos cadastrados</h2>
+
+    <div id="establishmentList"></div>
+
+  </div>
+
+</section>
+
+
+<!-- PERFIL PROFISSIONAL -->
+<section id="page-perfil" class="page">
+
+  <div id="professionalProfile"></div>
+
+</section>
+
+</main>
+
+
+<!-- NAVEGAÇÃO -->
+<nav class="bottom-nav">
+
+  <button class="nav-btn active" data-page="home" onclick="showPage('home')">
+    <span class="icon">🏠</span>
+    Início
+  </button>
+
+  <button class="nav-btn" data-page="temperatura" onclick="showPage('temperatura')">
+    <span class="icon">🌡️</span>
+    Temperatura
+  </button>
+
+  <button class="nav-btn" data-page="checklist" onclick="showPage('checklist')">
+    <span class="icon">☑️</span>
+    Checklist
+  </button>
+
+  <button class="nav-btn" data-page="problemas" onclick="showPage('problemas')">
+    <span class="icon">⚠️</span>
+    Problemas
+  </button>
+
+  <button class="nav-btn" data-page="evidencias" onclick="showPage('evidencias')">
+    <span class="icon">📷</span>
+    Evidências
+  </button>
+
+  <button class="nav-btn" data-page="dashboard" onclick="showPage('dashboard')">
+    <span class="icon">📊</span>
+    Dashboard
+  </button>
+
+  <button class="nav-btn" data-page="historico" onclick="showPage('historico')">
+    <span class="icon">📋</span>
+    Histórico
+  </button>
+
+  <button class="nav-btn" data-page="estabelecimentos" onclick="showPage('estabelecimentos')">
+    <span class="icon">🏢</span>
+    Estabelecimentos
+  </button>
 
 </nav>
 
-
-<main class="container">
-
-
-<section id="page-home" class="page active">
-
-<div class="card">
-<h2>Bem-vindo ao FoodSafe Moz</h2>
-<p class="muted">Sistema de controlo e gestão da segurança dos alimentos.</p>
-</div>
-
-<div class="stats">
-
-<div class="stat">
-Estabelecimentos
-<strong id="homeEstablishments">0</strong>
-</div>
-
-<div class="stat">
-Inspeções
-<strong id="homeInspections">0</strong>
-</div>
-
-<div class="stat">
-Problemas abertos
-<strong id="homeOpenProblems">0</strong>
-</div>
-
-<div class="stat">
-Ações atrasadas
-<strong id="homeOverdue">0</strong>
-</div>
-
-</div>
-
-<div class="card">
-<h3>Ações corretivas pendentes</h3>
-<div id="homeActions"></div>
-</div>
-
-</section>
-
-
-<section id="page-temperatura" class="page">
-
-<div class="card">
-
-<h2>Controlo de Temperatura</h2>
-
-<label>Estabelecimento</label>
-<select id="tempEstablishment"></select>
-
-<label>Equipamento / alimento</label>
-<input id="tempItem" placeholder="Ex.: Frigorífico 1">
-
-<label>Temperatura (°C)</label>
-<input id="tempValue" type="number" step="0.1">
-
-<button class="primary" onclick="saveTemperature()">Registar temperatura</button>
-
-<div id="tempResult"></div>
-
-</div>
-
-<div class="card">
-<h3>Registos recentes</h3>
-<div id="temperatureTable"></div>
-</div>
-
-</section>
-
-
-<section id="page-inspecao" class="page">
-
-<div class="card">
-
-<h2>Inspeção / Checklist</h2>
-
-<label>Estabelecimento</label>
-<select id="inspectionEstablishment" onchange="syncInspectionEstablishment()"></select>
-
-<label>Nome do estabelecimento</label>
-<input id="inspectionName">
-
-<label>Inspetor / responsável pela inspeção</label>
-<input id="inspectionInspector" placeholder="Nome do inspetor">
-
-<label>Responsável do estabelecimento</label>
-<input id="inspectionResponsible">
-
-<label>Data</label>
-<input id="inspectionDate" type="date">
-
-<label>Observação</label>
-<textarea id="inspectionObservation"></textarea>
-
-<h3>Checklist</h3>
-<div id="checklist"></div>
-
-<div class="card" style="background:#f8fafc">
-
-<strong>
-Conformidade:
-<span id="scoreText">0%</span>
-</strong>
-
-<div class="progress">
-<div id="scoreBar" style="width:0%"></div>
-</div>
-
-<span id="scoreClass" class="badge gray">Sem avaliação</span>
-
-</div>
-
-<button class="success full" onclick="saveInspection()">Guardar inspeção</button>
-
-</div>
-
-</section>
-
-
-<section id="page-problemas" class="page">
-
-<div class="card">
-
-<h2>Problemas e Ações Corretivas</h2>
-
-<div class="grid">
-
-<div>
-<label>Estabelecimento</label>
-<select id="problemEstablishment"></select>
-</div>
-
-<div>
-<label>Problema / não conformidade</label>
-<input id="problemTitle">
-</div>
-
-<div>
-<label>Severidade</label>
-<select id="problemSeverity">
-<option>Baixa</option>
-<option selected>Média</option>
-<option>Alta</option>
-<option>Crítica</option>
-</select>
-</div>
-
-<div>
-<label>Responsável</label>
-<input id="problemResponsible">
-</div>
-
-<div>
-<label>Prazo</label>
-<input id="problemDeadline" type="date">
-</div>
-
-</div>
-
-<label>Ação corretiva</label>
-<textarea id="problemAction"></textarea>
-
-<button class="primary" onclick="saveProblem()">Registar problema</button>
-
 </div>
 
 
-<div class="stats">
-
-<div class="stat">
-Abertos
-<strong id="problemOpen">0</strong>
-</div>
-
-<div class="stat">
-Em tratamento
-<strong id="problemTreatment">0</strong>
-</div>
-
-<div class="stat">
-Resolvidos
-<strong id="problemResolved">0</strong>
-</div>
-
-<div class="stat">
-Atrasados
-<strong id="problemOverdue">0</strong>
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h3>Registo de não conformidades</h3>
-
-<div id="problemsTable"></div>
-
-</div>
-
-</section>
-
-
-<section id="page-evidencias" class="page">
-
-<div class="card">
-
-<h2>Evidências</h2>
-
-<label>Estabelecimento</label>
-<select id="evidenceEstablishment"></select>
-
-<label>Descrição</label>
-<textarea id="evidenceDescription"></textarea>
-
-<label>Fotografia</label>
-<input id="evidencePhoto" type="file" accept="image/*" capture="environment">
-
-<button class="primary" onclick="saveEvidence()">Guardar evidência</button>
-
-</div>
-
-<div class="card">
-<div id="evidenceGrid"></div>
-</div>
-
-</section>
-
-
-<section id="page-dashboard" class="page">
-
-<div class="card">
-<h2>Dashboard</h2>
-</div>
-
-<div class="stats">
-
-<div class="stat">
-Estabelecimentos
-<strong id="dashEstablishments">0</strong>
-</div>
-
-<div class="stat">
-Inspeções
-<strong id="dashInspections">0</strong>
-</div>
-
-<div class="stat">
-Problemas abertos
-<strong id="dashOpen">0</strong>
-</div>
-
-<div class="stat">
-Ações atrasadas
-<strong id="dashOverdue">0</strong>
-</div>
-
-<div class="stat">
-Conformidade média
-<strong id="dashAverage">0%</strong>
-</div>
-
-</div>
-
-<div class="card">
-<h3>Estado das ações corretivas</h3>
-<div id="dashboardActions"></div>
-</div>
-
-<div class="card">
-<h3>Ações que precisam de atenção</h3>
-<div id="dashboardOverdue"></div>
-</div>
-
-</section>
-
-
-<section id="page-historico" class="page">
-
-<div class="card">
-
-<h2>Histórico de Inspeções</h2>
-
-<div id="historyTable"></div>
-
-</div>
-
-</section>
-
-
-<section id="page-estabelecimentos" class="page">
-
-<div class="card">
-
-<h2>Estabelecimentos</h2>
-
-<div class="grid">
-
-<div>
-<label>Nome</label>
-<input id="estName">
-</div>
-
-<div>
-<label>Tipo</label>
-<input id="estType" placeholder="Restaurante, cantina, mercado...">
-</div>
-
-<div>
-<label>Endereço</label>
-<input id="estAddress">
-</div>
-
-<div>
-<label>Bairro</label>
-<input id="estBairro">
-</div>
-
-<div>
-<label>Distrito</label>
-<input id="estDistrito">
-</div>
-
-<div>
-<label>Telefone</label>
-<input id="estPhone">
-</div>
-
-<div>
-<label>Responsável</label>
-<input id="estResponsible">
-</div>
-
-</div>
-
-<button class="primary" onclick="saveEstablishment()">Registar estabelecimento</button>
-
-</div>
-
-<div id="establishmentList"></div>
-
-</section>
-
-
-<section id="page-perfil" class="page">
-
-<div id="profileContent" class="card">
-<div class="empty">Selecione um estabelecimento para ver o perfil profissional.</div>
-</div>
-
-</section>
-
-
-</main>
-</div>
-
-
-<div id="actionModal" class="modal">
-
-<div class="modal-box">
-
-<div class="modal-head">
-
-<h2>Gerir ação corretiva</h2>
-
-<button class="secondary" onclick="closeActionModal()">Fechar</button>
-
-</div>
-
-<div id="actionModalContent"></div>
-
-</div>
-
-</div>
-
-
-<div id="reportModal" class="modal">
-
-<div class="modal-box">
-
-<div class="modal-head no-print">
-
-<h2>Relatório FoodSafe Moz</h2>
-
-<div class="actions">
-
-<button class="primary" onclick="window.print()">Imprimir / PDF</button>
-
-<button class="secondary" onclick="closeReport()">Fechar</button>
-
-</div>
-
-</div>
-
-<div id="reportContent"></div>
-
-</div>
-
-</div>
+<!-- TOAST -->
+<div id="toast" class="toast"></div>
 
 
 <script>
-"use strict";
 
-const DATA_KEY="foodsafemoz_v2";
-const USERS_KEY="foodsafemoz_users";
-const SESSION_KEY="foodsafemoz_session";
+/* =========================================================
+   FOODSAFE MOZ
+   ARMAZENAMENTO
+========================================================= */
 
-let db={
-establishments:[],
-inspections:[],
-temps:[],
-problems:[],
-evidences:[]
+const STORAGE_KEY = "foodsafemoz_v2";
+
+let db = {
+  inspections: [],
+  temperatures: [],
+  problems: [],
+  evidences: [],
+  establishments: []
 };
 
-let currentProfileId=null;
-let currentActionId=null;
+function loadData(){
+
+  try{
+
+    const saved = localStorage.getItem(STORAGE_KEY);
+
+    if(saved){
+      const parsed = JSON.parse(saved);
+
+      db = {
+        inspections: Array.isArray(parsed.inspections) ? parsed.inspections : [],
+        temperatures: Array.isArray(parsed.temperatures) ? parsed.temperatures : [],
+        problems: Array.isArray(parsed.problems) ? parsed.problems : [],
+        evidences: Array.isArray(parsed.evidences) ? parsed.evidences : [],
+        establishments: Array.isArray(parsed.establishments) ? parsed.establishments : []
+      };
+    }
+
+  }catch(error){
+
+    console.error("Erro ao carregar dados:",error);
+
+  }
+
+}
+
+function saveData(){
+
+  try{
+
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(db));
+
+  }catch(error){
+
+    console.error("Erro ao guardar dados:",error);
+
+    showToast("Não foi possível guardar os dados.");
+
+  }
+
+}
+
+loadData();
 
 
-const checklistItems=[
-"Higiene das mãos e dos manipuladores",
-"Vestuário e equipamentos de proteção adequados",
-"Limpeza e desinfeção",
-"Estado dos equipamentos e utensílios",
-"Controlo de pragas",
-"Armazenamento dos alimentos",
-"Controlo de temperatura",
-"Validade e rotulagem",
-"Prevenção de contaminação cruzada",
-"Gestão de resíduos",
-"Qualidade da água",
-"Boas práticas de manipulação"
-];
+/* =========================================================
+   NAVEGAÇÃO
+========================================================= */
 
+function showPage(page){
 
-function uid(p="id"){
-return p+"_"+Date.now()+"_"+Math.random().toString(36).slice(2,8)
+  document.querySelectorAll(".page").forEach(function(el){
+    el.classList.remove("active");
+  });
+
+  const target = document.getElementById("page-"+page);
+
+  if(target){
+    target.classList.add("active");
+  }
+
+  document.querySelectorAll(".nav-btn").forEach(function(btn){
+    btn.classList.remove("active");
+
+    if(btn.dataset.page === page){
+      btn.classList.add("active");
+    }
+  });
+
+  if(page === "home") updateHome();
+  if(page === "temperatura") renderTemperatureHistory();
+  if(page === "problemas") renderProblems();
+  if(page === "evidencias") renderEvidences();
+  if(page === "dashboard") renderDashboard();
+  if(page === "historico") renderHistory();
+  if(page === "estabelecimentos") renderEstablishments();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
 }
 
 
-function esc(v){
-return String(v??"")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;")
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+function showToast(message){
+
+  const toast = document.getElementById("toast");
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(function(){
+    toast.classList.remove("show");
+  },2600);
+
 }
 
+
+/* =========================================================
+   DATA
+========================================================= */
 
 function today(){
-let d=new Date();
-let y=d.getFullYear();
-let m=String(d.getMonth()+1).padStart(2,"0");
-let day=String(d.getDate()).padStart(2,"0");
-return `${y}-${m}-${day}`;
-}
 
+  const d = new Date();
 
-function formatDate(d){
-if(!d)return"—";
-let p=String(d).split("-");
-return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:d;
-}
+  const month = String(d.getMonth()+1).padStart(2,"0");
+  const day = String(d.getDate()).padStart(2,"0");
 
-
-function formatDateTime(){
-let d=new Date();
-return String(d.getDate()).padStart(2,"0")+"/"+
-String(d.getMonth()+1).padStart(2,"0")+"/"+
-d.getFullYear()+" "+
-String(d.getHours()).padStart(2,"0")+":"+
-String(d.getMinutes()).padStart(2,"0");
-}
-
-
-function normalizeText(v){
-return String(v||"")
-.trim()
-.toLowerCase()
-.normalize("NFD")
-.replace(/[\u0300-\u036f]/g,"");
-}
-
-
-function sameName(a,b){
-return normalizeText(a)===normalizeText(b);
-}
-
-
-function average(v){
-let a=v.filter(x=>Number.isFinite(Number(x)));
-return a.length?a.reduce((x,y)=>x+Number(y),0)/a.length:0;
-}
-
-
-function saveDB(){
-localStorage.setItem(DATA_KEY,JSON.stringify(db));
-}
-
-
-function getUsers(){
-try{
-return JSON.parse(localStorage.getItem(USERS_KEY)||"[]");
-}catch(e){
-return[];
-}
-}
-
-
-function loadDB(){
-
-try{
-
-let s=JSON.parse(localStorage.getItem(DATA_KEY)||"null");
-
-if(s&&typeof s==="object"){
-
-db.establishments=Array.isArray(s.establishments)?s.establishments:[];
-db.inspections=Array.isArray(s.inspections)?s.inspections:[];
-db.temps=Array.isArray(s.temps)?s.temps:[];
-db.problems=Array.isArray(s.problems)?s.problems:[];
-db.evidences=Array.isArray(s.evidences)?s.evidences:[];
+  return d.getFullYear()+"-"+month+"-"+day;
 
 }
 
-}catch(e){}
+function formatDate(date){
 
-migrateOldData();
-normalizeData();
-saveDB();
+  if(!date) return "-";
+
+  const parts = date.split("-");
+
+  if(parts.length === 3){
+    return parts[2]+"/"+parts[1]+"/"+parts[0];
+  }
+
+  return date;
 
 }
 
 
-function migrateOldData(){
+/* =========================================================
+   CLASSIFICAÇÃO
+========================================================= */
 
-try{
+function getRisk(compliance){
 
-let x=localStorage.getItem("inspections");
+  if(compliance >= 85){
+    return {
+      level:"Baixo",
+      class:"green",
+      icon:"🟢"
+    };
+  }
 
-if(x&&!db.inspections.length){
-let a=JSON.parse(x);
-if(Array.isArray(a))db.inspections=a;
-}
+  if(compliance >= 60){
+    return {
+      level:"Moderado",
+      class:"yellow",
+      icon:"🟡"
+    };
+  }
 
-x=localStorage.getItem("temps");
-
-if(x&&!db.temps.length){
-let a=JSON.parse(x);
-if(Array.isArray(a))db.temps=a;
-}
-
-x=localStorage.getItem("problems");
-
-if(x&&!db.problems.length){
-let a=JSON.parse(x);
-if(Array.isArray(a))db.problems=a;
-}
-
-x=localStorage.getItem("evidences");
-
-if(x&&!db.evidences.length){
-let a=JSON.parse(x);
-if(Array.isArray(a))db.evidences=a;
-}
-
-}catch(e){}
+  return {
+    level:"Alto",
+    class:"red",
+    icon:"🔴"
+  };
 
 }
 
 
-function normalizeData(){
+/* =========================================================
+   INÍCIO
+========================================================= */
 
-db.establishments.forEach(e=>{
-if(!e.id)e.id=uid("est");
-e.name=e.name||"Estabelecimento sem nome";
-e.createdAt=e.createdAt||today();
-});
+function calculateAverageCompliance(){
 
+  if(db.inspections.length === 0){
+    return 0;
+  }
 
-db.inspections.forEach(i=>{
+  const total = db.inspections.reduce(function(sum,item){
+    return sum + Number(item.compliance || 0);
+  },0);
 
-if(!i.id)i.id=uid("insp");
-if(!i.date)i.date=today();
-if(!i.name)i.name=i.establishmentName||"";
-if(!Array.isArray(i.checklist))i.checklist=[];
-
-if(!i.inspector)
-i.inspector=i.inspectionInspector||"";
-
-if(i.establishmentName&&!i.establishmentId){
-
-let e=db.establishments.find(x=>sameName(x.name,i.establishmentName));
-
-if(e)i.establishmentId=e.id;
-
-}
-
-if(!i.reportVersion)i.reportVersion="1.0";
-
-});
-
-
-db.problems.forEach(p=>{
-
-if(!p.id)p.id=uid("prob");
-
-p.status=p.status||"Aberto";
-p.action=p.action||"";
-p.responsible=p.responsible||"";
-p.deadline=p.deadline||"";
-p.resolutionDate=p.resolutionDate||"";
-p.resolution=p.resolution||"";
-p.completedAt=p.completedAt||p.resolutionDate||"";
-p.severity=p.severity||"Média";
-
-if(p.establishmentName&&!p.establishmentId){
-
-let e=db.establishments.find(x=>sameName(x.name,p.establishmentName));
-
-if(e)p.establishmentId=e.id;
-
-}
-
-});
-
-
-db.temps.forEach(t=>{
-
-if(!t.id)t.id=uid("temp");
-
-if(t.establishmentName&&!t.establishmentId){
-
-let e=db.establishments.find(x=>sameName(x.name,t.establishmentName));
-
-if(e)t.establishmentId=e.id;
-
-}
-
-});
-
-
-db.evidences.forEach(e=>{
-
-if(!e.id)e.id=uid("ev");
-
-if(e.establishmentName&&!e.establishmentId){
-
-let x=db.establishments.find(a=>sameName(a.name,e.establishmentName));
-
-if(x)e.establishmentId=x.id;
-
-}
-
-});
+  return Math.round(total / db.inspections.length);
 
 }
 
 
-function ensureUsers(){
+function updateHome(){
 
-let u=getUsers();
+  document.getElementById("homeInspections").textContent =
+    db.inspections.length;
 
-if(!u.length){
+  document.getElementById("homeProblems").textContent =
+    db.problems.length;
 
-u=[
-{
-id:uid("user"),
-username:"admin",
-email:"rafaelabiliocarlos1@gmail.com",
-password:"1234"
-}
-];
+  document.getElementById("homeEstablishments").textContent =
+    db.establishments.length;
 
-localStorage.setItem(USERS_KEY,JSON.stringify(u));
-
-}
+  document.getElementById("homeCompliance").textContent =
+    calculateAverageCompliance()+"%";
 
 }
 
 
-function showRecovery(){
+/* =========================================================
+   TEMPERATURA
+========================================================= */
 
-document.getElementById("loginForm").classList.add("hidden");
-document.getElementById("recoveryForm").classList.remove("hidden");
+function evaluateTemperature(){
 
-}
+  const food = document.getElementById("tempFood").value.trim();
+  const value = Number(document.getElementById("tempValue").value);
+  const type = document.getElementById("tempType").value;
 
+  if(!food || isNaN(value)){
 
-function showLogin(){
+    document.getElementById("temperatureResult").innerHTML =
+      '<div class="result-box red">Preencha o alimento e a temperatura.</div>';
 
-document.getElementById("recoveryForm").classList.add("hidden");
-document.getElementById("loginForm").classList.remove("hidden");
+    return;
 
-}
+  }
 
+  let status = "";
+  let className = "";
+  let recommendation = "";
 
-function login(){
+  if(type === "refrigerado"){
 
-let username=document.getElementById("username").value.trim();
-let password=document.getElementById("password").value;
+    if(value >= 0 && value <= 5){
 
-let u=getUsers().find(x=>x.username===username&&x.password===password);
+      status = "Temperatura adequada";
+      className = "green";
+      recommendation = "Manter o controlo da cadeia de frio.";
 
-if(!u){
+    }else{
 
-alert("Nome de utilizador ou palavra-passe incorretos.");
-return;
+      status = "Temperatura fora do intervalo recomendado";
+      className = "red";
+      recommendation = "Verificar imediatamente o equipamento e o alimento.";
 
-}
+    }
 
-localStorage.setItem(SESSION_KEY,u.id);
-openApp();
+  }
 
-}
+  if(type === "congelado"){
 
+    if(value <= -18){
 
-function recoverAccount(){
+      status = "Temperatura adequada";
+      className = "green";
+      recommendation = "Manter o alimento congelado e monitorizar.";
 
-let email=document.getElementById("recoveryEmail").value.trim().toLowerCase();
-let username=document.getElementById("newUsername").value.trim();
-let password=document.getElementById("newPassword").value;
+    }else{
 
-if(!email||!username||!password){
+      status = "Temperatura fora do intervalo recomendado";
+      className = "red";
+      recommendation = "Verificar o congelador e as condições do produto.";
 
-alert("Preencha todos os campos.");
-return;
+    }
 
-}
+  }
 
-let u=getUsers();
-let user=u.find(x=>(x.email||"").toLowerCase()===email);
+  if(type === "quente"){
 
-if(!user){
+    if(value >= 60){
 
-alert("E-mail não encontrado.");
-return;
+      status = "Temperatura adequada";
+      className = "green";
+      recommendation = "Manter o alimento em temperatura segura.";
 
-}
+    }else{
 
-user.username=username;
-user.password=password;
+      status = "Temperatura abaixo do recomendado";
+      className = "red";
+      recommendation = "Reaquecer ou avaliar o alimento conforme o procedimento de segurança.";
 
-localStorage.setItem(USERS_KEY,JSON.stringify(u));
+    }
 
-alert("Conta atualizada com sucesso.");
+  }
 
-showLogin();
+  const record = {
+    id:Date.now(),
+    food:food,
+    value:value,
+    type:type,
+    status:status,
+    date:today()
+  };
 
-}
+  db.temperatures.unshift(record);
+  saveData();
 
+  document.getElementById("temperatureResult").innerHTML =
+    '<div class="result-box '+className+'">'+
+    '<strong>'+status+'</strong><br>'+
+    'Temperatura: '+value+' °C<br>'+
+    recommendation+
+    '</div>';
 
-function logout(){
+  renderTemperatureHistory();
 
-localStorage.removeItem(SESSION_KEY);
-location.reload();
-
-}
-
-
-function openApp(){
-
-document.getElementById("loginScreen").classList.add("hidden");
-document.getElementById("app").classList.remove("hidden");
-
-loadDB();
-
-document.getElementById("inspectionDate").value=today();
-
-if(!document.getElementById("checklist").children.length)
-buildChecklist();
-
-renderAll();
-go("home");
-
-}
-
-
-function go(page){
-
-document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-
-let t=document.getElementById("page-"+page);
-
-if(t)t.classList.add("active");
-
-document.querySelectorAll(".nav button").forEach(b=>
-b.classList.toggle("active",b.dataset.page===page)
-);
-
-renderAll();
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
+  showToast("Temperatura registada com sucesso.");
 
 }
 
 
-function buildChecklist(){
+function renderTemperatureHistory(){
 
-let b=document.getElementById("checklist");
+  const box = document.getElementById("temperatureHistory");
 
-if(!b)return;
+  if(!box) return;
 
-b.innerHTML=checklistItems.map((x,i)=>
-`<label class="checklist-item">
-<input type="checkbox" class="check-item" data-index="${i}" onchange="updateInspectionScore()">
-<span>${esc(x)}</span>
-</label>`
-).join("");
+  if(db.temperatures.length === 0){
 
-}
+    box.innerHTML =
+      '<div class="empty">Nenhum registo de temperatura.</div>';
 
+    return;
 
-function updateInspectionScore(){
+  }
 
-let a=[...document.querySelectorAll(".check-item")];
+  box.innerHTML = db.temperatures.slice(0,20).map(function(item){
 
-let n=a.filter(x=>x.checked).length;
+    const good = item.status === "Temperatura adequada";
 
-let s=a.length?
-Math.round(n/a.length*100):0;
+    return `
+      <div class="list-item">
+        <strong>${escapeHtml(item.food)}</strong><br>
+        <span class="muted">
+          ${item.value} °C · ${formatDate(item.date)}
+        </span>
+        <br>
+        <span class="badge ${good ? "green" : "red"}">
+          ${good ? "Adequada" : "Fora do recomendado"}
+        </span>
+      </div>
+    `;
 
-document.getElementById("scoreText").textContent=s+"%";
-document.getElementById("scoreBar").style.width=s+"%";
-
-let label=
-s>=80?"Conforme":
-s>=60?"Parcialmente conforme":
-"Não conforme";
-
-let cls=
-s>=80?"green":
-s>=60?"yellow":
-"red";
-
-let e=document.getElementById("scoreClass");
-
-e.textContent=label;
-e.className="badge "+cls;
+  }).join("");
 
 }
 
 
-function syncInspectionEstablishment(){
-
-let id=document.getElementById("inspectionEstablishment").value;
-
-let e=db.establishments.find(x=>x.id===id);
-
-if(!e)return;
-
-document.getElementById("inspectionName").value=e.name||"";
-document.getElementById("inspectionResponsible").value=e.responsible||"";
-
-}
-
-
-function resetInspectionForm(){
-
-document.getElementById("inspectionName").value="";
-document.getElementById("inspectionInspector").value="";
-document.getElementById("inspectionResponsible").value="";
-document.getElementById("inspectionObservation").value="";
-document.getElementById("inspectionDate").value=today();
-document.getElementById("inspectionEstablishment").value="";
-
-document.querySelectorAll(".check-item")
-.forEach(x=>x.checked=false);
-
-updateInspectionScore();
-
-}
-
+/* =========================================================
+   CHECKLIST
+========================================================= */
 
 function saveInspection(){
 
-let establishmentId=document.getElementById("inspectionEstablishment").value;
+  const establishment =
+    document.getElementById("inspectionEstablishment").value.trim();
 
-let name=document.getElementById("inspectionName").value.trim();
+  const responsible =
+    document.getElementById("inspectionResponsible").value.trim();
 
-let inspector=document.getElementById("inspectionInspector").value.trim();
+  const date =
+    document.getElementById("inspectionDate").value || today();
 
-let responsible=document.getElementById("inspectionResponsible").value.trim();
+  if(!establishment){
 
-let date=document.getElementById("inspectionDate").value||today();
+    document.getElementById("checklistResult").innerHTML =
+      '<div class="result-box red">Informe o nome do estabelecimento.</div>';
 
-let observation=document.getElementById("inspectionObservation").value.trim();
+    return;
 
-if(!establishmentId||!name){
+  }
 
-alert("Selecione o estabelecimento.");
-return;
+  const checks = Array.from(document.querySelectorAll(".check"));
 
-}
+  const total = checks.length;
 
-if(!inspector){
+  const checked = checks.filter(function(check){
+    return check.checked;
+  }).length;
 
-alert("Informe o inspetor / responsável pela inspeção.");
-return;
+  const compliance =
+    total === 0 ? 0 : Math.round((checked / total) * 100);
 
-}
+  const risk = getRisk(compliance);
 
-let checks=[...document.querySelectorAll(".check-item")]
-.map((el,i)=>({
-item:checklistItems[i],
-checked:el.checked
-}));
+  const inspection = {
 
-let score=Math.round(
-checks.filter(x=>x.checked).length/checks.length*100
-);
+    id:Date.now(),
 
-let classification=
-score>=80?"Conforme":
-score>=60?"Parcialmente conforme":
-"Não conforme";
+    establishment:establishment,
 
-let est=db.establishments.find(e=>e.id===establishmentId);
+    responsible:responsible || "Não informado",
 
-let inspection={
+    date:date,
 
-id:uid("insp"),
+    checked:checked,
 
-establishmentId,
+    total:total,
 
-establishmentName:name,
+    compliance:compliance,
 
-inspector,
+    risk:risk.level
 
-responsible,
+  };
 
-date,
+  db.inspections.unshift(inspection);
 
-observation,
+  saveData();
 
-checklist:checks,
+  /* Criar estabelecimento automaticamente caso não exista */
 
-score,
+  const existing = db.establishments.find(function(item){
 
-classification,
+    return item.name.toLowerCase() === establishment.toLowerCase();
 
-reportNumber:generateReportNumber(),
+  });
 
-reportVersion:"1.3",
+  if(!existing){
 
-createdAt:new Date().toISOString()
+    db.establishments.push({
 
-};
+      id:Date.now()+1,
 
-db.inspections.push(inspection);
+      name:establishment,
 
+      location:"Não informada",
 
-checks
-.filter(x=>!x.checked)
-.forEach(x=>{
+      responsible:responsible || "Não informado",
 
-db.problems.push({
+      contact:"",
 
-id:uid("prob"),
+      type:"Não informado",
 
-establishmentId,
+      createdAt:today()
 
-establishmentName:name,
+    });
 
-title:x.item,
+    saveData();
 
-severity:"Média",
+  }
 
-responsible:responsible||(est?est.responsible:""),
+  document.getElementById("checklistResult").innerHTML =
+    '<div class="result-box '+risk.class+'">'+
+    '<strong>Inspeção guardada com sucesso.</strong><br>'+
+    'Conformidade: '+compliance+'%<br>'+
+    'Classificação de risco: '+risk.icon+' '+risk.level+
+    '</div>';
 
-deadline:"",
+  checks.forEach(function(check){
+    check.checked = false;
+  });
 
-action:"Corrigir a não conformidade identificada durante a inspeção.",
+  renderHistory();
+  renderDashboard();
+  renderEstablishments();
+  updateHome();
 
-status:"Aberto",
-
-resolutionDate:"",
-
-resolution:"",
-
-completedAt:"",
-
-date,
-
-inspectionId:inspection.id
-
-});
-
-});
-
-
-saveDB();
-
-alert(
-"Inspeção guardada com sucesso.\n\n"+
-"Conformidade: "+score+"%\n"+
-"Classificação: "+classification+"\n"+
-"Nº do relatório: "+inspection.reportNumber
-);
-
-resetInspectionForm();
-
-renderAll();
-
-openProfile(establishmentId);
+  showToast("Inspeção guardada com sucesso.");
 
 }
 
 
-function evaluateTemperature(v){
-
-let n=Number(v);
-
-return n<=5?
-{label:"Adequada",cls:"green"}:
-n<=8?
-{label:"Atenção",cls:"yellow"}:
-{label:"Inadequada",cls:"red"};
-
-}
-
-
-function saveTemperature(){
-
-let establishmentId=document.getElementById("tempEstablishment").value;
-let item=document.getElementById("tempItem").value.trim();
-let value=document.getElementById("tempValue").value;
-
-if(!establishmentId||!item||value===""){
-
-alert("Preencha estabelecimento, equipamento/alimento e temperatura.");
-return;
-
-}
-
-let e=db.establishments.find(x=>x.id===establishmentId);
-let ev=evaluateTemperature(value);
-
-db.temps.push({
-
-id:uid("temp"),
-
-establishmentId,
-
-establishmentName:e?e.name:"",
-
-item,
-
-value:Number(value),
-
-evaluation:ev.label,
-
-date:today(),
-
-createdAt:new Date().toISOString()
-
-});
-
-saveDB();
-
-document.getElementById("tempResult").innerHTML=
-`<div class="alert">
-Resultado:
-<span class="badge ${ev.cls}">${ev.label}</span>
-</div>`;
-
-document.getElementById("tempItem").value="";
-document.getElementById("tempValue").value="";
-
-renderAll();
-
-}
-
-
-function isProblemOverdue(p){
-
-return p.status!=="Resolvido"&&
-p.deadline&&
-p.deadline<today();
-
-}
-
-
-function getProblemStatusLabel(p){
-
-return isProblemOverdue(p)?
-"Atrasado":
-p.status||"Aberto";
-
-}
-
-
-function getProblemStatusClass(p){
-
-return isProblemOverdue(p)?
-"red":
-p.status==="Resolvido"?
-"green":
-p.status==="Em tratamento"?
-"yellow":
-"red";
-
-}
-
-
-function getOverdueProblems(){
-return db.problems.filter(isProblemOverdue);
-}
-
-
-function getOpenProblems(){
-return db.problems.filter(p=>p.status!=="Resolvido");
-}
-
-
-function getResolvedProblems(){
-return db.problems.filter(p=>p.status==="Resolvido");
-}
-
-
-function getProblemsInTreatment(){
-return db.problems.filter(p=>p.status==="Em tratamento");
-}
-
+/* =========================================================
+   PROBLEMAS
+========================================================= */
 
 function saveProblem(){
 
-let establishmentId=document.getElementById("problemEstablishment").value;
-let title=document.getElementById("problemTitle").value.trim();
-let severity=document.getElementById("problemSeverity").value;
-let responsible=document.getElementById("problemResponsible").value.trim();
-let deadline=document.getElementById("problemDeadline").value;
-let action=document.getElementById("problemAction").value.trim();
+  const establishment =
+    document.getElementById("problemEstablishment").value.trim();
 
-if(!establishmentId||!title){
+  const description =
+    document.getElementById("problemDescription").value.trim();
 
-alert("Informe estabelecimento e problema.");
-return;
+  const responsible =
+    document.getElementById("problemResponsible").value.trim();
 
-}
+  const action =
+    document.getElementById("problemAction").value.trim();
 
-let e=db.establishments.find(x=>x.id===establishmentId);
+  const status =
+    document.getElementById("problemStatus").value;
 
-if(deadline&&deadline<today()){
+  if(!establishment || !description){
 
-if(!confirm(
-"O prazo indicado já passou.\n\nDeseja guardar mesmo assim?"
-))return;
+    document.getElementById("problemResult").innerHTML =
+      '<div class="result-box red">Informe o estabelecimento e o problema.</div>';
 
-}
+    return;
 
-db.problems.push({
+  }
 
-id:uid("prob"),
+  db.problems.unshift({
 
-establishmentId,
+    id:Date.now(),
 
-establishmentName:e?e.name:"",
+    establishment:establishment,
 
-title,
+    description:description,
 
-severity,
+    responsible:responsible || "Não informado",
 
-responsible:responsible||(e?e.responsible:""),
+    action:action || "Não definida",
 
-deadline,
+    status:status,
 
-action,
+    date:today()
 
-status:"Aberto",
+  });
 
-resolutionDate:"",
+  saveData();
 
-resolution:"",
+  document.getElementById("problemResult").innerHTML =
+    '<div class="result-box green">Problema registado com sucesso.</div>';
 
-completedAt:"",
+  document.getElementById("problemDescription").value = "";
+  document.getElementById("problemAction").value = "";
 
-date:today()
+  renderProblems();
+  renderDashboard();
+  updateHome();
 
-});
-
-saveDB();
-
-alert("Problema registado com sucesso.");
-
-[
-"problemTitle",
-"problemResponsible",
-"problemDeadline",
-"problemAction"
-].forEach(id=>
-document.getElementById(id).value=""
-);
-
-renderAll();
-
-}
-
-
-function setProblemStatus(id,status){
-
-let p=db.problems.find(x=>x.id===id);
-
-if(!p)return;
-
-p.status=status;
-
-if(status==="Resolvido"){
-
-p.resolutionDate=p.resolutionDate||today();
-p.completedAt=p.completedAt||today();
-
-}else{
-
-p.resolutionDate="";
-p.completedAt="";
-
-}
-
-saveDB();
-
-renderAll();
-
-if(currentProfileId)
-renderProfile(currentProfileId);
+  showToast("Problema registado com sucesso.");
 
 }
 
 
 function changeProblemStatus(id){
 
-let p=db.problems.find(x=>x.id===id);
-
-if(!p)return;
-
-let next=
-p.status==="Aberto"?
-"Em tratamento":
-p.status==="Em tratamento"?
-"Resolvido":
-"Em tratamento";
-
-setProblemStatus(id,next);
-
-}
-
-
-function openAction(id){
-
-let p=db.problems.find(x=>x.id===id);
-
-if(!p)return;
-
-currentActionId=id;
-
-let status=p.status||"Aberto";
-
-document.getElementById("actionModalContent").innerHTML=`
-
-<div class="action-box">
-
-<label>Estabelecimento</label>
-<input value="${esc(p.establishmentName)}" disabled>
-
-<label>Problema / não conformidade</label>
-<textarea disabled>${esc(p.title)}</textarea>
-
-<div class="grid">
-
-<div>
-
-<label>Severidade</label>
-
-<select id="actionSeverity">
-
-<option ${p.severity==="Baixa"?"selected":""}>Baixa</option>
-
-<option ${p.severity==="Média"?"selected":""}>Média</option>
-
-<option ${p.severity==="Alta"?"selected":""}>Alta</option>
-
-<option ${p.severity==="Crítica"?"selected":""}>Crítica</option>
-
-</select>
-
-</div>
-
-
-<div>
-
-<label>Responsável pela correção</label>
-
-<input id="actionResponsible" value="${esc(p.responsible)}">
-
-</div>
-
-
-<div>
-
-<label>Prazo</label>
-
-<input id="actionDeadline" type="date" value="${esc(p.deadline)}">
-
-</div>
-
-
-<div>
-
-<label>Estado</label>
-
-<select id="actionStatus">
-
-<option ${status==="Aberto"?"selected":""}>Aberto</option>
-
-<option ${status==="Em tratamento"?"selected":""}>Em tratamento</option>
-
-<option ${status==="Resolvido"?"selected":""}>Resolvido</option>
-
-</select>
-
-</div>
-
-</div>
-
-
-<label>Ação corretiva</label>
-
-<textarea id="actionCorrective"
-placeholder="Descreva o que deve ser feito para corrigir a não conformidade.">${esc(p.action)}</textarea>
-
-
-<label>Resolução / observação final</label>
-
-<textarea id="actionResolution"
-placeholder="Descreva como a não conformidade foi resolvida, verificada ou acompanhada.">${esc(p.resolution||"")}</textarea>
-
-
-<div class="action-status-box">
-
-<strong>Estado atual:</strong>
-
-<span class="badge ${getProblemStatusClass(p)}">
-${esc(getProblemStatusLabel(p))}
-</span>
-
-${p.resolutionDate?
-`<p><strong>Data de conclusão:</strong> ${formatDate(p.resolutionDate)}</p>`:
-""}
-
-</div>
-
-
-${isProblemOverdue(p)?
-`
-<div class="alert" style="background:#fee2e2;color:#991b1b">
-
-<strong>⚠️ Ação atrasada</strong>
-
-<br>
-
-O prazo desta ação é
-<strong>${formatDate(p.deadline)}</strong>.
-
-</div>
-`
-:""}
-
-
-<div class="actions">
-
-<button class="success" onclick="saveAction()">
-Guardar alterações
-</button>
-
-<button class="secondary" onclick="closeActionModal()">
-Cancelar
-</button>
-
-</div>
-
-</div>
-
-<div class="action-history">
-
-<strong>Informação de controlo</strong>
-
-<p>
-Data de registo:
-${formatDate(p.date)}
-</p>
-
-<p>
-ID da ação:
-${esc(p.id)}
-</p>
-
-${p.inspectionId?
-`<p>Esta ação foi criada a partir de uma inspeção.</p>`:
-`<p>Esta ação foi registada manualmente.</p>`
-}
-
-</div>
-`;
-
-document.getElementById("actionModal").classList.add("open");
-
-}
-
-
-function saveAction(){
-
-let p=db.problems.find(x=>x.id===currentActionId);
-
-if(!p)return;
-
-let status=document.getElementById("actionStatus").value;
-
-let responsible=
-document.getElementById("actionResponsible").value.trim();
-
-let deadline=
-document.getElementById("actionDeadline").value;
-
-let action=
-document.getElementById("actionCorrective").value.trim();
-
-let resolution=
-document.getElementById("actionResolution").value.trim();
-
-if(!responsible){
-
-if(!confirm(
-"Não foi definido um responsável pela ação.\n\nDeseja guardar mesmo assim?"
-))return;
-
-}
-
-if(status==="Resolvido"&&!resolution){
-
-if(!confirm(
-"A ação está marcada como Resolvido, mas não foi indicada a resolução.\n\nDeseja guardar mesmo assim?"
-))return;
-
-}
-
-p.severity=document.getElementById("actionSeverity").value;
-
-p.responsible=responsible;
-
-p.deadline=deadline;
-
-p.status=status;
-
-p.action=action;
-
-p.resolution=resolution;
-
-
-if(status==="Resolvido"){
-
-p.resolutionDate=p.resolutionDate||today();
-p.completedAt=p.completedAt||today();
-
-}else{
-
-p.resolutionDate="";
-p.completedAt="";
-
-}
-
-
-saveDB();
-
-closeActionModal();
-
-renderAll();
-
-if(currentProfileId)
-renderProfile(currentProfileId);
-
-alert("Ação corretiva atualizada com sucesso.");
-
-}
-
-
-function closeActionModal(){
-
-document.getElementById("actionModal").classList.remove("open");
-
-currentActionId=null;
+  const problem = db.problems.find(function(item){
+    return item.id === id;
+  });
+
+  if(!problem) return;
+
+  if(problem.status === "Pendente"){
+    problem.status = "Em tratamento";
+  }else if(problem.status === "Em tratamento"){
+    problem.status = "Resolvido";
+  }else{
+    problem.status = "Pendente";
+  }
+
+  saveData();
+
+  renderProblems();
+  renderDashboard();
+  renderProfileIfOpen();
+
+  showToast("Estado atualizado.");
 
 }
 
 
 function renderProblems(){
 
-let open=getOpenProblems();
+  const box = document.getElementById("problemsList");
 
-let treatment=getProblemsInTreatment();
+  if(!box) return;
 
-let resolved=getResolvedProblems();
+  if(db.problems.length === 0){
 
-let overdue=getOverdueProblems();
+    box.innerHTML =
+      '<div class="empty">Nenhum problema registado.</div>';
 
-document.getElementById("problemOpen").textContent=open.length;
+    return;
 
-document.getElementById("problemTreatment").textContent=treatment.length;
+  }
 
-document.getElementById("problemResolved").textContent=resolved.length;
+  box.innerHTML = db.problems.map(function(item){
 
-document.getElementById("problemOverdue").textContent=overdue.length;
+    let className = "red";
 
+    if(item.status === "Em tratamento"){
+      className = "yellow";
+    }
 
-let box=document.getElementById("problemsTable");
+    if(item.status === "Resolvido"){
+      className = "green";
+    }
 
-if(!db.problems.length){
+    return `
+      <div class="list-item">
 
-box.innerHTML='<div class="empty">Nenhum problema registado.</div>';
+        <strong>${escapeHtml(item.establishment)}</strong>
 
-return;
+        <div class="muted">
+          ${formatDate(item.date)}
+        </div>
 
-}
+        <p>${escapeHtml(item.description)}</p>
 
+        <span class="badge ${className}">
+          ${escapeHtml(item.status)}
+        </span>
 
-let rows=[...db.problems].sort((a,b)=>
+        <p class="muted">
+          Responsável: ${escapeHtml(item.responsible)}<br>
+          Ação corretiva: ${escapeHtml(item.action)}
+        </p>
 
-isProblemOverdue(a)!==isProblemOverdue(b)?
+        <button
+          class="btn btn-small btn-secondary"
+          onclick="changeProblemStatus(${item.id})">
+          Alterar estado
+        </button>
 
-(isProblemOverdue(a)?-1:1):
+      </div>
+    `;
 
-String(b.date||"").localeCompare(String(a.date||""))
-
-);
-
-
-box.innerHTML=`
-
-<div class="table-wrap">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>Data</th>
-<th>Estabelecimento</th>
-<th>Problema</th>
-<th>Severidade</th>
-<th>Responsável</th>
-<th>Prazo</th>
-<th>Estado</th>
-<th>Resolução</th>
-<th>Conclusão</th>
-<th>Ação corretiva</th>
-<th>Gestão</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-${rows.map(p=>`
-
-<tr class="${isProblemOverdue(p)?"overdue":""}">
-
-<td>${formatDate(p.date)}</td>
-
-<td>${esc(p.establishmentName)}</td>
-
-<td>${esc(p.title)}</td>
-
-<td>
-<span class="badge ${getSeverityClass(p.severity)}">
-${esc(p.severity)}
-</span>
-</td>
-
-<td>${esc(p.responsible||"—")}</td>
-
-<td>${formatDate(p.deadline)}</td>
-
-<td>
-<span class="badge ${getProblemStatusClass(p)}">
-${esc(getProblemStatusLabel(p))}
-</span>
-</td>
-
-<td>
-${esc(p.resolution||"—")}
-</td>
-
-<td>
-${formatDate(p.resolutionDate)}
-</td>
-
-<td>
-${esc(p.action||"—")}
-</td>
-
-<td>
-<button class="primary small" onclick="openAction('${p.id}')">
-Gerir ação
-</button>
-</td>
-
-</tr>
-
-`).join("")}
-
-</tbody>
-
-</table>
-
-</div>
-`;
+  }).join("");
 
 }
 
+
+/* =========================================================
+   EVIDÊNCIAS
+========================================================= */
 
 function saveEvidence(){
 
-let establishmentId=
-document.getElementById("evidenceEstablishment").value;
+  const establishment =
+    document.getElementById("evidenceEstablishment").value.trim();
 
-let description=
-document.getElementById("evidenceDescription").value.trim();
+  const description =
+    document.getElementById("evidenceDescription").value.trim();
 
-let file=
-document.getElementById("evidencePhoto").files[0];
+  const file =
+    document.getElementById("evidencePhoto").files[0];
 
-if(!establishmentId||!description||!file){
+  if(!establishment || !description){
 
-alert("Preencha estabelecimento, descrição e fotografia.");
-return;
+    document.getElementById("evidenceResult").innerHTML =
+      '<div class="result-box red">Preencha o estabelecimento e a descrição.</div>';
+
+    return;
+
+  }
+
+  function finish(photo){
+
+    db.evidences.unshift({
+
+      id:Date.now(),
+
+      establishment:establishment,
+
+      description:description,
+
+      photo:photo || "",
+
+      date:today()
+
+    });
+
+    saveData();
+
+    document.getElementById("evidenceResult").innerHTML =
+      '<div class="result-box green">Evidência registada com sucesso.</div>';
+
+    document.getElementById("evidenceDescription").value = "";
+    document.getElementById("evidencePhoto").value = "";
+
+    renderEvidences();
+
+    showToast("Evidência guardada.");
+
+  }
+
+  if(file){
+
+    const reader = new FileReader();
+
+    reader.onload = function(event){
+
+      /*
+       Limita o tamanho para evitar sobrecarregar
+       o localStorage do navegador.
+      */
+
+      const image = event.target.result;
+
+      if(image.length > 1500000){
+
+        finish("");
+
+        showToast("Evidência guardada sem foto devido ao tamanho da imagem.");
+
+      }else{
+
+        finish(image);
+
+      }
+
+    };
+
+    reader.readAsDataURL(file);
+
+  }else{
+
+    finish("");
+
+  }
 
 }
 
-let e=db.establishments.find(x=>x.id===establishmentId);
 
-let reader=new FileReader();
+function renderEvidences(){
 
-reader.onload=function(){
+  const box = document.getElementById("evidenceList");
 
-db.evidences.push({
+  if(!box) return;
 
-id:uid("ev"),
+  if(db.evidences.length === 0){
 
-establishmentId,
+    box.innerHTML =
+      '<div class="empty">Nenhuma evidência registada.</div>';
 
-establishmentName:e?e.name:"",
+    return;
 
-description,
+  }
 
-photo:reader.result,
+  box.innerHTML = db.evidences.map(function(item){
 
-date:today()
+    return `
+      <div class="list-item">
 
-});
+        <strong>${escapeHtml(item.establishment)}</strong>
 
-saveDB();
+        <div class="muted">
+          ${formatDate(item.date)}
+        </div>
 
-document.getElementById("evidenceDescription").value="";
-document.getElementById("evidencePhoto").value="";
+        <p>${escapeHtml(item.description)}</p>
 
-alert("Evidência guardada com sucesso.");
+        ${
+          item.photo
+          ?
+          `<img src="${item.photo}"
+                style="width:100%;max-height:300px;object-fit:cover;border-radius:12px;">`
+          :
+          `<span class="badge gray">Sem fotografia</span>`
+        }
 
-renderAll();
+      </div>
+    `;
 
-};
-
-reader.readAsDataURL(file);
+  }).join("");
 
 }
 
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function renderDashboard(){
+
+  const inspections = db.inspections.length;
+
+  const problems = db.problems.length;
+
+  const resolved = db.problems.filter(function(item){
+    return item.status === "Resolvido";
+  }).length;
+
+  const compliance = calculateAverageCompliance();
+
+  document.getElementById("dashInspections").textContent = inspections;
+  document.getElementById("dashProblems").textContent = problems;
+  document.getElementById("dashResolved").textContent = resolved;
+  document.getElementById("dashCompliance").textContent = compliance+"%";
+
+  const pd = document.getElementById("problemDashboard");
+
+  const pending = db.problems.filter(function(item){
+    return item.status === "Pendente";
+  }).length;
+
+  const treatment = db.problems.filter(function(item){
+    return item.status === "Em tratamento";
+  }).length;
+
+  pd.innerHTML = `
+    <div class="grid">
+      <div class="stat">
+        <div class="stat-value">${pending}</div>
+        <div class="stat-label">Pendentes</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-value">${treatment}</div>
+        <div class="stat-label">Em tratamento</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-value">${resolved}</div>
+        <div class="stat-label">Resolvidos</div>
+      </div>
+    </div>
+  `;
+
+  const id = document.getElementById("inspectionDashboard");
+
+  if(db.inspections.length === 0){
+
+    id.innerHTML =
+      '<div class="empty">Ainda não existem inspeções.</div>';
+
+    return;
+
+  }
+
+  id.innerHTML = db.inspections.slice(0,10).map(function(item){
+
+    const risk = getRisk(item.compliance);
+
+    return `
+      <div class="list-item">
+        <strong>${escapeHtml(item.establishment)}</strong><br>
+        <span class="muted">${formatDate(item.date)}</span>
+        <br>
+        <span class="badge ${risk.class}">
+          ${risk.icon} ${item.compliance}% · ${risk.level}
+        </span>
+      </div>
+    `;
+
+  }).join("");
+
+}
+
+
+/* =========================================================
+   HISTÓRICO
+========================================================= */
+
+function renderHistory(){
+
+  const box = document.getElementById("historyList");
+
+  if(!box) return;
+
+  if(db.inspections.length === 0){
+
+    box.innerHTML =
+      '<div class="empty">Nenhuma inspeção realizada.</div>';
+
+    return;
+
+  }
+
+  box.innerHTML = db.inspections.map(function(item){
+
+    const risk = getRisk(item.compliance);
+
+    return `
+      <div class="list-item">
+
+        <strong>${escapeHtml(item.establishment)}</strong>
+
+        <div class="muted">
+          Data: ${formatDate(item.date)}<br>
+          Responsável: ${escapeHtml(item.responsible)}
+        </div>
+
+        <div style="margin-top:8px">
+
+          <span class="badge ${risk.class}">
+            ${risk.icon} ${item.compliance}% · ${risk.level}
+          </span>
+
+        </div>
+
+        <div class="progress">
+          <div class="progress-bar"
+               style="width:${item.compliance}%">
+          </div>
+        </div>
+
+        <div class="muted" style="margin-top:6px">
+          ${item.checked} de ${item.total} itens conformes.
+        </div>
+
+      </div>
+    `;
+
+  }).join("");
+
+}
+
+
+/* =========================================================
+   ESTABELECIMENTOS
+========================================================= */
 
 function saveEstablishment(){
 
-let name=document.getElementById("estName").value.trim();
+  const name =
+    document.getElementById("estName").value.trim();
 
-if(!name){
+  const location =
+    document.getElementById("estLocation").value.trim();
 
-alert("Informe o nome do estabelecimento.");
-return;
+  const responsible =
+    document.getElementById("estResponsible").value.trim();
 
-}
+  const contact =
+    document.getElementById("estContact").value.trim();
 
-if(db.establishments.some(e=>sameName(e.name,name))){
+  const type =
+    document.getElementById("estType").value.trim();
 
-alert("Este estabelecimento já está registado.");
-return;
+  if(!name){
 
-}
+    document.getElementById("establishmentResult").innerHTML =
+      '<div class="result-box red">Informe o nome do estabelecimento.</div>';
 
-db.establishments.push({
+    return;
 
-id:uid("est"),
+  }
 
-name,
+  const duplicate = db.establishments.some(function(item){
 
-type:document.getElementById("estType").value.trim(),
+    return item.name.toLowerCase() === name.toLowerCase();
 
-address:document.getElementById("estAddress").value.trim(),
+  });
 
-bairro:document.getElementById("estBairro").value.trim(),
+  if(duplicate){
 
-distrito:document.getElementById("estDistrito").value.trim(),
+    document.getElementById("establishmentResult").innerHTML =
+      '<div class="result-box yellow">Este estabelecimento já está cadastrado.</div>';
 
-phone:document.getElementById("estPhone").value.trim(),
+    return;
 
-responsible:document.getElementById("estResponsible").value.trim(),
+  }
 
-createdAt:today()
+  db.establishments.push({
 
-});
+    id:Date.now(),
 
-saveDB();
+    name:name,
 
-[
-"estName",
-"estType",
-"estAddress",
-"estBairro",
-"estDistrito",
-"estPhone",
-"estResponsible"
-].forEach(id=>
-document.getElementById(id).value=""
-);
+    location:location || "Não informada",
 
-alert("Estabelecimento registado com sucesso.");
+    responsible:responsible || "Não informado",
 
-renderAll();
+    contact:contact,
 
-}
+    type:type || "Não informado",
 
+    createdAt:today()
 
-function deleteEstablishment(id){
+  });
 
-let e=db.establishments.find(x=>x.id===id);
+  saveData();
 
-if(!e)return;
+  document.getElementById("estName").value = "";
+  document.getElementById("estLocation").value = "";
+  document.getElementById("estResponsible").value = "";
+  document.getElementById("estContact").value = "";
+  document.getElementById("estType").value = "";
 
-if(!confirm(
-"Excluir o estabelecimento da lista?\n\n"+
-"Os históricos de inspeções, problemas, temperaturas e evidências serão mantidos."
-))return;
+  document.getElementById("establishmentResult").innerHTML =
+    '<div class="result-box green">Estabelecimento cadastrado com sucesso.</div>';
 
-db.establishments=
-db.establishments.filter(x=>x.id!==id);
+  renderEstablishments();
+  updateHome();
 
-saveDB();
-
-renderAll();
-
-}
-
-
-function getInspectionsForEstablishment(e){
-
-return db.inspections.filter(i=>
-i.establishmentId===e.id||
-sameName(i.establishmentName,e.name)
-);
-
-}
-
-
-function getProblemsForEstablishment(e){
-
-return db.problems.filter(p=>
-p.establishmentId===e.id||
-sameName(p.establishmentName,e.name)
-);
-
-}
-
-
-function getTempsForEstablishment(e){
-
-return db.temps.filter(t=>
-t.establishmentId===e.id||
-sameName(t.establishmentName,e.name)
-);
-
-}
-
-
-function getEvidenceForEstablishment(e){
-
-return db.evidences.filter(x=>
-x.establishmentId===e.id||
-sameName(x.establishmentName,e.name)
-);
-
-}
-
-
-function fillEstablishmentSelects(){
-
-[
-"tempEstablishment",
-"inspectionEstablishment",
-"problemEstablishment",
-"evidenceEstablishment"
-].forEach(id=>{
-
-let s=document.getElementById(id);
-
-if(!s)return;
-
-let old=s.value;
-
-s.innerHTML=
-'<option value="">Selecionar estabelecimento</option>'+
-db.establishments.map(e=>
-`<option value="${esc(e.id)}">${esc(e.name)}</option>`
-).join("");
-
-if(db.establishments.some(e=>e.id===old))
-s.value=old;
-
-});
-
-}
-
-
-function calculateRisk(e){
-
-let ins=getInspectionsForEstablishment(e);
-
-let pro=getProblemsForEstablishment(e);
-
-let avg=average(ins.map(i=>i.score));
-
-if(!ins.length)
-return{label:"Sem avaliação",cls:"gray"};
-
-let critical=pro.some(p=>
-p.status!=="Resolvido"&&
-(p.severity==="Crítica"||p.severity==="Alta")
-);
-
-if(critical||avg<60)
-return{label:"Alto",cls:"red"};
-
-if(avg<80)
-return{label:"Médio",cls:"yellow"};
-
-return{label:"Baixo",cls:"green"};
+  showToast("Estabelecimento cadastrado.");
 
 }
 
 
 function renderEstablishments(){
 
-let box=document.getElementById("establishmentList");
+  const box = document.getElementById("establishmentList");
 
-if(!db.establishments.length){
+  if(!box) return;
 
-box.innerHTML=
-'<div class="card empty">Nenhum estabelecimento registado.</div>';
+  if(db.establishments.length === 0){
 
-return;
+    box.innerHTML =
+      '<div class="empty">Nenhum estabelecimento cadastrado.</div>';
 
-}
+    return;
 
+  }
 
-box.innerHTML=db.establishments.map(e=>{
+  box.innerHTML = db.establishments.map(function(est){
 
-let ins=getInspectionsForEstablishment(e);
+    const stats = getEstablishmentStats(est.name);
 
-let pro=getProblemsForEstablishment(e);
+    const risk = getRisk(stats.average);
 
-let avg=average(ins.map(i=>i.score));
+    return `
+      <div class="card" style="margin-bottom:10px;border:1px solid #e8eeee;box-shadow:none">
 
-let risk=calculateRisk(e);
+        <h3>${escapeHtml(est.name)}</h3>
 
-let overdue=pro.filter(isProblemOverdue).length;
+        <div class="muted">
+          📍 ${escapeHtml(est.location)}<br>
+          👤 ${escapeHtml(est.responsible)}<br>
+          🏢 ${escapeHtml(est.type)}
+        </div>
 
-return `
+        <div style="margin-top:10px">
+          <span class="badge ${risk.class}">
+            ${risk.icon} ${risk.level}
+          </span>
+        </div>
 
-<div class="card">
+        <p class="muted">
+          Inspeções: ${stats.inspections}<br>
+          Conformidade média: ${stats.average}%
+        </p>
 
-<h3>${esc(e.name)}</h3>
+        <button
+          class="btn btn-primary full"
+          onclick="openProfile(${est.id})">
+          Ver perfil
+        </button>
 
-<p class="muted">
-${esc(e.type||"Tipo não informado")}
-${e.distrito?" • "+esc(e.distrito):""}
-</p>
+      </div>
+    `;
 
-<div class="grid">
-
-<div>
-
-<strong>Conformidade média</strong>
-
-<div class="progress">
-<div style="width:${Math.round(avg)}%"></div>
-</div>
-
-${Math.round(avg)}%
-
-</div>
-
-<div>
-
-<strong>Nível de risco</strong>
-
-<br>
-
-<span class="badge ${risk.cls}">
-${risk.label}
-</span>
-
-</div>
-
-</div>
-
-<p>
-Inspeções: <strong>${ins.length}</strong> |
-Problemas: <strong>${pro.length}</strong> |
-Atrasados: <strong>${overdue}</strong>
-</p>
-
-<div class="actions">
-
-<button class="primary" onclick="openProfile('${e.id}')">
-Ver perfil
-</button>
-
-<button class="success" onclick="startInspectionFor('${e.id}')">
-Nova inspeção
-</button>
-
-<button class="secondary" onclick="goToProblemsFor('${e.id}')">
-Problemas
-</button>
-
-<button class="danger" onclick="deleteEstablishment('${e.id}')">
-Excluir
-</button>
-
-</div>
-
-</div>
-
-`;
-
-}).join("");
+  }).join("");
 
 }
 
 
-function startInspectionFor(id){
+/* =========================================================
+   ESTATÍSTICAS DO ESTABELECIMENTO
+========================================================= */
 
-go("inspecao");
+function getEstablishmentStats(name){
 
-document.getElementById("inspectionEstablishment").value=id;
+  const inspections = db.inspections.filter(function(item){
 
-syncInspectionEstablishment();
+    return item.establishment.toLowerCase() === name.toLowerCase();
+
+  });
+
+  const problems = db.problems.filter(function(item){
+
+    return item.establishment.toLowerCase() === name.toLowerCase();
+
+  });
+
+  const resolved = problems.filter(function(item){
+
+    return item.status === "Resolvido";
+
+  });
+
+  const average =
+    inspections.length
+    ?
+    Math.round(
+      inspections.reduce(function(sum,item){
+        return sum + Number(item.compliance || 0);
+      },0) / inspections.length
+    )
+    :
+    0;
+
+  return {
+    inspections:inspections.length,
+    problems:problems.length,
+    resolved:resolved.length,
+    average:average,
+    inspectionsList:inspections,
+    problemsList:problems
+  };
 
 }
 
 
-function goToProblemsFor(id){
-
-go("problemas");
-
-document.getElementById("problemEstablishment").value=id;
-
-}
-
+/* =========================================================
+   PERFIL PROFISSIONAL
+========================================================= */
 
 function openProfile(id){
 
-currentProfileId=id;
+  const establishment = db.establishments.find(function(item){
 
-go("perfil");
+    return item.id === id;
 
-renderProfile(id);
+  });
+
+  if(!establishment){
+
+    showToast("Estabelecimento não encontrado.");
+
+    return;
+
+  }
+
+  renderProfessionalProfile(establishment);
+
+  showPage("perfil");
+
+}
+
+
+function renderProfessionalProfile(establishment){
+
+  const box = document.getElementById("professionalProfile");
+
+  if(!box) return;
+
+  const stats = getEstablishmentStats(establishment.name);
+
+  const risk = getRisk(stats.average);
+
+  let lastInspection = null;
+
+  if(stats.inspectionsList.length > 0){
+
+    lastInspection = stats.inspectionsList[0];
+
+  }
+
+  const totalProblems = stats.problemsList.length;
+
+  const resolvedProblems = stats.resolved;
+
+  const resolutionRate =
+    totalProblems
+    ?
+    Math.round((resolvedProblems / totalProblems) * 100)
+    :
+    0;
+
+  box.innerHTML = `
+
+    <div class="profile-header">
+
+      <div class="profile-name">
+        ${escapeHtml(establishment.name)}
+      </div>
+
+      <div class="profile-location">
+        📍 ${escapeHtml(establishment.location)}
+      </div>
+
+      <div class="risk">
+        Estado atual:
+        <strong>
+          ${risk.icon} ${risk.level}
+        </strong>
+      </div>
+
+    </div>
+
+
+    <div class="grid">
+
+      <div class="stat">
+        <div class="stat-value">
+          ${stats.inspections}
+        </div>
+        <div class="stat-label">
+          Total de inspeções
+        </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-value">
+          ${stats.average}%
+        </div>
+        <div class="stat-label">
+          Conformidade média
+        </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-value">
+          ${totalProblems}
+        </div>
+        <div class="stat-label">
+          Não conformidades
+        </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-value">
+          ${resolvedProblems}
+        </div>
+        <div class="stat-label">
+          Resolvidas
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="card profile-section">
+
+      <h2>Informações do estabelecimento</h2>
+
+      <p>
+        <strong>Tipo:</strong>
+        ${escapeHtml(establishment.type)}
+      </p>
+
+      <p>
+        <strong>Responsável:</strong>
+        ${escapeHtml(establishment.responsible)}
+      </p>
+
+      <p>
+        <strong>Contacto:</strong>
+        ${escapeHtml(establishment.contact || "Não informado")}
+      </p>
+
+      <p>
+        <strong>Data de cadastro:</strong>
+        ${formatDate(establishment.createdAt)}
+      </p>
+
+    </div>
+
+
+    <div class="card profile-section">
+
+      <h2>Nível de risco automático</h2>
+
+      <span class="badge ${risk.class}">
+        ${risk.icon} Risco ${risk.level}
+      </span>
+
+      <p class="muted">
+        Classificação baseada na média de conformidade das
+        inspeções registadas neste estabelecimento.
+      </p>
+
+      <div class="progress">
+        <div class="progress-bar"
+             style="width:${stats.average}%">
+        </div>
+      </div>
+
+      <p class="muted">
+        Conformidade atual: ${stats.average}%
+      </p>
+
+    </div>
+
+
+    <div class="card profile-section">
+
+      <h2>Última inspeção</h2>
+
+      ${
+        lastInspection
+        ?
+        `
+        <div class="list-item">
+
+          <strong>
+            ${formatDate(lastInspection.date)}
+          </strong>
+
+          <p class="muted">
+            Responsável:
+            ${escapeHtml(lastInspection.responsible)}
+          </p>
+
+          <span class="badge ${getRisk(lastInspection.compliance).class}">
+            ${getRisk(lastInspection.compliance).icon}
+            ${lastInspection.compliance}% ·
+            ${getRisk(lastInspection.compliance).level}
+          </span>
+
+          <div class="progress">
+            <div class="progress-bar"
+                 style="width:${lastInspection.compliance}%">
+            </div>
+          </div>
+
+        </div>
+        `
+        :
+        `
+        <div class="empty">
+          Ainda não existe nenhuma inspeção para este estabelecimento.
+        </div>
+        `
+      }
+
+    </div>
+
+
+    <div class="card profile-section">
+
+      <h2>Evolução da conformidade</h2>
+
+      ${
+        stats.inspectionsList.length
+        ?
+        stats.inspectionsList.slice(0,10).map(function(item){
+
+          const itemRisk = getRisk(item.compliance);
+
+          return `
+
+            <div class="list-item">
+
+              <div style="display:flex;justify-content:space-between;gap:10px">
+
+                <strong>
+                  ${formatDate(item.date)}
+                </strong>
+
+                <span class="badge ${itemRisk.class}">
+                  ${item.compliance}%
+                </span>
+
+              </div>
+
+              <div class="progress">
+
+                <div class="progress-bar"
+                     style="width:${item.compliance}%">
+                </div>
+
+              </div>
+
+            </div>
+
+          `;
+
+        }).join("")
+        :
+        `
+        <div class="empty">
+          Ainda não existem dados de evolução.
+        </div>
+        `
+      }
+
+    </div>
+
+
+    <div class="card profile-section">
+
+      <h2>Não conformidades</h2>
+
+      ${
+        stats.problemsList.length
+        ?
+        stats.problemsList.map(function(problem){
+
+          let problemClass = "red";
+
+          if(problem.status === "Em tratamento"){
+            problemClass = "yellow";
+          }
+
+          if(problem.status === "Resolvido"){
+            problemClass = "green";
+          }
+
+          return `
+
+            <div class="list-item">
+
+              <strong>
+                ${escapeHtml(problem.description)}
+              </strong>
+
+              <p class="muted">
+                Data: ${formatDate(problem.date)}<br>
+                Responsável: ${escapeHtml(problem.responsible)}
+              </p>
+
+              <span class="badge ${problemClass}">
+                ${escapeHtml(problem.status)}
+              </span>
+
+              <p class="muted">
+                <strong>Ação corretiva:</strong><br>
+                ${escapeHtml(problem.action)}
+              </p>
+
+            </div>
+
+          `;
+
+        }).join("")
+        :
+        `
+        <div class="empty">
+          Nenhuma não conformidade registada.
+        </div>
+        `
+      }
+
+    </div>
+
+
+    <div class="card profile-section">
+
+      <h2>Ações corretivas</h2>
+
+      ${
+        stats.problemsList.length
+        ?
+        stats.problemsList.map(function(problem){
+
+          return `
+
+            <div class="list-item">
+
+              <strong>
+                ${escapeHtml(problem.action)}
+              </strong>
+
+              <p class="muted">
+                Estado:
+                ${escapeHtml(problem.status)}
+              </p>
+
+            </div>
+
+          `;
+
+        }).join("")
+        :
+        `
+        <div class="empty">
+          Nenhuma ação corretiva registada.
+        </div>
+        `
+      }
+
+    </div>
+
+
+    <div class="card profile-section">
+
+      <h2>Taxa de resolução</h2>
+
+      <div class="stat">
+
+        <div class="stat-value">
+          ${resolutionRate}%
+        </div>
+
+        <div class="stat-label">
+          Das não conformidades foram resolvidas
+        </div>
+
+        <div class="progress">
+
+          <div class="progress-bar"
+               style="width:${resolutionRate}%">
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card profile-section">
+
+      <h2>Relatório do estabelecimento</h2>
+
+      <div class="table-wrap">
+
+        <table>
+
+          <tr>
+            <th>Indicador</th>
+            <th>Resultado</th>
+          </tr>
+
+          <tr>
+            <td>Estabelecimento</td>
+            <td>${escapeHtml(establishment.name)}</td>
+          </tr>
+
+          <tr>
+            <td>Localização</td>
+            <td>${escapeHtml(establishment.location)}</td>
+          </tr>
+
+          <tr>
+            <td>Inspeções</td>
+            <td>${stats.inspections}</td>
+          </tr>
+
+          <tr>
+            <td>Conformidade média</td>
+            <td>${stats.average}%</td>
+          </tr>
+
+          <tr>
+            <td>Risco</td>
+            <td>${risk.icon} ${risk.level}</td>
+          </tr>
+
+          <tr>
+            <td>Não conformidades</td>
+            <td>${totalProblems}</td>
+          </tr>
+
+          <tr>
+            <td>Resolvidas</td>
+            <td>${resolvedProblems}</td>
+          </tr>
+
+          <tr>
+            <td>Taxa de resolução</td>
+            <td>${resolutionRate}%</td>
+          </tr>
+
+        </table>
+
+      </div>
+
+    </div>
+
+
+    <button
+      class="btn btn-secondary full"
+      onclick="showPage('estabelecimentos')">
+      ← Voltar para estabelecimentos
+    </button>
+
+  `;
 
 }
 
 
-function renderProfile(id){
+function renderProfileIfOpen(){
 
-let e=db.establishments.find(x=>x.id===id);
+  const page = document.getElementById("page-perfil");
 
-let box=document.getElementById("profileContent");
+  if(!page || !page.classList.contains("active")){
+    return;
+  }
 
-if(!e){
-
-box.innerHTML=
-'<div class="empty">Estabelecimento não encontrado.</div>';
-
-return;
-
-}
-
-currentProfileId=id;
-
-let ins=
-getInspectionsForEstablishment(e)
-.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
-
-let pro=getProblemsForEstablishment(e);
-
-let temps=
-getTempsForEstablishment(e)
-.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
-
-let ev=getEvidenceForEstablishment(e);
-
-let avg=average(ins.map(i=>i.score));
-
-let risk=calculateRisk(e);
-
-let open=pro.filter(p=>p.status!=="Resolvido").length;
-
-let treat=pro.filter(p=>p.status==="Em tratamento").length;
-
-let res=pro.filter(p=>p.status==="Resolvido").length;
-
-let over=pro.filter(isProblemOverdue).length;
-
-let latest=ins[0];
-
-
-box.innerHTML=`
-
-<div class="actions no-print">
-
-<button class="secondary" onclick="go('estabelecimentos')">
-← Estabelecimentos
-</button>
-
-<button class="success" onclick="startInspectionFor('${e.id}')">
-Nova inspeção
-</button>
-
-<button class="warning" onclick="goToProblemsFor('${e.id}')">
-Ações corretivas
-</button>
-
-<button class="primary" onclick="generateReportForEstablishment('${e.id}')">
-Relatório profissional
-</button>
-
-</div>
-
-
-<div class="card">
-
-<h2>${esc(e.name)}</h2>
-
-<p>${esc(e.type||"Tipo não informado")}</p>
-
-<div class="grid">
-
-<div>
-<strong>Endereço</strong>
-<p>${esc(e.address||"—")}</p>
-</div>
-
-<div>
-<strong>Bairro</strong>
-<p>${esc(e.bairro||"—")}</p>
-</div>
-
-<div>
-<strong>Distrito</strong>
-<p>${esc(e.distrito||"—")}</p>
-</div>
-
-<div>
-<strong>Responsável</strong>
-<p>${esc(e.responsible||"—")}</p>
-</div>
-
-<div>
-<strong>Telefone</strong>
-<p>${esc(e.phone||"—")}</p>
-</div>
-
-</div>
-
-</div>
-
-
-<div class="stats">
-
-<div class="stat">
-Conformidade média
-<strong>${Math.round(avg)}%</strong>
-</div>
-
-<div class="stat">
-Inspeções
-<strong>${ins.length}</strong>
-</div>
-
-<div class="stat">
-Problemas abertos
-<strong>${open}</strong>
-</div>
-
-<div class="stat">
-Ações atrasadas
-<strong>${over}</strong>
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h3>Nível de risco</h3>
-
-<span class="badge ${risk.cls}">
-${risk.label}
-</span>
-
-</div>
-
-
-<div class="card">
-
-<h3>Estado das ações corretivas</h3>
-
-<div class="grid">
-
-<div class="stat">
-Abertas
-<strong>${open}</strong>
-</div>
-
-<div class="stat">
-Em tratamento
-<strong>${treat}</strong>
-</div>
-
-<div class="stat">
-Resolvidas
-<strong>${res}</strong>
-</div>
-
-<div class="stat">
-Atrasadas
-<strong>${over}</strong>
-</div>
-
-</div>
-
-${over?
-`
-<div class="alert">
-Existem ${over} ação(ões) corretiva(s) atrasada(s).
-</div>
-`
-:""}
-
-</div>
-
-
-<div class="card">
-
-<h3>Última inspeção</h3>
-
-${latest?
-
-`
-
-<p>
-<strong>Data:</strong>
-${formatDate(latest.date)}
-</p>
-
-<p>
-<strong>Inspetor:</strong>
-${esc(latest.inspector||"Não informado")}
-</p>
-
-<p>
-<strong>Responsável do estabelecimento:</strong>
-${esc(latest.responsible||e.responsible||"Não informado")}
-</p>
-
-<p>
-<strong>Conformidade:</strong>
-${latest.score}%
-</p>
-
-<span class="badge ${
-latest.score>=80?
-"green":
-latest.score>=60?
-"yellow":
-"red"
-}">
-${esc(latest.classification)}
-</span>
-
-<div class="actions">
-
-<button class="primary small"
-onclick="generateReportForInspection('${latest.id}')">
-Abrir relatório
-</button>
-
-</div>
-
-`
-
-:
-
-'<div class="empty">Ainda não existem inspeções.</div>'
-
-}
-
-</div>
-
-
-<div class="card">
-
-<h3>Evolução da conformidade</h3>
-
-${ins.length?
-
-ins.map(i=>
-`
-<div style="margin:12px 0">
-
-<div style="display:flex;justify-content:space-between">
-
-<span>${formatDate(i.date)}</span>
-
-<strong>${i.score}%</strong>
-
-</div>
-
-<div class="progress">
-<div style="width:${i.score}%"></div>
-</div>
-
-</div>
-`
-).join("")
-
-:
-
-'<div class="empty">Sem dados.</div>'
-
-}
-
-</div>
-
-
-<div class="card">
-
-<h3>Histórico de inspeções</h3>
-
-${ins.length?
-
-`
-
-<div class="table-wrap">
-
-<table>
-
-<thead>
-
-<tr>
-<th>Data</th>
-<th>Inspetor</th>
-<th>Resp. estabelecimento</th>
-<th>Conformidade</th>
-<th>Classificação</th>
-<th>Nº relatório</th>
-<th></th>
-</tr>
-
-</thead>
-
-<tbody>
-
-${ins.map(i=>
-
-`
-<tr>
-
-<td>${formatDate(i.date)}</td>
-
-<td>${esc(i.inspector||"Não informado")}</td>
-
-<td>${esc(i.responsible||e.responsible||"—")}</td>
-
-<td>${i.score}%</td>
-
-<td>${esc(i.classification)}</td>
-
-<td>${esc(getInspectionReportNumber(i))}</td>
-
-<td>
-
-<button class="primary small"
-onclick="generateReportForInspection('${i.id}')">
-Relatório
-</button>
-
-</td>
-
-</tr>
-`
-
-).join("")}
-
-</tbody>
-
-</table>
-
-</div>
-
-`
-
-:
-
-'<div class="empty">Sem inspeções.</div>'
-
-}
-
-</div>
-
-
-<div class="card">
-
-<h3>Ações corretivas</h3>
-
-${pro.length?
-
-`
-
-<div class="table-wrap">
-
-<table>
-
-<thead>
-
-<tr>
-<th>Problema</th>
-<th>Severidade</th>
-<th>Responsável</th>
-<th>Prazo</th>
-<th>Estado</th>
-<th>Resolução</th>
-<th>Conclusão</th>
-<th>Ação</th>
-<th></th>
-</tr>
-
-</thead>
-
-<tbody>
-
-${pro.map(p=>
-
-`
-<tr class="${isProblemOverdue(p)?"overdue":""}">
-
-<td>${esc(p.title)}</td>
-
-<td>
-<span class="badge ${getSeverityClass(p.severity)}">
-${esc(p.severity)}
-</span>
-</td>
-
-<td>${esc(p.responsible||"—")}</td>
-
-<td>${formatDate(p.deadline)}</td>
-
-<td>
-<span class="badge ${getProblemStatusClass(p)}">
-${esc(getProblemStatusLabel(p))}
-</span>
-</td>
-
-<td>${esc(p.resolution||"—")}</td>
-
-<td>${formatDate(p.resolutionDate)}</td>
-
-<td>${esc(p.action||"—")}</td>
-
-<td>
-<button class="primary small"
-onclick="openAction('${p.id}')">
-Gerir
-</button>
-</td>
-
-</tr>
-`
-
-).join("")}
-
-</tbody>
-
-</table>
-
-</div>
-
-`
-
-:
-
-'<div class="empty">Nenhuma ação corretiva registada.</div>'
-
-}
-
-</div>
-
-
-<div class="card">
-
-<h3>Histórico de temperaturas</h3>
-
-${temps.length?
-
-`
-
-<div class="table-wrap">
-
-<table>
-
-<thead>
-
-<tr>
-<th>Data</th>
-<th>Item</th>
-<th>Temperatura</th>
-<th>Avaliação</th>
-</tr>
-
-</thead>
-
-<tbody>
-
-${temps.map(t=>
-
-`
-<tr>
-
-<td>${formatDate(t.date)}</td>
-
-<td>${esc(t.item)}</td>
-
-<td>${t.value} °C</td>
-
-<td>
-
-<span class="badge ${
-t.evaluation==="Adequada"?
-"green":
-t.evaluation==="Atenção"?
-"yellow":
-"red"
-}">
-
-${esc(t.evaluation)}
-
-</span>
-
-</td>
-
-</tr>
-`
-
-).join("")}
-
-</tbody>
-
-</table>
-
-</div>
-
-`
-
-:
-
-'<div class="empty">Sem registos de temperatura.</div>'
-
-}
-
-</div>
-
-
-<div class="card">
-
-<h3>Evidências fotográficas</h3>
-
-${ev.length?
-
-`
-
-<div class="photo-grid">
-
-${ev.map(x=>
-
-`
-<div>
-
-<img src="${x.photo}" alt="${esc(x.description)}">
-
-<small>
-${esc(x.description)}
-<br>
-${formatDate(x.date)}
-</small>
-
-</div>
-`
-
-).join("")}
-
-</div>
-
-`
-
-:
-
-'<div class="empty">Nenhuma evidência.</div>'
-
-}
-
-</div>
-
-`;
+  /*
+   O perfil atual pode ser reconstruído a partir
+   do título exibido.
+  */
 
 }
 
 
-function renderEvidence(){
+/* =========================================================
+   SEGURANÇA DE TEXTO
+========================================================= */
 
-let b=document.getElementById("evidenceGrid");
+function escapeHtml(value){
 
-if(!db.evidences.length){
+  if(value === undefined || value === null){
+    return "";
+  }
 
-b.innerHTML=
-'<div class="empty">Nenhuma evidência registada.</div>';
-
-return;
-
-}
-
-b.innerHTML=`
-
-<div class="photo-grid">
-
-${db.evidences.slice().reverse().map(e=>
-
-`
-<div>
-
-<img src="${e.photo}" alt="${esc(e.description)}">
-
-<strong>${esc(e.establishmentName)}</strong>
-
-<p>${esc(e.description)}</p>
-
-<small>${formatDate(e.date)}</small>
-
-</div>
-`
-
-).join("")}
-
-</div>
-
-`;
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
 
 
-function renderTemperatureTable(){
-
-let b=document.getElementById("temperatureTable");
-
-if(!db.temps.length){
-
-b.innerHTML=
-'<div class="empty">Nenhum registo de temperatura.</div>';
-
-return;
-
-}
-
-b.innerHTML=`
-
-<div class="table-wrap">
-
-<table>
-
-<thead>
-
-<tr>
-<th>Data</th>
-<th>Estabelecimento</th>
-<th>Item</th>
-<th>Temperatura</th>
-<th>Avaliação</th>
-</tr>
-
-</thead>
-
-<tbody>
-
-${db.temps.slice().reverse().slice(0,50).map(t=>
-
-`
-<tr>
-
-<td>${formatDate(t.date)}</td>
-
-<td>${esc(t.establishmentName)}</td>
-
-<td>${esc(t.item)}</td>
-
-<td>${t.value} °C</td>
-
-<td>
-
-<span class="badge ${
-t.evaluation==="Adequada"?
-"green":
-t.evaluation==="Atenção"?
-"yellow":
-"red"
-}">
-
-${esc(t.evaluation)}
-
-</span>
-
-</td>
-
-</tr>
-`
-
-).join("")}
-
-</tbody>
-
-</table>
-
-</div>
-
-`;
-
-}
-
-
-function renderDashboard(){
-
-let avg=average(db.inspections.map(i=>i.score));
-
-let over=getOverdueProblems();
-
-document.getElementById("dashEstablishments").textContent=
-db.establishments.length;
-
-document.getElementById("dashInspections").textContent=
-db.inspections.length;
-
-document.getElementById("dashOpen").textContent=
-getOpenProblems().length;
-
-document.getElementById("dashOverdue").textContent=
-over.length;
-
-document.getElementById("dashAverage").textContent=
-Math.round(avg)+"%";
-
-
-document.getElementById("dashboardActions").innerHTML=
-
-`
-<div class="grid">
-
-<div class="stat">
-Abertas
-<strong>${getOpenProblems().length}</strong>
-</div>
-
-<div class="stat">
-Em tratamento
-<strong>${getProblemsInTreatment().length}</strong>
-</div>
-
-<div class="stat">
-Resolvidas
-<strong>${getResolvedProblems().length}</strong>
-</div>
-
-<div class="stat">
-Atrasadas
-<strong>${over.length}</strong>
-</div>
-
-</div>
-`;
-
-
-let attention=
-db.problems.filter(p=>
-p.status!=="Resolvido"&&
-(
-isProblemOverdue(p)||
-p.status==="Em tratamento"||
-p.severity==="Crítica"||
-p.severity==="Alta"
-)
-);
-
-
-document.getElementById("dashboardOverdue").innerHTML=
-
-attention.length?
-
-attention.map(p=>
-
-`
-<div class="action-box">
-
-<strong>${esc(p.title)}</strong>
-
-<p>
-
-${esc(p.establishmentName)}
-
-<br>
-
-Responsável:
-${esc(p.responsible||"Não definido")}
-
-<br>
-
-Prazo:
-${formatDate(p.deadline)}
-
-<br>
-
-Estado:
-<span class="badge ${getProblemStatusClass(p)}">
-${esc(getProblemStatusLabel(p))}
-</span>
-
-</p>
-
-<button class="primary small"
-onclick="openAction('${p.id}')">
-
-Gerir ação
-
-</button>
-
-</div>
-`
-
-).join("")
-
-:
-
-'<div class="empty">Não existem ações que precisem de atenção.</div>';
-
-}
-
-
-function renderHistory(){
-
-let b=document.getElementById("historyTable");
-
-if(!db.inspections.length){
-
-b.innerHTML=
-'<div class="empty">Nenhuma inspeção realizada.</div>';
-
-return;
-
-}
-
-let rows=[...db.inspections]
-.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
-
-b.innerHTML=`
-
-<div class="table-wrap">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>Data</th>
-<th>Estabelecimento</th>
-<th>Inspetor</th>
-<th>Resp. estabelecimento</th>
-<th>Conformidade</th>
-<th>Classificação</th>
-<th>Nº relatório</th>
-<th></th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-${rows.map(i=>
-
-`
-<tr>
-
-<td>${formatDate(i.date)}</td>
-
-<td>${esc(i.establishmentName)}</td>
-
-<td>${esc(i.inspector||"Não informado")}</td>
-
-<td>${esc(i.responsible||"—")}</td>
-
-<td>${i.score}%</td>
-
-<td>${esc(i.classification)}</td>
-
-<td>${esc(getInspectionReportNumber(i))}</td>
-
-<td>
-
-<button class="primary small"
-onclick="generateReportForInspection('${i.id}')">
-
-Relatório
-
-</button>
-
-</td>
-
-</tr>
-`
-
-).join("")}
-
-</tbody>
-
-</table>
-
-</div>
-
-`;
-
-}
-
-
-function renderHome(){
-
-document.getElementById("homeEstablishments").textContent=
-db.establishments.length;
-
-document.getElementById("homeInspections").textContent=
-db.inspections.length;
-
-document.getElementById("homeOpenProblems").textContent=
-getOpenProblems().length;
-
-document.getElementById("homeOverdue").textContent=
-getOverdueProblems().length;
-
-
-let a=getOverdueProblems();
-
-let b=document.getElementById("homeActions");
-
-b.innerHTML=
-
-a.length?
-
-a.slice(0,5).map(p=>
-
-`
-<div class="action-box">
-
-<strong>${esc(p.title)}</strong>
-
-<p>
-
-${esc(p.establishmentName)}
-
-<br>
-
-Responsável:
-${esc(p.responsible||"Não definido")}
-
-<br>
-
-Prazo:
-${formatDate(p.deadline)}
-
-</p>
-
-<button class="primary small"
-onclick="openAction('${p.id}')">
-
-Gerir ação
-
-</button>
-
-</div>
-`
-
-).join("")
-
-:
-
-'<div class="empty">Não existem ações atrasadas.</div>';
-
-}
-
-
-function generateReportNumber(){
-
-let d=new Date();
-
-let y=d.getFullYear();
-
-let m=String(d.getMonth()+1).padStart(2,"0");
-
-let day=String(d.getDate()).padStart(2,"0");
-
-let time=
-String(d.getHours()).padStart(2,"0")+
-String(d.getMinutes()).padStart(2,"0")+
-String(d.getSeconds()).padStart(2,"0");
-
-let u=
-Math.random()
-.toString(36)
-.slice(2,6)
-.toUpperCase();
-
-return`FSM-${y}${m}${day}-${time}-${u}`;
-
-}
-
-
-function getInspectionReportNumber(i){
-
-if(i.reportNumber)
-return i.reportNumber;
-
-i.reportNumber=generateReportNumber();
-
-if(!i.reportVersion)
-i.reportVersion="1.0";
-
-saveDB();
-
-return i.reportNumber;
-
-}
-
-
-function getClassificationClass(c){
-
-return c==="Conforme"?
-"green":
-c==="Parcialmente conforme"?
-"yellow":
-c==="Não conforme"?
-"red":
-"gray";
-
-}
-
-
-function getSeverityClass(s){
-
-return s==="Crítica"||s==="Alta"?
-"red":
-s==="Média"?
-"yellow":
-"green";
-
-}
-
-
-function getReportActionClass(s){
-
-return s==="Crítica"?
-"report-action-critical":
-s==="Alta"?
-"report-action-high":
-s==="Média"?
-"report-action-medium":
-"report-action-low";
-
-}
-
-
-function generateReportForEstablishment(id){
-
-let e=db.establishments.find(x=>x.id===id);
-
-if(!e)return;
-
-let ins=
-getInspectionsForEstablishment(e)
-.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
-
-if(ins[0]){
-
-generateReportForInspection(ins[0].id);
-return;
-
-}
-
-let problems=getProblemsForEstablishment(e);
-
-let temps=getTempsForEstablishment(e);
-
-let ev=getEvidenceForEstablishment(e);
-
-let risk=calculateRisk(e);
-
-document.getElementById("reportContent").innerHTML=
-generateReportHTML(e,null,problems,temps,ev,risk);
-
-document.getElementById("reportModal").classList.add("open");
-
-}
-
-
-function generateReportForInspection(id){
-
-let i=db.inspections.find(x=>x.id===id);
-
-if(!i)return;
-
-let num=getInspectionReportNumber(i);
-
-if(!i.reportVersion){
-
-i.reportVersion="1.0";
-saveDB();
-
-}
-
-let e=
-db.establishments.find(x=>x.id===i.establishmentId)||
-db.establishments.find(x=>sameName(x.name,i.establishmentName))||
-{
-id:"",
-name:i.establishmentName,
-type:"",
-address:"",
-bairro:"",
-distrito:"",
-responsible:"",
-phone:""
-};
-
-let problems=
-db.problems.filter(p=>p.inspectionId===i.id);
-
-let temps=
-getTempsForEstablishment(e);
-
-let ev=
-getEvidenceForEstablishment(e);
-
-let risk=
-calculateRisk(e);
-
-document.getElementById("reportContent").innerHTML=
-generateReportHTML(
-e,
-i,
-problems,
-temps,
-ev,
-risk,
-num
-);
-
-document.getElementById("reportModal").classList.add("open");
-
-}
-
-
-function generateReportHTML(
-e,
-inspection,
-problems,
-temps,
-evidence,
-risk,
-existingReportNumber=""
-){
-
-let reportNumber=
-existingReportNumber||
-(inspection?
-getInspectionReportNumber(inspection):
-generateReportNumber());
-
-let avg=
-inspection?
-Number(inspection.score||0):
-0;
-
-let classification=
-inspection?
-inspection.classification:
-"Sem inspeção";
-
-let checklist=
-inspection&&Array.isArray(inspection.checklist)?
-inspection.checklist:
-[];
-
-let conformes=
-checklist.filter(c=>c.checked).length;
-
-let nonConformes=
-checklist.filter(c=>!c.checked).length;
-
-let openProblems=
-problems.filter(p=>p.status!=="Resolvido").length;
-
-let resolvedProblems=
-problems.filter(p=>p.status==="Resolvido").length;
-
-let overdueProblems=
-problems.filter(isProblemOverdue).length;
-
-let reportDate=
-formatDateTime();
-
-let inspector=
-inspection?
-(inspection.inspector||"Não informado"):
-"Não informado";
-
-let establishmentResponsible=
-inspection?
-(inspection.responsible||e.responsible||"Não informado"):
-(e.responsible||"Não informado");
-
-
-let complianceText=
-avg>=80?
-"O resultado global da checklist encontra-se na faixa de conformidade.":
-avg>=60?
-"O resultado global indica conformidade parcial e requer acompanhamento das não conformidades identificadas.":
-"O resultado global indica não conformidade e requer medidas corretivas prioritárias.";
-
-
-let conclusionExtra=
-openProblems>0?
-`Permanecem ${openProblems} ação(ões) corretiva(s) não resolvida(s) associada(s) diretamente a esta inspeção.`:
-"Todas as ações corretivas diretamente associadas a esta inspeção encontram-se resolvidas ou não foram registadas.";
-
-
-return`
-
-<div class="report-document">
-
-<div class="report-header">
-
-<h1>FoodSafe Moz</h1>
-
-<h2>
-RELATÓRIO DE INSPEÇÃO DE SEGURANÇA ALIMENTAR
-</h2>
-
-<p>
-Alimentos seguros, famílias protegidas
-</p>
-
-<div class="report-number">
-Nº ${esc(reportNumber)}
-</div>
-
-</div>
-
-
-<div class="report-control">
-
-<div class="report-control-box">
-<small>Número do documento</small>
-<strong>${esc(reportNumber)}</strong>
-</div>
-
-<div class="report-control-box">
-<small>Versão</small>
-<strong>${esc(inspection?inspection.reportVersion||"1.0":"1.0")}</strong>
-</div>
-
-<div class="report-control-box">
-<small>Gerado em</small>
-<strong>${esc(reportDate)}</strong>
-</div>
-
-</div>
-
-
-<div class="report-summary">
-
-<div class="report-summary-box">
-<small>Conformidade</small>
-<strong>${inspection?avg+"%":"—"}</strong>
-</div>
-
-<div class="report-summary-box">
-<small>Classificação</small>
-<strong style="font-size:14px">
-
-${inspection?
-`
-<span class="badge ${getClassificationClass(classification)}">
-${esc(classification)}
-</span>
-`
-:
-"—"
-}
-
-</strong>
-</div>
-
-<div class="report-summary-box">
-<small>Nível de risco</small>
-<strong style="font-size:14px">
-
-<span class="badge ${risk.cls}">
-${esc(risk.label)}
-</span>
-
-</strong>
-</div>
-
-<div class="report-summary-box">
-<small>Conformes</small>
-<strong>${conformes}</strong>
-</div>
-
-<div class="report-summary-box">
-<small>Não conformes</small>
-<strong>${nonConformes}</strong>
-</div>
-
-<div class="report-summary-box">
-<small>Ações abertas</small>
-<strong>${openProblems}</strong>
-</div>
-
-</div>
-
-
-${inspection?
-
-`
-<div class="report-section">
-
-<h3>1. Resultado global da inspeção</h3>
-
-<strong>
-Conformidade: ${avg}%
-</strong>
-
-<div class="report-progress">
-<div style="width:${Math.max(0,Math.min(100,avg))}%"></div>
-</div>
-
-<p>
-
-<span class="badge ${getClassificationClass(classification)}">
-${esc(classification)}
-</span>
-
-</p>
-
-<div class="report-note">
-${esc(complianceText)}
-</div>
-
-</div>
-`
-
-:
-""}
-
-
-<div class="report-section">
-
-<h3>
-${inspection?
-"2. Identificação do estabelecimento":
-"1. Identificação do estabelecimento"}
-</h3>
-
-<table class="report-table">
-
-<tbody>
-
-<tr>
-<th>Nome</th>
-<td>${esc(e.name)}</td>
-</tr>
-
-<tr>
-<th>Tipo</th>
-<td>${esc(e.type||"—")}</td>
-</tr>
-
-<tr>
-<th>Endereço</th>
-<td>${esc(e.address||"—")}</td>
-</tr>
-
-<tr>
-<th>Bairro</th>
-<td>${esc(e.bairro||"—")}</td>
-</tr>
-
-<tr>
-<th>Distrito</th>
-<td>${esc(e.distrito||"—")}</td>
-</tr>
-
-<tr>
-<th>Responsável</th>
-<td>${esc(establishmentResponsible)}</td>
-</tr>
-
-<tr>
-<th>Telefone</th>
-<td>${esc(e.phone||"—")}</td>
-</tr>
-
-</tbody>
-
-</table>
-
-</div>
-
-
-<div class="report-section">
-
-<h3>
-${inspection?
-"3. Dados da inspeção":
-"2. Dados do relatório"}
-</h3>
-
-<table class="report-table">
-
-<tbody>
-
-<tr>
-<th>Número do relatório</th>
-<td>${esc(reportNumber)}</td>
-</tr>
-
-<tr>
-<th>Data da inspeção</th>
-<td>${inspection?formatDate(inspection.date):"Não realizada"}</td>
-</tr>
-
-<tr>
-<th>Responsável pela inspeção</th>
-<td>${esc(inspector)}</td>
-</tr>
-
-<tr>
-<th>Responsável do estabelecimento</th>
-<td>${esc(establishmentResponsible)}</td>
-</tr>
-
-<tr>
-<th>Conformidade</th>
-<td>${inspection?avg+"%":"—"}</td>
-</tr>
-
-<tr>
-<th>Classificação</th>
-<td>${inspection?esc(classification):"Sem inspeção"}</td>
-</tr>
-
-<tr>
-<th>Nível de risco</th>
-
-<td>
-
-<span class="badge ${risk.cls}">
-${esc(risk.label)}
-</span>
-
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-</div>
-
-
-${inspection?
-
-`
-
-<div class="report-section">
-
-<h3>4. Resultado da checklist</h3>
-
-<p>
-
-<strong>Total de itens:</strong>
-${checklist.length}
-
-|
-
-<strong>Conformes:</strong>
-${conformes}
-
-|
-
-<strong>Não conformes:</strong>
-${nonConformes}
-
-</p>
-
-<table class="report-table">
-
-<thead>
-
-<tr>
-<th>Nº</th>
-<th>Item de verificação</th>
-<th>Resultado</th>
-</tr>
-
-</thead>
-
-<tbody>
-
-${checklist.length?
-
-checklist.map((c,n)=>
-
-`
-<tr class="${c.checked?"report-conform":"report-nonconform"}">
-
-<td>${n+1}</td>
-
-<td>${esc(c.item)}</td>
-
-<td>
-
-<span class="badge ${c.checked?"green":"red"}">
-
-${c.checked?
-"Conforme":
-"Não conforme"}
-
-</span>
-
-</td>
-
-</tr>
-`
-
-).join("")
-
-:
-
-`
-<tr>
-<td colspan="3">
-Sem dados de checklist.
-</td>
-</tr>
-`
-
-}
-
-</tbody>
-
-</table>
-
-</div>
-
-`
-
-:
-""}
-
-
-<div class="report-section">
-
-<h3>
-${inspection?
-"5. Não conformidades e ações corretivas":
-"3. Não conformidades e ações corretivas"}
-</h3>
-
-
-<div class="report-control">
-
-<div class="report-control-box">
-<small>Abertas</small>
-<strong>${openProblems}</strong>
-</div>
-
-<div class="report-control-box">
-<small>Resolvidas</small>
-<strong>${resolvedProblems}</strong>
-</div>
-
-<div class="report-control-box">
-<small>Atrasadas</small>
-<strong>${overdueProblems}</strong>
-</div>
-
-</div>
-
-
-${problems.length?
-
-problems.map(p=>
-
-`
-<div class="report-action-card ${getReportActionClass(p.severity)}">
-
-<h4>${esc(p.title)}</h4>
-
-<div class="report-action-grid">
-
-<div>
-
-<strong>Severidade:</strong>
-
-<br>
-
-<span class="badge ${getSeverityClass(p.severity)}">
-${esc(p.severity)}
-</span>
-
-</div>
-
-
-<div>
-
-<strong>Estado:</strong>
-
-<br>
-
-<span class="badge ${getProblemStatusClass(p)}">
-${esc(getProblemStatusLabel(p))}
-</span>
-
-</div>
-
-
-<div>
-
-<strong>Responsável:</strong>
-
-<br>
-
-${esc(p.responsible||"Não definido")}
-
-</div>
-
-
-<div>
-
-<strong>Prazo:</strong>
-
-<br>
-
-${formatDate(p.deadline)}
-
-</div>
-
-
-<div>
-
-<strong>Data de resolução:</strong>
-
-<br>
-
-${formatDate(p.resolutionDate)}
-
-</div>
-
-
-<div>
-
-<strong>Data de conclusão:</strong>
-
-<br>
-
-${formatDate(p.completedAt)}
-
-</div>
-
-</div>
-
-
-<p>
-
-<strong>Ação corretiva:</strong>
-
-<br>
-
-${esc(
-p.action||
-"Nenhuma ação corretiva definida."
-)}
-
-</p>
-
-
-<p>
-
-<strong>Resolução / verificação:</strong>
-
-<br>
-
-${esc(
-p.resolution||
-"Não registada."
-)}
-
-</p>
-
-
-</div>
-
-`).join("")
-
-:
-
-`
-<div class="report-note">
-
-Não foram registadas não conformidades diretamente associadas a esta inspeção.
-
-</div>
-`
-
-}
-
-</div>
-
-
-<div class="report-section">
-
-<h3>
-${inspection?
-"6. Controlo de temperaturas":
-"4. Controlo de temperaturas"}
-</h3>
-
-<div class="report-note">
-
-Os registos abaixo correspondem aos registos de temperatura disponíveis para este estabelecimento.
-
-</div>
-
-${temps.length?
-
-`
-
-<table class="report-table">
-
-<thead>
-
-<tr>
-<th>Data</th>
-<th>Item / equipamento</th>
-<th>Temperatura</th>
-<th>Avaliação</th>
-</tr>
-
-</thead>
-
-<tbody>
-
-${temps.map(t=>
-
-`
-<tr>
-
-<td>${formatDate(t.date)}</td>
-
-<td>${esc(t.item)}</td>
-
-<td>${t.value} °C</td>
-
-<td>
-
-<span class="badge ${
-t.evaluation==="Adequada"?
-"green":
-t.evaluation==="Atenção"?
-"yellow":
-"red"
-}">
-
-${esc(t.evaluation)}
-
-</span>
-
-</td>
-
-</tr>
-`
-
-).join("")}
-
-</tbody>
-
-</table>
-
-`
-
-:
-
-"<p>Nenhum registo de temperatura disponível.</p>"
-
-}
-
-</div>
-
-
-<div class="report-section">
-
-<h3>
-${inspection?
-"7. Evidências fotográficas":
-"5. Evidências fotográficas"}
-</h3>
-
-<div class="report-note">
-
-Evidências disponíveis no sistema para este estabelecimento.
-
-</div>
-
-${evidence.length?
-
-`
-
-<div class="photo-grid">
-
-${evidence.map(x=>
-
-`
-<div class="report-photo-card">
-
-<img
-class="report-photo"
-src="${x.photo}"
-alt="${esc(x.description)}"
->
-
-<div class="report-photo-caption">
-
-<strong>
-${esc(x.description)}
-</strong>
-
-<br>
-
-<small>
-Data: ${formatDate(x.date)}
-</small>
-
-</div>
-
-</div>
-`
-
-).join("")}
-
-</div>
-
-`
-
-:
-
-"<p>Nenhuma evidência fotográfica disponível.</p>"
-
-}
-
-</div>
-
-
-<div class="report-section">
-
-<h3>
-${inspection?
-"8. Observações":
-"6. Observações"}
-</h3>
-
-<p>
-
-${inspection?
-esc(inspection.observation||"Nenhuma observação registada."):
-"Não existe inspeção associada a este relatório."}
-
-</p>
-
-</div>
-
-
-${inspection?
-
-`
-
-<div class="report-section">
-
-<h3>9. Conclusão da inspeção</h3>
-
-<div class="report-conclusion">
-
-<p>
-
-A inspeção realizada em
-<strong>${formatDate(inspection.date)}</strong>
-apresentou uma conformidade global de
-<strong>${avg}%</strong>,
-sendo classificada como
-<strong>${esc(classification)}</strong>.
-
-</p>
-
-
-<p>
-
-Foram avaliados
-<strong>${checklist.length}</strong>
-item(ns), dos quais
-<strong>${conformes}</strong>
-foram considerados conformes e
-<strong>${nonConformes}</strong>
-não conformes.
-
-</p>
-
-
-<p>
-${esc(conclusionExtra)}
-</p>
-
-
-${overdueProblems?
-
-`
-<p>
-
-<strong>Atenção:</strong>
-
-existem ${overdueProblems}
-ação(ões) corretiva(s) diretamente associada(s) a esta inspeção cujo prazo se encontra ultrapassado.
-
-</p>
-`
-
-:
-""}
-
-</div>
-
-</div>
-
-`
-
-:
-
-`
-
-<div class="report-section">
-
-<h3>7. Conclusão</h3>
-
-<div class="report-conclusion">
-
-<p>
-
-Este documento apresenta os registos disponíveis para o estabelecimento no sistema FoodSafe Moz.
-
-</p>
-
-</div>
-
-</div>
-
-`}
-
-
-<div class="report-section">
-
-<h3>
-${inspection?
-"10. Assinaturas":
-"8. Assinaturas"}
-</h3>
-
-<div class="grid">
-
-<div class="signature-box">
-
-<div class="signature-line">
-&nbsp;
-</div>
-
-<br>
-
-<strong>
-Responsável pela inspeção
-</strong>
-
-<br>
-
-${esc(inspector)}
-
-</div>
-
-
-<div class="signature-box">
-
-<div class="signature-line">
-&nbsp;
-</div>
-
-<br>
-
-<strong>
-Responsável do estabelecimento
-</strong>
-
-<br>
-
-${esc(establishmentResponsible)}
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="report-footer">
-
-<strong>FoodSafe Moz</strong>
-
-<br>
-
-Alimentos seguros, famílias protegidas
-
-<br><br>
-
-Nº do relatório:
-${esc(reportNumber)}
-
-<br>
-
-Documento gerado em:
-${esc(reportDate)}
-
-<br>
-
-Documento gerado pelo sistema FoodSafe Moz.
-
-</div>
-
-
-</div>
-
-`;
-
-}
-
-
-function closeReport(){
-
-document.getElementById("reportModal").classList.remove("open");
-
-}
-
-
-function renderAll(){
-
-fillEstablishmentSelects();
-
-renderHome();
-
-renderTemperatureTable();
-
-renderProblems();
-
-renderEvidence();
-
-renderDashboard();
-
-renderHistory();
-
-renderEstablishments();
-
-let c=document.getElementById("checklist");
-
-if(c&&!c.children.length)
-buildChecklist();
-
-if(currentProfileId){
-
-let p=document.getElementById("page-perfil");
-
-if(p&&p.classList.contains("active"))
-renderProfile(currentProfileId);
-
-}
-
-}
-
-
-document.addEventListener("DOMContentLoaded",()=>{
-
-ensureUsers();
-
-loadDB();
-
-document.getElementById("inspectionDate").value=today();
-
-if(!document.getElementById("checklist").children.length)
-buildChecklist();
-
-if(localStorage.getItem(SESSION_KEY))
-openApp();
+/* =========================================================
+   INICIALIZAÇÃO
+========================================================= */
+
+document.addEventListener("DOMContentLoaded",function(){
+
+  const dateInput =
+    document.getElementById("inspectionDate");
+
+  if(dateInput){
+    dateInput.value = today();
+  }
+
+  updateHome();
+  renderTemperatureHistory();
+  renderProblems();
+  renderEvidences();
+  renderDashboard();
+  renderHistory();
+  renderEstablishments();
 
 });
 
 
-window.addEventListener("load",()=>{
+/* =========================================================
+   EVITAR COMPORTAMENTO INDESEJADO NO IPHONE
+========================================================= */
 
-loadDB();
+document.addEventListener("click",function(event){
 
-if(localStorage.getItem(SESSION_KEY))
-renderAll();
+  const button = event.target.closest("button");
 
-});
+  if(!button){
+    return;
+  }
+
+  /*
+   Não impedir o toque.
+   Apenas evita comportamento padrão quando necessário.
+  */
+
+},false);
 
 </script>
 
