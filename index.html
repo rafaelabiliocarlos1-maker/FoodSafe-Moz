@@ -871,14 +871,13 @@ Quando houver sessão online, os dados serão sincronizados automaticamente.
 
 <div id="toast" class="toast"></div>
 
-<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 "use strict";
 
 /* =========================================================
-   FOODSAFE MOZ — BASE LOCAL + SUPABASE
+   FOODSAFE MOZ — LOCAL + SUPABASE
 ========================================================= */
 
 const STORAGE_KEY="foodsafemoz_v2";
@@ -893,22 +892,22 @@ let cloudAuthenticated=false;
 let syncInProgress=false;
 
 try{
-  if(window.supabase && window.supabase.createClient){
-    supabaseClient=window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
-  }
+if(window.supabase&&window.supabase.createClient){
+supabaseClient=window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+}
 }catch(error){
-  console.error("Supabase não inicializado:",error);
+console.error("Supabase não inicializado:",error);
 }
 
 let db={
-  inspections:[],
-  temperatures:[],
-  problems:[],
-  evidences:[],
-  establishments:[]
+inspections:[],
+temperatures:[],
+problems:[],
+evidences:[],
+establishments:[]
 };
 
 let users=[];
@@ -969,9 +968,9 @@ localStorage.setItem(USERS_KEY,JSON.stringify(users));
 }
 
 function roleLabel(role){
-if(role==="admin")return "Administrador";
-if(role==="inspector")return "Inspector";
-if(role==="responsavel")return "Responsável";
+if(role==="admin")return"Administrador";
+if(role==="inspector")return"Inspector";
+if(role==="responsavel")return"Responsável";
 return role||"Utilizador";
 }
 
@@ -997,6 +996,64 @@ el.classList.add("sync");
 else{
 el.textContent="● Offline";
 }
+
+}
+
+/* =========================================================
+   UTILIZADOR SUPABASE REAL
+========================================================= */
+
+async function getCloudUser(){
+
+if(!supabaseClient)return null;
+
+try{
+
+const {data,error}=await supabaseClient.auth.getUser();
+
+if(error){
+console.error("Erro ao obter utilizador Supabase:",error);
+return null;
+}
+
+return data?.user||null;
+
+}catch(error){
+console.error(error);
+return null;
+}
+
+}
+
+async function getCloudUserId(){
+
+const authUser=await getCloudUser();
+
+return authUser?.id||null;
+
+}
+
+/*
+ Verifica se existe uma sessão Supabase real.
+ Não usa currentUser.id porque o utilizador local pode ter
+ IDs como "u_admin", enquanto o Supabase usa UUID.
+*/
+async function ensureCloudSession(){
+
+if(!supabaseClient)return null;
+
+const session=await getSupabaseSession();
+
+if(!session){
+cloudAuthenticated=false;
+setOnlineStatus("offline");
+return null;
+}
+
+cloudAuthenticated=true;
+
+return session;
+
 }
 
 /* =========================================================
@@ -1008,6 +1065,7 @@ async function getSupabaseSession(){
 if(!supabaseClient)return null;
 
 try{
+
 const {data,error}=await supabaseClient.auth.getSession();
 
 if(error){
@@ -1021,6 +1079,7 @@ return data?.session||null;
 console.error(error);
 return null;
 }
+
 }
 
 async function trySupabaseLogin(identifier,password){
@@ -1040,6 +1099,7 @@ email=localUser.email;
 }else{
 return false;
 }
+
 }
 
 try{
@@ -1062,13 +1122,15 @@ setOnlineStatus("online");
 const authUser=data.user;
 
 let profile=users.find(u=>
-u.email &&
-String(u.email).toLowerCase()===String(authUser.email||"").toLowerCase()
+u.email&&
+String(u.email).toLowerCase()===
+String(authUser.email||"").toLowerCase()
 );
 
 if(profile){
+
 currentUser=profile;
-localStorage.setItem(SESSION_KEY,profile.id);
+
 }else{
 
 currentUser={
@@ -1083,10 +1145,13 @@ createdAt:new Date().toISOString()
 
 users.push(currentUser);
 saveUsers();
-localStorage.setItem(SESSION_KEY,currentUser.id);
+
 }
 
+localStorage.setItem(SESSION_KEY,currentUser.id);
+
 return true;
+
 }
 
 }catch(error){
@@ -1094,6 +1159,7 @@ console.error("Erro de login Supabase:",error);
 }
 
 return false;
+
 }
 
 async function restoreSupabaseSession(){
@@ -1110,12 +1176,15 @@ setOnlineStatus("online");
 const authUser=session.user;
 
 let profile=users.find(u=>
-u.email &&
-String(u.email).toLowerCase()===String(authUser.email||"").toLowerCase()
+u.email&&
+String(u.email).toLowerCase()===
+String(authUser.email||"").toLowerCase()
 );
 
 if(profile){
+
 currentUser=profile;
+
 }else{
 
 currentUser={
@@ -1130,11 +1199,13 @@ createdAt:new Date().toISOString()
 
 users.push(currentUser);
 saveUsers();
+
 }
 
 localStorage.setItem(SESSION_KEY,currentUser.id);
 
 return true;
+
 }
 
 async function supabaseLogout(){
@@ -1149,6 +1220,7 @@ console.error(error);
 
 cloudAuthenticated=false;
 setOnlineStatus("offline");
+
 }
 
 /* =========================================================
@@ -1212,9 +1284,11 @@ createdAt:new Date().toISOString()
 
 users.push(admin);
 saveUsers();
+
 }
 
 renderChecklist();
+
 }
 
 /* =========================================================
@@ -1226,26 +1300,20 @@ async function login(username,password){
 const normalized=(username||"").trim().toLowerCase();
 const pass=password||"";
 
-/*
- Primeiro tenta autenticação online.
-*/
 const online=await trySupabaseLogin(normalized,pass);
 
 if(online)return true;
 
-/*
- Fallback local.
-*/
 let user=users.find(u=>
 (
-String(u.username||"").toLowerCase()===normalized ||
+String(u.username||"").toLowerCase()===normalized||
 String(u.email||"").toLowerCase()===normalized
 )&&
-String(u.password||"")===pass &&
+String(u.password||"")===pass&&
 u.active!==false
 );
 
-if(!user && normalized==="admin" && pass==="admin123"){
+if(!user&&normalized==="admin"&&pass==="admin123"){
 
 let admin=users.find(u=>u.role==="admin");
 
@@ -1276,6 +1344,7 @@ createdAt:new Date().toISOString()
 
 users.push(user);
 saveUsers();
+
 }
 
 }
@@ -1289,6 +1358,7 @@ setOnlineStatus("offline");
 localStorage.setItem(SESSION_KEY,user.id);
 
 return true;
+
 }
 
 async function doLogin(){
@@ -1303,6 +1373,7 @@ if(!username||!password){
 error.textContent="Preencha o utilizador e a palavra-passe.";
 error.classList.remove("hidden");
 return;
+
 }
 
 error.classList.add("hidden");
@@ -1314,6 +1385,7 @@ if(!ok){
 error.textContent="Utilizador, e-mail ou palavra-passe incorretos.";
 error.classList.remove("hidden");
 return;
+
 }
 
 openApp();
@@ -1349,6 +1421,7 @@ document.getElementById("loginScreen").classList.remove("hidden");
 
 document.getElementById("loginUser").value="";
 document.getElementById("loginPass").value="";
+
 }
 
 /* =========================================================
@@ -1370,7 +1443,8 @@ roleLabel(currentUser.role);
 function applyPermissions(){
 
 document.querySelectorAll(".admin-only").forEach(el=>{
-el.style.display=currentUser&&currentUser.role==="admin"?"":"none";
+el.style.display=
+currentUser&&currentUser.role==="admin"?"":"none";
 });
 
 }
@@ -1459,8 +1533,15 @@ async function cloudUpsertEstablishment(e){
 
 if(!cloudAuthenticated||!supabaseClient)return;
 
+const userId=await getCloudUserId();
+
+if(!userId){
+throw new Error("Sessão Supabase sem utilizador autenticado.");
+}
+
 const row={
 id:e.id,
+user_id:userId,
 name:e.name,
 responsible:e.responsible||null,
 phone:e.phone||null,
@@ -1476,18 +1557,25 @@ const {error}=await supabaseClient
 .upsert(row,{onConflict:"id"});
 
 if(error)throw error;
+
 }
 
 async function cloudDeleteEstablishment(id){
 
 if(!cloudAuthenticated||!supabaseClient)return;
 
+const userId=await getCloudUserId();
+
+if(!userId)throw new Error("Utilizador Supabase não encontrado.");
+
 const {error}=await supabaseClient
 .from("establishments")
 .delete()
-.eq("id",id);
+.eq("id",id)
+.eq("user_id",userId);
 
 if(error)throw error;
+
 }
 
 /* =========================================================
@@ -1498,16 +1586,21 @@ async function cloudUpsertInspection(i){
 
 if(!cloudAuthenticated||!supabaseClient)return;
 
+const userId=await getCloudUserId();
+
+if(!userId)throw new Error("Utilizador Supabase não encontrado.");
+
 const row={
 id:i.id,
+user_id:userId,
 establishment_id:i.establishmentId||null,
 establishment_name:i.establishmentName||null,
 responsible:i.responsible||null,
 date:i.date||null,
 type:i.type||null,
-checked:i.checked||0,
-total:i.total||0,
-compliance:i.compliance||0,
+checked:Number(i.checked||0),
+total:Number(i.total||0),
+compliance:Number(i.compliance||0),
 risk:i.risk||null,
 checklist:i.checklist||[],
 created_at:i.createdAt||new Date().toISOString()
@@ -1518,6 +1611,7 @@ const {error}=await supabaseClient
 .upsert(row,{onConflict:"id"});
 
 if(error)throw error;
+
 }
 
 /* =========================================================
@@ -1528,8 +1622,13 @@ async function cloudUpsertTemperature(t){
 
 if(!cloudAuthenticated||!supabaseClient)return;
 
+const userId=await getCloudUserId();
+
+if(!userId)throw new Error("Utilizador Supabase não encontrado.");
+
 const row={
 id:t.id,
+user_id:userId,
 establishment_id:t.establishmentId||null,
 food:t.food||null,
 value:Number(t.value||0),
@@ -1544,6 +1643,7 @@ const {error}=await supabaseClient
 .upsert(row,{onConflict:"id"});
 
 if(error)throw error;
+
 }
 
 /* =========================================================
@@ -1554,8 +1654,13 @@ async function cloudUpsertProblem(p){
 
 if(!cloudAuthenticated||!supabaseClient)return;
 
+const userId=await getCloudUserId();
+
+if(!userId)throw new Error("Utilizador Supabase não encontrado.");
+
 const row={
 id:p.id,
+user_id:userId,
 establishment_id:p.establishmentId||null,
 category:p.category||null,
 description:p.description||null,
@@ -1564,7 +1669,7 @@ status:p.status||null,
 deadline:p.deadline||null,
 action:p.action||null,
 created_at:p.createdAt||new Date().toISOString(),
-updated_at:p.updatedAt||null
+updated_at:p.updatedAt||new Date().toISOString()
 };
 
 const {error}=await supabaseClient
@@ -1572,6 +1677,7 @@ const {error}=await supabaseClient
 .upsert(row,{onConflict:"id"});
 
 if(error)throw error;
+
 }
 
 /* =========================================================
@@ -1582,8 +1688,13 @@ async function cloudUpsertEvidence(e){
 
 if(!cloudAuthenticated||!supabaseClient)return;
 
+const userId=await getCloudUserId();
+
+if(!userId)throw new Error("Utilizador Supabase não encontrado.");
+
 const row={
 id:e.id,
+user_id:userId,
 establishment_id:e.establishmentId||null,
 description:e.description||null,
 photo:e.photo||null,
@@ -1596,15 +1707,20 @@ const {error}=await supabaseClient
 .upsert(row,{onConflict:"id"});
 
 if(error)throw error;
+
 }
 
 /* =========================================================
-   SINCRONIZAÇÃO PARA A NUVEM
+   SINCRONIZAÇÃO LOCAL → NUVEM
 ========================================================= */
 
 async function syncLocalToCloud(){
 
 if(!cloudAuthenticated||!supabaseClient||syncInProgress)return;
+
+const session=await ensureCloudSession();
+
+if(!session)return;
 
 syncInProgress=true;
 setOnlineStatus("sync");
@@ -1636,7 +1752,13 @@ setOnlineStatus("online");
 }catch(error){
 
 console.error("Erro ao enviar dados para Supabase:",error);
-setOnlineStatus("offline");
+
+setOnlineStatus("online");
+
+toast(
+"Erro na sincronização: "+
+(error?.message||"verifique o RLS no Supabase.")
+);
 
 }finally{
 
@@ -1647,12 +1769,18 @@ syncInProgress=false;
 }
 
 /* =========================================================
-   SINCRONIZAÇÃO DA NUVEM PARA O APP
+   NUVEM → LOCAL
 ========================================================= */
 
 async function syncAllFromCloud(){
 
-if(!cloudAuthenticated||!supabaseClient)return;
+if(!supabaseClient)return;
+
+const session=await ensureCloudSession();
+
+if(!session)return;
+
+const userId=session.user.id;
 
 setOnlineStatus("sync");
 
@@ -1666,11 +1794,30 @@ probRes,
 evRes
 ]=await Promise.all([
 
-supabaseClient.from("establishments").select("*"),
-supabaseClient.from("inspections").select("*"),
-supabaseClient.from("temperatures").select("*"),
-supabaseClient.from("problems").select("*"),
-supabaseClient.from("evidences").select("*")
+supabaseClient
+.from("establishments")
+.select("*")
+.eq("user_id",userId),
+
+supabaseClient
+.from("inspections")
+.select("*")
+.eq("user_id",userId),
+
+supabaseClient
+.from("temperatures")
+.select("*")
+.eq("user_id",userId),
+
+supabaseClient
+.from("problems")
+.select("*")
+.eq("user_id",userId),
+
+supabaseClient
+.from("evidences")
+.select("*")
+.eq("user_id",userId)
 
 ]);
 
@@ -1686,7 +1833,13 @@ const cloudTemp=tempRes.data||[];
 const cloudProb=probRes.data||[];
 const cloudEv=evRes.data||[];
 
-mergeCloudData(cloudEst,cloudInsp,cloudTemp,cloudProb,cloudEv);
+mergeCloudData(
+cloudEst,
+cloudInsp,
+cloudTemp,
+cloudProb,
+cloudEv
+);
 
 await syncLocalToCloud();
 
@@ -1700,9 +1853,12 @@ toast("Dados sincronizados com a nuvem.");
 
 console.error("Erro ao carregar dados online:",error);
 
-setOnlineStatus("offline");
+setOnlineStatus("online");
 
-toast("Não foi possível sincronizar. Os dados locais continuam disponíveis.");
+toast(
+"Falha na sincronização: "+
+(error?.message||"erro desconhecido")
+);
 
 }
 
@@ -1845,35 +2001,56 @@ db.establishments.push(establishment);
 saveDB();
 
 if(cloudAuthenticated){
+
 try{
+
+setOnlineStatus("sync");
+
 await cloudUpsertEstablishment(establishment);
+
+setOnlineStatus("online");
+
+toast("Estabelecimento guardado e sincronizado.");
+
 }catch(error){
-console.error(error);
+
+console.error("Erro ao guardar estabelecimento:",error);
+
+setOnlineStatus("online");
+
+toast(
+"Guardado localmente. Falha na nuvem: "+
+(error?.message||"erro")
+);
+
 }
+
+}else{
+
+toast("Estabelecimento guardado localmente.");
+
 }
 
 closeModal("establishmentModal");
 renderEstablishments();
 refreshSelects();
 
-toast(
-cloudAuthenticated
-?"Estabelecimento guardado e sincronizado."
-:"Estabelecimento guardado localmente."
-);
-
 }
 
 function renderEstablishments(){
 
 const container=document.getElementById("establishmentsList");
+
 if(!container)return;
 
-const search=(document.getElementById("establishmentSearch")?.value||"").toLowerCase();
+const search=
+(document.getElementById("establishmentSearch")?.value||"")
+.toLowerCase();
 
 const list=db.establishments.filter(e=>
-!search||
-`${e.name} ${e.responsible} ${e.city} ${e.type}`.toLowerCase().includes(search)
+`${e.name} ${e.responsible} ${e.city} ${e.type}`
+.toLowerCase()
+.includes(search)
 );
 
 if(!list.length){
@@ -1883,23 +2060,28 @@ container.innerHTML=`
 <p class="muted">Nenhum estabelecimento encontrado.</p>
 </div>`;
 return;
+
 }
 
 container.innerHTML=list.map(e=>{
 
 const stats=getEstablishmentStats(e.id);
 
-return `
+return`
 <div class="card" style="margin-bottom:12px">
 
 <div class="page-title" style="margin-bottom:10px">
 
 <div>
 <h3 style="margin:0">${esc(e.name)}</h3>
-<div class="muted">${esc(e.type||"")} · ${esc(e.city||"")}</div>
+<div class="muted">
+${esc(e.type||"")} · ${esc(e.city||"")}
+</div>
 </div>
 
-<span class="badge ${riskClass(stats.risk)}">${esc(stats.risk)}</span>
+<span class="badge ${riskClass(stats.risk)}">
+${esc(stats.risk)}
+</span>
 
 </div>
 
@@ -1929,16 +2111,26 @@ return `
 
 <div class="actions" style="margin-top:14px">
 
-<button class="btn small" onclick="openProfile('${e.id}')">Ver perfil</button>
+<button class="btn small"
+onclick="openProfile('${e.id}')">
+Ver perfil
+</button>
 
-<button class="btn small secondary" onclick="openReport('${e.id}')">Relatório</button>
+<button class="btn small secondary"
+onclick="openReport('${e.id}')">
+Relatório
+</button>
 
-<button class="btn small danger" onclick="deleteEstablishment('${e.id}')">Apagar</button>
+<button class="btn small danger"
+onclick="deleteEstablishment('${e.id}')">
+Apagar
+</button>
 
 </div>
 
 </div>
 `;
+
 }).join("");
 
 }
@@ -1946,21 +2138,28 @@ return `
 async function deleteEstablishment(id){
 
 const e=db.establishments.find(x=>x.id===id);
+
 if(!e)return;
 
 if(!confirm(`Apagar o estabelecimento "${e.name}"?`))return;
 
 db.establishments=db.establishments.filter(x=>x.id!==id);
-
 saveDB();
 
 if(cloudAuthenticated){
 
 try{
+
 await cloudDeleteEstablishment(id);
+
 }catch(error){
+
 console.error(error);
-toast("Apagado localmente, mas houve erro na nuvem.");
+
+toast(
+"Apagado localmente, mas não foi possível apagar na nuvem."
+);
+
 }
 
 }
@@ -1972,28 +2171,47 @@ toast("Estabelecimento apagado.");
 
 function getEstablishmentStats(id){
 
-const inspections=db.inspections.filter(i=>i.establishmentId===id);
-const problems=db.problems.filter(p=>p.establishmentId===id);
+const inspections=db.inspections.filter(
+i=>i.establishmentId===id
+);
+
+const problems=db.problems.filter(
+p=>p.establishmentId===id
+);
 
 const total=inspections.length;
 
 const average=total
-?Math.round(inspections.reduce((s,i)=>s+Number(i.compliance||0),0)/total)
+?Math.round(
+inspections.reduce(
+(s,i)=>s+Number(i.compliance||0),0
+)/total
+)
 :0;
 
 let risk="Sem dados";
 
 if(total){
+
 if(average>=80)risk="Baixo";
 else if(average>=60)risk="Médio";
 else risk="Alto";
+
 }
 
 const last=inspections
 .slice()
-.sort((a,b)=>String(b.date).localeCompare(String(a.date)))[0]||null;
+.sort(
+(a,b)=>String(b.date).localeCompare(String(a.date))
+)[0]||null;
 
-return{total,average,problems:problems.length,risk,last};
+return{
+total,
+average,
+problems:problems.length,
+risk,
+last
+};
 
 }
 
@@ -2012,9 +2230,11 @@ return"gray";
 ========================================================= */
 
 function openProfile(id){
+
 currentProfileId=id;
 showPage("perfil");
 renderProfile();
+
 }
 
 function renderProfile(){
@@ -2023,36 +2243,53 @@ const container=document.getElementById("profileContent");
 
 if(!container||!currentProfileId)return;
 
-const e=db.establishments.find(x=>x.id===currentProfileId);
+const e=db.establishments.find(
+x=>x.id===currentProfileId
+);
 
 if(!e){
-container.innerHTML=`<div class="card">Estabelecimento não encontrado.</div>`;
+
+container.innerHTML=
+`<div class="card">Estabelecimento não encontrado.</div>`;
+
 return;
+
 }
 
 const stats=getEstablishmentStats(e.id);
 
 const inspections=db.inspections
 .filter(i=>i.establishmentId===e.id)
-.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+.sort(
+(a,b)=>String(b.date).localeCompare(String(a.date))
+);
 
 const problems=db.problems
 .filter(p=>p.establishmentId===e.id)
-.sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt)));
+.sort(
+(a,b)=>String(b.createdAt).localeCompare(String(a.createdAt))
+);
 
-const openProblems=problems.filter(p=>p.status!=="resolvido").length;
+const openProblems=
+problems.filter(p=>p.status!=="resolvido").length;
 
 container.innerHTML=`
 
 <div class="profile-header">
 
 <h2>${esc(e.name)}</h2>
-<div>${esc(e.type||"Estabelecimento")} · ${esc(e.city||"")}</div>
+
+<div>
+${esc(e.type||"Estabelecimento")} ·
+${esc(e.city||"")}
+</div>
 
 <div style="margin-top:12px">
+
 <span class="badge ${riskClass(stats.risk)}">
 Risco: ${esc(stats.risk)}
 </span>
+
 </div>
 
 </div>
@@ -2112,6 +2349,7 @@ stats.last
 <div class="card section">
 
 <h3>Evolução da conformidade</h3>
+
 ${renderComplianceChart(inspections)}
 
 </div>
@@ -2124,7 +2362,9 @@ ${
 problems.length
 ?`
 <div class="table-wrap">
+
 <table>
+
 <thead>
 <tr>
 <th>Data</th>
@@ -2134,38 +2374,56 @@ problems.length
 <th>Prazo</th>
 </tr>
 </thead>
+
 <tbody>
 
 ${problems.map(p=>`
+
 <tr>
-<td>${formatDate((p.createdAt||"").slice(0,10))}</td>
+
+<td>
+${formatDate((p.createdAt||"").slice(0,10))}
+</td>
+
 <td>${esc(p.description)}</td>
+
 <td>${severityBadge(p.severity)}</td>
+
 <td>${statusBadge(p.status)}</td>
+
 <td>${formatDate(p.deadline)}</td>
+
 </tr>
+
 `).join("")}
 
 </tbody>
+
 </table>
+
 </div>
 `
-:`<p class="muted">Nenhuma não conformidade registada.</p>`
+:`<p class="muted">
+Nenhuma não conformidade registada.
+</p>`
 }
 
 </div>
 
 <div class="actions section">
 
-<button class="btn" onclick="openReport('${e.id}')">
+<button class="btn"
+onclick="openReport('${e.id}')">
 Gerar relatório completo
 </button>
 
-<button class="btn secondary" onclick="showPage('estabelecimentos')">
+<button class="btn secondary"
+onclick="showPage('estabelecimentos')">
 Voltar
 </button>
 
 </div>
+
 `;
 
 }
@@ -2173,7 +2431,12 @@ Voltar
 function renderComplianceChart(inspections){
 
 if(!inspections.length){
-return`<p class="muted">Ainda não existem dados suficientes.</p>`;
+
+return`
+<p class="muted">
+Ainda não existem dados suficientes.
+</p>`;
+
 }
 
 const list=inspections.slice(0,8).reverse();
@@ -2182,13 +2445,27 @@ return list.map(i=>`
 
 <div style="margin-bottom:10px">
 
-<div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+<div style="
+display:flex;
+justify-content:space-between;
+font-size:12px;
+margin-bottom:4px">
+
 <span>${formatDate(i.date)}</span>
+
 <b>${i.compliance}%</b>
+
 </div>
 
 <div class="progress">
-<div style="width:${Math.max(0,Math.min(100,i.compliance))}%"></div>
+
+<div style="
+width:${Math.max(
+0,
+Math.min(100,Number(i.compliance||0))
+)}%">
+</div>
+
 </div>
 
 </div>
@@ -2202,9 +2479,11 @@ return list.map(i=>`
 ========================================================= */
 
 function openReport(id){
+
 currentProfileId=id;
 showPage("relatorio");
 renderReport();
+
 }
 
 function renderReport(){
@@ -2213,7 +2492,9 @@ const container=document.getElementById("reportContent");
 
 if(!container||!currentProfileId)return;
 
-const e=db.establishments.find(x=>x.id===currentProfileId);
+const e=db.establishments.find(
+x=>x.id===currentProfileId
+);
 
 if(!e)return;
 
@@ -2221,9 +2502,13 @@ const stats=getEstablishmentStats(e.id);
 
 const inspections=db.inspections
 .filter(i=>i.establishmentId===e.id)
-.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+.sort(
+(a,b)=>String(b.date).localeCompare(String(a.date))
+);
 
-const problems=db.problems.filter(p=>p.establishmentId===e.id);
+const problems=db.problems.filter(
+p=>p.establishmentId===e.id
+);
 
 container.innerHTML=`
 
@@ -2233,13 +2518,26 @@ container.innerHTML=`
 
 <h2>Relatório Profissional de Segurança Alimentar</h2>
 
-<p><b>Estabelecimento:</b> ${esc(e.name)}</p>
+<p>
+<b>Estabelecimento:</b>
+${esc(e.name)}
+</p>
 
-<p><b>Localização:</b> ${esc(e.address||"-")}, ${esc(e.city||"-")}</p>
+<p>
+<b>Localização:</b>
+${esc(e.address||"-")},
+${esc(e.city||"-")}
+</p>
 
-<p><b>Responsável:</b> ${esc(e.responsible||"-")}</p>
+<p>
+<b>Responsável:</b>
+${esc(e.responsible||"-")}
+</p>
 
-<p><b>Data do relatório:</b> ${formatDate(today())}</p>
+<p>
+<b>Data do relatório:</b>
+${formatDate(today())}
+</p>
 
 </div>
 
@@ -2270,7 +2568,9 @@ ${
 inspections.length
 ?`
 <div class="table-wrap">
+
 <table>
+
 <thead>
 <tr>
 <th>Data</th>
@@ -2279,24 +2579,34 @@ inspections.length
 <th>Risco</th>
 </tr>
 </thead>
+
 <tbody>
 
 ${inspections.slice(0,10).map(i=>`
 
 <tr>
+
 <td>${formatDate(i.date)}</td>
+
 <td>${esc(i.responsible||"-")}</td>
+
 <td>${i.compliance}%</td>
+
 <td>${esc(i.risk||"-")}</td>
+
 </tr>
 
 `).join("")}
 
 </tbody>
+
 </table>
+
 </div>
 `
-:`<p class="muted">Nenhuma inspeção registada.</p>`
+:`<p class="muted">
+Nenhuma inspeção registada.
+</p>`
 }
 
 </div>
@@ -2309,7 +2619,9 @@ ${
 problems.length
 ?`
 <div class="table-wrap">
+
 <table>
+
 <thead>
 <tr>
 <th>Problema</th>
@@ -2319,25 +2631,36 @@ problems.length
 <th>Ação corretiva</th>
 </tr>
 </thead>
+
 <tbody>
 
 ${problems.map(p=>`
 
 <tr>
+
 <td>${esc(p.description)}</td>
+
 <td>${esc(p.category)}</td>
+
 <td>${severityBadge(p.severity)}</td>
+
 <td>${statusBadge(p.status)}</td>
+
 <td>${esc(p.action||"-")}</td>
+
 </tr>
 
 `).join("")}
 
 </tbody>
+
 </table>
+
 </div>
 `
-:`<p class="muted">Nenhuma não conformidade registada.</p>`
+:`<p class="muted">
+Nenhuma não conformidade registada.
+</p>`
 }
 
 </div>
@@ -2357,9 +2680,11 @@ O estabelecimento apresenta uma conformidade média de
 <div style="margin-top:45px">
 
 <p>________________________________________</p>
+
 <p><b>Inspector responsável</b></p>
 
 </div>
+
 `;
 
 }
@@ -2378,11 +2703,18 @@ container.innerHTML=checklistData.map(item=>`
 
 <div class="check-item">
 
-<input type="checkbox" id="check_${item.id}" value="${item.id}">
+<input
+type="checkbox"
+id="check_${item.id}"
+value="${item.id}"
+>
 
 <label for="check_${item.id}">
+
 ${esc(item.title)}
+
 <small>${esc(item.desc)}</small>
+
 </label>
 
 </div>
@@ -2400,11 +2732,19 @@ function calculateChecklist(){
 let checked=0;
 
 checklistData.forEach(item=>{
-if(document.getElementById("check_"+item.id)?.checked)checked++;
+
+if(
+document.getElementById("check_"+item.id)?.checked
+){
+checked++;
+}
+
 });
 
 const total=checklistData.length;
-const compliance=Math.round((checked/total)*100);
+
+const compliance=
+Math.round((checked/total)*100);
 
 let risk="Alto";
 
@@ -2417,44 +2757,65 @@ document.getElementById("checklistResult").innerHTML=`
 
 <b>Resultado da inspeção</b><br>
 
-Itens conformes: ${checked}/${total}<br>
+Itens conformes:
+${checked}/${total}<br>
 
-Conformidade: <b>${compliance}%</b><br>
+Conformidade:
+<b>${compliance}%</b><br>
 
-Nível de risco: <b>${risk}</b>
+Nível de risco:
+<b>${risk}</b>
 
 </div>
+
 `;
 
-return{checked,total,compliance,risk};
+return{
+checked,
+total,
+compliance,
+risk
+};
 
 }
 
 async function saveInspection(){
 
 const establishmentName=
-document.getElementById("inspectionEstablishmentName").value.trim();
+document.getElementById(
+"inspectionEstablishmentName"
+).value.trim();
 
 const responsible=
-document.getElementById("inspectionResponsible").value.trim();
+document.getElementById(
+"inspectionResponsible"
+).value.trim();
 
 const date=
-document.getElementById("inspectionDate").value||today();
+document.getElementById(
+"inspectionDate"
+).value||today();
 
 if(!establishmentName){
+
 toast("Digite o nome do estabelecimento.");
 return;
+
 }
 
 if(!responsible){
+
 toast("Digite o responsável.");
 return;
+
 }
 
 const result=calculateChecklist();
 
-let establishment=db.establishments.find(e=>
-e.name.toLowerCase()===establishmentName.toLowerCase()
+let establishment=db.establishments.find(
+e=>
+e.name.toLowerCase()===
+establishmentName.toLowerCase()
 );
 
 if(!establishment){
@@ -2470,12 +2831,25 @@ createdAt:new Date().toISOString()
 
 db.establishments.push(establishment);
 
+saveDB();
+
 if(cloudAuthenticated){
+
 try{
-await cloudUpsertEstablishment(establishment);
+
+await cloudUpsertEstablishment(
+establishment
+);
+
 }catch(error){
-console.error(error);
+
+console.error(
+"Erro ao guardar estabelecimento criado pela inspeção:",
+error
+);
+
 }
+
 }
 
 }
@@ -2494,7 +2868,10 @@ risk:result.risk,
 checklist:checklistData.map(item=>({
 id:item.id,
 title:item.title,
-checked:document.getElementById("check_"+item.id).checked
+checked:
+document.getElementById(
+"check_"+item.id
+).checked
 })),
 createdAt:new Date().toISOString()
 };
@@ -2505,15 +2882,35 @@ saveDB();
 if(cloudAuthenticated){
 
 try{
-await cloudUpsertInspection(inspection);
-toast("Inspeção guardada e sincronizada.");
+
+setOnlineStatus("sync");
+
+await cloudUpsertInspection(
+inspection
+);
+
+setOnlineStatus("online");
+
+toast(
+"Inspeção guardada e sincronizada."
+);
+
 }catch(error){
+
 console.error(error);
-toast("Inspeção guardada localmente. Falha na sincronização.");
+
+setOnlineStatus("online");
+
+toast(
+"Inspeção guardada localmente. Falha na nuvem."
+);
+
 }
 
 }else{
+
 toast("Inspeção guardada localmente.");
+
 }
 
 refreshAll();
@@ -2523,14 +2920,29 @@ refreshAll();
 function clearChecklist(){
 
 checklistData.forEach(item=>{
-const el=document.getElementById("check_"+item.id);
+
+const el=
+document.getElementById("check_"+item.id);
+
 if(el)el.checked=false;
+
 });
 
-document.getElementById("checklistResult").innerHTML="";
-document.getElementById("inspectionEstablishmentName").value="";
-document.getElementById("inspectionResponsible").value="";
-document.getElementById("inspectionDate").value=today();
+document.getElementById(
+"checklistResult"
+).innerHTML="";
+
+document.getElementById(
+"inspectionEstablishmentName"
+).value="";
+
+document.getElementById(
+"inspectionResponsible"
+).value="";
+
+document.getElementById(
+"inspectionDate"
+).value=today();
 
 }
 
@@ -2540,12 +2952,19 @@ document.getElementById("inspectionDate").value=today();
 
 function evaluateTemperature(){
 
-const value=Number(document.getElementById("tempValue").value);
-const type=document.getElementById("tempType").value;
+const value=
+Number(
+document.getElementById("tempValue").value
+);
+
+const type=
+document.getElementById("tempType").value;
 
 if(isNaN(value)){
+
 toast("Digite uma temperatura.");
 return;
+
 }
 
 let ok=false;
@@ -2554,6 +2973,7 @@ let text="";
 if(type==="quente"){
 
 ok=value>=60;
+
 text=ok
 ?"Temperatura adequada para alimento quente."
 :"Temperatura abaixo do limite recomendado para alimento quente.";
@@ -2561,13 +2981,16 @@ text=ok
 }else{
 
 ok=value<=5;
+
 text=ok
 ?"Temperatura adequada para alimento frio."
 :"Temperatura acima do limite recomendado para alimento frio.";
 
 }
 
-document.getElementById("tempEvaluation").innerHTML=`
+document.getElementById(
+"tempEvaluation"
+).innerHTML=`
 
 <div class="alert ${ok?"green":"red"}">
 
@@ -2576,6 +2999,7 @@ document.getElementById("tempEvaluation").innerHTML=`
 ${esc(text)}
 
 </div>
+
 `;
 
 return ok;
@@ -2584,17 +3008,44 @@ return ok;
 
 async function saveTemperature(){
 
-const establishment=document.getElementById("tempEstablishment").value;
-const food=document.getElementById("tempFood").value.trim();
-const value=Number(document.getElementById("tempValue").value);
-const type=document.getElementById("tempType").value;
+const establishment=
+document.getElementById(
+"tempEstablishment"
+).value;
+
+const food=
+document.getElementById(
+"tempFood"
+).value.trim();
+
+const value=
+Number(
+document.getElementById("tempValue").value
+);
+
+const type=
+document.getElementById("tempType").value;
+
+if(!establishment){
+
+toast("Selecione o estabelecimento.");
+return;
+
+}
 
 if(!food||isNaN(value)){
-toast("Preencha o alimento e a temperatura.");
+
+toast(
+"Preencha o alimento e a temperatura."
+);
+
 return;
+
 }
 
 const ok=evaluateTemperature();
+
+if(ok===undefined)return;
 
 const temperature={
 id:uid("temp"),
@@ -2613,15 +3064,37 @@ saveDB();
 if(cloudAuthenticated){
 
 try{
-await cloudUpsertTemperature(temperature);
-toast("Temperatura guardada e sincronizada.");
+
+setOnlineStatus("sync");
+
+await cloudUpsertTemperature(
+temperature
+);
+
+setOnlineStatus("online");
+
+toast(
+"Temperatura guardada e sincronizada."
+);
+
 }catch(error){
+
 console.error(error);
-toast("Temperatura guardada localmente.");
+
+setOnlineStatus("online");
+
+toast(
+"Temperatura guardada localmente."
+);
+
 }
 
 }else{
-toast("Temperatura registada localmente.");
+
+toast(
+"Temperatura registada localmente."
+);
+
 }
 
 renderTemperatureList();
@@ -2630,15 +3103,26 @@ renderTemperatureList();
 
 function renderTemperatureList(){
 
-const container=document.getElementById("temperatureList");
+const container=
+document.getElementById(
+"temperatureList"
+);
 
 if(!container)return;
 
-const list=db.temperatures.slice().reverse().slice(0,20);
+const list=
+db.temperatures
+.slice()
+.reverse()
+.slice(0,20);
 
 if(!list.length){
 
-container.innerHTML=`<p class="muted">Nenhum registo de temperatura.</p>`;
+container.innerHTML=`
+<p class="muted">
+Nenhum registo de temperatura.
+</p>`;
+
 return;
 
 }
@@ -2650,6 +3134,7 @@ container.innerHTML=`
 <table>
 
 <thead>
+
 <tr>
 <th>Data</th>
 <th>Alimento</th>
@@ -2657,6 +3142,7 @@ container.innerHTML=`
 <th>Tipo</th>
 <th>Avaliação</th>
 </tr>
+
 </thead>
 
 <tbody>
@@ -2671,13 +3157,18 @@ ${list.map(t=>`
 
 <td>${t.value} °C</td>
 
-<td>${t.type==="quente"?"Quente":"Frio"}</td>
+<td>
+${t.type==="quente"?"Quente":"Frio"}
+</td>
 
 <td>
-${t.adequate
+
+${
+t.adequate
 ?`<span class="badge green">Adequada</span>`
 :`<span class="badge red">Não adequada</span>`
 }
+
 </td>
 
 </tr>
@@ -2689,6 +3180,7 @@ ${t.adequate
 </table>
 
 </div>
+
 `;
 
 }
@@ -2699,24 +3191,49 @@ ${t.adequate
 
 async function saveProblem(){
 
-const establishmentId=document.getElementById("problemEstablishment").value;
-const description=document.getElementById("problemDescription").value.trim();
+const establishmentId=
+document.getElementById(
+"problemEstablishment"
+).value;
+
+const description=
+document.getElementById(
+"problemDescription"
+).value.trim();
 
 if(!establishmentId||!description){
-toast("Preencha o estabelecimento e a descrição.");
+
+toast(
+"Preencha o estabelecimento e a descrição."
+);
+
 return;
+
 }
 
 const problem={
 id:uid("prob"),
 establishmentId,
-category:document.getElementById("problemCategory").value,
+category:
+document.getElementById(
+"problemCategory"
+).value,
 description,
-severity:document.getElementById("problemSeverity").value,
+severity:
+document.getElementById(
+"problemSeverity"
+).value,
 status:"aberto",
-deadline:document.getElementById("problemDeadline").value,
-action:document.getElementById("problemAction").value.trim(),
-createdAt:new Date().toISOString()
+deadline:
+document.getElementById(
+"problemDeadline"
+).value,
+action:
+document.getElementById(
+"problemAction"
+).value.trim(),
+createdAt:new Date().toISOString(),
+updatedAt:new Date().toISOString()
 };
 
 db.problems.push(problem);
@@ -2725,15 +3242,35 @@ saveDB();
 if(cloudAuthenticated){
 
 try{
+
+setOnlineStatus("sync");
+
 await cloudUpsertProblem(problem);
-toast("Problema registado e sincronizado.");
+
+setOnlineStatus("online");
+
+toast(
+"Problema registado e sincronizado."
+);
+
 }catch(error){
+
 console.error(error);
-toast("Problema guardado localmente.");
+
+setOnlineStatus("online");
+
+toast(
+"Problema guardado localmente."
+);
+
 }
 
 }else{
-toast("Problema registado localmente.");
+
+toast(
+"Problema registado localmente."
+);
+
 }
 
 closeModal("problemModal");
@@ -2750,7 +3287,10 @@ if(value==="média")cls="yellow";
 if(value==="alta")cls="red";
 if(value==="crítica")cls="red";
 
-return`<span class="badge ${cls}">${esc(value)}</span>`;
+return`
+<span class="badge ${cls}">
+${esc(value)}
+</span>`;
 
 }
 
@@ -2762,24 +3302,50 @@ if(value==="aberto")cls="red";
 if(value==="em tratamento")cls="yellow";
 if(value==="resolvido")cls="green";
 
-return`<span class="badge ${cls}">${esc(value)}</span>`;
+return`
+<span class="badge ${cls}">
+${esc(value)}
+</span>`;
 
 }
 
 function renderProblems(){
 
-const container=document.getElementById("problemsList");
+const container=
+document.getElementById(
+"problemsList"
+);
 
 if(!container)return;
 
-const search=(document.getElementById("problemSearch")?.value||"").toLowerCase();
-const status=document.getElementById("problemStatusFilter")?.value||"";
-const severity=document.getElementById("problemSeverityFilter")?.value||"";
-const category=document.getElementById("problemCategoryFilter")?.value||"";
+const search=
+(
+document.getElementById(
+"problemSearch"
+)?.value||""
+).toLowerCase();
+
+const status=
+document.getElementById(
+"problemStatusFilter"
+)?.value||"";
+
+const severity=
+document.getElementById(
+"problemSeverityFilter"
+)?.value||"";
+
+const category=
+document.getElementById(
+"problemCategoryFilter"
+)?.value||"";
 
 const list=db.problems.filter(p=>{
 
-const establishment=db.establishments.find(e=>e.id===p.establishmentId);
+const establishment=
+db.establishments.find(
+e=>e.id===p.establishmentId
+);
 
 const text=`
 ${p.description}
@@ -2789,11 +3355,12 @@ ${p.severity}
 ${establishment?.name||""}
 `.toLowerCase();
 
-return
+return(
 (!search||text.includes(search))&&
 (!status||p.status===status)&&
 (!severity||p.severity===severity)&&
-(!category||p.category===category);
+(!category||p.category===category)
+);
 
 });
 
@@ -2801,15 +3368,21 @@ if(!list.length){
 
 container.innerHTML=`
 <div class="card">
-<p class="muted">Nenhuma não conformidade encontrada.</p>
+<p class="muted">
+Nenhuma não conformidade encontrada.
+</p>
 </div>`;
+
 return;
 
 }
 
-container.innerHTML=list.slice().reverse().map(p=>{
+container.innerHTML=
+list.slice().reverse().map(p=>{
 
-const e=db.establishments.find(x=>x.id===p.establishmentId);
+const e=db.establishments.find(
+x=>x.id===p.establishmentId
+);
 
 const overdue=
 p.deadline&&
@@ -2824,17 +3397,23 @@ return`
 
 <div>
 
-<h3 style="margin:0">${esc(p.description)}</h3>
+<h3 style="margin:0">
+${esc(p.description)}
+</h3>
 
 <div class="muted">
-${esc(e?.name||"Estabelecimento")} · ${esc(p.category)}
+${esc(e?.name||"Estabelecimento")}
+·
+${esc(p.category)}
 </div>
 
 </div>
 
 <div>
+
 ${severityBadge(p.severity)}
 ${statusBadge(p.status)}
+
 </div>
 
 </div>
@@ -2853,27 +3432,52 @@ ${statusBadge(p.status)}
 
 </div>
 
-${overdue
-?`<div class="alert red" style="margin-top:10px">Prazo ultrapassado.</div>`
-:""}
+${
+overdue
+?`
+<div class="alert red" style="margin-top:10px">
+Prazo ultrapassado.
+</div>
+`
+:""
+}
 
 <div class="actions">
 
 ${
 p.status!=="em tratamento"
-?`<button class="btn small warning" onclick="updateProblemStatus('${p.id}','em tratamento')">Em tratamento</button>`
+?`
+<button
+class="btn small warning"
+onclick="updateProblemStatus(
+'${p.id}',
+'em tratamento'
+)">
+Em tratamento
+</button>
+`
 :""
 }
 
 ${
 p.status!=="resolvido"
-?`<button class="btn small success" onclick="updateProblemStatus('${p.id}','resolvido')">Marcar resolvido</button>`
+?`
+<button
+class="btn small success"
+onclick="updateProblemStatus(
+'${p.id}',
+'resolvido'
+)">
+Marcar resolvido
+</button>
+`
 :""
 }
 
 </div>
 
 </div>
+
 `;
 
 }).join("");
@@ -2882,7 +3486,9 @@ p.status!=="resolvido"
 
 async function updateProblemStatus(id,status){
 
-const p=db.problems.find(x=>x.id===id);
+const p=db.problems.find(
+x=>x.id===id
+);
 
 if(!p)return;
 
@@ -2894,9 +3500,19 @@ saveDB();
 if(cloudAuthenticated){
 
 try{
+
+setOnlineStatus("sync");
+
 await cloudUpsertProblem(p);
+
+setOnlineStatus("online");
+
 }catch(error){
+
 console.error(error);
+
+setOnlineStatus("online");
+
 }
 
 }
@@ -2914,14 +3530,31 @@ toast("Estado atualizado.");
 
 async function saveEvidence(){
 
-const establishmentId=document.getElementById("evidenceEstablishment").value;
-const description=document.getElementById("evidenceDescription").value.trim();
-const file=document.getElementById("evidencePhoto").files[0];
+const establishmentId=
+document.getElementById(
+"evidenceEstablishment"
+).value;
 
-if(!establishmentId||!description||!file){
+const description=
+document.getElementById(
+"evidenceDescription"
+).value.trim();
 
-toast("Preencha todos os campos e selecione uma fotografia.");
+const file=
+document.getElementById(
+"evidencePhoto"
+).files[0];
+
+if(!establishmentId||
+!description||
+!file){
+
+toast(
+"Preencha todos os campos e selecione uma fotografia."
+);
+
 return;
+
 }
 
 const reader=new FileReader();
@@ -2943,19 +3576,46 @@ saveDB();
 if(cloudAuthenticated){
 
 try{
-await cloudUpsertEvidence(evidence);
-toast("Evidência guardada e sincronizada.");
+
+setOnlineStatus("sync");
+
+await cloudUpsertEvidence(
+evidence
+);
+
+setOnlineStatus("online");
+
+toast(
+"Evidência guardada e sincronizada."
+);
+
 }catch(error){
+
 console.error(error);
-toast("Evidência guardada localmente.");
+
+setOnlineStatus("online");
+
+toast(
+"Evidência guardada localmente."
+);
+
 }
 
 }else{
-toast("Evidência guardada localmente.");
+
+toast(
+"Evidência registada localmente."
+);
+
 }
 
-document.getElementById("evidenceDescription").value="";
-document.getElementById("evidencePhoto").value="";
+document.getElementById(
+"evidenceDescription"
+).value="";
+
+document.getElementById(
+"evidencePhoto"
+).value="";
 
 renderEvidences();
 
@@ -2965,43 +3625,108 @@ reader.readAsDataURL(file);
 
 }
 
+async function deleteEvidence(id){
+
+if(!confirm("Apagar esta evidência?"))
+return;
+
+db.evidences=
+db.evidences.filter(
+e=>e.id!==id
+);
+
+saveDB();
+
+if(cloudAuthenticated){
+
+try{
+
+const userId=await getCloudUserId();
+
+if(userId){
+
+const {error}=await supabaseClient
+.from("evidences")
+.delete()
+.eq("id",id)
+.eq("user_id",userId);
+
+if(error)throw error;
+
+}
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+renderEvidences();
+
+toast("Evidência apagada.");
+
+}
+
 function renderEvidences(){
 
-const container=document.getElementById("evidenceList");
+const container=
+document.getElementById(
+"evidenceList"
+);
 
 if(!container)return;
 
-const list=db.evidences.slice().reverse();
+const list=
+db.evidences
+.slice()
+.reverse();
 
 if(!list.length){
 
 container.innerHTML=`
 <div class="card">
-<p class="muted">Nenhuma evidência registada.</p>
+<p class="muted">
+Nenhuma evidência registada.
+</p>
 </div>`;
+
 return;
 
 }
 
 container.innerHTML=list.map(ev=>{
 
-const e=db.establishments.find(x=>x.id===ev.establishmentId);
+const e=db.establishments.find(
+x=>x.id===ev.establishmentId
+);
 
 return`
 
 <div class="card" style="margin-bottom:12px">
 
-<b>${esc(e?.name||"Estabelecimento")}</b>
+<b>
+${esc(e?.name||"Estabelecimento")}
+</b>
 
 <p>${esc(ev.description)}</p>
 
-<div class="muted">${formatDate(ev.date)}</div>
+<div class="muted">
+${formatDate(ev.date)}
+</div>
 
-<img src="${ev.photo}" class="photo-preview" alt="Evidência">
+<img
+src="${ev.photo}"
+class="photo-preview"
+alt="Evidência"
+>
 
 <div class="actions" style="margin-top:10px">
 
-<button class="btn small danger" onclick="deleteEvidence('${ev.id}')">
+<button
+class="btn small danger"
+onclick="deleteEvidence('${ev.id}')">
 Apagar
 </button>
 
@@ -3015,58 +3740,47 @@ Apagar
 
 }
 
-async function deleteEvidence(id){
-
-if(!confirm("Apagar esta evidência?"))return;
-
-db.evidences=db.evidences.filter(e=>e.id!==id);
-saveDB();
-
-if(cloudAuthenticated){
-
-try{
-
-const {error}=await supabaseClient
-.from("evidences")
-.delete()
-.eq("id",id);
-
-if(error)throw error;
-
-}catch(error){
-console.error(error);
-}
-
-}
-
-renderEvidences();
-toast("Evidência apagada.");
-
-}
-
 /* =========================================================
    DASHBOARD
 ========================================================= */
 
 function renderDashboard(){
 
-const container=document.getElementById("dashboardContent");
+const container=
+document.getElementById(
+"dashboardContent"
+);
 
 if(!container)return;
 
-const total=db.establishments.length;
-const inspections=db.inspections.length;
-const problems=db.problems.length;
+const total=
+db.establishments.length;
 
-const openProblems=db.problems.filter(p=>p.status!=="resolvido").length;
+const inspections=
+db.inspections.length;
 
-const critical=db.problems.filter(
-p=>p.severity==="crítica"&&p.status!=="resolvido"
+const problems=
+db.problems.length;
+
+const openProblems=
+db.problems.filter(
+p=>p.status!=="resolvido"
 ).length;
 
-const compliance=inspections.length
+const critical=
+db.problems.filter(
+p=>
+p.severity==="crítica"&&
+p.status!=="resolvido"
+).length;
+
+const compliance=
+inspections
 ?Math.round(
-db.inspections.reduce((s,i)=>s+Number(i.compliance||0),0)/inspections.length
+db.inspections.reduce(
+(s,i)=>s+Number(i.compliance||0),
+0
+)/inspections
 )
 :0;
 
@@ -3103,10 +3817,38 @@ container.innerHTML=`
 <h3>Estado das não conformidades</h3>
 
 <p>Totais: <b>${problems}</b></p>
-<p>Em aberto: <b>${db.problems.filter(p=>p.status==="aberto").length}</b></p>
-<p>Em tratamento: <b>${db.problems.filter(p=>p.status==="em tratamento").length}</b></p>
-<p>Resolvidas: <b>${db.problems.filter(p=>p.status==="resolvido").length}</b></p>
-<p>Críticas abertas: <b>${critical}</b></p>
+
+<p>
+Em aberto:
+<b>
+${db.problems.filter(
+p=>p.status==="aberto"
+).length}
+</b>
+</p>
+
+<p>
+Em tratamento:
+<b>
+${db.problems.filter(
+p=>p.status==="em tratamento"
+).length}
+</b>
+</p>
+
+<p>
+Resolvidas:
+<b>
+${db.problems.filter(
+p=>p.status==="resolvido"
+).length}
+</b>
+</p>
+
+<p>
+Críticas abertas:
+<b>${critical}</b>
+</p>
 
 </div>
 
@@ -3114,16 +3856,31 @@ container.innerHTML=`
 
 <h3>Conformidade geral</h3>
 
-<div style="font-size:40px;font-weight:bold;text-align:center">
+<div style="
+font-size:40px;
+font-weight:bold;
+text-align:center
+">
 ${compliance}%
 </div>
 
 <div class="progress">
-<div style="width:${compliance}%"></div>
+
+<div style="
+width:${compliance}%
+">
 </div>
 
-<p class="muted" style="text-align:center;margin-top:10px">
+</div>
+
+<p class="muted"
+style="
+text-align:center;
+margin-top:10px
+">
+
 Baseado nas inspeções registadas
+
 </p>
 
 </div>
@@ -3141,18 +3898,28 @@ const s=getEstablishmentStats(e.id);
 
 return`
 
-<div style="padding:10px 0;border-bottom:1px solid #e2e8f0">
+<div style="
+padding:10px 0;
+border-bottom:1px solid #e2e8f0
+">
 
-<div style="display:flex;justify-content:space-between;gap:10px">
+<div style="
+display:flex;
+justify-content:space-between;
+gap:10px
+">
 
 <b>${esc(e.name)}</b>
 
-<span class="badge ${riskClass(s.risk)}">${esc(s.risk)}</span>
+<span class="badge ${riskClass(s.risk)}">
+${esc(s.risk)}
+</span>
 
 </div>
 
 <div class="muted">
-Conformidade: ${s.average}% · Inspeções: ${s.total}
+Conformidade: ${s.average}%
+· Inspeções: ${s.total}
 </div>
 
 </div>
@@ -3161,10 +3928,15 @@ Conformidade: ${s.average}% · Inspeções: ${s.total}
 
 }).join("")
 ||
-`<p class="muted">Nenhum estabelecimento.</p>`
+`
+<p class="muted">
+Nenhum estabelecimento.
+</p>
+`
 }
 
 </div>
+
 `;
 
 }
@@ -3175,27 +3947,45 @@ Conformidade: ${s.average}% · Inspeções: ${s.total}
 
 function renderHistory(){
 
-const container=document.getElementById("historyList");
+const container=
+document.getElementById(
+"historyList"
+);
 
 if(!container)return;
 
 const establishmentId=
-document.getElementById("historyEstablishmentFilter")?.value||"";
+document.getElementById(
+"historyEstablishmentFilter"
+)?.value||"";
 
 const minCompliance=
-Number(document.getElementById("historyComplianceFilter")?.value||0);
+Number(
+document.getElementById(
+"historyComplianceFilter"
+)?.value||0
+);
 
 const from=
-document.getElementById("historyDateFrom")?.value||"";
+document.getElementById(
+"historyDateFrom"
+)?.value||"";
 
 const to=
-document.getElementById("historyDateTo")?.value||"";
+document.getElementById(
+"historyDateTo"
+)?.value||"";
 
 const list=db.inspections.filter(i=>
 
-(!establishmentId||i.establishmentId===establishmentId)&&
-Number(i.compliance||0)>=minCompliance&&
+(!establishmentId||
+i.establishmentId===establishmentId)&&
+
+Number(i.compliance||0)>=
+minCompliance&&
+
 (!from||i.date>=from)&&
+
 (!to||i.date<=to)
 
 );
@@ -3204,8 +3994,11 @@ if(!list.length){
 
 container.innerHTML=`
 <div class="card">
-<p class="muted">Nenhuma inspeção encontrada.</p>
+<p class="muted">
+Nenhuma inspeção encontrada.
+</p>
 </div>`;
+
 return;
 
 }
@@ -3219,6 +4012,7 @@ container.innerHTML=`
 <table>
 
 <thead>
+
 <tr>
 <th>Data</th>
 <th>Estabelecimento</th>
@@ -3226,26 +4020,43 @@ container.innerHTML=`
 <th>Conformidade</th>
 <th>Risco</th>
 </tr>
+
 </thead>
 
 <tbody>
 
 ${list.slice()
-.sort((a,b)=>String(b.date).localeCompare(String(a.date)))
+.sort(
+(a,b)=>String(b.date)
+.localeCompare(String(a.date))
+)
 .map(i=>`
 
 <tr>
 
 <td>${formatDate(i.date)}</td>
 
-<td>${esc(i.establishmentName||getEstablishmentName(i.establishmentId))}</td>
+<td>
+${esc(
+i.establishmentName||
+getEstablishmentName(
+i.establishmentId
+)
+)}
+</td>
 
-<td>${esc(i.responsible||"-")}</td>
+<td>
+${esc(i.responsible||"-")}
+</td>
 
 <td>${i.compliance}%</td>
 
 <td>
-<span class="badge ${riskClass(i.risk)}">${esc(i.risk)}</span>
+
+<span class="badge ${riskClass(i.risk)}">
+${esc(i.risk)}
+</span>
+
 </td>
 
 </tr>
@@ -3259,23 +4070,39 @@ ${list.slice()
 </div>
 
 </div>
+
 `;
 
 }
 
 function clearHistoryFilters(){
 
-document.getElementById("historyEstablishmentFilter").value="";
-document.getElementById("historyComplianceFilter").value="";
-document.getElementById("historyDateFrom").value="";
-document.getElementById("historyDateTo").value="";
+document.getElementById(
+"historyEstablishmentFilter"
+).value="";
+
+document.getElementById(
+"historyComplianceFilter"
+).value="";
+
+document.getElementById(
+"historyDateFrom"
+).value="";
+
+document.getElementById(
+"historyDateTo"
+).value="";
 
 renderHistory();
 
 }
 
 function getEstablishmentName(id){
-return db.establishments.find(e=>e.id===id)?.name||"-";
+
+return db.establishments.find(
+e=>e.id===id
+)?.name||"-";
+
 }
 
 /* =========================================================
@@ -3284,27 +4111,63 @@ return db.establishments.find(e=>e.id===id)?.name||"-";
 
 async function saveUser(){
 
-if(!currentUser||currentUser.role!=="admin"){
-toast("Apenas o administrador pode criar utilizadores.");
+if(!currentUser||
+currentUser.role!=="admin"){
+
+toast(
+"Apenas o administrador pode criar utilizadores."
+);
+
 return;
+
 }
 
-const name=document.getElementById("userName").value.trim();
-const username=document.getElementById("userUsername").value.trim();
-const email=document.getElementById("userEmail").value.trim();
-const password=document.getElementById("userPassword").value;
-const role=document.getElementById("userRole").value;
+const name=
+document.getElementById(
+"userName"
+).value.trim();
+
+const username=
+document.getElementById(
+"userUsername"
+).value.trim();
+
+const email=
+document.getElementById(
+"userEmail"
+).value.trim();
+
+const password=
+document.getElementById(
+"userPassword"
+).value;
+
+const role=
+document.getElementById(
+"userRole"
+).value;
 
 if(!name||!username||!password){
-toast("Preencha nome, utilizador e palavra-passe.");
+
+toast(
+"Preencha nome, utilizador e palavra-passe."
+);
+
 return;
+
 }
 
 if(users.some(u=>
-String(u.username||"").toLowerCase()===username.toLowerCase()
+String(u.username||"").toLowerCase()===
+username.toLowerCase()
 )){
-toast("Esse nome de utilizador já existe.");
+
+toast(
+"Esse nome de utilizador já existe."
+);
+
 return;
+
 }
 
 const user={
@@ -3332,7 +4195,10 @@ toast(
 
 function renderUsers(){
 
-const tbody=document.getElementById("usersTable");
+const tbody=
+document.getElementById(
+"usersTable"
+);
 
 if(!tbody)return;
 
@@ -3349,11 +4215,13 @@ tbody.innerHTML=users.map(u=>`
 <td>${roleLabel(u.role)}</td>
 
 <td>
+
 ${
 u.active!==false
 ?`<span class="badge green">Ativo</span>`
 :`<span class="badge red">Inativo</span>`
 }
+
 </td>
 
 <td>
@@ -3364,14 +4232,28 @@ u.id==="u_admin"
 :`
 <div class="actions">
 
-<button class="btn small ${u.active!==false?"warning":"success"}"
+<button
+class="btn small ${
+u.active!==false
+?"warning"
+:"success"
+}"
 onclick="toggleUser('${u.id}')">
-${u.active!==false?"Desativar":"Ativar"}
+
+${
+u.active!==false
+?"Desativar"
+:"Ativar"
+}
+
 </button>
 
-<button class="btn small danger"
+<button
+class="btn small danger"
 onclick="deleteUser('${u.id}')">
+
 Apagar
+
 </button>
 
 </div>
@@ -3388,7 +4270,9 @@ Apagar
 
 function toggleUser(id){
 
-const u=users.find(x=>x.id===id);
+const u=users.find(
+x=>x.id===id
+);
 
 if(!u)return;
 
@@ -3397,24 +4281,34 @@ u.active=u.active===false;
 saveUsers();
 renderUsers();
 
-toast("Estado do utilizador atualizado.");
+toast(
+"Estado do utilizador atualizado."
+);
 
 }
 
 function deleteUser(id){
 
-const u=users.find(x=>x.id===id);
+const u=users.find(
+x=>x.id===id
+);
 
 if(!u||u.id==="u_admin")return;
 
-if(!confirm(`Apagar o utilizador "${u.name}"?`))return;
+if(!confirm(
+`Apagar o utilizador "${u.name}"?`
+))return;
 
-users=users.filter(x=>x.id!==id);
+users=users.filter(
+x=>x.id!==id
+);
 
 saveUsers();
 renderUsers();
 
-toast("Utilizador apagado.");
+toast(
+"Utilizador apagado."
+);
 
 }
 
@@ -3424,7 +4318,10 @@ toast("Utilizador apagado.");
 
 function renderAccount(){
 
-const container=document.getElementById("accountContent");
+const container=
+document.getElementById(
+"accountContent"
+);
 
 if(!container||!currentUser)return;
 
@@ -3446,24 +4343,39 @@ container.innerHTML=`
 
 <p>
 <span class="muted">Função</span><br>
-<span class="badge blue">${roleLabel(currentUser.role)}</span>
+<span class="badge blue">
+${roleLabel(currentUser.role)}
+</span>
 </p>
 
 <p>
 <span class="muted">Estado</span><br>
-<span class="badge green">Ativo</span>
+<span class="badge green">
+Ativo
+</span>
 </p>
 
 <p>
 <span class="muted">Base de dados</span><br>
+
 ${
 cloudAuthenticated
-?`<span class="badge green">Ligada à nuvem</span>`
-:`<span class="badge yellow">Modo local</span>`
+?`
+<span class="badge green">
+Ligada à nuvem
+</span>
+`
+:`
+<span class="badge yellow">
+Modo local
+</span>
+`
 }
+
 </p>
 
 </div>
+
 `;
 
 }
@@ -3477,29 +4389,45 @@ function getAlerts(){
 const alerts=[];
 
 db.problems
-.filter(p=>p.status!=="resolvido"&&p.deadline)
+.filter(
+p=>
+p.status!=="resolvido"&&
+p.deadline
+)
 .forEach(p=>{
 
-const e=db.establishments.find(x=>x.id===p.establishmentId);
+const e=db.establishments.find(
+x=>x.id===p.establishmentId
+);
 
 const days=Math.ceil(
-(new Date(p.deadline+"T00:00:00")-
-new Date(today()+"T00:00:00"))
-/(1000*60*60*24)
+
+(
+new Date(p.deadline+"T00:00:00")-
+new Date(today()+"T00:00:00")
+)/
+(1000*60*60*24)
+
 );
 
 if(days<0){
 
 alerts.push({
 type:"red",
-text:`Prazo ultrapassado: ${e?.name||"Estabelecimento"} — ${p.description}`
+text:
+`Prazo ultrapassado: ${
+e?.name||"Estabelecimento"
+} — ${p.description}`
 });
 
 }else if(days<=3){
 
 alerts.push({
 type:"yellow",
-text:`Prazo próximo: ${e?.name||"Estabelecimento"} — ${p.description}`
+text:
+`Prazo próximo: ${
+e?.name||"Estabelecimento"
+} — ${p.description}`
 });
 
 }
@@ -3507,14 +4435,23 @@ text:`Prazo próximo: ${e?.name||"Estabelecimento"} — ${p.description}`
 });
 
 db.problems
-.filter(p=>p.severity==="crítica"&&p.status!=="resolvido")
+.filter(
+p=>
+p.severity==="crítica"&&
+p.status!=="resolvido"
+)
 .forEach(p=>{
 
-const e=db.establishments.find(x=>x.id===p.establishmentId);
+const e=db.establishments.find(
+x=>x.id===p.establishmentId
+);
 
 alerts.push({
 type:"red",
-text:`Não conformidade crítica: ${e?.name||"Estabelecimento"}`
+text:
+`Não conformidade crítica: ${
+e?.name||"Estabelecimento"
+}`
 });
 
 });
@@ -3527,46 +4464,73 @@ function refreshHome(){
 
 const alerts=getAlerts();
 
-const home=document.getElementById("homeAlerts");
+const home=
+document.getElementById(
+"homeAlerts"
+);
 
 if(home){
 
-home.innerHTML=alerts.length
-?alerts.slice(0,10).map(a=>
-`<div class="alert ${a.type}">${esc(a.text)}</div>`
-).join("")
-:`<div class="alert green">Não existem alertas pendentes.</div>`;
+home.innerHTML=
+alerts.length
+?alerts
+.slice(0,10)
+.map(a=>
+`<div class="alert ${a.type}">
+${esc(a.text)}
+</div>`
+)
+.join("")
+:`<div class="alert green">
+Não existem alertas pendentes.
+</div>`;
 
 }
 
-const risk=document.getElementById("riskSummary");
+const risk=
+document.getElementById(
+"riskSummary"
+);
 
 if(risk){
 
-const counts={Baixo:0,Médio:0,Alto:0};
+const counts={
+Baixo:0,
+Médio:0,
+Alto:0
+};
 
 db.establishments.forEach(e=>{
 
-const r=getEstablishmentStats(e.id).risk;
+const r=
+getEstablishmentStats(e.id).risk;
 
-if(counts[r]!==undefined)counts[r]++;
+if(counts[r]!==undefined){
+counts[r]++;
+}
 
 });
 
 risk.innerHTML=`
 
 <p>
-<span class="badge green">Baixo</span>
+<span class="badge green">
+Baixo
+</span>
 ${counts.Baixo}
 </p>
 
 <p>
-<span class="badge yellow">Médio</span>
+<span class="badge yellow">
+Médio
+</span>
 ${counts.Médio}
 </p>
 
 <p>
-<span class="badge red">Alto</span>
+<span class="badge red">
+Alto
+</span>
 ${counts.Alto}
 </p>
 
@@ -3582,23 +4546,45 @@ ${counts.Alto}
 
 function refreshHomeStats(){
 
-document.getElementById("statEstablishments").textContent=
+const a=document.getElementById(
+"statEstablishments"
+);
+
+const b=document.getElementById(
+"statInspections"
+);
+
+const c=document.getElementById(
+"statProblems"
+);
+
+const d=document.getElementById(
+"statCompliance"
+);
+
+if(a)a.textContent=
 db.establishments.length;
 
-document.getElementById("statInspections").textContent=
+if(b)b.textContent=
 db.inspections.length;
 
-document.getElementById("statProblems").textContent=
-db.problems.filter(p=>p.status!=="resolvido").length;
+if(c)c.textContent=
+db.problems.filter(
+p=>p.status!=="resolvido"
+).length;
 
-const compliance=db.inspections.length
+const compliance=
+db.inspections.length
 ?Math.round(
-db.inspections.reduce((s,i)=>s+Number(i.compliance||0),0)
-/db.inspections.length
+db.inspections.reduce(
+(s,i)=>s+Number(i.compliance||0),
+0
+)/
+db.inspections.length
 )
 :0;
 
-document.getElementById("statCompliance").textContent=
+if(d)d.textContent=
 compliance+"%";
 
 }
@@ -3609,20 +4595,31 @@ compliance+"%";
 
 function populateEstablishmentSelect(id){
 
-const select=document.getElementById(id);
+const select=
+document.getElementById(id);
 
 if(!select)return;
 
 const old=select.value;
 
 select.innerHTML=
-`<option value="">Selecionar estabelecimento</option>`+
+`<option value="">
+Selecionar estabelecimento
+</option>`+
 db.establishments.map(e=>
-`<option value="${e.id}">${esc(e.name)}</option>`
+`<option value="${esc(e.id)}">
+${esc(e.name)}
+</option>`
 ).join("");
 
-if(db.establishments.some(e=>e.id===old)){
+if(
+db.establishments.some(
+e=>e.id===old
+)
+){
+
 select.value=old;
+
 }
 
 }
@@ -3633,9 +4630,14 @@ function refreshSelects(){
 "tempEstablishment",
 "evidenceEstablishment",
 "problemEstablishment"
-].forEach(populateEstablishmentSelect);
+].forEach(
+populateEstablishmentSelect
+);
 
-const history=document.getElementById("historyEstablishmentFilter");
+const history=
+document.getElementById(
+"historyEstablishmentFilter"
+);
 
 if(history){
 
@@ -3644,11 +4646,19 @@ const old=history.value;
 history.innerHTML=
 `<option value="">Todos</option>`+
 db.establishments.map(e=>
-`<option value="${e.id}">${esc(e.name)}</option>`
+`<option value="${esc(e.id)}">
+${esc(e.name)}
+</option>`
 ).join("");
 
-if(db.establishments.some(e=>e.id===old)){
+if(
+db.establishments.some(
+e=>e.id===old
+)
+){
+
 history.value=old;
+
 }
 
 }
@@ -3675,8 +4685,10 @@ renderUsers();
 renderAccount();
 
 if(currentProfileId){
+
 renderProfile();
 renderReport();
+
 }
 
 }
@@ -3685,85 +4697,140 @@ renderReport();
    RECONEXÃO AUTOMÁTICA
 ========================================================= */
 
-window.addEventListener("online",async()=>{
+window.addEventListener(
+"online",
+async()=>{
 
 if(!currentUser)return;
 
-if(supabaseClient){
+if(!supabaseClient)return;
 
-const session=await getSupabaseSession();
+const session=
+await getSupabaseSession();
 
 if(session){
 
 cloudAuthenticated=true;
-
 setOnlineStatus("online");
 
 await syncAllFromCloud();
 
 }else{
 
+cloudAuthenticated=false;
 setOnlineStatus("offline");
-
-}
 
 }
 
 });
 
-window.addEventListener("offline",()=>{
+window.addEventListener(
+"offline",
+()=>{
 
 cloudAuthenticated=false;
 setOnlineStatus("offline");
 
 if(currentUser){
-toast("Sem internet. O FoodSafe continuará a funcionar localmente.");
+
+toast(
+"Sem internet. O FoodSafe continuará a funcionar localmente."
+);
+
 }
 
 });
 
 /* =========================================================
+   MONITOR DE AUTENTICAÇÃO SUPABASE
+========================================================= */
+
+if(supabaseClient){
+
+supabaseClient.auth.onAuthStateChange(
+(event,session)=>{
+
+if(session){
+
+cloudAuthenticated=true;
+setOnlineStatus("online");
+
+}else{
+
+cloudAuthenticated=false;
+
+if(currentUser){
+setOnlineStatus("offline");
+}
+
+}
+
+}
+);
+
+}
+
+/* =========================================================
    INICIALIZAÇÃO
 ========================================================= */
 
-document.addEventListener("DOMContentLoaded",async()=>{
+document.addEventListener(
+"DOMContentLoaded",
+async()=>{
 
 loadData();
 
-document.getElementById("loginPass").addEventListener("keydown",e=>{
+document.getElementById(
+"loginPass"
+).addEventListener(
+"keydown",
+e=>{
 if(e.key==="Enter")doLogin();
-});
+}
+);
 
-document.getElementById("loginUser").addEventListener("keydown",e=>{
+document.getElementById(
+"loginUser"
+).addEventListener(
+"keydown",
+e=>{
 if(e.key==="Enter")doLogin();
-});
+}
+);
 
-/*
- Tenta recuperar sessão online primeiro.
-*/
-const onlineSession=await restoreSupabaseSession();
+const onlineSession=
+await restoreSupabaseSession();
 
 if(onlineSession){
 
 openApp();
+
 await syncAllFromCloud();
+
 return;
 
 }
 
-/*
- Depois tenta sessão local.
-*/
-const sessionId=localStorage.getItem(SESSION_KEY);
+const sessionId=
+localStorage.getItem(
+SESSION_KEY
+);
 
 if(sessionId){
 
-const sessionUser=users.find(u=>u.id===sessionId);
+const sessionUser=
+users.find(
+u=>u.id===sessionId
+);
 
-if(sessionUser&&sessionUser.active!==false){
+if(
+sessionUser&&
+sessionUser.active!==false
+){
 
 currentUser=sessionUser;
 cloudAuthenticated=false;
+
 setOnlineStatus("offline");
 
 openApp();
@@ -3773,6 +4840,7 @@ openApp();
 }
 
 });
+
 </script>
 
 </body>
