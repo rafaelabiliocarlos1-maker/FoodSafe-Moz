@@ -1,207 +1,369 @@
+<script>
+"use strict";
+
+/* =========================================================
+   FOODSAFE MOZ — LOCAL + SUPABASE
+========================================================= */
+
+const STORAGE_KEY="foodsafemoz_v2";
+const USERS_KEY="foodsafemoz_users";
+const SESSION_KEY="foodsafemoz_session";
+
+const SUPABASE_URL="https://nwpagrewnlqvyhrhaidv.supabase.co";
+const SUPABASE_KEY="sb_publishable_O7W-2dYDs4-JenXunOOxw_r3AOASYt";
+
+let supabaseClient=null;
+let cloudAuthenticated=false;
+let syncInProgress=false;
+
+try{
+if(window.supabase&&window.supabase.createClient){
+supabaseClient=window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+}
+}catch(error){
+console.error("Supabase não inicializado:",error);
+}
+
+let db={
+inspections:[],
+temperatures:[],
+problems:[],
+evidences:[],
+establishments:[]
+};
+
+let users=[];
+let currentUser=null;
+let currentProfileId=null;
+
+
+/* =========================================================
+   UTILIZADORES
+========================================================= */
+
+function saveUsers(){
+localStorage.setItem(USERS_KEY,JSON.stringify(users));
+}
+
+function roleLabel(role){
+if(role==="admin")return"Administrador";
+if(role==="inspector")return"Inspector";
+if(role==="responsavel")return"Responsável";
+return role||"Utilizador";
+}
+
+
+/* =========================================================
+   ESTADO ONLINE
+========================================================= */
+
+function setOnlineStatus(state){
+
+const el=document.getElementById("onlineStatus");
+if(!el)return;
+
+el.classList.remove("online","sync");
+
+if(state==="online"){
+el.textContent="● Online";
+el.classList.add("online");
+}
+else if(state==="sync"){
+el.textContent="↻ Sincronizando";
+el.classList.add("sync");
+}
+else{
+el.textContent="● Offline";
+}
+
+}
+
+
+/* =========================================================
+   SUPABASE SESSION
+========================================================= */
+
+async function getSupabaseSession(){
+
+if(!supabaseClient)return null;
+
+try{
+
+const {data,error}=await supabaseClient.auth.getSession();
+
+if(error){
+console.error("Erro ao obter sessão Supabase:",error);
+return null;
+}
+
+return data?.session||null;
+
+}catch(error){
+
+console.error("Erro Supabase:",error);
+return null;
+
+}
+
+}
+
+async function getCloudUser(){
+
+if(!supabaseClient)return null;
+
+try{
+
+const {data,error}=await supabaseClient.auth.getUser();
+
+if(error){
+console.error("Erro ao obter utilizador Supabase:",error);
+return null;
+}
+
+return data?.user||null;
+
+}catch(error){
+
+console.error("Erro ao obter utilizador:",error);
+return null;
+
+}
+
+}
+
+async function getCloudUserId(){
+
+const user=await getCloudUser();
+
+return user?.id||null;
+
+}
+
+
+/* =========================================================
+   LOGIN SUPABASE — CORRIGIDO
+========================================================= */
+
 async function trySupabaseLogin(identifier,password){
+
 if(!supabaseClient){
-return {
+
+return{
 ok:false,
 error:"Supabase não foi inicializado no navegador."
 };
+
 }
+
 let email=String(identifier||"").trim();
+
+if(!email){
+
+return{
+ok:false,
+error:"O e-mail/utilizador está vazio."
+};
+
+}
+
+
+/* ---------------------------------------------------------
+   SE FOI DIGITADO UM UTILIZADOR, ENCONTRA O E-MAIL
+--------------------------------------------------------- */
+
 if(!email.includes("@")){
+
 const localUser=users.find(u=>
-String(u.username||"").toLowerCase()===
+String(u.username||"").trim().toLowerCase()===
 email.toLowerCase()
 );
-if(localUser?.email){
-email=String(localUser.email).trim();
-}else{
-return {
+
+if(!localUser){
+
+return{
 ok:false,
-notFound:true,
-error:"Nome de utilizador não encontrado localmente."
+error:"Não existe um utilizador local associado a esse nome."
 };
+
 }
+
+if(!localUser.email){
+
+return{
+ok:false,
+error:"Este utilizador não possui um e-mail associado para o Supabase."
+};
+
 }
+
+email=String(localUser.email).trim();
+
+}
+
+
+/* ---------------------------------------------------------
+   LOGIN REAL NO SUPABASE
+--------------------------------------------------------- */
+
 try{
+
 const {data,error}=await supabaseClient.auth.signInWithPassword({
-email,
-password
+
+email:email,
+password:password
+
 });
+
+
+/* ---------------------------------------------------------
+   ERRO REAL DO SUPABASE
+--------------------------------------------------------- */
+
 if(error){
+
 console.error(
-"ERRO REAL DO SUPABASE LOGIN:",
+"ERRO REAL DO SUPABASE:",
 error
 );
-return {
+
+return{
 ok:false,
-error:error.message||"Erro de autenticação no Supabase."
+error:error.message||"Falha na autenticação Supabase."
 };
+
 }
+
+
+/* ---------------------------------------------------------
+   SEM SESSÃO
+--------------------------------------------------------- */
+
 if(!data?.session||!data?.user){
-return {
+
+return{
 ok:false,
 error:"O Supabase não devolveu uma sessão válida."
 };
+
 }
+
+
+/* ---------------------------------------------------------
+   LOGIN BEM-SUCEDIDO
+--------------------------------------------------------- */
+
 cloudAuthenticated=true;
+
 setOnlineStatus("online");
+
 const authUser=data.user;
+
 let profile=users.find(u=>
 u.email&&
-String(u.email).toLowerCase()===
-String(authUser.email||"").toLowerCase()
+String(u.email).trim().toLowerCase()===
+String(authUser.email||"").trim().toLowerCase()
 );
+
 if(profile){
+
 currentUser=profile;
+
 }else{
+
 currentUser={
+
 id:authUser.id,
-name:authUser.user_metadata?.name||authUser.email,
-username:authUser.user_metadata?.username||authUser.email,
+
+name:
+authUser.user_metadata?.name||
+authUser.email,
+
+username:
+authUser.user_metadata?.username||
+authUser.email,
+
 email:authUser.email,
-role:authUser.user_metadata?.role||"inspector",
+
+role:
+authUser.user_metadata?.role||
+"inspector",
+
 active:true,
-createdAt:new Date().toISOString()
+
+createdAt:
+new Date().toISOString()
+
 };
+
 users.push(currentUser);
+
 saveUsers();
+
 }
+
 localStorage.setItem(
 SESSION_KEY,
 currentUser.id
 );
-return {
+
+return{
 ok:true,
-user:authUser
+error:null
 };
+
 }catch(error){
+
 console.error(
-"ERRO EXCEPCIONAL NO LOGIN SUPABASE:",
+"ERRO EXCEÇÃO SUPABASE:",
 error
 );
-return {
+
+return{
 ok:false,
-error:error?.message||String(error)
+error:
+error?.message||
+"Erro desconhecido durante o login."
 };
+
 }
+
 }
+
+
+/* =========================================================
+   LOGIN GERAL — CORRIGIDO
+========================================================= */
+
 async function login(username,password){
-const normalized=String(username||"").trim();
-const pass=password||"";
-if(!normalized||!pass){
-return {
-ok:false,
-error:"Preencha o utilizador e a palavra-passe."
-};
-}
-/*
-=========================================================
-SE FOR E-MAIL:
-LOGIN DIRETO NO SUPABASE
-Não fazemos fallback silencioso para o login local.
-Assim conseguimos ver o erro verdadeiro.
-=========================================================
-*/
-if(normalized.includes("@")){
-const result=
-await trySupabaseLogin(
-normalized,
-pass
-);
-if(result.ok){
-return {
-ok:true
-};
-}
-/*
-Se o Supabase recusou o e-mail, mostramos
-o erro real em vez de esconder.
-*/
-return {
-ok:false,
-error:
-result.error||
-"Não foi possível autenticar no Supabase."
-};
-}
-/*
-=========================================================
-SE FOR NOME DE UTILIZADOR:
-procuramos o e-mail associado localmente
-e tentamos autenticar no Supabase.
-=========================================================
-*/
-const localUser=users.find(u=>
-String(u.username||"").toLowerCase()===
-normalized.toLowerCase()
-);
-if(localUser?.email){
-const result=
-await trySupabaseLogin(
-localUser.email,
-pass
-);
-if(result.ok){
-return {
-ok:true
-};
-}
-/*
-Se existe um e-mail associado mas o Supabase
-recusou, não escondemos o erro.
-*/
-return {
-ok:false,
-error:
-result.error||
-"Não foi possível autenticar o utilizador."
-};
-}
-/*
-=========================================================
-LOGIN ADMINISTRATIVO LOCAL
-=========================================================
-*/
-const localLoginUser=users.find(u=>
-(
-String(u.username||"").toLowerCase()===
-normalized.toLowerCase()
-)&&
-String(u.password||"")===pass&&
-u.active!==false
-);
-if(localLoginUser){
-currentUser=localLoginUser;
-cloudAuthenticated=false;
-setOnlineStatus("offline");
-localStorage.setItem(
-SESSION_KEY,
-localLoginUser.id
-);
-return {
-ok:true
-};
-}
+
+const normalized=
+String(username||"").trim().toLowerCase();
+
+const pass=
+String(password||"");
+
+
+/* ---------------------------------------------------------
+   ADMIN LOCAL
+   Mantém o acesso admin/admin123 funcionando mesmo offline.
+--------------------------------------------------------- */
+
 if(
-normalized.toLowerCase()==="admin"&&
+normalized==="admin"&&
 pass==="admin123"
 ){
+
 let admin=users.find(
 u=>u.role==="admin"
 );
-if(admin){
-admin.username="admin";
-admin.password="admin123";
-admin.active=true;
-if(!admin.name){
-admin.name="Administrador";
-}
-if(!admin.email){
-admin.email="admin@foodsafemoz.local";
-}
-saveUsers();
-currentUser=admin;
-}else{
+
+if(!admin){
+
 admin={
+
 id:"u_admin",
 name:"Administrador",
 username:"admin",
@@ -210,60 +372,334 @@ password:"admin123",
 role:"admin",
 active:true,
 createdAt:new Date().toISOString()
+
 };
+
 users.push(admin);
-saveUsers();
-currentUser=admin;
+
+}else{
+
+admin.username="admin";
+admin.password="admin123";
+admin.active=true;
+
 }
+
+saveUsers();
+
+currentUser=admin;
+
 cloudAuthenticated=false;
+
 setOnlineStatus("offline");
+
+localStorage.setItem(
+SESSION_KEY,
+admin.id
+);
+
+return{
+ok:true,
+local:true
+};
+
+}
+
+
+/* ---------------------------------------------------------
+   LOGIN ONLINE
+--------------------------------------------------------- */
+
+const result=
+await trySupabaseLogin(
+normalized,
+pass
+);
+
+if(result.ok){
+
+return{
+ok:true,
+local:false
+};
+
+}
+
+
+/* ---------------------------------------------------------
+   NÃO FAZER FALLBACK SILENCIOSO
+--------------------------------------------------------- */
+
+return{
+ok:false,
+error:result.error
+};
+
+}
+
+
+/* =========================================================
+   BOTÃO ENTRAR — CORRIGIDO
+========================================================= */
+
+async function doLogin(){
+
+const username=
+document.getElementById(
+"loginUser"
+).value.trim();
+
+const password=
+document.getElementById(
+"loginPass"
+).value;
+
+const error=
+document.getElementById(
+"loginError"
+);
+
+if(!username||!password){
+
+error.textContent=
+"Preencha o utilizador e a palavra-passe.";
+
+error.classList.remove("hidden");
+
+return;
+
+}
+
+error.classList.add("hidden");
+
+
+/* ---------------------------------------------------------
+   MOSTRA PROCESSAMENTO
+--------------------------------------------------------- */
+
+error.textContent=
+"Autenticando...";
+
+error.classList.remove("hidden");
+
+
+const result=
+await login(
+username,
+password
+);
+
+
+/* ---------------------------------------------------------
+   FALHA
+--------------------------------------------------------- */
+
+if(!result.ok){
+
+error.textContent=
+"Erro de login: "+
+(result.error||
+"Utilizador ou palavra-passe incorretos.");
+
+error.classList.remove("hidden");
+
+return;
+
+}
+
+
+/* ---------------------------------------------------------
+   SUCESSO
+--------------------------------------------------------- */
+
+error.classList.add("hidden");
+
+openApp();
+
+
+if(cloudAuthenticated){
+
+await syncAllFromCloud();
+
+}
+
+}
+
+
+/* =========================================================
+   RESTAURAR SESSÃO SUPABASE
+========================================================= */
+
+async function restoreSupabaseSession(){
+
+if(!supabaseClient)return false;
+
+const session=
+await getSupabaseSession();
+
+if(!session)return false;
+
+cloudAuthenticated=true;
+
+setOnlineStatus("online");
+
+const authUser=session.user;
+
+let profile=users.find(u=>
+u.email&&
+String(u.email).trim().toLowerCase()===
+String(authUser.email||"").trim().toLowerCase()
+);
+
+if(profile){
+
+currentUser=profile;
+
+}else{
+
+currentUser={
+
+id:authUser.id,
+
+name:
+authUser.user_metadata?.name||
+authUser.email,
+
+username:
+authUser.user_metadata?.username||
+authUser.email,
+
+email:authUser.email,
+
+role:
+authUser.user_metadata?.role||
+"inspector",
+
+active:true,
+
+createdAt:
+new Date().toISOString()
+
+};
+
+users.push(currentUser);
+
+saveUsers();
+
+}
+
 localStorage.setItem(
 SESSION_KEY,
 currentUser.id
 );
-return {
-ok:true
-};
+
+return true;
+
 }
-return {
-ok:false,
-error:"Utilizador local não encontrado."
-};
-}
-async function doLogin(){
-const username=
-document.getElementById("loginUser").value.trim();
-const password=
-document.getElementById("loginPass").value;
-const error=
-document.getElementById("loginError");
-if(!username||!password){
-error.textContent=
-"Preencha o utilizador e a palavra-passe.";
-error.classList.remove("hidden");
-return;
-}
-error.classList.add("hidden");
-const result=
-await login(username,password);
-if(!result.ok){
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function supabaseLogout(){
+
+if(supabaseClient){
+
+try{
+
+await supabaseClient.auth.signOut();
+
+}catch(error){
+
 console.error(
-"FoodSafe Login:",
-result.error
+"Erro ao sair do Supabase:",
+error
 );
-/*
-Mostra temporariamente o erro real.
-Isso vai permitir identificar exatamente
-o que o Supabase está a devolver.
-*/
-error.textContent=
-"Erro de login: "+
-(result.error||"Falha desconhecida.");
-error.classList.remove("hidden");
-return;
+
 }
-openApp();
+
+}
+
+cloudAuthenticated=false;
+
+setOnlineStatus("offline");
+
+}
+
+async function logout(){
+
 if(cloudAuthenticated){
-await syncAllFromCloud();
+
+await supabaseLogout();
+
 }
+
+currentUser=null;
+
+localStorage.removeItem(
+SESSION_KEY
+);
+
+document.getElementById(
+"app"
+).classList.add("hidden");
+
+document.getElementById(
+"loginScreen"
+).classList.remove("hidden");
+
+document.getElementById(
+"loginUser"
+).value="";
+
+document.getElementById(
+"loginPass"
+).value="";
+
+const error=
+document.getElementById(
+"loginError"
+);
+
+error.classList.add("hidden");
+
+}
+
+
+/* =========================================================
+   MONITOR SUPABASE AUTH
+========================================================= */
+
+if(supabaseClient){
+
+supabaseClient.auth.onAuthStateChange(
+(event,session)=>{
+
+console.log(
+"Supabase Auth:",
+event
+);
+
+if(session){
+
+cloudAuthenticated=true;
+
+setOnlineStatus("online");
+
+}else{
+
+cloudAuthenticated=false;
+
+if(currentUser){
+
+setOnlineStatus("offline");
+
+}
+
+}
+
+}
+);
+
 }
