@@ -1,3784 +1,2098 @@
 <!DOCTYPE html>
+
 <html lang="pt">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
 <meta name="theme-color" content="#0f766e">
+
 <title>FoodSafe Moz</title>
 
 <style>
+
 *{box-sizing:border-box}
-html,body{
-margin:0;
-padding:0;
-font-family:Arial,Helvetica,sans-serif;
-background:#f3f7f7;
-color:#17202a
-}
-body{min-height:100vh}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
+
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f2f6f6;color:#17202a}
+
+header{background:#0f766e;color:white;padding:17px}
+
+header h1{margin:0;font-size:23px}
+
+header p{margin:5px 0;font-size:13px}
+
+main{max-width:1000px;margin:auto;padding:14px 14px 100px}
+
+.card{background:white;border-radius:12px;padding:16px;margin-bottom:13px;box-shadow:0 2px 8px #0000000d}
+
+h2{font-size:20px;margin:4px 0 14px}
+
+h3{font-size:16px;margin:8px 0}
+
+label{display:block;font-weight:bold;font-size:13px;margin:11px 0 5px}
+
+input,select,textarea{width:100%;padding:12px;border:1px solid #cbd5d5;border-radius:8px;background:white;font-size:16px}
+
+textarea{min-height:75px;resize:vertical}
+
+button{border:0;border-radius:8px;padding:11px 14px;margin:4px 3px 4px 0;background:#0f766e;color:white;font-weight:bold;font-size:14px}
+
+button.secondary{background:#e4eeee;color:#134e4a}
+
+button.danger{background:#b91c1c;color:white}
+
+button:disabled{opacity:.5}
+
 .hidden{display:none!important}
-.muted{color:#64748b}
-.card{
-background:white;
-border-radius:16px;
-padding:18px;
-margin-bottom:16px;
-box-shadow:0 3px 14px rgba(15,23,42,.07)
-}
-.section{
-background:white;
-border-radius:16px;
-padding:18px;
-margin-bottom:18px
-}
-h1,h2,h3{margin-top:0}
-h2{font-size:22px}
-h3{font-size:18px}
-label{
-display:block;
-font-weight:600;
-font-size:14px;
-margin:10px 0 6px
-}
-input,select,textarea{
-width:100%;
-padding:12px;
-border:1px solid #d5dce3;
-border-radius:10px;
-background:#fff;
-outline:none
-}
-input:focus,select:focus,textarea:focus{
-border-color:#0f766e
-}
-textarea{min-height:90px;resize:vertical}
-button{
-border:0;
-border-radius:10px;
-padding:11px 15px;
-font-weight:700
-}
-.btn{
-background:#0f766e;
-color:white
-}
-.btn-secondary{
-background:#e2e8f0;
-color:#17202a
-}
-.btn-danger{
-background:#dc2626;
-color:white
-}
-.btn-warning{
-background:#f59e0b;
-color:white
-}
-.btn-success{
-background:#16a34a;
-color:white
-}
-.btn-small{
-padding:7px 10px;
-font-size:12px
-}
-.login-screen{
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:20px
-}
-.login-box{
-width:100%;
-max-width:420px;
-background:white;
-border-radius:22px;
-padding:28px;
-box-shadow:0 10px 35px rgba(15,23,42,.12)
-}
-.logo{
-width:62px;
-height:62px;
-border-radius:18px;
-background:#0f766e;
-color:white;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:25px;
-font-weight:800;
-margin-bottom:15px
-}
-.login-title{
-font-size:27px;
-font-weight:800;
-margin-bottom:5px
-}
-.login-subtitle{
-color:#64748b;
-margin-bottom:22px
-}
-.error{
-background:#fee2e2;
-color:#991b1b;
-padding:11px;
-border-radius:10px;
-margin:10px 0;
-font-size:14px
-}
-.success{
-background:#dcfce7;
-color:#166534;
-padding:11px;
-border-radius:10px;
-margin:10px 0;
-font-size:14px
-}
 
-#app{min-height:100vh}
-.topbar{
-position:sticky;
-top:0;
-z-index:20;
-background:white;
-border-bottom:1px solid #e2e8f0;
-padding:12px 15px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:10px
-}
-.brand{
-font-weight:800;
-color:#0f766e;
-font-size:19px
-}
-.user-mini{
-font-size:12px;
-text-align:right
-}
-.status{
-font-size:11px;
-font-weight:700
-}
-.online{color:#16a34a}
-.offline{color:#dc2626}
-
-.main{
-max-width:1100px;
-margin:auto;
-padding:18px 15px 100px
-}
 .page{display:none}
+
 .page.active{display:block}
 
-.grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:15px
-}
-.grid3{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:15px
-}
-@media(max-width:700px){
-.grid,.grid3{grid-template-columns:1fr}
-}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
 
-.kpi{
-background:white;
-padding:17px;
-border-radius:15px;
-box-shadow:0 3px 12px rgba(15,23,42,.06)
-}
-.kpi .value{
-font-size:27px;
-font-weight:800;
-margin:5px 0
-}
-.kpi .label{
-font-size:13px;
-color:#64748b
-}
+.metric{background:#e5f4f0;padding:14px;border-radius:10px}
 
-.nav{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-z-index:30;
-background:white;
-border-top:1px solid #dbe3e8;
-display:flex;
-overflow-x:auto;
-padding:7px
-}
-.nav button{
-background:transparent;
-color:#475569;
-min-width:80px;
-font-size:11px;
-padding:8px 6px
-}
-.nav button.active{
-color:#0f766e;
-background:#ecfdf5
-}
+.metric strong{display:block;font-size:24px;margin-top:7px}
 
-table{
-width:100%;
-border-collapse:collapse;
-font-size:13px
-}
-th,td{
-padding:10px 8px;
-border-bottom:1px solid #e5e7eb;
-text-align:left;
-vertical-align:top
-}
-th{font-size:12px;color:#475569}
-.table-wrap{overflow-x:auto}
+.muted{font-size:13px;color:#647575}
 
-.badge{
-display:inline-block;
-padding:5px 8px;
-border-radius:999px;
-font-size:11px;
-font-weight:700
-}
-.green{background:#dcfce7;color:#166534}
-.yellow{background:#fef3c7;color:#92400e}
-.red{background:#fee2e2;color:#991b1b}
-.blue{background:#dbeafe;color:#1d4ed8}
-.gray{background:#e2e8f0;color:#475569}
+.status{background:#e4f3ef;padding:10px;border-radius:8px;font-size:13px;margin:10px 0;overflow-wrap:anywhere}
 
-.check-row{
-display:flex;
-gap:10px;
-align-items:flex-start;
-padding:12px 0;
-border-bottom:1px solid #edf2f7
-}
-.check-row input{
-width:20px;
-height:20px;
-margin-top:2px
-}
-.progress{
-height:10px;
-background:#e2e8f0;
-border-radius:20px;
-overflow:hidden;
-margin:10px 0
-}
-.progress-bar{
-height:100%;
-background:#0f766e;
-width:0
-}
+.status.error{background:#fee2e2;color:#991b1b}
 
-.modal{
-position:fixed;
-inset:0;
-background:rgba(15,23,42,.55);
-display:none;
-align-items:center;
-justify-content:center;
-z-index:100;
-padding:18px
-}
-.modal.show{display:flex}
-.modal-box{
-background:white;
-width:100%;
-max-width:560px;
-max-height:90vh;
-overflow:auto;
-border-radius:18px;
-padding:20px
-}
-.modal-head{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:10px
-}
+.status.warn{background:#fef3c7;color:#92400e}
 
-.empty{
-padding:25px;
-text-align:center;
-color:#64748b
-}
+.item{border:1px solid #e1e8e8;border-radius:9px;padding:12px;margin:9px 0;overflow-wrap:anywhere}
 
-.risk-low{color:#16a34a}
-.risk-medium{color:#d97706}
-.risk-high{color:#dc2626}
+.badge{display:inline-block;border-radius:5px;padding:4px 7px;font-size:12px;background:#e5eeee}
 
-@media print{
-.topbar,.nav,.no-print{display:none!important}
-.main{padding:0}
-.page{display:none!important}
-#page-relatorio{display:block!important}
-.card,.section{box-shadow:none;border:1px solid #ddd}
-}
+.good{background:#dcfce7;color:#166534}
+
+.warnbadge{background:#fef3c7;color:#92400e}
+
+.bad{background:#fee2e2;color:#991b1b}
+
+.check{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid #eee}
+
+.check input{width:20px;height:20px;margin:0;flex-shrink:0}
+
+.check label{font-weight:normal;margin:0;font-size:14px}
+
+.nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ddd;display:flex;overflow-x:auto;padding:5px;z-index:10}
+
+.nav button{flex-shrink:0;background:white;color:#465b5b;font-size:12px;padding:10px}
+
+.nav button.active{background:#d8f2ed;color:#065f55}
+
+img.evidence{max-width:100%;max-height:280px;display:block;border-radius:8px;margin-top:8px}
+
+@media(min-width:700px){main{padding:22px 22px 100px}.nav{justify-content:center}}
+
+@media print{header,.nav,#login,button{display:none!important}.page{display:none!important}#page-relatorio{display:block!important}.card{box-shadow:none}}
+
 </style>
+
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div id="loginScreen" class="login-screen">
-<div class="login-box">
+<header>
 
-<div class="logo">FS</div>
+<h1>FoodSafe Moz</h1>
 
-<div class="login-title">FoodSafe Moz</div>
-<div class="login-subtitle">
-Alimentos seguros, famílias protegidas
-</div>
+<p>Alimentos seguros, famílias protegidas</p>
 
-<div id="loginError" class="error hidden"></div>
+<div id="connection">A verificar ligação...</div>
 
-<label>Utilizador ou e-mail</label>
-<input id="loginUser" type="text" autocomplete="username"
-placeholder="Utilizador ou e-mail">
+</header>
 
-<label>Palavra-passe</label>
-<input id="loginPass" type="password"
-autocomplete="current-password"
-placeholder="Palavra-passe">
+<main>
 
-<button class="btn" style="width:100%;margin-top:16px"
-onclick="doLogin()">
-Entrar
-</button>
+<div id="notice" class="status hidden"></div>
 
-<p class="muted" style="font-size:12px;margin-top:18px">
-A autenticação é protegida pelo Supabase.
-</p>
+<section id="login" class="card">
 
-</div>
-</div>
+<h2>Entrar no FoodSafe Moz</h2>
 
+<p class="muted">Entra com uma conta Supabase para sincronizar os teus dados.</p>
 
-<!-- APP -->
-<div id="app" class="hidden">
+<form id="loginForm">
 
-<div class="topbar">
-<div>
-<div class="brand">FoodSafe Moz</div>
-<div id="onlineStatus" class="status offline">Offline</div>
-</div>
+<label for="email">E-mail</label>
 
-<div class="user-mini">
-<div id="currentUserName">Utilizador</div>
-<div id="currentUserRole" class="muted">Inspector</div>
-</div>
-</div>
+<input id="email" type="email" autocomplete="username" required>
 
+<label for="password">Palavra-passe</label>
 
-<div class="main">
+<input id="password" type="password" autocomplete="current-password" required>
 
-<!-- INÍCIO -->
-<section id="page-inicio" class="page active">
+<button type="submit">Entrar</button>
 
-<h2>Início</h2>
+</form>
+
+<button type="button" class="secondary" id="demoButton">Continuar em modo de demonstração</button>
+
+<p class="muted">A demonstração permite testar as funções. Os dados ficam neste dispositivo e não são sincronizados com a nuvem.</p>
+
+</section>
+
+<section id="app" class="hidden">
 
 <div class="card">
-<h3>Bem-vindo ao FoodSafe Moz</h3>
-<p class="muted">
-Sistema de monitorização de segurança alimentar.
-</p>
-</div>
 
-<div class="grid3">
+<strong id="userLabel">FoodSafe Moz</strong>
 
-<div class="kpi">
-<div class="label">Estabelecimentos</div>
-<div class="value" id="kpiEstablishments">0</div>
-</div>
+<div id="syncMessage" class="status">A preparar a aplicação...</div>
 
-<div class="kpi">
-<div class="label">Inspeções</div>
-<div class="value" id="kpiInspections">0</div>
-</div>
+<button class="secondary" onclick="manualSync()">Sincronizar agora</button>
 
-<div class="kpi">
-<div class="label">Problemas</div>
-<div class="value" id="kpiProblems">0</div>
-</div>
+<button class="secondary" onclick="logout()">Sair</button>
 
 </div>
 
-<div class="section">
-<h3>Acesso rápido</h3>
+<section id="page-inicio" class="page active">
+
+<div class="card">
+
+<h2>Painel principal</h2>
+
+<p>Controla a higiene, as temperaturas e os riscos de segurança alimentar.</p>
 
 <div class="grid">
 
-<button class="btn" onclick="showPage('estabelecimentos')">
-Estabelecimentos
-</button>
+<div class="metric">Estabelecimentos<strong id="mEst">0</strong></div>
 
-<button class="btn" onclick="showPage('checklist')">
-Nova inspeção
-</button>
+<div class="metric">Inspeções<strong id="mIns">0</strong></div>
 
-<button class="btn" onclick="showPage('temperatura')">
-Registar temperatura
-</button>
+<div class="metric">Problemas abertos<strong id="mProb">0</strong></div>
 
-<button class="btn" onclick="showPage('problemas')">
-Não conformidades
-</button>
+<div class="metric">Conformidade média<strong id="mConf">—</strong></div>
 
 </div>
+
 </div>
+
+<div class="card">
+
+<h3>Acesso rápido</h3>
+
+<button onclick="showPage('checklist')">Nova inspeção</button>
+
+<button onclick="showPage('temperatura')">Registar temperatura</button>
+
+<button onclick="showPage('problemas')">Registar problema</button>
+
+</div>
+
+<div class="card"><h3>Atividades recentes</h3><div id="recent"></div></div>
 
 </section>
 
-
-<!-- TEMPERATURA -->
-<section id="page-temperatura" class="page">
-
-<h2>Temperatura</h2>
-
-<div class="section">
-
-<label>Estabelecimento</label>
-<select id="tempEstablishment"></select>
-
-<label>Tipo</label>
-<select id="tempType">
-<option value="refrigeracao">Refrigeração</option>
-<option value="congelacao">Congelação</option>
-<option value="cozimento">Cozimento</option>
-<option value="manutencao_quente">Manutenção quente</option>
-<option value="outro">Outro</option>
-</select>
-
-<label>Temperatura °C</label>
-<input id="tempValue" type="number" step="0.1">
-
-<label>Observação</label>
-<textarea id="tempNote"></textarea>
-
-<button class="btn" onclick="saveTemperature()">
-Guardar temperatura
-</button>
-
-</div>
-
-<div class="section">
-<h3>Histórico de temperaturas</h3>
-<div id="temperatureList"></div>
-</div>
-
-</section>
-
-
-<!-- CHECKLIST -->
-<section id="page-checklist" class="page">
-
-<h2>Checklist de inspeção</h2>
-
-<div class="section">
-
-<label>Estabelecimento</label>
-<select id="inspectionEstablishment"></select>
-
-<label>Responsável</label>
-<input id="inspectionResponsible">
-
-<div id="checklistContainer"></div>
-
-<div class="progress">
-<div id="checkProgress" class="progress-bar"></div>
-</div>
-
-<div id="checkScore" style="font-weight:800">
-Conformidade: 0%
-</div>
-
-<br>
-
-<button class="btn" onclick="saveInspection()">
-Guardar inspeção
-</button>
-
-</div>
-
-</section>
-
-
-<!-- PROBLEMAS -->
-<section id="page-problemas" class="page">
-
-<h2>Não conformidades</h2>
-
-<div class="section">
-
-<label>Estabelecimento</label>
-<select id="problemEstablishment"></select>
-
-<label>Descrição</label>
-<textarea id="problemDescription"
-placeholder="Descreva o problema encontrado"></textarea>
-
-<label>Categoria</label>
-<select id="problemCategory">
-<option>Higiene</option>
-<option>Temperatura</option>
-<option>Armazenamento</option>
-<option>Manipulação</option>
-<option>Instalações</option>
-<option>Equipamentos</option>
-<option>Outro</option>
-</select>
-
-<label>Gravidade</label>
-<select id="problemSeverity">
-<option value="baixa">Baixa</option>
-<option value="media">Média</option>
-<option value="alta">Alta</option>
-<option value="critica">Crítica</option>
-</select>
-
-<label>Ação corretiva</label>
-<textarea id="problemAction"></textarea>
-
-<button class="btn" onclick="saveProblem()">
-Guardar não conformidade
-</button>
-
-</div>
-
-<div class="section">
-<h3>Problemas registados</h3>
-<div id="problemList"></div>
-</div>
-
-</section>
-
-
-<!-- EVIDÊNCIAS -->
-<section id="page-evidencias" class="page">
-
-<h2>Evidências</h2>
-
-<div class="section">
-
-<label>Estabelecimento</label>
-<select id="evidenceEstablishment"></select>
-
-<label>Descrição</label>
-<textarea id="evidenceDescription"></textarea>
-
-<label>Imagem / evidência</label>
-<input id="evidenceFile" type="file"
-accept="image/*" capture="environment">
-
-<button class="btn" onclick="saveEvidence()">
-Guardar evidência
-</button>
-
-</div>
-
-<div class="section">
-<h3>Evidências registadas</h3>
-<div id="evidenceList"></div>
-</div>
-
-</section>
-
-
-<!-- DASHBOARD -->
-<section id="page-dashboard" class="page">
-
-<h2>Dashboard</h2>
-
-<div class="grid3">
-
-<div class="kpi">
-<div class="label">Inspeções</div>
-<div id="dashInspections" class="value">0</div>
-</div>
-
-<div class="kpi">
-<div class="label">Conformidade média</div>
-<div id="dashCompliance" class="value">0%</div>
-</div>
-
-<div class="kpi">
-<div class="label">Problemas</div>
-<div id="dashProblems" class="value">0</div>
-</div>
-
-</div>
-
-<div class="section">
-<h3>Resumo de risco</h3>
-<div id="riskSummary"></div>
-</div>
-
-</section>
-
-
-<!-- HISTÓRICO -->
-<section id="page-historico" class="page">
-
-<h2>Histórico</h2>
-
-<div class="section">
-<div id="historyList"></div>
-</div>
-
-</section>
-
-
-<!-- ESTABELECIMENTOS -->
 <section id="page-estabelecimentos" class="page">
+
+<div class="card">
 
 <h2>Estabelecimentos</h2>
 
-<div class="section">
-<button class="btn" onclick="openEstablishmentModal()">
-+ Novo estabelecimento
-</button>
-</div>
+<form id="estForm">
 
-<div id="establishmentList"></div>
+<label>Nome do estabelecimento</label>
 
-</section>
-
-
-<!-- PERFIL -->
-<section id="page-perfil" class="page">
-
-<h2>Perfil profissional</h2>
-
-<div id="profileContent"></div>
-
-</section>
-
-
-<!-- RELATÓRIO -->
-<section id="page-relatorio" class="page">
-
-<div class="no-print" style="margin-bottom:15px">
-<button class="btn" onclick="window.print()">
-Imprimir / PDF
-</button>
-</div>
-
-<div id="reportContent"></div>
-
-</section>
-
-
-<!-- UTILIZADORES -->
-<section id="page-utilizadores" class="page admin-only">
-
-<h2>Utilizadores</h2>
-
-<div class="section">
-
-<button class="btn" onclick="openUserModal()">
-+ Novo utilizador
-</button>
-
-<p class="muted" style="font-size:13px;margin-top:12px">
-Os utilizadores são criados diretamente no Supabase Auth.
-As palavras-passe não são guardadas no navegador.
-</p>
-
-</div>
-
-<div class="section">
-<div id="usersList"></div>
-</div>
-
-</section>
-
-
-<!-- CONTA -->
-<section id="page-conta" class="page">
-
-<h2>Minha conta</h2>
-
-<div class="section">
-
-<div class="grid">
-
-<div>
-<strong>Nome</strong>
-<p id="accountName" class="muted"></p>
-</div>
-
-<div>
-<strong>Utilizador</strong>
-<p id="accountUsername" class="muted"></p>
-</div>
-
-<div>
-<strong>E-mail</strong>
-<p id="accountEmail" class="muted"></p>
-</div>
-
-<div>
-<strong>Função</strong>
-<p id="accountRole" class="muted"></p>
-</div>
-
-</div>
-
-<br>
-
-<button class="btn-danger" onclick="logout()">
-Terminar sessão
-</button>
-
-</div>
-
-</section>
-
-</div>
-
-
-<!-- NAV -->
-<div class="nav">
-
-<button onclick="showPage('inicio')" data-page="inicio">
-Início
-</button>
-
-<button onclick="showPage('temperatura')" data-page="temperatura">
-Temperatura
-</button>
-
-<button onclick="showPage('checklist')" data-page="checklist">
-Checklist
-</button>
-
-<button onclick="showPage('problemas')" data-page="problemas">
-Problemas
-</button>
-
-<button onclick="showPage('evidencias')" data-page="evidencias">
-Evidências
-</button>
-
-<button onclick="showPage('dashboard')" data-page="dashboard">
-Dashboard
-</button>
-
-<button onclick="showPage('historico')" data-page="historico">
-Histórico
-</button>
-
-<button onclick="showPage('estabelecimentos')" data-page="estabelecimentos">
-Estab.
-</button>
-
-<button onclick="showPage('utilizadores')"
-data-page="utilizadores"
-class="admin-only">
-Utilizadores
-</button>
-
-<button onclick="showPage('conta')" data-page="conta">
-Conta
-</button>
-
-</div>
-
-</div>
-
-
-<!-- MODAL ESTABELECIMENTO -->
-<div id="establishmentModal" class="modal">
-
-<div class="modal-box">
-
-<div class="modal-head">
-<h3>Novo estabelecimento</h3>
-<button class="btn-secondary" onclick="closeModal('establishmentModal')">
-✕
-</button>
-</div>
-
-<label>Nome</label>
-<input id="estName">
+<input id="estName" required>
 
 <label>Responsável</label>
+
 <input id="estResponsible">
 
 <label>Telefone</label>
-<input id="estPhone">
+
+<input id="estPhone" type="tel">
 
 <label>Cidade</label>
+
 <input id="estCity" value="Nampula">
 
 <label>Endereço</label>
+
 <input id="estAddress">
 
-<label>Tipo</label>
-<input id="estType"
-placeholder="Restaurante, cantina, mercado...">
+<label>Tipo de estabelecimento</label>
 
-<label>Observações</label>
-<textarea id="estNotes"></textarea>
+<select id="estType">
 
-<br>
+<option>Restaurante</option><option>Mercado</option><option>Padaria</option>
 
-<button class="btn" onclick="saveEstablishment()">
-Guardar
-</button>
+<option>Hotel</option><option>Armazém</option><option>Escola</option><option>Outro</option>
 
-</div>
-</div>
-
-
-<!-- MODAL UTILIZADOR -->
-<div id="userModal" class="modal">
-
-<div class="modal-box">
-
-<div class="modal-head">
-<h3>Novo utilizador</h3>
-<button class="btn-secondary" onclick="closeModal('userModal')">
-✕
-</button>
-</div>
-
-<div id="userModalError" class="error hidden"></div>
-
-<label>Nome</label>
-<input id="newUserName">
-
-<label>Nome de utilizador</label>
-<input id="newUserUsername">
-
-<label>E-mail</label>
-<input id="newUserEmail" type="email">
-
-<label>Palavra-passe</label>
-<input id="newUserPassword" type="password"
-autocomplete="new-password">
-
-<label>Função</label>
-<select id="newUserRole">
-<option value="inspector">Inspector</option>
-<option value="responsavel">Responsável</option>
-<option value="admin">Administrador</option>
 </select>
 
-<p class="muted" style="font-size:12px">
-A palavra-passe é enviada diretamente ao Supabase Auth
-e não é armazenada no FoodSafe Moz.
-</p>
+<label>Observações</label>
 
-<button class="btn" onclick="saveUser()">
-Criar utilizador
-</button>
+<textarea id="estNotes"></textarea>
+
+<button type="submit">Guardar estabelecimento</button>
+
+</form>
 
 </div>
+
+<div class="card"><h3>Estabelecimentos registados</h3><div id="estList"></div></div>
+
+</section>
+
+<section id="page-temperatura" class="page">
+
+<div class="card">
+
+<h2>Controlo de temperatura</h2>
+
+<form id="tempForm">
+
+<label>Estabelecimento</label><select id="tempEst" required></select>
+
+<label>Alimento ou equipamento</label><input id="tempItem" required>
+
+<div class="grid">
+
+<div><label>Temperatura (°C)</label><input id="tempValue" type="number" step="0.1" required></div>
+
+<div><label>Mínimo (°C)</label><input id="tempMin" type="number" step="0.1" value="0" required></div>
+
+<div><label>Máximo (°C)</label><input id="tempMax" type="number" step="0.1" value="5" required></div>
+
 </div>
 
+<label>Observações</label><textarea id="tempNotes"></textarea>
+
+<button type="submit">Guardar temperatura</button>
+
+</form>
+
+<p class="muted">Confirma os limites adequados ao alimento e às normas aplicáveis antes de avaliar o resultado.</p>
+
+</div>
+
+<div class="card"><h3>Histórico de temperaturas</h3><div id="tempList"></div></div>
+
+</section>
+
+<section id="page-checklist" class="page">
+
+<div class="card">
+
+<h2>Checklist de inspeção</h2>
+
+<form id="inspectionForm">
+
+<label>Estabelecimento</label><select id="inspectionEst" required></select>
+
+<label>Nome do inspetor</label><input id="inspectorName" required>
+
+<div id="checkItems"></div>
+
+<label>Observações da inspeção</label><textarea id="inspectionNotes"></textarea>
+
+<button type="submit">Guardar inspeção</button>
+
+</form>
+
+</div>
+
+</section>
+
+<section id="page-problemas" class="page">
+
+<div class="card">
+
+<h2>Problemas e não conformidades</h2>
+
+<form id="problemForm">
+
+<label>Estabelecimento</label><select id="problemEst" required></select>
+
+<label>Descrição do problema</label><textarea id="problemDesc" required></textarea>
+
+<label>Categoria</label>
+
+<select id="problemCategory">
+
+<option>Higiene</option><option>Temperatura</option><option>Armazenamento</option>
+
+<option>Manipulação</option><option>Instalações</option><option>Equipamentos</option><option>Outro</option>
+
+</select>
+
+<label>Gravidade</label>
+
+<select id="problemSeverity">
+
+<option>Baixa</option><option selected>Média</option><option>Alta</option><option>Crítica</option>
+
+</select>
+
+<label>Medida corretiva</label><textarea id="problemAction"></textarea>
+
+<button type="submit">Registar problema</button>
+
+</form>
+
+</div>
+
+<div class="card"><h3>Problemas registados</h3><div id="problemList"></div></div>
+
+</section>
+
+<section id="page-evidencias" class="page">
+
+<div class="card">
+
+<h2>Evidências</h2>
+
+<form id="evidenceForm">
+
+<label>Estabelecimento</label><select id="evidenceEst" required></select>
+
+<label>Descrição da evidência</label><textarea id="evidenceDesc" required></textarea>
+
+<label>Fotografia (máximo 1,5 MB)</label>
+
+<input id="evidenceFile" type="file" accept="image/*" capture="environment">
+
+<button type="submit">Guardar evidência</button>
+
+</form>
+
+<p class="muted">As fotografias ficam no armazenamento local do dispositivo. O envio de fotografias para a nuvem requer configuração do Supabase Storage.</p>
+
+</div>
+
+<div class="card"><h3>Evidências registadas</h3><div id="evidenceList"></div></div>
+
+</section>
+
+<section id="page-dashboard" class="page">
+
+<div class="card">
+
+<h2>Dashboard</h2>
+
+<div class="grid">
+
+<div class="metric">Estabelecimentos<strong id="dEst">0</strong></div>
+
+<div class="metric">Inspeções<strong id="dIns">0</strong></div>
+
+<div class="metric">Temperaturas<strong id="dTemp">0</strong></div>
+
+<div class="metric">Problemas<strong id="dProb">0</strong></div>
+
+</div>
+
+</div>
+
+<div class="card"><h3>Resumo dos riscos</h3><div id="riskSummary"></div></div>
+
+</section>
+
+<section id="page-historico" class="page">
+
+<div class="card"><h2>Histórico de inspeções</h2><div id="historyList"></div></div>
+
+</section>
+
+<section id="page-perfil" class="page">
+
+<div class="card">
+
+<h2>Perfil do estabelecimento</h2>
+
+<label>Selecionar estabelecimento</label><select id="profileEst"></select>
+
+<div id="profileDetails"></div>
+
+</div>
+
+</section>
+
+<section id="page-relatorio" class="page">
+
+<div class="card">
+
+<h2>Relatório geral</h2>
+
+<p>Prepara o relatório para impressão ou para guardar em PDF.</p>
+
+<button onclick="printReport()">Imprimir / Guardar PDF</button>
+
+<div id="reportContent"></div>
+
+</div>
+
+</section>
+
+<section id="page-conta" class="page">
+
+<div class="card">
+
+<h2>Conta e dados</h2>
+
+<div id="accountInfo"></div>
+
+<button onclick="manualSync()">Sincronizar agora</button>
+
+<button class="secondary" onclick="exportData()">Exportar cópia dos dados</button>
+
+<button class="danger" onclick="logout()">Terminar sessão</button>
+
+</div>
+
+</section>
+
+</section>
+
+<nav id="nav" class="nav hidden">
+
+<button class="active" data-page="inicio">Início</button>
+
+<button data-page="estabelecimentos">Estab.</button>
+
+<button data-page="temperatura">Temperatura</button>
+
+<button data-page="checklist">Checklist</button>
+
+<button data-page="problemas">Problemas</button>
+
+<button data-page="evidencias">Evidências</button>
+
+<button data-page="dashboard">Dashboard</button>
+
+<button data-page="historico">Histórico</button>
+
+<button data-page="perfil">Perfil</button>
+
+<button data-page="relatorio">Relatório</button>
+
+<button data-page="conta">Conta</button>
+
+</nav>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
-/* =========================================================
-   CONFIGURAÇÃO SUPABASE
-========================================================= */
-
-const SUPABASE_URL =
-"https://nwpagrewnlqvyhrhaidv.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_O7W-2dYDs4-JenXunlOOxw_r3AOASYt";
-
-const USERS_FUNCTION =
-SUPABASE_URL + "/functions/v1/foodsafemoz-users";
-
-const supabaseClient =
-window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
+// O JavaScript e a configuração do Supabase serão acrescentados na Parte 3.
 
 
-/* =========================================================
-   CHAVES LOCAIS
-========================================================= */
+<script>
 
-const DATA_KEY="foodsafemoz_v2";
-const USERS_KEY="foodsafemoz_users";
-const SESSION_KEY="foodsafemoz_session";
+/* =====================================================
 
+   FOODSAFE MOZ — PARTE 3
 
-/* =========================================================
-   DADOS
-========================================================= */
+   Dados locais, autenticação, navegação e sincronização
 
-let establishments=[];
-let inspections=[];
-let temperatures=[];
-let problems=[];
-let evidences=[];
-let users=[];
+   ===================================================== */
 
-let currentUser=null;
-let cloudAuthenticated=false;
-let syncInProgress=false;
+const SUPABASE_URL = "https://nwpagrewnlqvyhrhaidv.supabase.co";
 
-let selectedEstablishment=null;
+const SUPABASE_KEY = "sb_publishable_O7W-2dYDs4-JenXunxw_r3AOASYt";
 
+const STORAGE_KEY = "foodsafemoz_v2";
 
-/* =========================================================
-   CHECKLIST
-========================================================= */
+const SESSION_KEY = "foodsafemoz_session";
 
-const checklistItems=[
-["higiene_pessoal","Higiene pessoal"],
-["instalacoes","Instalações adequadas"],
-["equipamentos","Equipamentos limpos e funcionais"],
-["armazenamento","Armazenamento adequado"],
-["temperatura","Controlo de temperatura"],
-["contaminacao","Prevenção de contaminação cruzada"],
-["agua","Água e gelo seguros"],
-["residuos","Gestão de resíduos"],
-["pragas","Controlo de pragas"],
-["documentacao","Documentação e registos"]
+let supabaseClient = null;
+
+let currentUser = null;
+
+let demoMode = false;
+
+let db = {
+
+  establishments: [],
+
+  inspections: [],
+
+  temperatures: [],
+
+  problems: [],
+
+  evidences: []
+
+};
+
+const checklistItems = [
+
+  "Higiene pessoal",
+
+  "Instalações",
+
+  "Equipamentos",
+
+  "Armazenamento",
+
+  "Temperatura",
+
+  "Contaminação cruzada",
+
+  "Água e gelo",
+
+  "Resíduos",
+
+  "Pragas",
+
+  "Documentação"
+
 ];
 
-let checklistState={};
+function $(id) {
 
-function buildChecklist(){
+  return document.getElementById(id);
 
-const box=
-document.getElementById("checklistContainer");
+}
 
-box.innerHTML="";
+function uid() {
 
-checklistItems.forEach(item=>{
+  return crypto.randomUUID
 
-const key=item[0];
-const label=item[1];
+    ? crypto.randomUUID()
 
-checklistState[key]=false;
+    : "fs-" + Date.now() + "-" + Math.random().toString(16).slice(2);
 
-const div=document.createElement("div");
+}
 
-div.className="check-row";
+function escapeHTML(value) {
 
-div.innerHTML=`
-<input type="checkbox"
-id="check_${key}"
-onchange="updateChecklist()">
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
 
-<div>
-<b>${label}</b>
-<div class="muted" style="font-size:12px">
-Conforme / não conforme
-</div>
-</div>
-`;
+    "&": "&amp;",
 
-box.appendChild(div);
+    "<": "&lt;",
+
+    ">": "&gt;",
+
+    '"': "&quot;",
+
+    "'": "&#39;"
+
+  })[char]);
+
+}
+
+function today() {
+
+  return new Date().toISOString().slice(0, 10);
+
+}
+
+function dateLabel(value) {
+
+  if (!value) return "—";
+
+  const date = new Date(value);
+
+  return Number.isNaN(date.getTime())
+
+    ? escapeHTML(value)
+
+    : date.toLocaleDateString("pt-PT");
+
+}
+
+function notice(message, type = "info") {
+
+  const element = $("notice");
+
+  if (!element) {
+
+    alert(message);
+
+    return;
+
+  }
+
+  element.textContent = message;
+
+  element.className = "notice " + type;
+
+  element.classList.remove("hidden");
+
+}
+
+function setConnection(message, online = false) {
+
+  const element = $("connection");
+
+  if (element) {
+
+    element.textContent = message;
+
+    element.dataset.online = online ? "true" : "false";
+
+  }
+
+  const sync = $("syncMessage");
+
+  if (sync) sync.textContent = message;
+
+}
+
+function saveLocal() {
+
+  try {
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+
+    return true;
+
+  } catch (error) {
+
+    console.error("Erro ao guardar localmente:", error);
+
+    notice("Não foi possível guardar os dados neste dispositivo.", "error");
+
+    return false;
+
+  }
+
+}
+
+function loadLocal() {
+
+  try {
+
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+
+    for (const key of Object.keys(db)) {
+
+      db[key] = Array.isArray(saved[key]) ? saved[key] : [];
+
+    }
+
+  } catch (error) {
+
+    console.error("Erro ao ler os dados locais:", error);
+
+  }
+
+}
+
+function allRecords() {
+
+  return [
+
+    ...db.establishments,
+
+    ...db.inspections,
+
+    ...db.temperatures,
+
+    ...db.problems,
+
+    ...db.evidences
+
+  ];
+
+}
+
+function isMine(record) {
+
+  return demoMode
+
+    ? !record.user_id
+
+    : record.user_id === currentUser?.id;
+
+}
+
+function myRecords(table) {
+
+  return db[table].filter(isMine);
+
+}
+
+function addRecord(table, record) {
+
+  const entry = {
+
+    id: uid(),
+
+    created_at: new Date().toISOString(),
+
+    ...record
+
+  };
+
+  if (!demoMode && currentUser) {
+
+    entry.user_id = currentUser.id;
+
+  }
+
+  db[table].unshift(entry);
+
+  saveLocal();
+
+  renderAll();
+
+  if (!demoMode && currentUser) {
+
+    syncRecord(table, entry);
+
+  } else {
+
+    setConnection("Modo demonstração: dados guardados apenas neste dispositivo.", false);
+
+  }
+
+  return entry;
+
+}
+
+function initSupabase() {
+
+  try {
+
+    if (window.supabase?.createClient) {
+
+      supabaseClient = window.supabase.createClient(
+
+        SUPABASE_URL,
+
+        SUPABASE_KEY,
+
+        {
+
+          auth: {
+
+            persistSession: true,
+
+            autoRefreshToken: true,
+
+            detectSessionInUrl: true
+
+          }
+
+        }
+
+      );
+
+    }
+
+  } catch (error) {
+
+    console.error("Supabase não inicializado:", error);
+
+  }
+
+}
+
+async function login(event) {
+
+  event?.preventDefault();
+
+  const email = $("email")?.value.trim();
+
+  const password = $("password")?.value;
+
+  if (!email || !password) {
+
+    notice("Introduz o e-mail e a palavra-passe.", "error");
+
+    return;
+
+  }
+
+  if (!supabaseClient) {
+
+    notice("O serviço de autenticação não foi carregado. Verifica a ligação à internet e recarrega a página.", "error");
+
+    return;
+
+  }
+
+  setConnection("A verificar o acesso…");
+
+  try {
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+
+      email,
+
+      password
+
+    });
+
+    if (error) throw error;
+
+    currentUser = data.user;
+
+    demoMode = false;
+
+    localStorage.setItem(SESSION_KEY, JSON.stringify({
+
+      id: currentUser.id,
+
+      email: currentUser.email
+
+    }));
+
+    await enterApp();
+
+    notice("Sessão iniciada com sucesso.", "success");
+
+  } catch (error) {
+
+    console.error("Erro de login:", error);
+
+    setConnection("Não foi possível iniciar sessão.", false);
+
+    notice("Não foi possível entrar. Confirma o e-mail, a palavra-passe e se o utilizador está confirmado no Supabase.", "error");
+
+  }
+
+}
+
+async function enterApp() {
+
+  $("login")?.classList.add("hidden");
+
+  $("app")?.classList.remove("hidden");
+
+  if ($("userLabel")) {
+
+    $("userLabel").textContent = demoMode
+
+      ? "Demonstração local"
+
+      : (currentUser?.email || "Utilizador autenticado");
+
+  }
+
+  if ($("accountInfo")) {
+
+    $("accountInfo").textContent = demoMode
+
+      ? "Modo demonstração. Os dados ficam apenas neste dispositivo e não são sincronizados."
+
+      : "Conta autenticada: " + (currentUser?.email || "");
+
+  }
+
+  if (demoMode) {
+
+    setConnection("Demonstração local — sem sincronização na nuvem.", false);
+
+  } else {
+
+    setConnection("Sessão autenticada. A verificar a sincronização…", true);
+
+    await syncFromCloud();
+
+  }
+
+  buildChecklist();
+
+  populateSelects();
+
+  renderAll();
+
+  showPage("inicio");
+
+}
+
+async function startDemo() {
+
+  demoMode = true;
+
+  currentUser = null;
+
+  await enterApp();
+
+  notice("Entraste no modo demonstração. Estes dados não serão enviados ao Supabase.", "info");
+
+}
+
+async function logout() {
+
+  if (!demoMode && supabaseClient) {
+
+    try {
+
+      await supabaseClient.auth.signOut();
+
+    } catch (error) {
+
+      console.error("Erro ao terminar sessão:", error);
+
+    }
+
+  }
+
+  currentUser = null;
+
+  demoMode = false;
+
+  localStorage.removeItem(SESSION_KEY);
+
+  $("app")?.classList.add("hidden");
+
+  $("login")?.classList.remove("hidden");
+
+  setConnection("Sessão terminada.", false);
+
+}
+
+function showPage(name) {
+
+  document.querySelectorAll(".page").forEach(page => {
+
+    page.classList.remove("active");
+
+  });
+
+  const target = $("page-" + name);
+
+  if (target) target.classList.add("active");
+
+  document.querySelectorAll(".nav [data-page]").forEach(button => {
+
+    button.classList.toggle("active", button.dataset.page === name);
+
+  });
+
+  if (name === "relatorio") renderReport();
+
+  if (name === "perfil") renderProfile();
+
+  if (name === "dashboard") renderDashboard();
+
+}
+
+function buildChecklist() {
+
+  const container = $("checkItems");
+
+  if (!container || container.dataset.ready === "true") return;
+
+  container.innerHTML = checklistItems.map((item, index) => `
+
+    <label class="check-row">
+
+      <input type="checkbox" name="check-${index}" value="${escapeHTML(item)}">
+
+      <span>${escapeHTML(item)}</span>
+
+    </label>
+
+  `).join("");
+
+  container.dataset.ready = "true";
+
+}
+
+function populateSelects() {
+
+  const establishments = myRecords("establishments");
+
+  [
+
+    "tempEst",
+
+    "inspectionEst",
+
+    "problemEst",
+
+    "evidenceEst",
+
+    "profileEst"
+
+  ].forEach(id => {
+
+    const select = $(id);
+
+    if (!select) return;
+
+    const previous = select.value;
+
+    const firstOption = id === "profileEst"
+
+      ? "Selecionar estabelecimento"
+
+      : "Selecionar estabelecimento";
+
+    select.innerHTML = `<option value="">${firstOption}</option>` +
+
+      establishments.map(est => `
+
+        <option value="${escapeHTML(est.id)}">${escapeHTML(est.name)}</option>
+
+      `).join("");
+
+    if (establishments.some(est => est.id === previous)) {
+
+      select.value = previous;
+
+    }
+
+  });
+
+}
+
+function selectedEstablishment(id) {
+
+  return myRecords("establishments").find(est => est.id === id);
+
+}
+
+function establishmentName(id) {
+
+  return selectedEstablishment(id)?.name || "Estabelecimento removido";
+
+}
+
+function renderEstablishments() {
+
+  const container = $("estList");
+
+  if (!container) return;
+
+  const establishments = myRecords("establishments");
+
+  container.innerHTML = establishments.length
+
+    ? establishments.map(est => `
+
+      <article class="item">
+
+        <h3>${escapeHTML(est.name)}</h3>
+
+        <p>Responsável: ${escapeHTML(est.responsible || "—")}</p>
+
+        <p>Localização: ${escapeHTML(est.city || "—")} · ${escapeHTML(est.address || "—")}</p>
+
+        <p>Tipo: ${escapeHTML(est.type || "—")}</p>
+
+        <button type="button" onclick="viewEstablishment('${est.id}')">Ver perfil</button>
+
+        <button type="button" onclick="deleteRecord('establishments','${est.id}')">Eliminar</button>
+
+      </article>
+
+    `).join("")
+
+    : "<p>Ainda não há estabelecimentos registados.</p>";
+
+}
+
+function renderTemperatures() {
+
+  const container = $("tempList");
+
+  if (!container) return;
+
+  const rows = myRecords("temperatures");
+
+  container.innerHTML = rows.length
+
+    ? rows.map(item => {
+
+      const valid = Number(item.value) >= Number(item.min) &&
+
+                    Number(item.value) <= Number(item.max);
+
+      return `
+
+        <article class="item">
+
+          <h3>${escapeHTML(establishmentName(item.establishment_id))}</h3>
+
+          <p>Alimento/equipamento: ${escapeHTML(item.item || "—")}</p>
+
+          <p>Temperatura: ${escapeHTML(item.value)} °C</p>
+
+          <p>Limites registados: ${escapeHTML(item.min)} °C a ${escapeHTML(item.max)} °C</p>
+
+          <p>Resultado: <strong>${valid ? "Dentro dos limites definidos" : "Fora dos limites definidos"}</strong></p>
+
+          <p>Data: ${dateLabel(item.created_at)}</p>
+
+          <p>${escapeHTML(item.notes || "")}</p>
+
+          <button type="button" onclick="deleteRecord('temperatures','${item.id}')">Eliminar</button>
+
+        </article>
+
+      `;
+
+    }).join("")
+
+    : "<p>Ainda não há temperaturas registadas.</p>";
+
+}
+
+function renderProblems() {
+
+  const container = $("problemList");
+
+  if (!container) return;
+
+  const rows = myRecords("problems");
+
+  container.innerHTML = rows.length
+
+    ? rows.map(item => `
+
+      <article class="item">
+
+        <h3>${escapeHTML(establishmentName(item.establishment_id))}</h3>
+
+        <p>${escapeHTML(item.description)}</p>
+
+        <p>Categoria: ${escapeHTML(item.category || "—")} · Gravidade: ${escapeHTML(item.severity || "—")}</p>
+
+        <p>Medida corretiva: ${escapeHTML(item.action || "—")}</p>
+
+        <p>Estado: <strong>${escapeHTML(item.status || "Aberto")}</strong></p>
+
+        <p>Data: ${dateLabel(item.created_at)}</p>
+
+        <button type="button" onclick="changeProblemStatus('${item.id}')">Alterar estado</button>
+
+        <button type="button" onclick="deleteRecord('problems','${item.id}')">Eliminar</button>
+
+      </article>
+
+    `).join("")
+
+    : "<p>Ainda não há problemas registados.</p>";
+
+}
+
+function renderEvidences() {
+
+  const container = $("evidenceList");
+
+  if (!container) return;
+
+  const rows = myRecords("evidences");
+
+  container.innerHTML = rows.length
+
+    ? rows.map(item => `
+
+      <article class="item">
+
+        <h3>${escapeHTML(establishmentName(item.establishment_id))}</h3>
+
+        <p>${escapeHTML(item.description || "Evidência")}</p>
+
+        <p>Data: ${dateLabel(item.created_at)}</p>
+
+        ${item.fileData ? `<img src="${item.fileData}" alt="Evidência" style="max-width:100%;height:auto">` : ""}
+
+        <p>${item.fileData ? "Fotografia guardada neste dispositivo." : "Sem fotografia anexada."}</p>
+
+        <button type="button" onclick="deleteRecord('evidences','${item.id}')">Eliminar</button>
+
+      </article>
+
+    `).join("")
+
+    : "<p>Ainda não há evidências registadas.</p>";
+
+}
+
+function renderHistory() {
+
+  const container = $("historyList");
+
+  if (!container) return;
+
+  const rows = [
+
+    ...myRecords("inspections").map(item => ({
+
+      ...item, kind: "Inspeção", description: `${item.score ?? 0}% de conformidade`
+
+    })),
+
+    ...myRecords("temperatures").map(item => ({
+
+      ...item, kind: "Temperatura", description: `${item.value} °C`
+
+    })),
+
+    ...myRecords("problems").map(item => ({
+
+      ...item, kind: "Problema", description: item.description
+
+    })),
+
+    ...myRecords("evidences").map(item => ({
+
+      ...item, kind: "Evidência", description: item.description
+
+    }))
+
+  ].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+  container.innerHTML = rows.length
+
+    ? rows.map(item => `
+
+      <article class="item">
+
+        <strong>${escapeHTML(item.kind)}</strong>
+
+        <p>${escapeHTML(establishmentName(item.establishment_id))}</p>
+
+        <p>${escapeHTML(item.description || "")}</p>
+
+        <p>${dateLabel(item.created_at)}</p>
+
+      </article>
+
+    `).join("")
+
+    : "<p>O histórico ainda está vazio.</p>";
+
+}
+
+function renderDashboard() {
+
+  const inspections = myRecords("inspections");
+
+  const temperatures = myRecords("temperatures");
+
+  const problems = myRecords("problems");
+
+  const establishments = myRecords("establishments");
+
+  if ($("dEst")) $("dEst").textContent = establishments.length;
+
+  if ($("dIns")) $("dIns").textContent = inspections.length;
+
+  if ($("dTemp")) $("dTemp").textContent = temperatures.length;
+
+  if ($("dProb")) $("dProb").textContent = problems.filter(p => p.status !== "Resolvido").length;
+
+  if ($("riskSummary")) {
+
+    const unresolved = problems.filter(p => p.status !== "Resolvido");
+
+    const critical = unresolved.filter(p => ["Alta", "Crítica"].includes(p.severity));
+
+    $("riskSummary").textContent = critical.length
+
+      ? `${critical.length} problema(s) de gravidade alta ou crítica por resolver.`
+
+      : unresolved.length
+
+        ? `${unresolved.length} problema(s) por resolver.`
+
+        : "Não há problemas pendentes registados.";
+
+  }
+
+  if ($("mEst")) $("mEst").textContent = establishments.length;
+
+  if ($("mIns")) $("mIns").textContent = inspections.length;
+
+  if ($("mProb")) $("mProb").textContent = problems.filter(p => p.status !== "Resolvido").length;
+
+  const average = inspections.length
+
+    ? Math.round(inspections.reduce((sum, item) => sum + Number(item.score || 0), 0) / inspections.length)
+
+    : 0;
+
+  if ($("mConf")) $("mConf").textContent = inspections.length ? average + "%" : "—";
+
+  const recent = $("recent");
+
+  if (recent) {
+
+    const latest = [
+
+      ...inspections.map(x => ({ ...x, kind: "Inspeção" })),
+
+      ...temperatures.map(x => ({ ...x, kind: "Temperatura" })),
+
+      ...problems.map(x => ({ ...x, kind: "Problema" }))
+
+    ].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 5);
+
+    recent.innerHTML = latest.length
+
+      ? latest.map(x => `<p><strong>${escapeHTML(x.kind)}</strong> — ${escapeHTML(establishmentName(x.establishment_id))} · ${dateLabel(x.created_at)}</p>`).join("")
+
+      : "<p>Sem atividade registada.</p>";
+
+  }
+
+}
+
+function renderProfile() {
+
+  const id = $("profileEst")?.value;
+
+  const container = $("profileDetails");
+
+  if (!container) return;
+
+  const est = selectedEstablishment(id);
+
+  if (!est) {
+
+    container.innerHTML = "<p>Seleciona um estabelecimento para consultar o perfil.</p>";
+
+    return;
+
+  }
+
+  const inspections = myRecords("inspections").filter(x => x.establishment_id === id);
+
+  const problems = myRecords("problems").filter(x => x.establishment_id === id);
+
+  const temps = myRecords("temperatures").filter(x => x.establishment_id === id);
+
+  const average = inspections.length
+
+    ? Math.round(inspections.reduce((sum, x) => sum + Number(x.score || 0), 0) / inspections.length)
+
+    : null;
+
+  const risk = problems.some(x => x.status !== "Resolvido" && ["Alta", "Crítica"].includes(x.severity))
+
+    ? "Alto"
+
+    : problems.some(x => x.status !== "Resolvido")
+
+      ? "Moderado"
+
+      : "Sem problemas pendentes registados";
+
+  container.innerHTML = `
+
+    <article class="item">
+
+      <h3>${escapeHTML(est.name)}</h3>
+
+      <p>Responsável: ${escapeHTML(est.responsible || "—")}</p>
+
+      <p>Telefone: ${escapeHTML(est.phone || "—")}</p>
+
+      <p>Localização: ${escapeHTML(est.city || "—")} · ${escapeHTML(est.address || "—")}</p>
+
+      <p>Total de inspeções: ${inspections.length}</p>
+
+      <p>Conformidade média: ${average === null ? "Sem inspeções" : average + "%"}</p>
+
+      <p>Nível de risco indicativo: <strong>${risk}</strong></p>
+
+      <p>Problemas por resolver: ${problems.filter(x => x.status !== "Resolvido").length}</p>
+
+      <p>Registos de temperatura: ${temps.length}</p>
+
+      <p>Última inspeção: ${inspections.length ? dateLabel(inspections[0].created_at) : "Nenhuma"}</p>
+
+    </article>
+
+  `;
+
+}
+
+function viewEstablishment(id) {
+
+  showPage("perfil");
+
+  if ($("profileEst")) $("profileEst").value = id;
+
+  renderProfile();
+
+}
+
+function renderReport() {
+
+  const container = $("reportContent");
+
+  if (!container) return;
+
+  const establishments = myRecords("establishments");
+
+  const inspections = myRecords("inspections");
+
+  const problems = myRecords("problems");
+
+  container.innerHTML = `
+
+    <h2>Relatório FoodSafe Moz</h2>
+
+    <p>Data de emissão: ${dateLabel(new Date().toISOString())}</p>
+
+    <p>Estabelecimentos registados: ${establishments.length}</p>
+
+    <p>Inspeções registadas: ${inspections.length}</p>
+
+    <p>Problemas pendentes: ${problems.filter(x => x.status !== "Resolvido").length}</p>
+
+    ${establishments.map(est => {
+
+      const ins = inspections.filter(x => x.establishment_id === est.id);
+
+      const prob = problems.filter(x => x.establishment_id === est.id && x.status !== "Resolvido");
+
+      return `
+
+        <hr>
+
+        <h3>${escapeHTML(est.name)}</h3>
+
+        <p>Responsável: ${escapeHTML(est.responsible || "—")}</p>
+
+        <p>Inspeções: ${ins.length}</p>
+
+        <p>Problemas pendentes: ${prob.length}</p>
+
+      `;
+
+    }).join("")}
+
+  `;
+
+}
+
+function printReport() {
+
+  renderReport();
+
+  window.print();
+
+}
+
+function renderAll() {
+
+  populateSelects();
+
+  renderEstablishments();
+
+  renderTemperatures();
+
+  renderProblems();
+
+  renderEvidences();
+
+  renderHistory();
+
+  renderDashboard();
+
+  renderProfile();
+
+  renderReport();
+
+}
+
+/* ------------------ REGISTOS ------------------ */
+
+$("loginForm")?.addEventListener("submit", login);
+
+$("demoButton")?.addEventListener("click", startDemo);
+
+document.querySelectorAll(".nav [data-page]").forEach(button => {
+
+  button.addEventListener("click", () => showPage(button.dataset.page));
 
 });
 
-updateChecklist();
+$("estForm")?.addEventListener("submit", event => {
+
+  event.preventDefault();
+
+  const name = $("estName").value.trim();
+
+  if (!name) {
+
+    notice("Introduz o nome do estabelecimento.", "error");
+
+    return;
+
+  }
+
+  addRecord("establishments", {
+
+    name,
+
+    responsible: $("estResponsible").value.trim(),
+
+    phone: $("estPhone").value.trim(),
+
+    city: $("estCity").value.trim(),
+
+    address: $("estAddress").value.trim(),
+
+    type: $("estType").value,
+
+    notes: $("estNotes").value.trim()
+
+  });
+
+  event.target.reset();
+
+  if ($("estCity")) $("estCity").value = "Nampula";
+
+  notice("Estabelecimento guardado.", "success");
+
+});
+
+$("tempForm")?.addEventListener("submit", event => {
+
+  event.preventDefault();
+
+  const establishment_id = $("tempEst").value;
+
+  const value = Number($("tempValue").value);
+
+  const min = Number($("tempMin").value);
+
+  const max = Number($("tempMax").value);
+
+  if (!establishment_id || !Number.isFinite(value) || min > max) {
+
+    notice("Verifica o estabelecimento e os limites de temperatura.", "error");
+
+    return;
+
+  }
+
+  addRecord("temperatures", {
+
+    establishment_id,
+
+    item: $("tempItem").value.trim(),
+
+    value,
+
+    min,
+
+    max,
+
+    notes: $("tempNotes").value.trim()
+
+  });
+
+  event.target.reset();
+
+  notice("Temperatura registada.", "success");
+
+});
+
+$("inspectionForm")?.addEventListener("submit", event => {
+
+  event.preventDefault();
+
+  const establishment_id = $("inspectionEst").value;
+
+  const checked = checklistItems.filter((item, index) =>
+
+    $(`check-${index}`)?.checked ||
+
+    document.querySelector(`[name="check-${index}"]`)?.checked
+
+  );
+
+  if (!establishment_id) {
+
+    notice("Seleciona o estabelecimento da inspeção.", "error");
+
+    return;
+
+  }
+
+  const score = Math.round((checked.length / checklistItems.length) * 100);
+
+  const unchecked = checklistItems.filter((item, index) =>
+
+    !document.querySelector(`[name="check-${index}"]`)?.checked
+
+  );
+
+  addRecord("inspections", {
+
+    establishment_id,
+
+    inspector: $("inspectorName").value.trim(),
+
+    score,
+
+    checked_items: checked,
+
+    nonconformities: unchecked,
+
+    notes: $("inspectionNotes").value.trim(),
+
+    risk: score >= 80 ? "Baixo" : score >= 50 ? "Moderado" : "Alto"
+
+  });
+
+  event.target.reset();
+
+  notice(`Inspeção guardada. Conformidade: ${score}%.`, "success");
+
+});
+
+$("problemForm")?.addEventListener("submit", event => {
+
+  event.preventDefault();
+
+  const establishment_id = $("problemEst").value;
+
+  const description = $("problemDesc").value.trim();
+
+  if (!establishment_id || !description) {
+
+    notice("Seleciona um estabelecimento e descreve o problema.", "error");
+
+    return;
+
+  }
+
+  addRecord("problems", {
+
+    establishment_id,
+
+    description,
+
+    category: $("problemCategory").value,
+
+    severity: $("problemSeverity").value,
+
+    action: $("problemAction").value.trim(),
+
+    status: "Aberto"
+
+  });
+
+  event.target.reset();
+
+  notice("Problema guardado.", "success");
+
+});
+
+$("evidenceForm")?.addEventListener("submit", event => {
+
+  event.preventDefault();
+
+  const establishment_id = $("evidenceEst").value;
+
+  const description = $("evidenceDesc").value.trim();
+
+  const file = $("evidenceFile").files?.[0];
+
+  if (!establishment_id) {
+
+    notice("Seleciona o estabelecimento da evidência.", "error");
+
+    return;
+
+  }
+
+  const saveEvidence = file => {
+
+    addRecord("evidences", {
+
+      establishment_id,
+
+      description,
+
+      fileName: file?.name || "",
+
+      fileData: file?.data || null,
+
+      storage: "local"
+
+    });
+
+    event.target.reset();
+
+    notice("Evidência guardada neste dispositivo. A fotografia não foi enviada para a nuvem.", "success");
+
+  };
+
+  if (!file) {
+
+    saveEvidence(null);
+
+    return;
+
+  }
+
+  if (file.size > 3 * 1024 * 1024) {
+
+    notice("A fotografia excede 3 MB. Escolhe uma imagem mais pequena.", "error");
+
+    return;
+
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = () => saveEvidence({ name: file.name, data: reader.result });
+
+  reader.onerror = () => notice("Não foi possível ler a fotografia.", "error");
+
+  reader.readAsDataURL(file);
+
+});
+
+$("profileEst")?.addEventListener("change", renderProfile);
+
+/* ------------------ ESTADOS E ELIMINAÇÃO ------------------ */
+
+function changeProblemStatus(id) {
+
+  const problem = db.problems.find(x => x.id === id && isMine(x));
+
+  if (!problem) return;
+
+  const states = ["Aberto", "Em tratamento", "Resolvido"];
+
+  const next = (states.indexOf(problem.status || "Aberto") + 1) % states.length;
+
+  problem.status = states[next];
+
+  problem.updated_at = new Date().toISOString();
+
+  saveLocal();
+
+  renderAll();
+
+  if (!demoMode && currentUser) {
+
+    syncRecord("problems", problem);
+
+  }
+
+  notice("Estado atualizado para: " + problem.status, "success");
 
 }
 
+async function deleteRecord(table, id) {
 
-/* =========================================================
-   LOCAL DATA
-========================================================= */
+  const record = db[table]?.find(x => x.id === id && isMine(x));
 
-function sanitizeUsers(list){
+  if (!record) return;
 
-return (Array.isArray(list)?list:[]).map(u=>({
+  if (!confirm("Tens a certeza de que queres eliminar este registo?")) return;
 
-id:u.id,
-email:u.email||"",
-name:u.name||u.email||"Utilizador",
-username:u.username||u.email||"",
-role:u.role||"inspector",
-active:u.active!==false,
-createdAt:u.createdAt||null,
-lastSignInAt:u.lastSignInAt||null
-}));
+  db[table] = db[table].filter(x => x.id !== id);
 
-}
+  saveLocal();
 
-function loadData(){
+  renderAll();
 
-try{
+  if (!demoMode && currentUser && table !== "evidences") {
 
-const data=
-JSON.parse(
-localStorage.getItem(DATA_KEY)||"{}"
-);
+    try {
 
-establishments=
-Array.isArray(data.establishments)
-?data.establishments:[];
+      const { error } = await supabaseClient
 
-inspections=
-Array.isArray(data.inspections)
-?data.inspections:[];
+        .from(table)
 
-temperatures=
-Array.isArray(data.temperatures)
-?data.temperatures:[];
+        .delete()
 
-problems=
-Array.isArray(data.problems)
-?data.problems:[];
+        .eq("id", id)
 
-evidences=
-Array.isArray(data.evidences)
-?data.evidences:[];
+        .eq("user_id", currentUser.id);
 
-}catch(e){
+      if (error) throw error;
 
-establishments=[];
-inspections=[];
-temperatures=[];
-problems=[];
-evidences=[];
+    } catch (error) {
+
+      console.error("Erro ao eliminar na nuvem:", error);
+
+      notice("Registo removido localmente, mas a eliminação na nuvem falhou. Verifica a ligação e o RLS.", "error");
+
+      return;
+
+    }
+
+  }
+
+  notice("Registo eliminado.", "success");
 
 }
 
-try{
+/* ------------------ SUPABASE / SINCRONIZAÇÃO ------------------ */
 
-users=
-sanitizeUsers(
-JSON.parse(
-localStorage.getItem(USERS_KEY)||"[]"
-)
-);
+const cloudTables = {
 
-}catch(e){
+  establishments: "establishments",
 
-users=[];
+  inspections: "inspections",
 
-}
+  temperatures: "temperatures",
 
-}
+  problems: "problems"
 
-function saveData(){
-
-localStorage.setItem(
-DATA_KEY,
-JSON.stringify({
-establishments,
-inspections,
-temperatures,
-problems,
-evidences
-})
-);
-
-}
-
-function saveUsers(){
-
-users=sanitizeUsers(users);
-
-localStorage.setItem(
-USERS_KEY,
-JSON.stringify(users)
-);
-
-}
-
-
-/* =========================================================
-   UTILITÁRIOS
-========================================================= */
-
-function esc(value){
-
-return String(value??"")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
-
-}
-
-function uid(){
-
-return crypto.randomUUID
-?crypto.randomUUID()
-:"id_"+Date.now()+"_"+Math.random()
-.toString(36).slice(2);
-
-}
-
-function now(){
-
-return new Date().toISOString();
-
-}
-
-function closeModal(id){
-
-document.getElementById(id)
-.classList.remove("show");
-
-}
-
-function openModal(id){
-
-document.getElementById(id)
-.classList.add("show");
-
-}
-
-
-/* =========================================================
-   STATUS
-========================================================= */
-
-function setOnlineStatus(status){
-
-const el=
-document.getElementById("onlineStatus");
-
-if(!el)return;
-
-if(status==="online"){
-
-el.textContent="● Online";
-el.className="status online";
-
-}else{
-
-el.textContent="● Offline";
-el.className="status offline";
-
-}
-
-}
-
-
-/* =========================================================
-   SUPABASE SESSION
-========================================================= */
-
-async function getSupabaseSession(){
-
-const {data,error}=
-await supabaseClient.auth.getSession();
-
-if(error)throw error;
-
-return data.session;
-
-}
-
-async function restoreSupabaseSession(){
-
-try{
-
-const session=
-await getSupabaseSession();
-
-if(session){
-
-cloudAuthenticated=true;
-setOnlineStatus("online");
-
-const user=session.user;
-
-currentUser={
-id:user.id,
-name:
-user.user_metadata?.name||
-user.email||
-"Utilizador",
-username:
-user.user_metadata?.username||
-user.email||
-"",
-email:user.email||"",
-role:
-user.user_metadata?.role||
-"inspector",
-active:true
 };
 
-return session;
+async function syncRecord(table, record) {
 
-}
-
-}catch(error){
-
-console.error(error);
-
-}
-
-cloudAuthenticated=false;
-setOnlineStatus("offline");
-
-return null;
-
-}
-
-
-/* =========================================================
-   EDGE FUNCTION — UTILIZADORES
-========================================================= */
-
-async function userFunction(
-action,
-payload={}
-){
-
-const session=
-await getSupabaseSession();
-
-if(!session){
-
-throw new Error(
-"Sessão Supabase não encontrada."
-);
-
-}
-
-const res=
-await fetch(
-USERS_FUNCTION,
-{
-method:"POST",
-headers:{
-"Content-Type":"application/json",
-"Authorization":
-"Bearer "+session.access_token,
-"apikey":SUPABASE_KEY
-},
-body:JSON.stringify({
-action,
-...payload
-})
-}
-);
-
-const data=
-await res.json().catch(()=>({}));
-
-if(!res.ok){
-
-throw new Error(
-data.error||
-"Erro na gestão de utilizadores."
-);
-
-}
-
-return data;
-
-}
-
-
-/* =========================================================
-   CARREGAR UTILIZADORES DA NUVEM
-========================================================= */
-
-async function loadCloudUsers(){
-
-if(!currentUser||
-currentUser.role!=="admin")return;
-
-try{
-
-const r=
-await userFunction("list");
-
-users=
-sanitizeUsers(r.users||[]);
-
-saveUsers();
-
-renderUsers();
-
-}catch(error){
-
-console.error(error);
-
-showUserError(
-"Não foi possível carregar os utilizadores: "+
-error.message
-);
-
-}
-
-}
-
-
-/* =========================================================
-   LOGIN
-========================================================= */
-
-async function doLogin(){
-
-const login=
-document.getElementById("loginUser")
-.value.trim();
-
-const password=
-document.getElementById("loginPass")
-.value;
-
-const errorBox=
-document.getElementById("loginError");
-
-errorBox.classList.add("hidden");
-
-if(!login||!password){
-
-errorBox.textContent=
-"Preencha o utilizador/e-mail e a palavra-passe.";
-
-errorBox.classList.remove("hidden");
-
-return;
-
-}
-
-try{
-
-let email=login;
-
-if(!login.includes("@")){
-
-const localUser=
-users.find(
-u=>
-u.username?.toLowerCase()===
-login.toLowerCase()
-);
-
-if(!localUser){
-
-throw new Error(
-"Utilizador não encontrado. Use o e-mail da conta."
-);
-
-}
-
-email=localUser.email;
-
-}
-
-const {data,error}=
-await supabaseClient.auth.signInWithPassword({
-email,
-password
-});
-
-if(error)throw error;
-
-if(!data.user){
-
-throw new Error(
-"Não foi possível iniciar a sessão."
-);
-
-}
-
-const user=data.user;
-
-currentUser={
-id:user.id,
-name:
-user.user_metadata?.name||
-user.email||
-"Utilizador",
-username:
-user.user_metadata?.username||
-user.email||
-"",
-email:user.email||"",
-role:
-user.user_metadata?.role||
-"inspector",
-active:true
-};
-
-cloudAuthenticated=true;
-
-localStorage.removeItem(
-SESSION_KEY
-);
-
-setOnlineStatus("online");
-
-document.getElementById("loginPass")
-.value="";
-
-openApp();
-
-await syncAllFromCloud();
-
-if(currentUser.role==="admin"){
-
-await loadCloudUsers();
-
-}
-
-}catch(error){
-
-console.error(error);
-
-errorBox.textContent=
-traduzAuthError(error.message);
-
-errorBox.classList.remove("hidden");
-
-}
-
-}
-
-function traduzAuthError(msg){
-
-if(!msg)return"Erro ao iniciar sessão.";
-
-if(
-msg.toLowerCase().includes("invalid login credentials")
-)return"Utilizador, e-mail ou palavra-passe incorretos.";
-
-if(
-msg.toLowerCase().includes("email not confirmed")
-)return"O e-mail desta conta ainda não foi confirmado.";
-
-return msg;
-
-}
-
-
-/* =========================================================
-   LOGOUT
-========================================================= */
-
-async function logout(){
-
-try{
-
-await supabaseClient.auth.signOut();
-
-}catch(e){}
-
-currentUser=null;
-cloudAuthenticated=false;
-
-localStorage.removeItem(
-SESSION_KEY
-);
-
-document.getElementById("app")
-.classList.add("hidden");
-
-document.getElementById("loginScreen")
-.classList.remove("hidden");
-
-setOnlineStatus("offline");
-
-}
-
-
-/* =========================================================
-   ABRIR APP
-========================================================= */
-
-async function openApp(){
-
-document.getElementById("loginScreen")
-.classList.add("hidden");
-
-document.getElementById("app")
-.classList.remove("hidden");
-
-renderCurrentUser();
-applyPermissions();
-refreshAll();
-
-if(currentUser?.role==="admin"){
-
-await loadCloudUsers();
-
-}
-
-}
-
-function renderCurrentUser(){
-
-if(!currentUser)return;
-
-document.getElementById(
-"currentUserName"
-).textContent=
-currentUser.name;
-
-document.getElementById(
-"currentUserRole"
-).textContent=
-formatRole(currentUser.role);
-
-document.getElementById(
-"accountName"
-).textContent=
-currentUser.name;
-
-document.getElementById(
-"accountUsername"
-).textContent=
-currentUser.username;
-
-document.getElementById(
-"accountEmail"
-).textContent=
-currentUser.email;
-
-document.getElementById(
-"accountRole"
-).textContent=
-formatRole(currentUser.role);
-
-}
-
-function formatRole(role){
-
-if(role==="admin")return"Administrador";
-if(role==="inspector")return"Inspector";
-if(role==="responsavel")return"Responsável";
-
-return role||"Utilizador";
-
-}
-
-function applyPermissions(){
-
-const isAdmin=
-currentUser?.role==="admin";
-
-document.querySelectorAll(
-".admin-only"
-).forEach(el=>{
-
-el.classList.toggle(
-"hidden",
-!isAdmin
-);
-
-});
-
-}
-
-
-/* =========================================================
-   NAVEGAÇÃO
-========================================================= */
-
-function showPage(page){
-
-if(
-page==="utilizadores"&&
-currentUser?.role!=="admin"
-){
-
-return;
-
-}
-
-document.querySelectorAll(".page")
-.forEach(p=>
-p.classList.remove("active")
-);
-
-const target=
-document.getElementById(
-"page-"+page
-);
-
-if(target)target.classList.add("active");
-
-document.querySelectorAll(
-".nav button"
-).forEach(btn=>{
-
-btn.classList.toggle(
-"active",
-btn.dataset.page===page
-);
-
-});
-
-if(page==="dashboard")
-renderDashboard();
-
-if(page==="historico")
-renderHistory();
-
-if(page==="estabelecimentos")
-renderEstablishments();
-
-if(page==="perfil")
-renderProfile();
-
-if(page==="relatorio")
-renderReport();
-
-if(page==="utilizadores")
-loadCloudUsers();
-
-}
-
-
-/* =========================================================
-   ESTABELECIMENTOS
-========================================================= */
-
-function populateEstablishmentSelects(){
-
-const selects=[
-"tempEstablishment",
-"inspectionEstablishment",
-"problemEstablishment",
-"evidenceEstablishment"
-];
-
-selects.forEach(id=>{
-
-const select=
-document.getElementById(id);
-
-if(!select)return;
-
-const old=select.value;
-
-select.innerHTML=
-`<option value="">Selecione...</option>`+
-establishments.map(e=>
-`<option value="${e.id}">
-${esc(e.name||e.nome||"Sem nome")}
-</option>`
-).join("");
-
-if(old)select.value=old;
-
-});
-
-}
-
-function openEstablishmentModal(){
-
-[
-"estName",
-"estResponsible",
-"estPhone",
-"estAddress",
-"estType",
-"estNotes"
-].forEach(id=>{
-document.getElementById(id).value="";
-});
-
-document.getElementById("estCity")
-.value="Nampula";
-
-openModal("establishmentModal");
-
-}
-
-async function saveEstablishment(){
-
-const name=
-document.getElementById("estName").value.trim();
-
-if(!name){
-
-alert("Informe o nome do estabelecimento.");
-
-return;
-
-}
-
-const item={
-id:uid(),
-user_id:currentUser?.id||null,
-name,
-nome:name,
-responsible:
-document.getElementById("estResponsible").value.trim(),
-phone:
-document.getElementById("estPhone").value.trim(),
-city:
-document.getElementById("estCity").value.trim(),
-address:
-document.getElementById("estAddress").value.trim(),
-type:
-document.getElementById("estType").value.trim(),
-notes:
-document.getElementById("estNotes").value.trim(),
-created_at:now()
-};
-
-establishments.push(item);
-
-saveData();
-
-closeModal("establishmentModal");
-
-populateEstablishmentSelects();
-
-renderEstablishments();
-
-await syncTable(
-"establishments",
-item
-);
-
-refreshAll();
-
-alert("Estabelecimento guardado com sucesso.");
-
-}
-
-function renderEstablishments(){
-
-const box=
-document.getElementById(
-"establishmentList"
-);
-
-if(!box)return;
-
-if(!establishments.length){
-
-box.innerHTML=
-`<div class="empty">
-Nenhum estabelecimento registado.
-</div>`;
-
-return;
-
-}
-
-box.innerHTML=
-establishments.map(e=>{
-
-const total=
-inspections.filter(
-i=>i.establishment_id===e.id
-).length;
-
-return`
-<div class="card">
-
-<div style="display:flex;
-justify-content:space-between;
-gap:10px;
-align-items:flex-start">
-
-<div>
-
-<h3>${esc(e.name||e.nome)}</h3>
-
-<p class="muted">
-${esc(e.city||"")} 
-${e.type?"• "+esc(e.type):""}
-</p>
-
-<p style="font-size:13px">
-Responsável:
-<b>${esc(e.responsible||"-")}</b>
-</p>
-
-</div>
-
-<span class="badge blue">
-${total} inspeção(ões)
-</span>
-
-</div>
-
-<div style="display:flex;gap:8px;flex-wrap:wrap">
-
-<button class="btn btn-small"
-onclick="openProfile('${e.id}')">
-Ver perfil
-</button>
-
-<button class="btn-secondary btn-small"
-onclick="selectForInspection('${e.id}')">
-Nova inspeção
-</button>
-
-</div>
-
-</div>
-`;
-
-}).join("");
-
-}
-
-function selectForInspection(id){
-
-document.getElementById(
-"inspectionEstablishment"
-).value=id;
-
-showPage("checklist");
-
-}
-
-
-/* =========================================================
-   CHECKLIST
-========================================================= */
-
-function updateChecklist(){
-
-let ok=0;
-
-checklistItems.forEach(item=>{
-
-const key=item[0];
-
-const checked=
-document.getElementById(
-"check_"+key
-)?.checked||false;
-
-checklistState[key]=checked;
-
-if(checked)ok++;
-
-});
-
-const total=
-checklistItems.length;
-
-const percent=
-total?Math.round(ok/total*100):0;
-
-document.getElementById(
-"checkProgress"
-).style.width=
-percent+"%";
-
-document.getElementById(
-"checkScore"
-).textContent=
-"Conformidade: "+percent+"%";
-
-}
-
-async function saveInspection(){
-
-const establishmentId=
-document.getElementById(
-"inspectionEstablishment"
-).value;
-
-if(!establishmentId){
-
-alert("Selecione um estabelecimento.");
-
-return;
-
-}
-
-const responsible=
-document.getElementById(
-"inspectionResponsible"
-).value.trim();
-
-let score=0;
-
-const answers={};
-
-checklistItems.forEach(item=>{
-
-const key=item[0];
-
-answers[key]=
-!!document.getElementById(
-"check_"+key
-)?.checked;
-
-if(answers[key])score++;
-
-});
-
-const conformity=
-Math.round(
-score/checklistItems.length*100
-);
-
-let risk="Baixo";
-
-if(conformity<70)risk="Médio";
-if(conformity<50)risk="Alto";
-
-const item={
-id:uid(),
-user_id:currentUser?.id||null,
-establishment_id:establishmentId,
-responsible,
-answers,
-score:conformity,
-conformity,
-risk,
-created_at:now()
-};
-
-inspections.push(item);
-
-saveData();
-
-await syncTable(
-"inspections",
-item
-);
-
-alert(
-"Inspeção guardada. Conformidade: "+
-conformity+"%"
-);
-
-renderDashboard();
-renderHistory();
-
-}
-
-
-/* =========================================================
-   TEMPERATURAS
-========================================================= */
-
-function temperatureEvaluation(type,value){
-
-value=Number(value);
-
-if(type==="congelacao"){
-
-return value<=-18;
-
-}
-
-if(type==="refrigeracao"){
-
-return value>=0&&value<=5;
-
-}
-
-if(type==="cozimento"){
-
-return value>=70;
-
-}
-
-if(type==="manutencao_quente"){
-
-return value>=60;
-
-}
-
-return true;
-
-}
-
-async function saveTemperature(){
-
-const establishmentId=
-document.getElementById(
-"tempEstablishment"
-).value;
-
-const value=
-document.getElementById(
-"tempValue"
-).value;
-
-if(!establishmentId||value===""){
-
-alert(
-"Selecione o estabelecimento e informe a temperatura."
-);
-
-return;
-
-}
-
-const type=
-document.getElementById(
-"tempType"
-).value;
-
-const ok=
-temperatureEvaluation(type,value);
-
-const item={
-id:uid(),
-user_id:currentUser?.id||null,
-establishment_id:establishmentId,
-type,
-value:Number(value),
-ok,
-note:
-document.getElementById(
-"tempNote"
-).value.trim(),
-created_at:now()
-};
-
-temperatures.push(item);
-
-saveData();
-
-await syncTable(
-"temperatures",
-item
-);
-
-document.getElementById(
-"tempValue"
-).value="";
-
-document.getElementById(
-"tempNote"
-).value="";
-
-renderTemperatures();
-
-alert(
-ok?
-"Temperatura dentro do parâmetro."
-:
-"Temperatura fora do parâmetro."
-);
-
-}
-
-function renderTemperatures(){
-
-const box=
-document.getElementById(
-"temperatureList"
-);
-
-if(!temperatures.length){
-
-box.innerHTML=
-`<div class="empty">
-Nenhuma temperatura registada.
-</div>`;
-
-return;
-
-}
-
-box.innerHTML=
-`<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Data</th>
-<th>Estabelecimento</th>
-<th>Tipo</th>
-<th>Temperatura</th>
-<th>Avaliação</th>
-</tr>
-</thead>
-<tbody>
-${temperatures.slice().reverse().map(t=>{
-
-const e=
-establishments.find(
-x=>x.id===t.establishment_id
-);
-
-return`
-<tr>
-<td>${formatDate(t.created_at)}</td>
-<td>${esc(e?.name||e?.nome||"-")}</td>
-<td>${esc(t.type)}</td>
-<td>${t.value} °C</td>
-<td>
-<span class="badge ${t.ok?"green":"red"}">
-${t.ok?"Conforme":"Fora do parâmetro"}
-</span>
-</td>
-</tr>
-`;
-
-}).join("")}
-</tbody>
-</table>
-</div>`;
-
-}
-
-
-/* =========================================================
-   PROBLEMAS
-========================================================= */
-
-async function saveProblem(){
-
-const establishmentId=
-document.getElementById(
-"problemEstablishment"
-).value;
-
-const description=
-document.getElementById(
-"problemDescription"
-).value.trim();
-
-if(!establishmentId||!description){
-
-alert(
-"Selecione o estabelecimento e descreva o problema."
-);
-
-return;
-
-}
-
-const item={
-id:uid(),
-user_id:currentUser?.id||null,
-establishment_id:establishmentId,
-description,
-category:
-document.getElementById(
-"problemCategory"
-).value,
-severity:
-document.getElementById(
-"problemSeverity"
-).value,
-status:"aberto",
-action:
-document.getElementById(
-"problemAction"
-).value.trim(),
-created_at:now()
-};
-
-problems.push(item);
-
-saveData();
-
-await syncTable(
-"problems",
-item
-);
-
-document.getElementById(
-"problemDescription"
-).value="";
-
-document.getElementById(
-"problemAction"
-).value="";
-
-renderProblems();
-
-alert("Não conformidade registada.");
-
-}
-
-function severityBadge(value){
-
-const cls=
-value==="critica"||value==="alta"
-?"red":
-value==="media"
-?"yellow":
-"green";
-
-return`
-<span class="badge ${cls}">
-${esc(value)}
-</span>`;
-
-}
-
-function statusBadge(value){
+  if (demoMode || !currentUser || !supabaseClient) return;
 
-const cls=
-value==="resolvido"
-?"green":
-value==="em tratamento"
-?"yellow":
-"red";
+  if (!cloudTables[table]) return;
 
-return`
-<span class="badge ${cls}">
-${esc(value)}
-</span>`;
+  const payload = { ...record };
 
-}
-
-function renderProblems(){
-
-const box=
-document.getElementById(
-"problemList"
-);
-
-if(!problems.length){
-
-box.innerHTML=
-`<div class="empty">
-Nenhuma não conformidade registada.
-</div>`;
-
-return;
-
-}
-
-box.innerHTML=
-`<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Descrição</th>
-<th>Estabelecimento</th>
-<th>Categoria</th>
-<th>Gravidade</th>
-<th>Estado</th>
-<th>Ação</th>
-</tr>
-</thead>
-<tbody>
-${problems.slice().reverse().map(p=>{
-
-const e=
-establishments.find(
-x=>x.id===p.establishment_id
-);
-
-return`
-<tr>
-<td>${esc(p.description)}</td>
-<td>${esc(e?.name||e?.nome||"-")}</td>
-<td>${esc(p.category)}</td>
-<td>${severityBadge(p.severity)}</td>
-<td>${statusBadge(p.status)}</td>
-<td>${esc(p.action||"-")}</td>
-</tr>
-`;
-
-}).join("")}
-</tbody>
-</table>
-</div>`;
-
-}
-
-
-/* =========================================================
-   EVIDÊNCIAS
-========================================================= */
-
-async function saveEvidence(){
-
-const establishmentId=
-document.getElementById(
-"evidenceEstablishment"
-).value;
-
-const description=
-document.getElementById(
-"evidenceDescription"
-).value.trim();
-
-if(!establishmentId){
-
-alert("Selecione um estabelecimento.");
-
-return;
-
-}
-
-const file=
-document.getElementById(
-"evidenceFile"
-).files[0];
-
-let fileData="";
-
-if(file){
-
-if(file.size>1500000){
-
-alert(
-"A imagem é muito grande. Escolha uma imagem menor."
-);
-
-return;
-
-}
-
-fileData=
-await readFileAsDataURL(file);
-
-}
-
-const item={
-id:uid(),
-user_id:currentUser?.id||null,
-establishment_id:establishmentId,
-description,
-file:fileData,
-created_at:now()
-};
-
-evidences.push(item);
-
-saveData();
-
-await syncTable(
-"evidences",
-item
-);
-
-document.getElementById(
-"evidenceDescription"
-).value="";
-
-document.getElementById(
-"evidenceFile"
-).value="";
-
-renderEvidences();
-
-alert("Evidência guardada.");
-
-}
-
-function readFileAsDataURL(file){
-
-return new Promise((resolve,reject)=>{
-
-const reader=new FileReader();
-
-reader.onload=
-()=>resolve(reader.result);
-
-reader.onerror=reject;
-
-reader.readAsDataURL(file);
-
-});
-
-}
-
-function renderEvidences(){
-
-const box=
-document.getElementById(
-"evidenceList"
-);
-
-if(!evidences.length){
-
-box.innerHTML=
-`<div class="empty">
-Nenhuma evidência registada.
-</div>`;
-
-return;
-
-}
-
-box.innerHTML=
-evidences.slice().reverse().map(e=>{
-
-const establishment=
-establishments.find(
-x=>x.id===e.establishment_id
-);
-
-return`
-<div class="card">
-
-<b>${esc(
-establishment?.name||
-establishment?.nome||
-"-"
-)}</b>
-
-<p>${esc(e.description||"Sem descrição")}</p>
-
-${
-e.file
-?
-`<img src="${e.file}"
-style="width:100%;max-width:350px;
-border-radius:12px">`
-:""
-}
-
-<p class="muted">
-${formatDate(e.created_at)}
-</p>
-
-</div>
-`;
-
-}).join("");
-
-}
-
-
-/* =========================================================
-   DASHBOARD
-========================================================= */
-
-function renderDashboard(){
-
-const total=
-inspections.length;
-
-const avg=
-total
-?
-Math.round(
-inspections.reduce(
-(a,i)=>a+Number(i.conformity||i.score||0),
-0
-)/total
-)
-:0;
-
-document.getElementById(
-"dashInspections"
-).textContent=total;
-
-document.getElementById(
-"dashCompliance"
-).textContent=
-avg+"%";
-
-document.getElementById(
-"dashProblems"
-).textContent=
-problems.length;
-
-document.getElementById(
-"kpiEstablishments"
-).textContent=
-establishments.length;
-
-document.getElementById(
-"kpiInspections"
-).textContent=
-inspections.length;
-
-document.getElementById(
-"kpiProblems"
-).textContent=
-problems.length;
-
-const low=
-inspections.filter(
-i=>Number(i.conformity||0)>=80
-).length;
-
-const medium=
-inspections.filter(
-i=>
-Number(i.conformity||0)>=50&&
-Number(i.conformity||0)<80
-).length;
-
-const high=
-inspections.filter(
-i=>Number(i.conformity||0)<50
-).length;
-
-document.getElementById(
-"riskSummary"
-).innerHTML=`
-
-<div class="grid3">
-
-<div class="kpi">
-<div class="label">Baixo risco</div>
-<div class="value risk-low">${low}</div>
-</div>
-
-<div class="kpi">
-<div class="label">Risco médio</div>
-<div class="value risk-medium">${medium}</div>
-</div>
-
-<div class="kpi">
-<div class="label">Alto risco</div>
-<div class="value risk-high">${high}</div>
-</div>
-
-</div>
-
-`;
-
-}
-
-
-/* =========================================================
-   HISTÓRICO
-========================================================= */
-
-function renderHistory(){
-
-const box=
-document.getElementById(
-"historyList"
-);
-
-if(!inspections.length){
-
-box.innerHTML=
-`<div class="empty">
-Nenhuma inspeção registada.
-</div>`;
-
-return;
-
-}
-
-box.innerHTML=
-`<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Data</th>
-<th>Estabelecimento</th>
-<th>Conformidade</th>
-<th>Risco</th>
-</tr>
-</thead>
-<tbody>
-
-${inspections.slice().reverse().map(i=>{
-
-const e=
-establishments.find(
-x=>x.id===i.establishment_id
-);
-
-const score=
-Number(i.conformity||i.score||0);
-
-const cls=
-score>=80?"green":
-score>=50?"yellow":"red";
-
-return`
-<tr>
-<td>${formatDate(i.created_at)}</td>
-<td>${esc(e?.name||e?.nome||"-")}</td>
-<td>
-<span class="badge ${cls}">
-${score}%
-</span>
-</td>
-<td>${esc(i.risk||"-")}</td>
-</tr>
-`;
-
-}).join("")}
-
-</tbody>
-</table>
-</div>`;
-
-}
-
-
-/* =========================================================
-   PERFIL
-========================================================= */
-
-function openProfile(id){
-
-selectedEstablishment=id;
-
-showPage("perfil");
-
-renderProfile();
-
-}
-
-function renderProfile(){
-
-const box=
-document.getElementById(
-"profileContent"
-);
-
-if(!selectedEstablishment){
-
-box.innerHTML=
-`<div class="empty">
-Selecione um estabelecimento em Estab.
-</div>`;
-
-return;
-
-}
-
-const e=
-establishments.find(
-x=>x.id===selectedEstablishment
-);
-
-if(!e){
-
-box.innerHTML=
-`<div class="empty">
-Estabelecimento não encontrado.
-</div>`;
-
-return;
-
-}
-
-const list=
-inspections.filter(
-i=>i.establishment_id===e.id
-);
-
-const avg=
-list.length
-?
-Math.round(
-list.reduce(
-(a,i)=>a+Number(i.conformity||0),0
-)/list.length
-)
-:0;
-
-const risk=
-avg>=80
-?"Baixo"
-:avg>=50
-?"Médio"
-:"Alto";
-
-const riskClass=
-risk==="Baixo"
-?"green":
-risk==="Médio"
-?"yellow":
-"red";
-
-const establishmentProblems=
-problems.filter(
-p=>p.establishment_id===e.id
-);
-
-box.innerHTML=`
-
-<div class="card">
-
-<h2>${esc(e.name||e.nome)}</h2>
-
-<p class="muted">
-${esc(e.city||"")}
-${e.address?" • "+esc(e.address):""}
-</p>
-
-<p>
-Responsável:
-<b>${esc(e.responsible||"-")}</b>
-</p>
-
-<p>
-Tipo:
-<b>${esc(e.type||"-")}</b>
-</p>
-
-</div>
-
-<div class="grid3">
-
-<div class="kpi">
-<div class="label">Inspeções</div>
-<div class="value">${list.length}</div>
-</div>
-
-<div class="kpi">
-<div class="label">Conformidade média</div>
-<div class="value">${avg}%</div>
-</div>
-
-<div class="kpi">
-<div class="label">Risco</div>
-<div class="value">
-<span class="badge ${riskClass}">
-${risk}
-</span>
-</div>
-</div>
-
-</div>
-
-<div class="section">
-
-<h3>Histórico de inspeções</h3>
-
-${
-list.length
-?
-`<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Data</th>
-<th>Conformidade</th>
-<th>Risco</th>
-</tr>
-</thead>
-<tbody>
-
-${list.slice().reverse().map(i=>`
-<tr>
-<td>${formatDate(i.created_at)}</td>
-<td>${Number(i.conformity||0)}%</td>
-<td>${esc(i.risk||"-")}</td>
-</tr>
-`).join("")}
-
-</tbody>
-</table>
-</div>`
-:
-`<p class="muted">
-Este estabelecimento ainda não possui inspeções.
-</p>`
-}
-
-</div>
-
-<div class="section">
-
-<h3>Não conformidades</h3>
-
-${
-establishmentProblems.length
-?
-`<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Descrição</th>
-<th>Categoria</th>
-<th>Gravidade</th>
-<th>Estado</th>
-<th>Ação</th>
-</tr>
-</thead>
-<tbody>
-
-${establishmentProblems.map(p=>`
-
-<tr>
-<td>${esc(p.description)}</td>
-<td>${esc(p.category)}</td>
-<td>${severityBadge(p.severity)}</td>
-<td>${statusBadge(p.status)}</td>
-<td>${esc(p.action||"-")}</td>
-</tr>
-
-`).join("")}
-
-</tbody>
-</table>
-</div>`
-:
-`<p class="muted">
-Nenhuma não conformidade registada.
-</p>`
-}
-
-</div>
-
-<div class="section">
-
-<h3>Temperaturas</h3>
-
-${
-temperatures.filter(
-t=>t.establishment_id===e.id
-).length
-?
-`<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Data</th>
-<th>Tipo</th>
-<th>Temperatura</th>
-<th>Avaliação</th>
-</tr>
-</thead>
-<tbody>
-
-${temperatures
-.filter(t=>t.establishment_id===e.id)
-.slice().reverse()
-.map(t=>`
-
-<tr>
-<td>${formatDate(t.created_at)}</td>
-<td>${esc(t.type)}</td>
-<td>${t.value} °C</td>
-<td>
-<span class="badge ${t.ok?"green":"red"}">
-${t.ok?"Conforme":"Fora"}
-</span>
-</td>
-</tr>
-
-`).join("")}
-
-</tbody>
-</table>
-</div>`
-:
-`<p class="muted">
-Nenhuma temperatura registada.
-</p>`
-}
-
-</div>
-
-<div class="section">
-
-<button class="btn"
-onclick="openReport('${e.id}')">
-Gerar relatório profissional
-</button>
-
-</div>
-
-`;
-
-}
-
-
-/* =========================================================
-   RELATÓRIO
-========================================================= */
-
-function openReport(id){
-
-selectedEstablishment=id;
-
-showPage("relatorio");
-
-renderReport();
-
-}
-
-function renderReport(){
-
-const box=
-document.getElementById(
-"reportContent"
-);
-
-if(!selectedEstablishment){
-
-box.innerHTML=
-`<div class="empty">
-Nenhum estabelecimento selecionado.
-</div>`;
-
-return;
+  delete payload.fileData;
 
-}
-
-const e=
-establishments.find(
-x=>x.id===selectedEstablishment
-);
-
-if(!e)return;
-
-const list=
-inspections.filter(
-i=>i.establishment_id===e.id
-);
-
-const avg=
-list.length
-?
-Math.round(
-list.reduce(
-(a,i)=>a+Number(i.conformity||0),0
-)/list.length
-)
-:0;
-
-const risk=
-avg>=80
-?"Baixo"
-:avg>=50
-?"Médio"
-:"Alto";
-
-const p=
-problems.filter(
-x=>x.establishment_id===e.id
-);
-
-box.innerHTML=`
-
-<div class="section">
-
-<h1>FoodSafe Moz</h1>
-
-<h2>Relatório Profissional de Segurança Alimentar</h2>
-
-<p>
-<b>Estabelecimento:</b>
-${esc(e.name||e.nome)}
-</p>
-
-<p>
-<b>Responsável:</b>
-${esc(e.responsible||"-")}
-</p>
-
-<p>
-<b>Localização:</b>
-${esc(e.city||"-")}
-${e.address?" — "+esc(e.address):""}
-</p>
-
-<p>
-<b>Tipo:</b>
-${esc(e.type||"-")}
-</p>
-
-<p>
-<b>Data do relatório:</b>
-${formatDate(now())}
-</p>
-
-</div>
-
-<div class="grid3">
-
-<div class="kpi">
-<div class="label">Total de inspeções</div>
-<div class="value">${list.length}</div>
-</div>
-
-<div class="kpi">
-<div class="label">Conformidade média</div>
-<div class="value">${avg}%</div>
-</div>
-
-<div class="kpi">
-<div class="label">Classificação de risco</div>
-<div class="value">${esc(risk)}</div>
-</div>
-
-</div>
-
-<div class="section">
-
-<h3>Histórico de inspeções</h3>
-
-${
-list.length
-?
-`<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Data</th>
-<th>Conformidade</th>
-<th>Risco</th>
-</tr>
-</thead>
-<tbody>
-${list.map(i=>`
-<tr>
-<td>${formatDate(i.created_at)}</td>
-<td>${Number(i.conformity||0)}%</td>
-<td>${esc(i.risk||"-")}</td>
-</tr>
-`).join("")}
-</tbody>
-</table>
-</div>`
-:
-"<p>Nenhuma inspeção registada.</p>"
-}
-
-</div>
-
-<div class="section">
-
-<h3>Não conformidades</h3>
-
-${
-p.length
-?
-`<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Descrição</th>
-<th>Categoria</th>
-<th>Gravidade</th>
-<th>Estado</th>
-<th>Ação corretiva</th>
-</tr>
-</thead>
-<tbody>
-
-${p.map(x=>`
-
-<tr>
-<td>${esc(x.description)}</td>
-<td>${esc(x.category)}</td>
-<td>${severityBadge(x.severity)}</td>
-<td>${statusBadge(x.status)}</td>
-<td>${esc(x.action||"-")}</td>
-</tr>
-
-`).join("")}
-
-</tbody>
-</table>
-</div>`
-:
-"<p>Nenhuma não conformidade registada.</p>"
-}
-
-</div>
-
-<div class="section">
-
-<h3>Conclusão</h3>
-
-<p>
-O estabelecimento apresenta uma conformidade média de
-<b>${avg}%</b>, com classificação de risco
-<b>${esc(risk)}</b>.
-</p>
-
-</div>
-
-<div style="margin-top:45px">
-
-<p>________________________________________</p>
-
-<p><b>Inspector responsável</b></p>
-
-</div>
-
-`;
-
-}
-
-
-/* =========================================================
-   GESTÃO DE UTILIZADORES
-========================================================= */
-
-function openUserModal(){
-
-if(currentUser?.role!=="admin"){
-
-alert("Apenas administradores podem criar utilizadores.");
-
-return;
-
-}
-
-[
-"newUserName",
-"newUserUsername",
-"newUserEmail",
-"newUserPassword"
-].forEach(id=>{
-
-document.getElementById(id).value="";
-
-});
-
-document.getElementById(
-"newUserRole"
-).value="inspector";
-
-document.getElementById(
-"userModalError"
-).classList.add("hidden");
-
-openModal("userModal");
-
-}
-
-function showUserError(message){
-
-const box=
-document.getElementById(
-"userModalError"
-);
-
-if(!box)return;
-
-box.textContent=message;
-
-box.classList.remove("hidden");
-
-}
-
-async function saveUser(){
-
-if(currentUser?.role!=="admin"){
-
-alert(
-"Apenas administradores podem criar utilizadores."
-);
-
-return;
-
-}
-
-const name=
-document.getElementById(
-"newUserName"
-).value.trim();
-
-const username=
-document.getElementById(
-"newUserUsername"
-).value.trim();
-
-const email=
-document.getElementById(
-"newUserEmail"
-).value.trim();
-
-const password=
-document.getElementById(
-"newUserPassword"
-).value;
-
-const role=
-document.getElementById(
-"newUserRole"
-).value;
-
-if(
-!name||
-!username||
-!email||
-!password
-){
-
-showUserError(
-"Preencha todos os campos."
-);
-
-return;
-
-}
-
-if(password.length<6){
-
-showUserError(
-"A palavra-passe deve ter pelo menos 6 caracteres."
-);
-
-return;
-
-}
-
-try{
-
-await userFunction(
-"create",
-{
-name,
-username,
-email,
-password,
-role
-}
-);
-
-closeModal("userModal");
-
-await loadCloudUsers();
-
-alert(
-"Utilizador criado com sucesso."
-);
-
-}catch(error){
-
-console.error(error);
-
-showUserError(error.message);
-
-}
+  delete payload.fileName;
 
-}
-
-async function toggleUser(id,active){
-
-if(currentUser?.role!=="admin")return;
-
-if(id===currentUser.id){
-
-alert(
-"Não podes desativar a tua própria conta."
-);
-
-return;
-
-}
-
-try{
-
-await userFunction(
-"toggle",
-{
-userId:id,
-active:!active
-}
-);
-
-await loadCloudUsers();
-
-}catch(error){
-
-alert(error.message);
-
-}
-
-}
-
-async function deleteUser(id){
-
-if(currentUser?.role!=="admin")return;
-
-if(id===currentUser.id){
-
-alert(
-"Não podes apagar a tua própria conta."
-);
-
-return;
-
-}
-
-const user=
-users.find(u=>u.id===id);
-
-if(!user)return;
-
-if(
-!confirm(
-"Apagar o utilizador "+
-(user.name||user.email)+
-"? Esta ação não pode ser desfeita."
-)
-)return;
-
-try{
-
-await userFunction(
-"delete",
-{
-userId:id
-}
-);
-
-await loadCloudUsers();
+  delete payload.storage;
 
-}catch(error){
+  payload.user_id = currentUser.id;
 
-alert(error.message);
+  try {
 
-}
-
-}
-
-function renderUsers(){
+    const { error } = await supabaseClient
 
-const box=
-document.getElementById(
-"usersList"
-);
+      .from(cloudTables[table])
 
-if(!box)return;
+      .upsert(payload, { onConflict: "id" });
 
-if(currentUser?.role!=="admin"){
+    if (error) throw error;
 
-box.innerHTML="";
+    setConnection("Ligado — último registo sincronizado.", true);
 
-return;
+  } catch (error) {
 
-}
-
-if(!users.length){
+    console.error("Erro ao sincronizar " + table + ":", error);
 
-box.innerHTML=
-`<div class="empty">
-Nenhum utilizador encontrado.
-</div>`;
+    setConnection("Registo guardado localmente; sincronização na nuvem falhou.", false);
 
-return;
+    notice("O registo ficou guardado neste dispositivo, mas não foi confirmado no Supabase. Verifica as colunas da tabela e as políticas RLS.", "error");
 
-}
+  }
 
-box.innerHTML=
-`<div class="table-wrap">
-<table>
-
-<thead>
-<tr>
-<th>Utilizador</th>
-<th>E-mail</th>
-<th>Função</th>
-<th>Estado</th>
-<th>Ações</th>
-</tr>
-</thead>
-
-<tbody>
-
-${users.map(u=>{
-
-const isCurrent=
-u.id===currentUser.id;
-
-return`
-
-<tr>
-
-<td>
-<b>${esc(u.name)}</b>
-<br>
-<span class="muted">
-@${esc(u.username)}
-</span>
-${isCurrent?
-`<br><span class="badge blue">
-Conta atual
-</span>`:""}
-</td>
-
-<td>${esc(u.email)}</td>
-
-<td>
-${esc(formatRole(u.role))}
-</td>
-
-<td>
-
-<span class="badge ${
-u.active
-?"green"
-:"red"
-}">
-${u.active?"Ativo":"Desativado"}
-</span>
-
-</td>
-
-<td>
-
-${
-isCurrent
-?
-`<span class="muted">
-Conta atual
-</span>`
-:
-`
-<button
-class="${
-u.active
-?"btn-warning"
-:"btn-success"
-} btn-small"
-onclick="toggleUser(
-'${u.id}',
-${u.active}
-)">
-${u.active?"Desativar":"Ativar"}
-</button>
-
-<button
-class="btn-danger btn-small"
-onclick="deleteUser('${u.id}')">
-Apagar
-</button>
-`
 }
-
-</td>
 
-</tr>
+async function syncFromCloud() {
 
-`;
+  if (!currentUser || !supabaseClient) return;
 
-}).join("")}
+  let failures = [];
 
-</tbody>
+  for (const table of Object.keys(cloudTables)) {
 
-</table>
-</div>`;
+    try {
 
-}
-
+      const { data, error } = await supabaseClient
 
-/* =========================================================
-   SINCRONIZAÇÃO CLOUD
-========================================================= */
+        .from(cloudTables[table])
 
-async function syncTable(table,row){
+        .select("*")
 
-if(!cloudAuthenticated)return;
+        .eq("user_id", currentUser.id);
 
-try{
+      if (error) throw error;
 
-const payload={
-...row,
-user_id:
-row.user_id||
-currentUser?.id||
-null
-};
+      const cloudRows = Array.isArray(data) ? data : [];
 
-const {
-error
-}=
-await supabaseClient
-.from(table)
-.upsert(
-payload,
-{id:"id"}
-);
+      const localOthers = db[table].filter(row => row.user_id !== currentUser.id);
 
-if(error){
+      const merged = new Map();
 
-console.error(
-"Erro cloud",
-table,
-error
-);
-
-}
+      localOthers.forEach(row => merged.set(row.id, row));
 
-}catch(error){
+      cloudRows.forEach(row => merged.set(row.id, row));
 
-console.error(error);
+      db[table] = Array.from(merged.values());
 
-}
+    } catch (error) {
 
-}
+      console.error("Erro ao carregar " + table + ":", error);
 
-async function syncAllFromCloud(){
+      failures.push(table);
 
-if(!cloudAuthenticated||
-!currentUser?.id)return;
+    }
 
-if(syncInProgress)return;
+  }
 
-syncInProgress=true;
+  saveLocal();
 
-try{
+  renderAll();
 
-const tables=[
-"establishments",
-"inspections",
-"temperatures",
-"problems",
-"evidences"
-];
+  if (failures.length) {
 
-for(const table of tables){
+    setConnection("Ligação ativa, mas falhou a leitura de: " + failures.join(", "), false);
 
-const {
-data,
-error
-}=
-await supabaseClient
-.from(table)
-.select("*")
-.order("created_at",{ascending:false});
+    notice("Alguns dados não foram carregados do Supabase. Confirma as permissões SELECT e as políticas RLS.", "error");
 
-if(error){
+  } else {
 
-console.error(
-"Erro ao sincronizar",
-table,
-error
-);
+    setConnection("Ligado — dados da conta carregados.", true);
 
-continue;
+  }
 
 }
 
-if(!Array.isArray(data))continue;
+async function manualSync() {
 
-if(table==="establishments")
-establishments=data;
+  if (demoMode || !currentUser) {
 
-if(table==="inspections")
-inspections=data;
+    notice("A sincronização exige uma sessão autenticada no Supabase.", "error");
 
-if(table==="temperatures")
-temperatures=data;
+    return;
 
-if(table==="problems")
-problems=data;
+  }
 
-if(table==="evidences")
-evidences=data;
-
-}
+  await syncFromCloud();
 
-saveData();
+  let failed = 0;
 
-setOnlineStatus("online");
+  for (const table of Object.keys(cloudTables)) {
 
-refreshAll();
+    const rows = db[table].filter(row => row.user_id === currentUser.id);
 
-}catch(error){
+    for (const row of rows) {
 
-console.error(error);
+      try {
 
-setOnlineStatus("offline");
+        const payload = { ...row, user_id: currentUser.id };
 
-}finally{
+        const { error } = await supabaseClient
 
-syncInProgress=false;
+          .from(cloudTables[table])
 
-}
+          .upsert(payload, { onConflict: "id" });
 
-}
+        if (error) throw error;
 
+      } catch (error) {
 
-/* =========================================================
-   REFRESH
-========================================================= */
+        console.error("Erro de sincronização:", table, error);
 
-function refreshAll(){
+        failed++;
 
-populateEstablishmentSelects();
+      }
 
-renderTemperatures();
+    }
 
-renderProblems();
+  }
 
-renderEvidences();
+  if (failed) {
 
-renderDashboard();
+    setConnection("Sincronização incompleta: " + failed + " registo(s) falharam.", false);
 
-renderHistory();
+    notice("A sincronização não foi concluída. Consulta a consola e as colunas/políticas das tabelas.", "error");
 
-renderEstablishments();
+  } else {
 
-renderProfile();
+    setConnection("Sincronização concluída sem erros reportados.", true);
 
-renderCurrentUser();
+    notice("Sincronização concluída.", "success");
 
-buildChecklist();
+  }
 
 }
-
-function formatDate(value){
-
-if(!value)return"-";
 
-try{
+function exportData() {
 
-return new Date(value)
-.toLocaleString(
-"pt-MZ",
-{
-dateStyle:"short",
-timeStyle:"short"
-}
-);
-
-}catch(e){
+  const data = JSON.stringify(db, null, 2);
 
-return value;
+  const blob = new Blob([data], { type: "application/json" });
 
-}
+  const url = URL.createObjectURL(blob);
 
-}
+  const link = document.createElement("a");
 
+  link.href = url;
 
-/* =========================================================
-   AUTH MONITOR
-========================================================= */
+  link.download = "foodsafemoz-backup-" + today() + ".json";
 
-supabaseClient.auth.onAuthStateChange(
-async(event,session)=>{
+  document.body.appendChild(link);
 
-if(event==="SIGNED_OUT"){
+  link.click();
 
-cloudAuthenticated=false;
-currentUser=null;
-setOnlineStatus("offline");
+  link.remove();
 
-return;
+  URL.revokeObjectURL(url);
 
 }
 
-if(
-session&&
-event==="SIGNED_IN"
-){
-
-cloudAuthenticated=true;
-
-const user=session.user;
-
-currentUser={
-id:user.id,
-name:
-user.user_metadata?.name||
-user.email||
-"Utilizador",
-username:
-user.user_metadata?.username||
-user.email||
-"",
-email:user.email||"",
-role:
-user.user_metadata?.role||
-"inspector",
-active:true
-};
-
-setOnlineStatus("online");
+/* ------------------ ARRANQUE ------------------ */
 
-}
-
-}
-);
+async function initApp() {
 
+  loadLocal();
 
-/* =========================================================
-   INICIALIZAÇÃO
-========================================================= */
+  initSupabase();
 
-document.addEventListener(
-"DOMContentLoaded",
-async()=>{
+  buildChecklist();
 
-loadData();
+  if (supabaseClient) {
 
-buildChecklist();
+    try {
 
-document.getElementById(
-"loginPass"
-).addEventListener(
-"keydown",
-e=>{
+      const { data, error } = await supabaseClient.auth.getSession();
 
-if(e.key==="Enter")
-doLogin();
+      if (!error && data?.session?.user) {
 
-}
-);
+        currentUser = data.session.user;
 
-document.getElementById(
-"loginUser"
-).addEventListener(
-"keydown",
-e=>{
+        demoMode = false;
 
-if(e.key==="Enter")
-doLogin();
+        await enterApp();
 
-}
-);
+        return;
 
-const onlineSession=
-await restoreSupabaseSession();
+      }
 
-if(onlineSession){
+    } catch (error) {
 
-openApp();
+      console.error("Erro ao restaurar sessão:", error);
 
-await syncAllFromCloud();
+    }
 
-if(currentUser?.role==="admin"){
+  }
 
-await loadCloudUsers();
+  $("login")?.classList.remove("hidden");
 
-}
+  $("app")?.classList.add("hidden");
 
-return;
+  setConnection("Entra com a tua conta para sincronizar os dados.", false);
 
 }
 
-const sessionId=
-localStorage.getItem(
-SESSION_KEY
-);
+document.addEventListener("DOMContentLoaded", initApp);
 
-if(sessionId){
+/* Disponibiliza funções usadas pelos botões HTML */
 
-const sessionUser=
-users.find(
-u=>u.id===sessionId
-);
+window.showPage = showPage;
 
-if(
-sessionUser&&
-sessionUser.active!==false
-){
+window.viewEstablishment = viewEstablishment;
 
-currentUser=sessionUser;
+window.changeProblemStatus = changeProblemStatus;
 
-cloudAuthenticated=false;
+window.deleteRecord = deleteRecord;
 
-setOnlineStatus("offline");
+window.printReport = printReport;
 
-openApp();
+window.manualSync = manualSync;
 
-}
-
-}
+window.exportData = exportData;
 
-});
+window.logout = logout;
 
 </script>
 
+</main>
+
 </body>
+
 </html>
