@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 
 <html lang="pt">
@@ -76,11 +78,11 @@ button:disabled{opacity:.5}
 
 .bad{background:#fee2e2;color:#991b1b}
 
-.check{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid #eee}
+.check-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #eee;font-weight:normal}
 
-.check input{width:20px;height:20px;margin:0;flex-shrink:0}
+.check-row input{width:20px;height:20px;flex-shrink:0}
 
-.check label{font-weight:normal;margin:0;font-size:14px}
+.check-row span{font-size:14px}
 
 .nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #ddd;display:flex;overflow-x:auto;padding:5px;z-index:10}
 
@@ -200,39 +202,25 @@ img.evidence{max-width:100%;max-height:280px;display:block;border-radius:8px;mar
 
 <form id="estForm">
 
-<label>Nome do estabelecimento</label>
+<label>Nome do estabelecimento</label><input id="estName" required>
 
-<input id="estName" required>
+<label>Responsável</label><input id="estResponsible">
 
-<label>Responsável</label>
+<label>Telefone</label><input id="estPhone" type="tel">
 
-<input id="estResponsible">
+<label>Cidade</label><input id="estCity" value="Nampula">
 
-<label>Telefone</label>
-
-<input id="estPhone" type="tel">
-
-<label>Cidade</label>
-
-<input id="estCity" value="Nampula">
-
-<label>Endereço</label>
-
-<input id="estAddress">
+<label>Endereço</label><input id="estAddress">
 
 <label>Tipo de estabelecimento</label>
 
 <select id="estType">
 
-<option>Restaurante</option><option>Mercado</option><option>Padaria</option>
-
-<option>Hotel</option><option>Armazém</option><option>Escola</option><option>Outro</option>
+<option>Restaurante</option><option>Mercado</option><option>Padaria</option><option>Hotel</option><option>Armazém</option><option>Escola</option><option>Outro</option>
 
 </select>
 
-<label>Observações</label>
-
-<textarea id="estNotes"></textarea>
+<label>Observações</label><textarea id="estNotes"></textarea>
 
 <button type="submit">Guardar estabelecimento</button>
 
@@ -318,21 +306,11 @@ img.evidence{max-width:100%;max-height:280px;display:block;border-radius:8px;mar
 
 <label>Categoria</label>
 
-<select id="problemCategory">
-
-<option>Higiene</option><option>Temperatura</option><option>Armazenamento</option>
-
-<option>Manipulação</option><option>Instalações</option><option>Equipamentos</option><option>Outro</option>
-
-</select>
+<select id="problemCategory"><option>Higiene</option><option>Temperatura</option><option>Armazenamento</option><option>Manipulação</option><option>Instalações</option><option>Equipamentos</option><option>Outro</option></select>
 
 <label>Gravidade</label>
 
-<select id="problemSeverity">
-
-<option>Baixa</option><option selected>Média</option><option>Alta</option><option>Crítica</option>
-
-</select>
+<select id="problemSeverity"><option>Baixa</option><option selected>Média</option><option>Alta</option><option>Crítica</option></select>
 
 <label>Medida corretiva</label><textarea id="problemAction"></textarea>
 
@@ -358,7 +336,7 @@ img.evidence{max-width:100%;max-height:280px;display:block;border-radius:8px;mar
 
 <label>Descrição da evidência</label><textarea id="evidenceDesc" required></textarea>
 
-<label>Fotografia (máximo 1,5 MB)</label>
+<label>Fotografia (máximo 1,5 MB recomendado)</label>
 
 <input id="evidenceFile" type="file" accept="image/*" capture="environment">
 
@@ -366,7 +344,7 @@ img.evidence{max-width:100%;max-height:280px;display:block;border-radius:8px;mar
 
 </form>
 
-<p class="muted">As fotografias ficam no armazenamento local do dispositivo. O envio de fotografias para a nuvem requer configuração do Supabase Storage.</p>
+<p class="muted">As fotografias ficam no armazenamento local deste dispositivo. Não são enviadas para a nuvem por este código.</p>
 
 </div>
 
@@ -484,1610 +462,819 @@ img.evidence{max-width:100%;max-height:280px;display:block;border-radius:8px;mar
 
 <script>
 
-// O JavaScript e a configuração do Supabase serão acrescentados na Parte 3.
+"use strict";
 
+const SUPABASE_URL="https://nwpagrewnlqvyhrhaidv.supabase.co";
 
-<script>
+const SUPABASE_KEY="sb_publishable_O7W-2dYDs4-JenXunxw_r3AOASYt";
 
-/* =====================================================
+const STORAGE_KEY="foodsafemoz_v2";
 
-   FOODSAFE MOZ — PARTE 3
+const SESSION_KEY="foodsafemoz_session";
 
-   Dados locais, autenticação, navegação e sincronização
+let supabaseClient=null;
 
-   ===================================================== */
+let currentUser=null;
 
-const SUPABASE_URL = "https://nwpagrewnlqvyhrhaidv.supabase.co";
+let demoMode=false;
 
-const SUPABASE_KEY = "sb_publishable_O7W-2dYDs4-JenXunxw_r3AOASYt";
+let db={establishments:[],inspections:[],temperatures:[],problems:[],evidences:[]};
 
-const STORAGE_KEY = "foodsafemoz_v2";
+const checklistItems=[
 
-const SESSION_KEY = "foodsafemoz_session";
+"Higiene pessoal","Instalações","Equipamentos","Armazenamento","Temperatura",
 
-let supabaseClient = null;
-
-let currentUser = null;
-
-let demoMode = false;
-
-let db = {
-
-  establishments: [],
-
-  inspections: [],
-
-  temperatures: [],
-
-  problems: [],
-
-  evidences: []
-
-};
-
-const checklistItems = [
-
-  "Higiene pessoal",
-
-  "Instalações",
-
-  "Equipamentos",
-
-  "Armazenamento",
-
-  "Temperatura",
-
-  "Contaminação cruzada",
-
-  "Água e gelo",
-
-  "Resíduos",
-
-  "Pragas",
-
-  "Documentação"
+"Contaminação cruzada","Água e gelo","Resíduos","Pragas","Documentação"
 
 ];
 
-function $(id) {
+function $(id){return document.getElementById(id)}
 
-  return document.getElementById(id);
+function uid(){return crypto.randomUUID?crypto.randomUUID():"fs-"+Date.now()+"-"+Math.random().toString(16).slice(2)}
 
-}
+function escapeHTML(value){
 
-function uid() {
-
-  return crypto.randomUUID
-
-    ? crypto.randomUUID()
-
-    : "fs-" + Date.now() + "-" + Math.random().toString(16).slice(2);
+return String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
 
 }
 
-function escapeHTML(value) {
+function today(){return new Date().toISOString().slice(0,10)}
 
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
+function dateLabel(value){
 
-    "&": "&amp;",
+if(!value)return "—";
 
-    "<": "&lt;",
+const date=new Date(value);
 
-    ">": "&gt;",
-
-    '"': "&quot;",
-
-    "'": "&#39;"
-
-  })[char]);
+return Number.isNaN(date.getTime())?escapeHTML(value):date.toLocaleDateString("pt-PT");
 
 }
 
-function today() {
+function notice(message,type="info"){
 
-  return new Date().toISOString().slice(0, 10);
+const element=$("notice");
 
-}
+if(!element){alert(message);return}
 
-function dateLabel(value) {
+element.textContent=message;
 
-  if (!value) return "—";
+element.className="status"+(type==="error"?" error":type==="warn"?" warn":"");
 
-  const date = new Date(value);
-
-  return Number.isNaN(date.getTime())
-
-    ? escapeHTML(value)
-
-    : date.toLocaleDateString("pt-PT");
+element.classList.remove("hidden");
 
 }
 
-function notice(message, type = "info") {
+function setConnection(message,online=false){
 
-  const element = $("notice");
+if($("connection")){$("connection").textContent=message;$("connection").dataset.online=online?"true":"false"}
 
-  if (!element) {
-
-    alert(message);
-
-    return;
-
-  }
-
-  element.textContent = message;
-
-  element.className = "notice " + type;
-
-  element.classList.remove("hidden");
+if($("syncMessage"))$("syncMessage").textContent=message;
 
 }
 
-function setConnection(message, online = false) {
+function saveLocal(){
 
-  const element = $("connection");
+try{localStorage.setItem(STORAGE_KEY,JSON.stringify(db));return true}
 
-  if (element) {
-
-    element.textContent = message;
-
-    element.dataset.online = online ? "true" : "false";
-
-  }
-
-  const sync = $("syncMessage");
-
-  if (sync) sync.textContent = message;
+catch(error){console.error("Erro ao guardar localmente:",error);notice("Não foi possível guardar os dados neste dispositivo.","error");return false}
 
 }
 
-function saveLocal() {
+function loadLocal(){
 
-  try {
+try{
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}");
 
-    return true;
+for(const key of Object.keys(db))db[key]=Array.isArray(saved[key])?saved[key]:[];
 
-  } catch (error) {
-
-    console.error("Erro ao guardar localmente:", error);
-
-    notice("Não foi possível guardar os dados neste dispositivo.", "error");
-
-    return false;
-
-  }
+}catch(error){console.error("Erro ao ler os dados locais:",error)}
 
 }
 
-function loadLocal() {
+function isMine(record){return demoMode?!record.user_id:record.user_id===currentUser?.id}
 
-  try {
+function myRecords(table){return db[table].filter(isMine)}
 
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+function addRecord(table,record){
 
-    for (const key of Object.keys(db)) {
+const entry={id:uid(),created_at:new Date().toISOString(),...record};
 
-      db[key] = Array.isArray(saved[key]) ? saved[key] : [];
+if(!demoMode&&currentUser)entry.user_id=currentUser.id;
 
-    }
+db[table].unshift(entry);
 
-  } catch (error) {
+saveLocal();
 
-    console.error("Erro ao ler os dados locais:", error);
+renderAll();
 
-  }
+if(!demoMode&&currentUser)syncRecord(table,entry);
 
-}
+else setConnection("Modo demonstração: dados guardados apenas neste dispositivo.",false);
 
-function allRecords() {
-
-  return [
-
-    ...db.establishments,
-
-    ...db.inspections,
-
-    ...db.temperatures,
-
-    ...db.problems,
-
-    ...db.evidences
-
-  ];
+return entry;
 
 }
 
-function isMine(record) {
+function initSupabase(){
 
-  return demoMode
+try{
 
-    ? !record.user_id
+if(window.supabase?.createClient){
 
-    : record.user_id === currentUser?.id;
+supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{
 
-}
-
-function myRecords(table) {
-
-  return db[table].filter(isMine);
-
-}
-
-function addRecord(table, record) {
-
-  const entry = {
-
-    id: uid(),
-
-    created_at: new Date().toISOString(),
-
-    ...record
-
-  };
-
-  if (!demoMode && currentUser) {
-
-    entry.user_id = currentUser.id;
-
-  }
-
-  db[table].unshift(entry);
-
-  saveLocal();
-
-  renderAll();
-
-  if (!demoMode && currentUser) {
-
-    syncRecord(table, entry);
-
-  } else {
-
-    setConnection("Modo demonstração: dados guardados apenas neste dispositivo.", false);
-
-  }
-
-  return entry;
-
-}
-
-function initSupabase() {
-
-  try {
-
-    if (window.supabase?.createClient) {
-
-      supabaseClient = window.supabase.createClient(
-
-        SUPABASE_URL,
-
-        SUPABASE_KEY,
-
-        {
-
-          auth: {
-
-            persistSession: true,
-
-            autoRefreshToken: true,
-
-            detectSessionInUrl: true
-
-          }
-
-        }
-
-      );
-
-    }
-
-  } catch (error) {
-
-    console.error("Supabase não inicializado:", error);
-
-  }
-
-}
-
-async function login(event) {
-
-  event?.preventDefault();
-
-  const email = $("email")?.value.trim();
-
-  const password = $("password")?.value;
-
-  if (!email || !password) {
-
-    notice("Introduz o e-mail e a palavra-passe.", "error");
-
-    return;
-
-  }
-
-  if (!supabaseClient) {
-
-    notice("O serviço de autenticação não foi carregado. Verifica a ligação à internet e recarrega a página.", "error");
-
-    return;
-
-  }
-
-  setConnection("A verificar o acesso…");
-
-  try {
-
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
-
-      email,
-
-      password
-
-    });
-
-    if (error) throw error;
-
-    currentUser = data.user;
-
-    demoMode = false;
-
-    localStorage.setItem(SESSION_KEY, JSON.stringify({
-
-      id: currentUser.id,
-
-      email: currentUser.email
-
-    }));
-
-    await enterApp();
-
-    notice("Sessão iniciada com sucesso.", "success");
-
-  } catch (error) {
-
-    console.error("Erro de login:", error);
-
-    setConnection("Não foi possível iniciar sessão.", false);
-
-    notice("Não foi possível entrar. Confirma o e-mail, a palavra-passe e se o utilizador está confirmado no Supabase.", "error");
-
-  }
-
-}
-
-async function enterApp() {
-
-  $("login")?.classList.add("hidden");
-
-  $("app")?.classList.remove("hidden");
-
-  if ($("userLabel")) {
-
-    $("userLabel").textContent = demoMode
-
-      ? "Demonstração local"
-
-      : (currentUser?.email || "Utilizador autenticado");
-
-  }
-
-  if ($("accountInfo")) {
-
-    $("accountInfo").textContent = demoMode
-
-      ? "Modo demonstração. Os dados ficam apenas neste dispositivo e não são sincronizados."
-
-      : "Conta autenticada: " + (currentUser?.email || "");
-
-  }
-
-  if (demoMode) {
-
-    setConnection("Demonstração local — sem sincronização na nuvem.", false);
-
-  } else {
-
-    setConnection("Sessão autenticada. A verificar a sincronização…", true);
-
-    await syncFromCloud();
-
-  }
-
-  buildChecklist();
-
-  populateSelects();
-
-  renderAll();
-
-  showPage("inicio");
-
-}
-
-async function startDemo() {
-
-  demoMode = true;
-
-  currentUser = null;
-
-  await enterApp();
-
-  notice("Entraste no modo demonstração. Estes dados não serão enviados ao Supabase.", "info");
-
-}
-
-async function logout() {
-
-  if (!demoMode && supabaseClient) {
-
-    try {
-
-      await supabaseClient.auth.signOut();
-
-    } catch (error) {
-
-      console.error("Erro ao terminar sessão:", error);
-
-    }
-
-  }
-
-  currentUser = null;
-
-  demoMode = false;
-
-  localStorage.removeItem(SESSION_KEY);
-
-  $("app")?.classList.add("hidden");
-
-  $("login")?.classList.remove("hidden");
-
-  setConnection("Sessão terminada.", false);
-
-}
-
-function showPage(name) {
-
-  document.querySelectorAll(".page").forEach(page => {
-
-    page.classList.remove("active");
-
-  });
-
-  const target = $("page-" + name);
-
-  if (target) target.classList.add("active");
-
-  document.querySelectorAll(".nav [data-page]").forEach(button => {
-
-    button.classList.toggle("active", button.dataset.page === name);
-
-  });
-
-  if (name === "relatorio") renderReport();
-
-  if (name === "perfil") renderProfile();
-
-  if (name === "dashboard") renderDashboard();
-
-}
-
-function buildChecklist() {
-
-  const container = $("checkItems");
-
-  if (!container || container.dataset.ready === "true") return;
-
-  container.innerHTML = checklistItems.map((item, index) => `
-
-    <label class="check-row">
-
-      <input type="checkbox" name="check-${index}" value="${escapeHTML(item)}">
-
-      <span>${escapeHTML(item)}</span>
-
-    </label>
-
-  `).join("");
-
-  container.dataset.ready = "true";
-
-}
-
-function populateSelects() {
-
-  const establishments = myRecords("establishments");
-
-  [
-
-    "tempEst",
-
-    "inspectionEst",
-
-    "problemEst",
-
-    "evidenceEst",
-
-    "profileEst"
-
-  ].forEach(id => {
-
-    const select = $(id);
-
-    if (!select) return;
-
-    const previous = select.value;
-
-    const firstOption = id === "profileEst"
-
-      ? "Selecionar estabelecimento"
-
-      : "Selecionar estabelecimento";
-
-    select.innerHTML = `<option value="">${firstOption}</option>` +
-
-      establishments.map(est => `
-
-        <option value="${escapeHTML(est.id)}">${escapeHTML(est.name)}</option>
-
-      `).join("");
-
-    if (establishments.some(est => est.id === previous)) {
-
-      select.value = previous;
-
-    }
-
-  });
-
-}
-
-function selectedEstablishment(id) {
-
-  return myRecords("establishments").find(est => est.id === id);
-
-}
-
-function establishmentName(id) {
-
-  return selectedEstablishment(id)?.name || "Estabelecimento removido";
-
-}
-
-function renderEstablishments() {
-
-  const container = $("estList");
-
-  if (!container) return;
-
-  const establishments = myRecords("establishments");
-
-  container.innerHTML = establishments.length
-
-    ? establishments.map(est => `
-
-      <article class="item">
-
-        <h3>${escapeHTML(est.name)}</h3>
-
-        <p>Responsável: ${escapeHTML(est.responsible || "—")}</p>
-
-        <p>Localização: ${escapeHTML(est.city || "—")} · ${escapeHTML(est.address || "—")}</p>
-
-        <p>Tipo: ${escapeHTML(est.type || "—")}</p>
-
-        <button type="button" onclick="viewEstablishment('${est.id}')">Ver perfil</button>
-
-        <button type="button" onclick="deleteRecord('establishments','${est.id}')">Eliminar</button>
-
-      </article>
-
-    `).join("")
-
-    : "<p>Ainda não há estabelecimentos registados.</p>";
-
-}
-
-function renderTemperatures() {
-
-  const container = $("tempList");
-
-  if (!container) return;
-
-  const rows = myRecords("temperatures");
-
-  container.innerHTML = rows.length
-
-    ? rows.map(item => {
-
-      const valid = Number(item.value) >= Number(item.min) &&
-
-                    Number(item.value) <= Number(item.max);
-
-      return `
-
-        <article class="item">
-
-          <h3>${escapeHTML(establishmentName(item.establishment_id))}</h3>
-
-          <p>Alimento/equipamento: ${escapeHTML(item.item || "—")}</p>
-
-          <p>Temperatura: ${escapeHTML(item.value)} °C</p>
-
-          <p>Limites registados: ${escapeHTML(item.min)} °C a ${escapeHTML(item.max)} °C</p>
-
-          <p>Resultado: <strong>${valid ? "Dentro dos limites definidos" : "Fora dos limites definidos"}</strong></p>
-
-          <p>Data: ${dateLabel(item.created_at)}</p>
-
-          <p>${escapeHTML(item.notes || "")}</p>
-
-          <button type="button" onclick="deleteRecord('temperatures','${item.id}')">Eliminar</button>
-
-        </article>
-
-      `;
-
-    }).join("")
-
-    : "<p>Ainda não há temperaturas registadas.</p>";
-
-}
-
-function renderProblems() {
-
-  const container = $("problemList");
-
-  if (!container) return;
-
-  const rows = myRecords("problems");
-
-  container.innerHTML = rows.length
-
-    ? rows.map(item => `
-
-      <article class="item">
-
-        <h3>${escapeHTML(establishmentName(item.establishment_id))}</h3>
-
-        <p>${escapeHTML(item.description)}</p>
-
-        <p>Categoria: ${escapeHTML(item.category || "—")} · Gravidade: ${escapeHTML(item.severity || "—")}</p>
-
-        <p>Medida corretiva: ${escapeHTML(item.action || "—")}</p>
-
-        <p>Estado: <strong>${escapeHTML(item.status || "Aberto")}</strong></p>
-
-        <p>Data: ${dateLabel(item.created_at)}</p>
-
-        <button type="button" onclick="changeProblemStatus('${item.id}')">Alterar estado</button>
-
-        <button type="button" onclick="deleteRecord('problems','${item.id}')">Eliminar</button>
-
-      </article>
-
-    `).join("")
-
-    : "<p>Ainda não há problemas registados.</p>";
-
-}
-
-function renderEvidences() {
-
-  const container = $("evidenceList");
-
-  if (!container) return;
-
-  const rows = myRecords("evidences");
-
-  container.innerHTML = rows.length
-
-    ? rows.map(item => `
-
-      <article class="item">
-
-        <h3>${escapeHTML(establishmentName(item.establishment_id))}</h3>
-
-        <p>${escapeHTML(item.description || "Evidência")}</p>
-
-        <p>Data: ${dateLabel(item.created_at)}</p>
-
-        ${item.fileData ? `<img src="${item.fileData}" alt="Evidência" style="max-width:100%;height:auto">` : ""}
-
-        <p>${item.fileData ? "Fotografia guardada neste dispositivo." : "Sem fotografia anexada."}</p>
-
-        <button type="button" onclick="deleteRecord('evidences','${item.id}')">Eliminar</button>
-
-      </article>
-
-    `).join("")
-
-    : "<p>Ainda não há evidências registadas.</p>";
-
-}
-
-function renderHistory() {
-
-  const container = $("historyList");
-
-  if (!container) return;
-
-  const rows = [
-
-    ...myRecords("inspections").map(item => ({
-
-      ...item, kind: "Inspeção", description: `${item.score ?? 0}% de conformidade`
-
-    })),
-
-    ...myRecords("temperatures").map(item => ({
-
-      ...item, kind: "Temperatura", description: `${item.value} °C`
-
-    })),
-
-    ...myRecords("problems").map(item => ({
-
-      ...item, kind: "Problema", description: item.description
-
-    })),
-
-    ...myRecords("evidences").map(item => ({
-
-      ...item, kind: "Evidência", description: item.description
-
-    }))
-
-  ].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
-  container.innerHTML = rows.length
-
-    ? rows.map(item => `
-
-      <article class="item">
-
-        <strong>${escapeHTML(item.kind)}</strong>
-
-        <p>${escapeHTML(establishmentName(item.establishment_id))}</p>
-
-        <p>${escapeHTML(item.description || "")}</p>
-
-        <p>${dateLabel(item.created_at)}</p>
-
-      </article>
-
-    `).join("")
-
-    : "<p>O histórico ainda está vazio.</p>";
-
-}
-
-function renderDashboard() {
-
-  const inspections = myRecords("inspections");
-
-  const temperatures = myRecords("temperatures");
-
-  const problems = myRecords("problems");
-
-  const establishments = myRecords("establishments");
-
-  if ($("dEst")) $("dEst").textContent = establishments.length;
-
-  if ($("dIns")) $("dIns").textContent = inspections.length;
-
-  if ($("dTemp")) $("dTemp").textContent = temperatures.length;
-
-  if ($("dProb")) $("dProb").textContent = problems.filter(p => p.status !== "Resolvido").length;
-
-  if ($("riskSummary")) {
-
-    const unresolved = problems.filter(p => p.status !== "Resolvido");
-
-    const critical = unresolved.filter(p => ["Alta", "Crítica"].includes(p.severity));
-
-    $("riskSummary").textContent = critical.length
-
-      ? `${critical.length} problema(s) de gravidade alta ou crítica por resolver.`
-
-      : unresolved.length
-
-        ? `${unresolved.length} problema(s) por resolver.`
-
-        : "Não há problemas pendentes registados.";
-
-  }
-
-  if ($("mEst")) $("mEst").textContent = establishments.length;
-
-  if ($("mIns")) $("mIns").textContent = inspections.length;
-
-  if ($("mProb")) $("mProb").textContent = problems.filter(p => p.status !== "Resolvido").length;
-
-  const average = inspections.length
-
-    ? Math.round(inspections.reduce((sum, item) => sum + Number(item.score || 0), 0) / inspections.length)
-
-    : 0;
-
-  if ($("mConf")) $("mConf").textContent = inspections.length ? average + "%" : "—";
-
-  const recent = $("recent");
-
-  if (recent) {
-
-    const latest = [
-
-      ...inspections.map(x => ({ ...x, kind: "Inspeção" })),
-
-      ...temperatures.map(x => ({ ...x, kind: "Temperatura" })),
-
-      ...problems.map(x => ({ ...x, kind: "Problema" }))
-
-    ].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 5);
-
-    recent.innerHTML = latest.length
-
-      ? latest.map(x => `<p><strong>${escapeHTML(x.kind)}</strong> — ${escapeHTML(establishmentName(x.establishment_id))} · ${dateLabel(x.created_at)}</p>`).join("")
-
-      : "<p>Sem atividade registada.</p>";
-
-  }
-
-}
-
-function renderProfile() {
-
-  const id = $("profileEst")?.value;
-
-  const container = $("profileDetails");
-
-  if (!container) return;
-
-  const est = selectedEstablishment(id);
-
-  if (!est) {
-
-    container.innerHTML = "<p>Seleciona um estabelecimento para consultar o perfil.</p>";
-
-    return;
-
-  }
-
-  const inspections = myRecords("inspections").filter(x => x.establishment_id === id);
-
-  const problems = myRecords("problems").filter(x => x.establishment_id === id);
-
-  const temps = myRecords("temperatures").filter(x => x.establishment_id === id);
-
-  const average = inspections.length
-
-    ? Math.round(inspections.reduce((sum, x) => sum + Number(x.score || 0), 0) / inspections.length)
-
-    : null;
-
-  const risk = problems.some(x => x.status !== "Resolvido" && ["Alta", "Crítica"].includes(x.severity))
-
-    ? "Alto"
-
-    : problems.some(x => x.status !== "Resolvido")
-
-      ? "Moderado"
-
-      : "Sem problemas pendentes registados";
-
-  container.innerHTML = `
-
-    <article class="item">
-
-      <h3>${escapeHTML(est.name)}</h3>
-
-      <p>Responsável: ${escapeHTML(est.responsible || "—")}</p>
-
-      <p>Telefone: ${escapeHTML(est.phone || "—")}</p>
-
-      <p>Localização: ${escapeHTML(est.city || "—")} · ${escapeHTML(est.address || "—")}</p>
-
-      <p>Total de inspeções: ${inspections.length}</p>
-
-      <p>Conformidade média: ${average === null ? "Sem inspeções" : average + "%"}</p>
-
-      <p>Nível de risco indicativo: <strong>${risk}</strong></p>
-
-      <p>Problemas por resolver: ${problems.filter(x => x.status !== "Resolvido").length}</p>
-
-      <p>Registos de temperatura: ${temps.length}</p>
-
-      <p>Última inspeção: ${inspections.length ? dateLabel(inspections[0].created_at) : "Nenhuma"}</p>
-
-    </article>
-
-  `;
-
-}
-
-function viewEstablishment(id) {
-
-  showPage("perfil");
-
-  if ($("profileEst")) $("profileEst").value = id;
-
-  renderProfile();
-
-}
-
-function renderReport() {
-
-  const container = $("reportContent");
-
-  if (!container) return;
-
-  const establishments = myRecords("establishments");
-
-  const inspections = myRecords("inspections");
-
-  const problems = myRecords("problems");
-
-  container.innerHTML = `
-
-    <h2>Relatório FoodSafe Moz</h2>
-
-    <p>Data de emissão: ${dateLabel(new Date().toISOString())}</p>
-
-    <p>Estabelecimentos registados: ${establishments.length}</p>
-
-    <p>Inspeções registadas: ${inspections.length}</p>
-
-    <p>Problemas pendentes: ${problems.filter(x => x.status !== "Resolvido").length}</p>
-
-    ${establishments.map(est => {
-
-      const ins = inspections.filter(x => x.establishment_id === est.id);
-
-      const prob = problems.filter(x => x.establishment_id === est.id && x.status !== "Resolvido");
-
-      return `
-
-        <hr>
-
-        <h3>${escapeHTML(est.name)}</h3>
-
-        <p>Responsável: ${escapeHTML(est.responsible || "—")}</p>
-
-        <p>Inspeções: ${ins.length}</p>
-
-        <p>Problemas pendentes: ${prob.length}</p>
-
-      `;
-
-    }).join("")}
-
-  `;
-
-}
-
-function printReport() {
-
-  renderReport();
-
-  window.print();
-
-}
-
-function renderAll() {
-
-  populateSelects();
-
-  renderEstablishments();
-
-  renderTemperatures();
-
-  renderProblems();
-
-  renderEvidences();
-
-  renderHistory();
-
-  renderDashboard();
-
-  renderProfile();
-
-  renderReport();
-
-}
-
-/* ------------------ REGISTOS ------------------ */
-
-$("loginForm")?.addEventListener("submit", login);
-
-$("demoButton")?.addEventListener("click", startDemo);
-
-document.querySelectorAll(".nav [data-page]").forEach(button => {
-
-  button.addEventListener("click", () => showPage(button.dataset.page));
+auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}
 
 });
 
-$("estForm")?.addEventListener("submit", event => {
+}
 
-  event.preventDefault();
-
-  const name = $("estName").value.trim();
-
-  if (!name) {
-
-    notice("Introduz o nome do estabelecimento.", "error");
-
-    return;
-
-  }
-
-  addRecord("establishments", {
-
-    name,
-
-    responsible: $("estResponsible").value.trim(),
-
-    phone: $("estPhone").value.trim(),
-
-    city: $("estCity").value.trim(),
-
-    address: $("estAddress").value.trim(),
-
-    type: $("estType").value,
-
-    notes: $("estNotes").value.trim()
-
-  });
-
-  event.target.reset();
-
-  if ($("estCity")) $("estCity").value = "Nampula";
-
-  notice("Estabelecimento guardado.", "success");
-
-});
-
-$("tempForm")?.addEventListener("submit", event => {
-
-  event.preventDefault();
-
-  const establishment_id = $("tempEst").value;
-
-  const value = Number($("tempValue").value);
-
-  const min = Number($("tempMin").value);
-
-  const max = Number($("tempMax").value);
-
-  if (!establishment_id || !Number.isFinite(value) || min > max) {
-
-    notice("Verifica o estabelecimento e os limites de temperatura.", "error");
-
-    return;
-
-  }
-
-  addRecord("temperatures", {
-
-    establishment_id,
-
-    item: $("tempItem").value.trim(),
-
-    value,
-
-    min,
-
-    max,
-
-    notes: $("tempNotes").value.trim()
-
-  });
-
-  event.target.reset();
-
-  notice("Temperatura registada.", "success");
-
-});
-
-$("inspectionForm")?.addEventListener("submit", event => {
-
-  event.preventDefault();
-
-  const establishment_id = $("inspectionEst").value;
-
-  const checked = checklistItems.filter((item, index) =>
-
-    $(`check-${index}`)?.checked ||
-
-    document.querySelector(`[name="check-${index}"]`)?.checked
-
-  );
-
-  if (!establishment_id) {
-
-    notice("Seleciona o estabelecimento da inspeção.", "error");
-
-    return;
-
-  }
-
-  const score = Math.round((checked.length / checklistItems.length) * 100);
-
-  const unchecked = checklistItems.filter((item, index) =>
-
-    !document.querySelector(`[name="check-${index}"]`)?.checked
-
-  );
-
-  addRecord("inspections", {
-
-    establishment_id,
-
-    inspector: $("inspectorName").value.trim(),
-
-    score,
-
-    checked_items: checked,
-
-    nonconformities: unchecked,
-
-    notes: $("inspectionNotes").value.trim(),
-
-    risk: score >= 80 ? "Baixo" : score >= 50 ? "Moderado" : "Alto"
-
-  });
-
-  event.target.reset();
-
-  notice(`Inspeção guardada. Conformidade: ${score}%.`, "success");
-
-});
-
-$("problemForm")?.addEventListener("submit", event => {
-
-  event.preventDefault();
-
-  const establishment_id = $("problemEst").value;
-
-  const description = $("problemDesc").value.trim();
-
-  if (!establishment_id || !description) {
-
-    notice("Seleciona um estabelecimento e descreve o problema.", "error");
-
-    return;
-
-  }
-
-  addRecord("problems", {
-
-    establishment_id,
-
-    description,
-
-    category: $("problemCategory").value,
-
-    severity: $("problemSeverity").value,
-
-    action: $("problemAction").value.trim(),
-
-    status: "Aberto"
-
-  });
-
-  event.target.reset();
-
-  notice("Problema guardado.", "success");
-
-});
-
-$("evidenceForm")?.addEventListener("submit", event => {
-
-  event.preventDefault();
-
-  const establishment_id = $("evidenceEst").value;
-
-  const description = $("evidenceDesc").value.trim();
-
-  const file = $("evidenceFile").files?.[0];
-
-  if (!establishment_id) {
-
-    notice("Seleciona o estabelecimento da evidência.", "error");
-
-    return;
-
-  }
-
-  const saveEvidence = file => {
-
-    addRecord("evidences", {
-
-      establishment_id,
-
-      description,
-
-      fileName: file?.name || "",
-
-      fileData: file?.data || null,
-
-      storage: "local"
-
-    });
-
-    event.target.reset();
-
-    notice("Evidência guardada neste dispositivo. A fotografia não foi enviada para a nuvem.", "success");
-
-  };
-
-  if (!file) {
-
-    saveEvidence(null);
-
-    return;
-
-  }
-
-  if (file.size > 3 * 1024 * 1024) {
-
-    notice("A fotografia excede 3 MB. Escolhe uma imagem mais pequena.", "error");
-
-    return;
-
-  }
-
-  const reader = new FileReader();
-
-  reader.onload = () => saveEvidence({ name: file.name, data: reader.result });
-
-  reader.onerror = () => notice("Não foi possível ler a fotografia.", "error");
-
-  reader.readAsDataURL(file);
-
-});
-
-$("profileEst")?.addEventListener("change", renderProfile);
-
-/* ------------------ ESTADOS E ELIMINAÇÃO ------------------ */
-
-function changeProblemStatus(id) {
-
-  const problem = db.problems.find(x => x.id === id && isMine(x));
-
-  if (!problem) return;
-
-  const states = ["Aberto", "Em tratamento", "Resolvido"];
-
-  const next = (states.indexOf(problem.status || "Aberto") + 1) % states.length;
-
-  problem.status = states[next];
-
-  problem.updated_at = new Date().toISOString();
-
-  saveLocal();
-
-  renderAll();
-
-  if (!demoMode && currentUser) {
-
-    syncRecord("problems", problem);
-
-  }
-
-  notice("Estado atualizado para: " + problem.status, "success");
+}catch(error){console.error("Supabase não inicializado:",error)}
 
 }
 
-async function deleteRecord(table, id) {
+async function login(event){
 
-  const record = db[table]?.find(x => x.id === id && isMine(x));
+event?.preventDefault();
 
-  if (!record) return;
+const email=$("email")?.value.trim();
 
-  if (!confirm("Tens a certeza de que queres eliminar este registo?")) return;
+const password=$("password")?.value;
 
-  db[table] = db[table].filter(x => x.id !== id);
+if(!email||!password){notice("Introduz o e-mail e a palavra-passe.","error");return}
 
-  saveLocal();
+if(!supabaseClient){notice("O serviço de autenticação não foi carregado. Verifica a internet e recarrega a página.","error");return}
 
-  renderAll();
+setConnection("A verificar o acesso…");
 
-  if (!demoMode && currentUser && table !== "evidences") {
+try{
 
-    try {
+const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
 
-      const { error } = await supabaseClient
+if(error)throw error;
 
-        .from(table)
+currentUser=data.user;
 
-        .delete()
+demoMode=false;
 
-        .eq("id", id)
+localStorage.setItem(SESSION_KEY,JSON.stringify({id:currentUser.id,email:currentUser.email}));
 
-        .eq("user_id", currentUser.id);
+await enterApp();
 
-      if (error) throw error;
+notice("Sessão iniciada com sucesso.","success");
 
-    } catch (error) {
+}catch(error){
 
-      console.error("Erro ao eliminar na nuvem:", error);
+console.error("Erro de login:",error);
 
-      notice("Registo removido localmente, mas a eliminação na nuvem falhou. Verifica a ligação e o RLS.", "error");
+setConnection("Não foi possível iniciar sessão.",false);
 
-      return;
-
-    }
-
-  }
-
-  notice("Registo eliminado.", "success");
+notice("Não foi possível entrar. Confirma o e-mail, a palavra-passe e se o utilizador está confirmado no Supabase.","error");
 
 }
 
-/* ------------------ SUPABASE / SINCRONIZAÇÃO ------------------ */
+}
 
-const cloudTables = {
+async function enterApp(){
 
-  establishments: "establishments",
+$("login")?.classList.add("hidden");
 
-  inspections: "inspections",
+$("app")?.classList.remove("hidden");
 
-  temperatures: "temperatures",
+$("nav")?.classList.remove("hidden");
 
-  problems: "problems"
+if($("userLabel"))$("userLabel").textContent=demoMode?"Demonstração local":(currentUser?.email||"Utilizador autenticado");
+
+if($("accountInfo"))$("accountInfo").textContent=demoMode?"Modo demonstração. Os dados ficam apenas neste dispositivo e não são sincronizados.":"Conta autenticada: "+(currentUser?.email||"");
+
+if(demoMode)setConnection("Demonstração local — sem sincronização na nuvem.",false);
+
+else{setConnection("Sessão autenticada. A verificar a sincronização…",true);await syncFromCloud()}
+
+buildChecklist();
+
+populateSelects();
+
+renderAll();
+
+showPage("inicio");
+
+}
+
+async function startDemo(){
+
+demoMode=true;currentUser=null;
+
+await enterApp();
+
+notice("Entraste no modo demonstração. Estes dados não serão enviados ao Supabase.","info");
+
+}
+
+async function logout(){
+
+if(!demoMode&&supabaseClient){try{await supabaseClient.auth.signOut()}catch(error){console.error("Erro ao terminar sessão:",error)}}
+
+currentUser=null;demoMode=false;
+
+localStorage.removeItem(SESSION_KEY);
+
+$("app")?.classList.add("hidden");
+
+$("nav")?.classList.add("hidden");
+
+$("login")?.classList.remove("hidden");
+
+setConnection("Sessão terminada.",false);
+
+}
+
+function showPage(name){
+
+document.querySelectorAll(".page").forEach(page=>page.classList.remove("active"));
+
+$("page-"+name)?.classList.add("active");
+
+document.querySelectorAll(".nav [data-page]").forEach(button=>button.classList.toggle("active",button.dataset.page===name));
+
+if(name==="relatorio")renderReport();
+
+if(name==="perfil")renderProfile();
+
+if(name==="dashboard")renderDashboard();
+
+}
+
+function buildChecklist(){
+
+const container=$("checkItems");
+
+if(!container||container.dataset.ready==="true")return;
+
+container.innerHTML=checklistItems.map((item,index)=>`<label class="check-row"><input type="checkbox" name="check-${index}" value="${escapeHTML(item)}"><span>${escapeHTML(item)}</span></label>`).join("");
+
+container.dataset.ready="true";
+
+}
+
+function populateSelects(){
+
+const establishments=myRecords("establishments");
+
+["tempEst","inspectionEst","problemEst","evidenceEst","profileEst"].forEach(id=>{
+
+const select=$(id);if(!select)return;
+
+const previous=select.value;
+
+select.innerHTML='<option value="">Selecionar estabelecimento</option>'+establishments.map(est=>`<option value="${escapeHTML(est.id)}">${escapeHTML(est.name)}</option>`).join("");
+
+if(establishments.some(est=>est.id===previous))select.value=previous;
+
+});
+
+}
+
+function selectedEstablishment(id){return myRecords("establishments").find(est=>est.id===id)}
+
+function establishmentName(id){return selectedEstablishment(id)?.name||"Estabelecimento removido"}
+
+function renderEstablishments(){
+
+const container=$("estList");if(!container)return;
+
+const rows=myRecords("establishments");
+
+container.innerHTML=rows.length?rows.map(est=>`
+
+<article class="item"><h3>${escapeHTML(est.name)}</h3>
+
+<p>Responsável: ${escapeHTML(est.responsible||"—")}</p>
+
+<p>Localização: ${escapeHTML(est.city||"—")} · ${escapeHTML(est.address||"—")}</p>
+
+<p>Tipo: ${escapeHTML(est.type||"—")}</p>
+
+<button type="button" onclick="viewEstablishment('${est.id}')">Ver perfil</button>
+
+<button type="button" onclick="deleteRecord('establishments','${est.id}')">Eliminar</button></article>`).join(""):"<p>Ainda não há estabelecimentos registados.</p>";
+
+}
+
+function renderTemperatures(){
+
+const container=$("tempList");if(!container)return;
+
+const rows=myRecords("temperatures");
+
+container.innerHTML=rows.length?rows.map(item=>{
+
+const valid=Number(item.value)>=Number(item.min)&&Number(item.value)<=Number(item.max);
+
+return `<article class="item"><h3>${escapeHTML(establishmentName(item.establishment_id))}</h3>
+
+<p>Alimento/equipamento: ${escapeHTML(item.item||"—")}</p>
+
+<p>Temperatura: ${escapeHTML(item.value)} °C</p>
+
+<p>Limites registados: ${escapeHTML(item.min)} °C a ${escapeHTML(item.max)} °C</p>
+
+<p>Resultado: <strong>${valid?"Dentro dos limites definidos":"Fora dos limites definidos"}</strong></p>
+
+<p>Data: ${dateLabel(item.created_at)}</p><p>${escapeHTML(item.notes||"")}</p>
+
+<button type="button" onclick="deleteRecord('temperatures','${item.id}')">Eliminar</button></article>`;
+
+}).join(""):"<p>Ainda não há temperaturas registadas.</p>";
+
+}
+
+function renderProblems(){
+
+const container=$("problemList");if(!container)return;
+
+const rows=myRecords("problems");
+
+container.innerHTML=rows.length?rows.map(item=>`
+
+<article class="item"><h3>${escapeHTML(establishmentName(item.establishment_id))}</h3>
+
+<p>${escapeHTML(item.description)}</p>
+
+<p>Categoria: ${escapeHTML(item.category||"—")} · Gravidade: ${escapeHTML(item.severity||"—")}</p>
+
+<p>Medida corretiva: ${escapeHTML(item.action||"—")}</p>
+
+<p>Estado: <strong>${escapeHTML(item.status||"Aberto")}</strong></p>
+
+<p>Data: ${dateLabel(item.created_at)}</p>
+
+<button type="button" onclick="changeProblemStatus('${item.id}')">Alterar estado</button>
+
+<button type="button" onclick="deleteRecord('problems','${item.id}')">Eliminar</button></article>`).join(""):"<p>Ainda não há problemas registados.</p>";
+
+}
+
+function renderEvidences(){
+
+const container=$("evidenceList");if(!container)return;
+
+const rows=myRecords("evidences");
+
+container.innerHTML=rows.length?rows.map(item=>`
+
+<article class="item"><h3>${escapeHTML(establishmentName(item.establishment_id))}</h3>
+
+<p>${escapeHTML(item.description||"Evidência")}</p><p>Data: ${dateLabel(item.created_at)}</p>
+
+${item.fileData?`<img class="evidence" src="${item.fileData}" alt="Evidência">`:""}
+
+<p>${item.fileData?"Fotografia guardada neste dispositivo.":"Sem fotografia anexada."}</p>
+
+<button type="button" onclick="deleteRecord('evidences','${item.id}')">Eliminar</button></article>`).join(""):"<p>Ainda não há evidências registadas.</p>";
+
+}
+
+function renderHistory(){
+
+const container=$("historyList");if(!container)return;
+
+const rows=[
+
+...myRecords("inspections").map(x=>({...x,kind:"Inspeção",description:`${x.score??0}% de conformidade`})),
+
+...myRecords("temperatures").map(x=>({...x,kind:"Temperatura",description:`${x.value} °C`})),
+
+...myRecords("problems").map(x=>({...x,kind:"Problema",description:x.description})),
+
+...myRecords("evidences").map(x=>({...x,kind:"Evidência",description:x.description}))
+
+].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+
+container.innerHTML=rows.length?rows.map(x=>`<article class="item"><strong>${escapeHTML(x.kind)}</strong><p>${escapeHTML(establishmentName(x.establishment_id))}</p><p>${escapeHTML(x.description||"")}</p><p>${dateLabel(x.created_at)}</p></article>`).join(""):"<p>O histórico ainda está vazio.</p>";
+
+}
+
+function renderDashboard(){
+
+const inspections=myRecords("inspections"),temps=myRecords("temperatures"),problems=myRecords("problems"),ests=myRecords("establishments");
+
+if($("dEst"))$("dEst").textContent=ests.length;
+
+if($("dIns"))$("dIns").textContent=inspections.length;
+
+if($("dTemp"))$("dTemp").textContent=temps.length;
+
+if($("dProb"))$("dProb").textContent=problems.filter(p=>p.status!=="Resolvido").length;
+
+const unresolved=problems.filter(p=>p.status!=="Resolvido");
+
+const critical=unresolved.filter(p=>["Alta","Crítica"].includes(p.severity));
+
+if($("riskSummary"))$("riskSummary").textContent=critical.length?`${critical.length} problema(s) de gravidade alta ou crítica por resolver.`:unresolved.length?`${unresolved.length} problema(s) por resolver.`:"Não há problemas pendentes registados.";
+
+if($("mEst"))$("mEst").textContent=ests.length;
+
+if($("mIns"))$("mIns").textContent=inspections.length;
+
+if($("mProb"))$("mProb").textContent=unresolved.length;
+
+const average=inspections.length?Math.round(inspections.reduce((sum,x)=>sum+Number(x.score||0),0)/inspections.length):0;
+
+if($("mConf"))$("mConf").textContent=inspections.length?average+"%":"—";
+
+if($("recent")){
+
+const latest=[...inspections.map(x=>({...x,kind:"Inspeção"})),...temps.map(x=>({...x,kind:"Temperatura"})),...problems.map(x=>({...x,kind:"Problema"}))].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).slice(0,5);
+
+$("recent").innerHTML=latest.length?latest.map(x=>`<p><strong>${escapeHTML(x.kind)}</strong> — ${escapeHTML(establishmentName(x.establishment_id))} · ${dateLabel(x.created_at)}</p>`).join(""):"<p>Sem atividade registada.</p>";
+
+}
+
+}
+
+function renderProfile(){
+
+const id=$("profileEst")?.value,container=$("profileDetails");if(!container)return;
+
+const est=selectedEstablishment(id);
+
+if(!est){container.innerHTML="<p>Seleciona um estabelecimento para consultar o perfil.</p>";return}
+
+const inspections=myRecords("inspections").filter(x=>x.establishment_id===id);
+
+const problems=myRecords("problems").filter(x=>x.establishment_id===id);
+
+const temps=myRecords("temperatures").filter(x=>x.establishment_id===id);
+
+const average=inspections.length?Math.round(inspections.reduce((sum,x)=>sum+Number(x.score||0),0)/inspections.length):null;
+
+const risk=problems.some(x=>x.status!=="Resolvido"&&["Alta","Crítica"].includes(x.severity))?"Alto":problems.some(x=>x.status!=="Resolvido")?"Moderado":"Sem problemas pendentes registados";
+
+container.innerHTML=`<article class="item"><h3>${escapeHTML(est.name)}</h3>
+
+<p>Responsável: ${escapeHTML(est.responsible||"—")}</p><p>Telefone: ${escapeHTML(est.phone||"—")}</p>
+
+<p>Localização: ${escapeHTML(est.city||"—")} · ${escapeHTML(est.address||"—")}</p>
+
+<p>Total de inspeções: ${inspections.length}</p><p>Conformidade média: ${average===null?"Sem inspeções":average+"%"}</p>
+
+<p>Nível de risco indicativo: <strong>${risk}</strong></p>
+
+<p>Problemas por resolver: ${problems.filter(x=>x.status!=="Resolvido").length}</p>
+
+<p>Registos de temperatura: ${temps.length}</p>
+
+<p>Última inspeção: ${inspections.length?dateLabel(inspections[0].created_at):"Nenhuma"}</p></article>`;
+
+}
+
+function viewEstablishment(id){showPage("perfil");if($("profileEst"))$("profileEst").value=id;renderProfile()}
+
+function renderReport(){
+
+const container=$("reportContent");if(!container)return;
+
+const ests=myRecords("establishments"),inspections=myRecords("inspections"),problems=myRecords("problems");
+
+container.innerHTML=`<h2>Relatório FoodSafe Moz</h2><p>Data de emissão: ${dateLabel(new Date().toISOString())}</p>
+
+<p>Estabelecimentos registados: ${ests.length}</p><p>Inspeções registadas: ${inspections.length}</p>
+
+<p>Problemas pendentes: ${problems.filter(x=>x.status!=="Resolvido").length}</p>
+
+${ests.map(est=>{const ins=inspections.filter(x=>x.establishment_id===est.id),prob=problems.filter(x=>x.establishment_id===est.id&&x.status!=="Resolvido");return `<hr><h3>${escapeHTML(est.name)}</h3><p>Responsável: ${escapeHTML(est.responsible||"—")}</p><p>Inspeções: ${ins.length}</p><p>Problemas pendentes: ${prob.length}</p>`}).join("")}`;
+
+}
+
+function printReport(){renderReport();window.print()}
+
+function renderAll(){
+
+populateSelects();renderEstablishments();renderTemperatures();renderProblems();renderEvidences();renderHistory();renderDashboard();renderProfile();renderReport();
+
+}
+
+/* Formulários */
+
+$("loginForm").addEventListener("submit",login);
+
+$("demoButton").addEventListener("click",startDemo);
+
+document.querySelectorAll(".nav [data-page]").forEach(button=>button.addEventListener("click",()=>showPage(button.dataset.page)));
+
+$("estForm").addEventListener("submit",event=>{
+
+event.preventDefault();
+
+const name=$("estName").value.trim();
+
+if(!name){notice("Introduz o nome do estabelecimento.","error");return}
+
+addRecord("establishments",{name,responsible:$("estResponsible").value.trim(),phone:$("estPhone").value.trim(),city:$("estCity").value.trim(),address:$("estAddress").value.trim(),type:$("estType").value,notes:$("estNotes").value.trim()});
+
+event.target.reset();$("estCity").value="Nampula";notice("Estabelecimento guardado.","success");
+
+});
+
+$("tempForm").addEventListener("submit",event=>{
+
+event.preventDefault();
+
+const establishment_id=$("tempEst").value,value=Number($("tempValue").value),min=Number($("tempMin").value),max=Number($("tempMax").value);
+
+if(!establishment_id||!Number.isFinite(value)||min>max){notice("Verifica o estabelecimento e os limites de temperatura.","error");return}
+
+addRecord("temperatures",{establishment_id,item:$("tempItem").value.trim(),value,min,max,notes:$("tempNotes").value.trim()});
+
+event.target.reset();$("tempMin").value="0";$("tempMax").value="5";notice("Temperatura registada.","success");
+
+});
+
+$("inspectionForm").addEventListener("submit",event=>{
+
+event.preventDefault();
+
+const establishment_id=$("inspectionEst").value;
+
+const checked=checklistItems.filter((item,index)=>document.querySelector(`[name="check-${index}"]`)?.checked);
+
+if(!establishment_id){notice("Seleciona o estabelecimento da inspeção.","error");return}
+
+const unchecked=checklistItems.filter((item,index)=>!document.querySelector(`[name="check-${index}"]`)?.checked);
+
+const score=Math.round(checked.length/checklistItems.length*100);
+
+addRecord("inspections",{establishment_id,inspector:$("inspectorName").value.trim(),score,checked_items:checked,nonconformities:unchecked,notes:$("inspectionNotes").value.trim(),risk:score>=80?"Baixo":score>=50?"Moderado":"Alto"});
+
+event.target.reset();notice(`Inspeção guardada. Conformidade: ${score}%.`,"success");
+
+});
+
+$("problemForm").addEventListener("submit",event=>{
+
+event.preventDefault();
+
+const establishment_id=$("problemEst").value,description=$("problemDesc").value.trim();
+
+if(!establishment_id||!description){notice("Seleciona um estabelecimento e descreve o problema.","error");return}
+
+addRecord("problems",{establishment_id,description,category:$("problemCategory").value,severity:$("problemSeverity").value,action:$("problemAction").value.trim(),status:"Aberto"});
+
+event.target.reset();notice("Problema guardado.","success");
+
+});
+
+$("evidenceForm").addEventListener("submit",event=>{
+
+event.preventDefault();
+
+const establishment_id=$("evidenceEst").value,description=$("evidenceDesc").value.trim(),file=$("evidenceFile").files?.[0];
+
+if(!establishment_id||!description){notice("Seleciona um estabelecimento e descreve a evidência.","error");return}
+
+const saveEvidence=fileData=>{
+
+addRecord("evidences",{establishment_id,description,fileName:file?.name||"",fileData:fileData||null,storage:"local"});
+
+event.target.reset();notice("Evidência guardada neste dispositivo. A fotografia não foi enviada para a nuvem.","success");
 
 };
 
-async function syncRecord(table, record) {
+if(!file){saveEvidence(null);return}
 
-  if (demoMode || !currentUser || !supabaseClient) return;
+if(file.size>1.5*1024*1024){notice("A fotografia excede 1,5 MB. Escolhe uma imagem mais pequena.","error");return}
 
-  if (!cloudTables[table]) return;
+const reader=new FileReader();
 
-  const payload = { ...record };
+reader.onload=()=>saveEvidence({name:file.name,data:reader.result});
 
-  delete payload.fileData;
+reader.onerror=()=>notice("Não foi possível ler a fotografia.","error");
 
-  delete payload.fileName;
+reader.onload=()=>saveEvidence(reader.result);
 
-  delete payload.storage;
+reader.readAsDataURL(file);
 
-  payload.user_id = currentUser.id;
+});
 
-  try {
+$("profileEst").addEventListener("change",renderProfile);
 
-    const { error } = await supabaseClient
+function changeProblemStatus(id){
 
-      .from(cloudTables[table])
+const problem=db.problems.find(x=>x.id===id&&isMine(x));if(!problem)return;
 
-      .upsert(payload, { onConflict: "id" });
+const states=["Aberto","Em tratamento","Resolvido"];
 
-    if (error) throw error;
+problem.status=states[(states.indexOf(problem.status||"Aberto")+1)%states.length];
 
-    setConnection("Ligado — último registo sincronizado.", true);
+problem.updated_at=new Date().toISOString();saveLocal();renderAll();
 
-  } catch (error) {
+if(!demoMode&&currentUser)syncRecord("problems",problem);
 
-    console.error("Erro ao sincronizar " + table + ":", error);
-
-    setConnection("Registo guardado localmente; sincronização na nuvem falhou.", false);
-
-    notice("O registo ficou guardado neste dispositivo, mas não foi confirmado no Supabase. Verifica as colunas da tabela e as políticas RLS.", "error");
-
-  }
+notice("Estado atualizado para: "+problem.status,"success");
 
 }
 
-async function syncFromCloud() {
+async function deleteRecord(table,id){
 
-  if (!currentUser || !supabaseClient) return;
+const record=db[table]?.find(x=>x.id===id&&isMine(x));if(!record)return;
 
-  let failures = [];
+if(!confirm("Tens a certeza de que queres eliminar este registo?"))return;
 
-  for (const table of Object.keys(cloudTables)) {
+db[table]=db[table].filter(x=>x.id!==id);saveLocal();renderAll();
 
-    try {
+if(!demoMode&&currentUser&&table!=="evidences"){
 
-      const { data, error } = await supabaseClient
+try{
 
-        .from(cloudTables[table])
+const {error}=await supabaseClient.from(table).delete().eq("id",id).eq("user_id",currentUser.id);
 
-        .select("*")
+if(error)throw error;
 
-        .eq("user_id", currentUser.id);
+}catch(error){
 
-      if (error) throw error;
+console.error("Erro ao eliminar na nuvem:",error);
 
-      const cloudRows = Array.isArray(data) ? data : [];
-
-      const localOthers = db[table].filter(row => row.user_id !== currentUser.id);
-
-      const merged = new Map();
-
-      localOthers.forEach(row => merged.set(row.id, row));
-
-      cloudRows.forEach(row => merged.set(row.id, row));
-
-      db[table] = Array.from(merged.values());
-
-    } catch (error) {
-
-      console.error("Erro ao carregar " + table + ":", error);
-
-      failures.push(table);
-
-    }
-
-  }
-
-  saveLocal();
-
-  renderAll();
-
-  if (failures.length) {
-
-    setConnection("Ligação ativa, mas falhou a leitura de: " + failures.join(", "), false);
-
-    notice("Alguns dados não foram carregados do Supabase. Confirma as permissões SELECT e as políticas RLS.", "error");
-
-  } else {
-
-    setConnection("Ligado — dados da conta carregados.", true);
-
-  }
+notice("Registo removido localmente, mas a eliminação na nuvem falhou. Verifica a ligação e o RLS.","error");return;
 
 }
 
-async function manualSync() {
+}
 
-  if (demoMode || !currentUser) {
-
-    notice("A sincronização exige uma sessão autenticada no Supabase.", "error");
-
-    return;
-
-  }
-
-  await syncFromCloud();
-
-  let failed = 0;
-
-  for (const table of Object.keys(cloudTables)) {
-
-    const rows = db[table].filter(row => row.user_id === currentUser.id);
-
-    for (const row of rows) {
-
-      try {
-
-        const payload = { ...row, user_id: currentUser.id };
-
-        const { error } = await supabaseClient
-
-          .from(cloudTables[table])
-
-          .upsert(payload, { onConflict: "id" });
-
-        if (error) throw error;
-
-      } catch (error) {
-
-        console.error("Erro de sincronização:", table, error);
-
-        failed++;
-
-      }
-
-    }
-
-  }
-
-  if (failed) {
-
-    setConnection("Sincronização incompleta: " + failed + " registo(s) falharam.", false);
-
-    notice("A sincronização não foi concluída. Consulta a consola e as colunas/políticas das tabelas.", "error");
-
-  } else {
-
-    setConnection("Sincronização concluída sem erros reportados.", true);
-
-    notice("Sincronização concluída.", "success");
-
-  }
+notice("Registo eliminado.","success");
 
 }
 
-function exportData() {
+/* Supabase e sincronização */
 
-  const data = JSON.stringify(db, null, 2);
+const cloudTables={establishments:"establishments",inspections:"inspections",temperatures:"temperatures",problems:"problems"};
 
-  const blob = new Blob([data], { type: "application/json" });
+async function syncRecord(table,record){
 
-  const url = URL.createObjectURL(blob);
+if(demoMode||!currentUser||!supabaseClient||!cloudTables[table])return;
 
-  const link = document.createElement("a");
+const payload={...record};delete payload.fileData;delete payload.fileName;delete payload.storage;
 
-  link.href = url;
+payload.user_id=currentUser.id;
 
-  link.download = "foodsafemoz-backup-" + today() + ".json";
+try{
 
-  document.body.appendChild(link);
+const {error}=await supabaseClient.from(cloudTables[table]).upsert(payload,{onConflict:"id"});
 
-  link.click();
+if(error)throw error;
 
-  link.remove();
+setConnection("Ligado — último registo sincronizado.",true);
 
-  URL.revokeObjectURL(url);
+}catch(error){
 
-}
+console.error("Erro ao sincronizar "+table+":",error);
 
-/* ------------------ ARRANQUE ------------------ */
+setConnection("Registo guardado localmente; sincronização na nuvem falhou.",false);
 
-async function initApp() {
-
-  loadLocal();
-
-  initSupabase();
-
-  buildChecklist();
-
-  if (supabaseClient) {
-
-    try {
-
-      const { data, error } = await supabaseClient.auth.getSession();
-
-      if (!error && data?.session?.user) {
-
-        currentUser = data.session.user;
-
-        demoMode = false;
-
-        await enterApp();
-
-        return;
-
-      }
-
-    } catch (error) {
-
-      console.error("Erro ao restaurar sessão:", error);
-
-    }
-
-  }
-
-  $("login")?.classList.remove("hidden");
-
-  $("app")?.classList.add("hidden");
-
-  setConnection("Entra com a tua conta para sincronizar os dados.", false);
+notice("O registo ficou guardado neste dispositivo, mas não foi confirmado no Supabase. Verifica as colunas da tabela e as políticas RLS.","error");
 
 }
 
-document.addEventListener("DOMContentLoaded", initApp);
+}
 
-/* Disponibiliza funções usadas pelos botões HTML */
+async function syncFromCloud(){
 
-window.showPage = showPage;
+if(!currentUser||!supabaseClient)return;
 
-window.viewEstablishment = viewEstablishment;
+const failures=[];
 
-window.changeProblemStatus = changeProblemStatus;
+for(const table of Object.keys(cloudTables)){
 
-window.deleteRecord = deleteRecord;
+try{
 
-window.printReport = printReport;
+const {data,error}=await supabaseClient.from(cloudTables[table]).select("*").eq("user_id",currentUser.id);
 
-window.manualSync = manualSync;
+if(error)throw error;
 
-window.exportData = exportData;
+const cloudRows=Array.isArray(data)?data:[];
 
-window.logout = logout;
+const localOthers=db[table].filter(row=>row.user_id!==currentUser.id);
+
+const merged=new Map();
+
+localOthers.forEach(row=>merged.set(row.id,row));
+
+cloudRows.forEach(row=>merged.set(row.id,row));
+
+db[table]=Array.from(merged.values());
+
+}catch(error){console.error("Erro ao carregar "+table+":",error);failures.push(table)}
+
+}
+
+saveLocal();renderAll();
+
+if(failures.length){
+
+setConnection("Ligação ativa, mas falhou a leitura de: "+failures.join(", "),false);
+
+notice("Alguns dados não foram carregados do Supabase. Confirma as permissões SELECT e as políticas RLS.","error");
+
+}else setConnection("Ligado — dados da conta carregados.",true);
+
+}
+
+async function manualSync(){
+
+if(demoMode||!currentUser){notice("A sincronização exige uma sessão autenticada no Supabase.","error");return}
+
+if(!supabaseClient){notice("O Supabase não está inicializado. Recarrega a página e tenta novamente.","error");return}
+
+await syncFromCloud();
+
+let failed=0;
+
+for(const table of Object.keys(cloudTables)){
+
+const rows=db[table].filter(row=>row.user_id===currentUser.id);
+
+for(const row of rows){
+
+try{
+
+const payload={...row,user_id:currentUser.id};
+
+const {error}=await supabaseClient.from(cloudTables[table]).upsert(payload,{onConflict:"id"});
+
+if(error)throw error;
+
+}catch(error){console.error("Erro de sincronização:",table,error);failed++}
+
+}
+
+}
+
+if(failed){setConnection("Sincronização incompleta: "+failed+" registo(s) falharam.",false);notice("A sincronização não foi concluída. Verifica as colunas e políticas das tabelas.","error")}
+
+else{setConnection("Sincronização concluída sem erros reportados.",true);notice("Sincronização concluída.","success")}
+
+}
+
+function exportData(){
+
+const blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"});
+
+const url=URL.createObjectURL(blob),link=document.createElement("a");
+
+link.href=url;link.download="foodsafemoz-backup-"+today()+".json";
+
+document.body.appendChild(link);link.click();link.remove();
+
+setTimeout(()=>URL.revokeObjectURL(url),1000);
+
+}
+
+/* Arranque */
+
+async function initApp(){
+
+loadLocal();initSupabase();buildChecklist();
+
+if(supabaseClient){
+
+try{
+
+const {data,error}=await supabaseClient.auth.getSession();
+
+if(!error&&data?.session?.user){currentUser=data.session.user;demoMode=false;await enterApp();return}
+
+}catch(error){console.error("Erro ao restaurar sessão:",error)}
+
+}
+
+$("login")?.classList.remove("hidden");
+
+$("app")?.classList.add("hidden");
+
+$("nav")?.classList.add("hidden");
+
+setConnection("Entra com a tua conta para sincronizar os dados.",false);
+
+}
+
+window.showPage=showPage;
+
+window.viewEstablishment=viewEstablishment;
+
+window.changeProblemStatus=changeProblemStatus;
+
+window.deleteRecord=deleteRecord;
+
+window.printReport=printReport;
+
+window.manualSync=manualSync;
+
+window.exportData=exportData;
+
+window.logout=logout;
+
+document.addEventListener("DOMContentLoaded",initApp);
 
 </script>
 
