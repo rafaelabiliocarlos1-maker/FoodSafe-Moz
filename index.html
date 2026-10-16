@@ -138,7 +138,7 @@ img.evidence{max-width:100%;max-height:280px;display:block;border-radius:8px;mar
 
 <button type="button" class="secondary" id="demoButton">Continuar em modo de demonstração</button>
 
-<p class="muted">A demonstração permite testar as funções. Os dados ficam neste dispositivo e não são sincronizados com a nuvem.</p>
+<p class="muted">Na demonstração, os dados ficam neste dispositivo e não são sincronizados com a nuvem.</p>
 
 </section>
 
@@ -214,11 +214,7 @@ img.evidence{max-width:100%;max-height:280px;display:block;border-radius:8px;mar
 
 <label>Tipo de estabelecimento</label>
 
-<select id="estType">
-
-<option>Restaurante</option><option>Mercado</option><option>Padaria</option><option>Hotel</option><option>Armazém</option><option>Escola</option><option>Outro</option>
-
-</select>
+<select id="estType"><option>Restaurante</option><option>Mercado</option><option>Padaria</option><option>Hotel</option><option>Armazém</option><option>Escola</option><option>Outro</option></select>
 
 <label>Observações</label><textarea id="estNotes"></textarea>
 
@@ -260,7 +256,7 @@ img.evidence{max-width:100%;max-height:280px;display:block;border-radius:8px;mar
 
 </form>
 
-<p class="muted">Confirma os limites adequados ao alimento e às normas aplicáveis antes de avaliar o resultado.</p>
+<p class="muted">Confirma os limites adequados ao alimento e às normas aplicáveis.</p>
 
 </div>
 
@@ -289,6 +285,8 @@ img.evidence{max-width:100%;max-height:280px;display:block;border-radius:8px;mar
 </form>
 
 </div>
+
+<div class="card"><h3>Inspeções registadas</h3><div id="inspectionList"></div></div>
 
 </section>
 
@@ -336,7 +334,7 @@ img.evidence{max-width:100%;max-height:280px;display:block;border-radius:8px;mar
 
 <label>Descrição da evidência</label><textarea id="evidenceDesc" required></textarea>
 
-<label>Fotografia (máximo 1,5 MB recomendado)</label>
+<label>Fotografia (máximo 1,5 MB)</label>
 
 <input id="evidenceFile" type="file" accept="image/*" capture="environment">
 
@@ -344,7 +342,7 @@ img.evidence{max-width:100%;max-height:280px;display:block;border-radius:8px;mar
 
 </form>
 
-<p class="muted">As fotografias ficam no armazenamento local deste dispositivo. Não são enviadas para a nuvem por este código.</p>
+<p class="muted">Os dados descritivos são sincronizados. A fotografia fica neste dispositivo; não é enviada para o Supabase.</p>
 
 </div>
 
@@ -378,7 +376,7 @@ img.evidence{max-width:100%;max-height:280px;display:block;border-radius:8px;mar
 
 <section id="page-historico" class="page">
 
-<div class="card"><h2>Histórico de inspeções</h2><div id="historyList"></div></div>
+<div class="card"><h2>Histórico de inspeções e atividades</h2><div id="historyList"></div></div>
 
 </section>
 
@@ -478,23 +476,61 @@ let currentUser=null;
 
 let demoMode=false;
 
-let db={establishments:[],inspections:[],temperatures:[],problems:[],evidences:[]};
+let syncRunning=false;
+
+let db={
+
+ establishments:[],
+
+ inspections:[],
+
+ temperatures:[],
+
+ problems:[],
+
+ evidences:[]
+
+};
+
+const cloudTables={
+
+ establishments:"establishments",
+
+ inspections:"inspections",
+
+ temperatures:"temperatures",
+
+ problems:"problems",
+
+ evidences:"evidences"
+
+};
 
 const checklistItems=[
 
-"Higiene pessoal","Instalações","Equipamentos","Armazenamento","Temperatura",
+ "Higiene pessoal","Instalações","Equipamentos","Armazenamento","Temperatura",
 
-"Contaminação cruzada","Água e gelo","Resíduos","Pragas","Documentação"
+ "Contaminação cruzada","Água e gelo","Resíduos","Pragas","Documentação"
 
 ];
 
 function $(id){return document.getElementById(id)}
 
-function uid(){return crypto.randomUUID?crypto.randomUUID():"fs-"+Date.now()+"-"+Math.random().toString(16).slice(2)}
+function uid(){
+
+ return crypto.randomUUID?crypto.randomUUID():
+
+ "fs-"+Date.now()+"-"+Math.random().toString(16).slice(2);
+
+}
 
 function escapeHTML(value){
 
-return String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
+ return String(value??"").replace(/[&<>"']/g,char=>({
+
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+
+ }[char]));
 
 }
 
@@ -502,459 +538,769 @@ function today(){return new Date().toISOString().slice(0,10)}
 
 function dateLabel(value){
 
-if(!value)return "—";
+ if(!value)return "—";
 
-const date=new Date(value);
+ const date=new Date(value);
 
-return Number.isNaN(date.getTime())?escapeHTML(value):date.toLocaleDateString("pt-PT");
+ return Number.isNaN(date.getTime())?escapeHTML(value):
+
+ date.toLocaleDateString("pt-PT");
 
 }
 
 function notice(message,type="info"){
 
-const element=$("notice");
+ const el=$("notice");
 
-if(!element){alert(message);return}
+ if(!el){alert(message);return}
 
-element.textContent=message;
+ el.textContent=message;
 
-element.className="status"+(type==="error"?" error":type==="warn"?" warn":"");
+ el.className="status"+(type==="error"?" error":type==="warn"?" warn":"");
 
-element.classList.remove("hidden");
+ el.classList.remove("hidden");
 
 }
 
 function setConnection(message,online=false){
 
-if($("connection")){$("connection").textContent=message;$("connection").dataset.online=online?"true":"false"}
+ if($("connection")){
 
-if($("syncMessage"))$("syncMessage").textContent=message;
+  $("connection").textContent=message;
+
+  $("connection").dataset.online=online?"true":"false";
+
+ }
+
+ if($("syncMessage"))$("syncMessage").textContent=message;
 
 }
 
 function saveLocal(){
 
-try{localStorage.setItem(STORAGE_KEY,JSON.stringify(db));return true}
+ try{
 
-catch(error){console.error("Erro ao guardar localmente:",error);notice("Não foi possível guardar os dados neste dispositivo.","error");return false}
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(db));
+
+  return true;
+
+ }catch(error){
+
+  console.error("Erro ao guardar localmente:",error);
+
+  notice("Não foi possível guardar os dados neste dispositivo. Exporta os dados e liberta espaço.","error");
+
+  return false;
+
+ }
 
 }
 
 function loadLocal(){
 
-try{
+ try{
 
-const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}");
+  const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}");
 
-for(const key of Object.keys(db))db[key]=Array.isArray(saved[key])?saved[key]:[];
+  for(const key of Object.keys(db)){
 
-}catch(error){console.error("Erro ao ler os dados locais:",error)}
+   db[key]=Array.isArray(saved[key])?saved[key]:[];
+
+  }
+
+ }catch(error){
+
+  console.error("Erro ao ler dados locais:",error);
+
+  notice("Não foi possível ler os dados guardados neste dispositivo.","error");
+
+ }
 
 }
 
-function isMine(record){return demoMode?!record.user_id:record.user_id===currentUser?.id}
+function isMine(record){
 
-function myRecords(table){return db[table].filter(isMine)}
+ return demoMode
+
+  ? !record.user_id
+
+  : record.user_id===currentUser?.id;
+
+}
+
+function myRecords(table){
+
+ return (db[table]||[]).filter(isMine);
+
+}
+
+/* Os dados ficam primeiro no dispositivo.
+
+   _syncPending indica que ainda precisam de confirmação da nuvem. */
 
 function addRecord(table,record){
 
-const entry={id:uid(),created_at:new Date().toISOString(),...record};
+ const entry={
 
-if(!demoMode&&currentUser)entry.user_id=currentUser.id;
+  id:uid(),
 
-db[table].unshift(entry);
+  created_at:new Date().toISOString(),
 
-saveLocal();
+  ...record
 
-renderAll();
+ };
 
-if(!demoMode&&currentUser)syncRecord(table,entry);
+ if(!demoMode&&currentUser){
 
-else setConnection("Modo demonstração: dados guardados apenas neste dispositivo.",false);
+  entry.user_id=currentUser.id;
 
-return entry;
+  entry._syncPending=true;
+
+ }
+
+ db[table].unshift(entry);
+
+ if(!saveLocal()){
+
+  db[table]=db[table].filter(x=>x.id!==entry.id);
+
+  renderAll();
+
+  return null;
+
+ }
+
+ renderAll();
+
+ if(!demoMode&&currentUser){
+
+  syncRecord(table,entry);
+
+ }else{
+
+  setConnection("Demonstração local — sem sincronização na nuvem.",false);
+
+ }
+
+ return entry;
 
 }
 
 function initSupabase(){
 
-try{
+ try{
 
-if(window.supabase?.createClient){
+  if(window.supabase?.createClient){
 
-supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{
+   supabaseClient=window.supabase.createClient(
 
-auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}
+    SUPABASE_URL,SUPABASE_KEY,
 
-});
+    {auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}
 
-}
+   );
 
-}catch(error){console.error("Supabase não inicializado:",error)}
+  }
+
+ }catch(error){
+
+  console.error("Supabase não inicializado:",error);
+
+ }
 
 }
 
 async function login(event){
 
-event?.preventDefault();
+ event?.preventDefault();
 
-const email=$("email")?.value.trim();
+ const email=$("email").value.trim();
 
-const password=$("password")?.value;
+ const password=$("password").value;
 
-if(!email||!password){notice("Introduz o e-mail e a palavra-passe.","error");return}
+ if(!email||!password){
 
-if(!supabaseClient){notice("O serviço de autenticação não foi carregado. Verifica a internet e recarrega a página.","error");return}
+  notice("Introduz o e-mail e a palavra-passe.","error");
 
-setConnection("A verificar o acesso…");
+  return;
 
-try{
+ }
 
-const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
+ if(!supabaseClient){
 
-if(error)throw error;
+  notice("O Supabase não foi carregado. Verifica a internet e recarrega a página.","error");
 
-currentUser=data.user;
+  return;
 
-demoMode=false;
+ }
 
-localStorage.setItem(SESSION_KEY,JSON.stringify({id:currentUser.id,email:currentUser.email}));
+ setConnection("A verificar o acesso…",false);
 
-await enterApp();
+ try{
 
-notice("Sessão iniciada com sucesso.","success");
+  const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
 
-}catch(error){
+  if(error)throw error;
 
-console.error("Erro de login:",error);
+  currentUser=data.user;
 
-setConnection("Não foi possível iniciar sessão.",false);
+  demoMode=false;
 
-notice("Não foi possível entrar. Confirma o e-mail, a palavra-passe e se o utilizador está confirmado no Supabase.","error");
+  localStorage.setItem(SESSION_KEY,JSON.stringify({
 
-}
+   id:currentUser.id,email:currentUser.email
+
+  }));
+
+  await enterApp();
+
+  notice("Sessão iniciada. Verifica a mensagem de sincronização.","info");
+
+ }catch(error){
+
+  console.error("Erro de login:",error);
+
+  setConnection("Não foi possível iniciar sessão.",false);
+
+  notice("Não foi possível entrar. Confirma o e-mail, a palavra-passe e a confirmação da conta no Supabase.","error");
+
+ }
 
 }
 
 async function enterApp(){
 
-$("login")?.classList.add("hidden");
+ $("login").classList.add("hidden");
 
-$("app")?.classList.remove("hidden");
+ $("app").classList.remove("hidden");
 
-$("nav")?.classList.remove("hidden");
+ $("nav").classList.remove("hidden");
 
-if($("userLabel"))$("userLabel").textContent=demoMode?"Demonstração local":(currentUser?.email||"Utilizador autenticado");
+ $("userLabel").textContent=demoMode
 
-if($("accountInfo"))$("accountInfo").textContent=demoMode?"Modo demonstração. Os dados ficam apenas neste dispositivo e não são sincronizados.":"Conta autenticada: "+(currentUser?.email||"");
+  ?"Demonstração local":(currentUser?.email||"Utilizador autenticado");
 
-if(demoMode)setConnection("Demonstração local — sem sincronização na nuvem.",false);
+ $("accountInfo").textContent=demoMode
 
-else{setConnection("Sessão autenticada. A verificar a sincronização…",true);await syncFromCloud()}
+  ?"Modo demonstração. Os dados ficam apenas neste dispositivo."
 
-buildChecklist();
+  :"Conta autenticada: "+(currentUser?.email||"");
 
-populateSelects();
+ buildChecklist();
 
-renderAll();
+ populateSelects();
 
-showPage("inicio");
+ renderAll();
+
+ showPage("inicio");
+
+ if(demoMode){
+
+  setConnection("Demonstração local — sem sincronização na nuvem.",false);
+
+ }else{
+
+  await syncFromCloud();
+
+ }
 
 }
 
 async function startDemo(){
 
-demoMode=true;currentUser=null;
+ demoMode=true;
 
-await enterApp();
+ currentUser=null;
 
-notice("Entraste no modo demonstração. Estes dados não serão enviados ao Supabase.","info");
+ await enterApp();
+
+ notice("Modo demonstração ativo. Os dados não serão enviados ao Supabase.","info");
 
 }
 
 async function logout(){
 
-if(!demoMode&&supabaseClient){try{await supabaseClient.auth.signOut()}catch(error){console.error("Erro ao terminar sessão:",error)}}
+ if(!demoMode&&supabaseClient){
 
-currentUser=null;demoMode=false;
+  try{await supabaseClient.auth.signOut()}
 
-localStorage.removeItem(SESSION_KEY);
+  catch(error){console.error("Erro ao terminar sessão:",error)}
 
-$("app")?.classList.add("hidden");
+ }
 
-$("nav")?.classList.add("hidden");
+ currentUser=null;
 
-$("login")?.classList.remove("hidden");
+ demoMode=false;
 
-setConnection("Sessão terminada.",false);
+ localStorage.removeItem(SESSION_KEY);
+
+ $("app").classList.add("hidden");
+
+ $("nav").classList.add("hidden");
+
+ $("login").classList.remove("hidden");
+
+ setConnection("Sessão terminada.",false);
 
 }
 
 function showPage(name){
 
-document.querySelectorAll(".page").forEach(page=>page.classList.remove("active"));
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
 
-$("page-"+name)?.classList.add("active");
+ $("page-"+name)?.classList.add("active");
 
-document.querySelectorAll(".nav [data-page]").forEach(button=>button.classList.toggle("active",button.dataset.page===name));
+ document.querySelectorAll(".nav [data-page]").forEach(button=>{
 
-if(name==="relatorio")renderReport();
+  button.classList.toggle("active",button.dataset.page===name);
 
-if(name==="perfil")renderProfile();
+ });
 
-if(name==="dashboard")renderDashboard();
+ if(name==="relatorio")renderReport();
+
+ if(name==="perfil")renderProfile();
+
+ if(name==="dashboard")renderDashboard();
 
 }
 
 function buildChecklist(){
 
-const container=$("checkItems");
+ const container=$("checkItems");
 
-if(!container||container.dataset.ready==="true")return;
+ if(!container||container.dataset.ready==="true")return;
 
-container.innerHTML=checklistItems.map((item,index)=>`<label class="check-row"><input type="checkbox" name="check-${index}" value="${escapeHTML(item)}"><span>${escapeHTML(item)}</span></label>`).join("");
+ container.innerHTML=checklistItems.map((item,index)=>
 
-container.dataset.ready="true";
+  `<label class="check-row">
+
+   <input type="checkbox" name="check-${index}" value="${escapeHTML(item)}">
+
+   <span>${escapeHTML(item)}</span>
+
+  </label>`
+
+ ).join("");
+
+ container.dataset.ready="true";
 
 }
 
 function populateSelects(){
 
-const establishments=myRecords("establishments");
+ const establishments=myRecords("establishments");
 
-["tempEst","inspectionEst","problemEst","evidenceEst","profileEst"].forEach(id=>{
+ ["tempEst","inspectionEst","problemEst","evidenceEst","profileEst"].forEach(id=>{
 
-const select=$(id);if(!select)return;
+  const select=$(id);
 
-const previous=select.value;
+  if(!select)return;
 
-select.innerHTML='<option value="">Selecionar estabelecimento</option>'+establishments.map(est=>`<option value="${escapeHTML(est.id)}">${escapeHTML(est.name)}</option>`).join("");
+  const previous=select.value;
 
-if(establishments.some(est=>est.id===previous))select.value=previous;
+  select.innerHTML='<option value="">Selecionar estabelecimento</option>'+
 
-});
+   establishments.map(est=>
+
+    `<option value="${escapeHTML(est.id)}">${escapeHTML(est.name)}</option>`
+
+   ).join("");
+
+  if(establishments.some(est=>est.id===previous))select.value=previous;
+
+ });
 
 }
 
-function selectedEstablishment(id){return myRecords("establishments").find(est=>est.id===id)}
+function selectedEstablishment(id){
 
-function establishmentName(id){return selectedEstablishment(id)?.name||"Estabelecimento removido"}
+ return myRecords("establishments").find(est=>est.id===id);
+
+}
+
+function establishmentName(id){
+
+ return selectedEstablishment(id)?.name||"Estabelecimento removido";
+
+}
 
 function renderEstablishments(){
 
-const container=$("estList");if(!container)return;
+ const container=$("estList");
 
-const rows=myRecords("establishments");
+ if(!container)return;
 
-container.innerHTML=rows.length?rows.map(est=>`
+ const rows=myRecords("establishments");
 
-<article class="item"><h3>${escapeHTML(est.name)}</h3>
+ container.innerHTML=rows.length?rows.map(est=>`
 
-<p>Responsável: ${escapeHTML(est.responsible||"—")}</p>
+  <article class="item">
 
-<p>Localização: ${escapeHTML(est.city||"—")} · ${escapeHTML(est.address||"—")}</p>
+   <h3>${escapeHTML(est.name)}</h3>
 
-<p>Tipo: ${escapeHTML(est.type||"—")}</p>
+   <p>Responsável: ${escapeHTML(est.responsible||"—")}</p>
 
-<button type="button" onclick="viewEstablishment('${est.id}')">Ver perfil</button>
+   <p>Localização: ${escapeHTML(est.city||"—")} · ${escapeHTML(est.address||"—")}</p>
 
-<button type="button" onclick="deleteRecord('establishments','${est.id}')">Eliminar</button></article>`).join(""):"<p>Ainda não há estabelecimentos registados.</p>";
+   <p>Tipo: ${escapeHTML(est.type||"—")}</p>
+
+   <button type="button" onclick="viewEstablishment('${est.id}')">Ver perfil</button>
+
+   <button type="button" class="danger" onclick="deleteRecord('establishments','${est.id}')">Eliminar</button>
+
+  </article>
+
+ `).join(""):"<p>Ainda não há estabelecimentos registados.</p>";
 
 }
 
 function renderTemperatures(){
 
-const container=$("tempList");if(!container)return;
+ const container=$("tempList");
 
-const rows=myRecords("temperatures");
+ if(!container)return;
 
-container.innerHTML=rows.length?rows.map(item=>{
+ const rows=myRecords("temperatures");
 
-const valid=Number(item.value)>=Number(item.min)&&Number(item.value)<=Number(item.max);
+ container.innerHTML=rows.length?rows.map(item=>{
 
-return `<article class="item"><h3>${escapeHTML(establishmentName(item.establishment_id))}</h3>
+  const valid=Number(item.value)>=Number(item.min)&&Number(item.value)<=Number(item.max);
 
-<p>Alimento/equipamento: ${escapeHTML(item.item||"—")}</p>
+  return `<article class="item">
 
-<p>Temperatura: ${escapeHTML(item.value)} °C</p>
+   <h3>${escapeHTML(establishmentName(item.establishment_id))}</h3>
 
-<p>Limites registados: ${escapeHTML(item.min)} °C a ${escapeHTML(item.max)} °C</p>
+   <p>Alimento/equipamento: ${escapeHTML(item.item||"—")}</p>
 
-<p>Resultado: <strong>${valid?"Dentro dos limites definidos":"Fora dos limites definidos"}</strong></p>
+   <p>Temperatura: ${escapeHTML(item.value)} °C</p>
 
-<p>Data: ${dateLabel(item.created_at)}</p><p>${escapeHTML(item.notes||"")}</p>
+   <p>Limites: ${escapeHTML(item.min)} °C a ${escapeHTML(item.max)} °C</p>
 
-<button type="button" onclick="deleteRecord('temperatures','${item.id}')">Eliminar</button></article>`;
+   <p>Resultado: <strong>${valid?"Dentro dos limites definidos":"Fora dos limites definidos"}</strong></p>
 
-}).join(""):"<p>Ainda não há temperaturas registadas.</p>";
+   <p>Data: ${dateLabel(item.created_at)}</p>
+
+   <p>${escapeHTML(item.notes||"")}</p>
+
+   <button type="button" class="danger" onclick="deleteRecord('temperatures','${item.id}')">Eliminar</button>
+
+  </article>`;
+
+ }).join(""):"<p>Ainda não há temperaturas registadas.</p>";
+
+}
+
+function renderInspections(){
+
+ const container=$("inspectionList");
+
+ if(!container)return;
+
+ const rows=myRecords("inspections");
+
+ container.innerHTML=rows.length?rows.map(item=>`
+
+  <article class="item">
+
+   <h3>${escapeHTML(establishmentName(item.establishment_id))}</h3>
+
+   <p>Inspetor: ${escapeHTML(item.inspector||"—")}</p>
+
+   <p>Conformidade: ${escapeHTML(item.score)}%</p>
+
+   <p>Itens conformes: ${escapeHTML((item.checked_items||[]).join(", ")||"Nenhum")}</p>
+
+   <p>Itens por verificar/conformes não assinalados: ${escapeHTML((item.nonconformities||[]).join(", ")||"Nenhum")}</p>
+
+   <p>Observações: ${escapeHTML(item.notes||"—")}</p>
+
+   <p>Data: ${dateLabel(item.created_at)}</p>
+
+   <button type="button" class="danger" onclick="deleteRecord('inspections','${item.id}')">Eliminar</button>
+
+  </article>
+
+ `).join(""):"<p>Ainda não há inspeções registadas.</p>";
 
 }
 
 function renderProblems(){
 
-const container=$("problemList");if(!container)return;
+ const container=$("problemList");
 
-const rows=myRecords("problems");
+ if(!container)return;
 
-container.innerHTML=rows.length?rows.map(item=>`
+ const rows=myRecords("problems");
 
-<article class="item"><h3>${escapeHTML(establishmentName(item.establishment_id))}</h3>
+ container.innerHTML=rows.length?rows.map(item=>`
 
-<p>${escapeHTML(item.description)}</p>
+  <article class="item">
 
-<p>Categoria: ${escapeHTML(item.category||"—")} · Gravidade: ${escapeHTML(item.severity||"—")}</p>
+   <h3>${escapeHTML(establishmentName(item.establishment_id))}</h3>
 
-<p>Medida corretiva: ${escapeHTML(item.action||"—")}</p>
+   <p>${escapeHTML(item.description)}</p>
 
-<p>Estado: <strong>${escapeHTML(item.status||"Aberto")}</strong></p>
+   <p>Categoria: ${escapeHTML(item.category||"—")} · Gravidade: ${escapeHTML(item.severity||"—")}</p>
 
-<p>Data: ${dateLabel(item.created_at)}</p>
+   <p>Medida corretiva: ${escapeHTML(item.action||"—")}</p>
 
-<button type="button" onclick="changeProblemStatus('${item.id}')">Alterar estado</button>
+   <p>Estado: <strong>${escapeHTML(item.status||"Aberto")}</strong></p>
 
-<button type="button" onclick="deleteRecord('problems','${item.id}')">Eliminar</button></article>`).join(""):"<p>Ainda não há problemas registados.</p>";
+   <p>Data: ${dateLabel(item.created_at)}</p>
+
+   <button type="button" onclick="changeProblemStatus('${item.id}')">Alterar estado</button>
+
+   <button type="button" class="danger" onclick="deleteRecord('problems','${item.id}')">Eliminar</button>
+
+  </article>
+
+ `).join(""):"<p>Ainda não há problemas registados.</p>";
 
 }
 
 function renderEvidences(){
 
-const container=$("evidenceList");if(!container)return;
+ const container=$("evidenceList");
 
-const rows=myRecords("evidences");
+ if(!container)return;
 
-container.innerHTML=rows.length?rows.map(item=>`
+ const rows=myRecords("evidences");
 
-<article class="item"><h3>${escapeHTML(establishmentName(item.establishment_id))}</h3>
+ container.innerHTML=rows.length?rows.map(item=>`
 
-<p>${escapeHTML(item.description||"Evidência")}</p><p>Data: ${dateLabel(item.created_at)}</p>
+  <article class="item">
 
-${item.fileData?`<img class="evidence" src="${item.fileData}" alt="Evidência">`:""}
+   <h3>${escapeHTML(establishmentName(item.establishment_id))}</h3>
 
-<p>${item.fileData?"Fotografia guardada neste dispositivo.":"Sem fotografia anexada."}</p>
+   <p>${escapeHTML(item.description||"Evidência")}</p>
 
-<button type="button" onclick="deleteRecord('evidences','${item.id}')">Eliminar</button></article>`).join(""):"<p>Ainda não há evidências registadas.</p>";
+   <p>Data: ${dateLabel(item.created_at)}</p>
+
+   ${item.fileData?`<img class="evidence" src="${item.fileData}" alt="Evidência">`:""}
+
+   <p>${item.fileData?"Fotografia guardada neste dispositivo.":"Sem fotografia local disponível."}</p>
+
+   <button type="button" class="danger" onclick="deleteRecord('evidences','${item.id}')">Eliminar</button>
+
+  </article>
+
+ `).join(""):"<p>Ainda não há evidências registadas.</p>";
 
 }
 
 function renderHistory(){
 
-const container=$("historyList");if(!container)return;
+ const container=$("historyList");
 
-const rows=[
+ if(!container)return;
 
-...myRecords("inspections").map(x=>({...x,kind:"Inspeção",description:`${x.score??0}% de conformidade`})),
+ const rows=[
 
-...myRecords("temperatures").map(x=>({...x,kind:"Temperatura",description:`${x.value} °C`})),
+  ...myRecords("inspections").map(x=>({...x,kind:"Inspeção",description:`${x.score??0}% de conformidade`})),
 
-...myRecords("problems").map(x=>({...x,kind:"Problema",description:x.description})),
+  ...myRecords("temperatures").map(x=>({...x,kind:"Temperatura",description:`${x.value} °C`})),
 
-...myRecords("evidences").map(x=>({...x,kind:"Evidência",description:x.description}))
+  ...myRecords("problems").map(x=>({...x,kind:"Problema",description:x.description})),
 
-].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+  ...myRecords("evidences").map(x=>({...x,kind:"Evidência",description:x.description}))
 
-container.innerHTML=rows.length?rows.map(x=>`<article class="item"><strong>${escapeHTML(x.kind)}</strong><p>${escapeHTML(establishmentName(x.establishment_id))}</p><p>${escapeHTML(x.description||"")}</p><p>${dateLabel(x.created_at)}</p></article>`).join(""):"<p>O histórico ainda está vazio.</p>";
+ ].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+
+ container.innerHTML=rows.length?rows.map(x=>`
+
+  <article class="item">
+
+   <strong>${escapeHTML(x.kind)}</strong>
+
+   <p>${escapeHTML(establishmentName(x.establishment_id))}</p>
+
+   <p>${escapeHTML(x.description||"")}</p>
+
+   <p>${dateLabel(x.created_at)}</p>
+
+  </article>
+
+ `).join(""):"<p>O histórico ainda está vazio.</p>";
 
 }
 
 function renderDashboard(){
 
-const inspections=myRecords("inspections"),temps=myRecords("temperatures"),problems=myRecords("problems"),ests=myRecords("establishments");
+ const inspections=myRecords("inspections");
 
-if($("dEst"))$("dEst").textContent=ests.length;
+ const temps=myRecords("temperatures");
 
-if($("dIns"))$("dIns").textContent=inspections.length;
+ const problems=myRecords("problems");
 
-if($("dTemp"))$("dTemp").textContent=temps.length;
+ const ests=myRecords("establishments");
 
-if($("dProb"))$("dProb").textContent=problems.filter(p=>p.status!=="Resolvido").length;
+ $("dEst").textContent=ests.length;
 
-const unresolved=problems.filter(p=>p.status!=="Resolvido");
+ $("dIns").textContent=inspections.length;
 
-const critical=unresolved.filter(p=>["Alta","Crítica"].includes(p.severity));
+ $("dTemp").textContent=temps.length;
 
-if($("riskSummary"))$("riskSummary").textContent=critical.length?`${critical.length} problema(s) de gravidade alta ou crítica por resolver.`:unresolved.length?`${unresolved.length} problema(s) por resolver.`:"Não há problemas pendentes registados.";
+ $("dProb").textContent=problems.filter(p=>p.status!=="Resolvido").length;
 
-if($("mEst"))$("mEst").textContent=ests.length;
+ const unresolved=problems.filter(p=>p.status!=="Resolvido");
 
-if($("mIns"))$("mIns").textContent=inspections.length;
+ const critical=unresolved.filter(p=>["Alta","Crítica"].includes(p.severity));
 
-if($("mProb"))$("mProb").textContent=unresolved.length;
+ $("riskSummary").textContent=critical.length
 
-const average=inspections.length?Math.round(inspections.reduce((sum,x)=>sum+Number(x.score||0),0)/inspections.length):0;
+  ?`${critical.length} problema(s) de gravidade alta ou crítica por resolver.`
 
-if($("mConf"))$("mConf").textContent=inspections.length?average+"%":"—";
+  :unresolved.length
 
-if($("recent")){
+   ?`${unresolved.length} problema(s) por resolver.`
 
-const latest=[...inspections.map(x=>({...x,kind:"Inspeção"})),...temps.map(x=>({...x,kind:"Temperatura"})),...problems.map(x=>({...x,kind:"Problema"}))].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).slice(0,5);
+   :"Não há problemas pendentes registados.";
 
-$("recent").innerHTML=latest.length?latest.map(x=>`<p><strong>${escapeHTML(x.kind)}</strong> — ${escapeHTML(establishmentName(x.establishment_id))} · ${dateLabel(x.created_at)}</p>`).join(""):"<p>Sem atividade registada.</p>";
+ $("mEst").textContent=ests.length;
 
-}
+ $("mIns").textContent=inspections.length;
+
+ $("mProb").textContent=unresolved.length;
+
+ const average=inspections.length
+
+  ?Math.round(inspections.reduce((sum,x)=>sum+Number(x.score||0),0)/inspections.length)
+
+  :0;
+
+ $("mConf").textContent=inspections.length?average+"%":"—";
+
+ const latest=[
+
+  ...inspections.map(x=>({...x,kind:"Inspeção"})),
+
+  ...temps.map(x=>({...x,kind:"Temperatura"})),
+
+  ...problems.map(x=>({...x,kind:"Problema"}))
+
+ ].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).slice(0,5);
+
+ $("recent").innerHTML=latest.length?latest.map(x=>
+
+  `<p><strong>${escapeHTML(x.kind)}</strong> — ${escapeHTML(establishmentName(x.establishment_id))} · ${dateLabel(x.created_at)}</p>`
+
+ ).join(""):"<p>Sem atividade registada.</p>";
 
 }
 
 function renderProfile(){
 
-const id=$("profileEst")?.value,container=$("profileDetails");if(!container)return;
+ const id=$("profileEst")?.value;
 
-const est=selectedEstablishment(id);
+ const container=$("profileDetails");
 
-if(!est){container.innerHTML="<p>Seleciona um estabelecimento para consultar o perfil.</p>";return}
+ if(!container)return;
 
-const inspections=myRecords("inspections").filter(x=>x.establishment_id===id);
+ const est=selectedEstablishment(id);
 
-const problems=myRecords("problems").filter(x=>x.establishment_id===id);
+ if(!est){
 
-const temps=myRecords("temperatures").filter(x=>x.establishment_id===id);
+  container.innerHTML="<p>Seleciona um estabelecimento para consultar o perfil.</p>";
 
-const average=inspections.length?Math.round(inspections.reduce((sum,x)=>sum+Number(x.score||0),0)/inspections.length):null;
+  return;
 
-const risk=problems.some(x=>x.status!=="Resolvido"&&["Alta","Crítica"].includes(x.severity))?"Alto":problems.some(x=>x.status!=="Resolvido")?"Moderado":"Sem problemas pendentes registados";
+ }
 
-container.innerHTML=`<article class="item"><h3>${escapeHTML(est.name)}</h3>
+ const inspections=myRecords("inspections").filter(x=>x.establishment_id===id);
 
-<p>Responsável: ${escapeHTML(est.responsible||"—")}</p><p>Telefone: ${escapeHTML(est.phone||"—")}</p>
+ const problems=myRecords("problems").filter(x=>x.establishment_id===id);
 
-<p>Localização: ${escapeHTML(est.city||"—")} · ${escapeHTML(est.address||"—")}</p>
+ const temps=myRecords("temperatures").filter(x=>x.establishment_id===id);
 
-<p>Total de inspeções: ${inspections.length}</p><p>Conformidade média: ${average===null?"Sem inspeções":average+"%"}</p>
+ const average=inspections.length
 
-<p>Nível de risco indicativo: <strong>${risk}</strong></p>
+  ?Math.round(inspections.reduce((sum,x)=>sum+Number(x.score||0),0)/inspections.length)
 
-<p>Problemas por resolver: ${problems.filter(x=>x.status!=="Resolvido").length}</p>
+  :null;
 
-<p>Registos de temperatura: ${temps.length}</p>
+ const risk=problems.some(x=>x.status!=="Resolvido"&&["Alta","Crítica"].includes(x.severity))
 
-<p>Última inspeção: ${inspections.length?dateLabel(inspections[0].created_at):"Nenhuma"}</p></article>`;
+  ?"Alto"
+
+  :problems.some(x=>x.status!=="Resolvido")?"Moderado":"Sem problemas pendentes";
+
+ container.innerHTML=`<article class="item">
+
+  <h3>${escapeHTML(est.name)}</h3>
+
+  <p>Responsável: ${escapeHTML(est.responsible||"—")}</p>
+
+  <p>Telefone: ${escapeHTML(est.phone||"—")}</p>
+
+  <p>Localização: ${escapeHTML(est.city||"—")} · ${escapeHTML(est.address||"—")}</p>
+
+  <p>Total de inspeções: ${inspections.length}</p>
+
+  <p>Conformidade média: ${average===null?"Sem inspeções":average+"%"}</p>
+
+  <p>Nível de risco indicativo: <strong>${risk}</strong></p>
+
+  <p>Problemas por resolver: ${problems.filter(x=>x.status!=="Resolvido").length}</p>
+
+  <p>Registos de temperatura: ${temps.length}</p>
+
+  <p>Observações: ${escapeHTML(est.notes||"—")}</p>
+
+  <p>Última inspeção: ${inspections.length?dateLabel(inspections[0].created_at):"Nenhuma"}</p>
+
+ </article>`;
 
 }
 
-function viewEstablishment(id){showPage("perfil");if($("profileEst"))$("profileEst").value=id;renderProfile()}
+function viewEstablishment(id){
+
+ showPage("perfil");
+
+ $("profileEst").value=id;
+
+ renderProfile();
+
+}
 
 function renderReport(){
 
-const container=$("reportContent");if(!container)return;
+ const container=$("reportContent");
 
-const ests=myRecords("establishments"),inspections=myRecords("inspections"),problems=myRecords("problems");
+ if(!container)return;
 
-container.innerHTML=`<h2>Relatório FoodSafe Moz</h2><p>Data de emissão: ${dateLabel(new Date().toISOString())}</p>
+ const ests=myRecords("establishments");
 
-<p>Estabelecimentos registados: ${ests.length}</p><p>Inspeções registadas: ${inspections.length}</p>
+ const inspections=myRecords("inspections");
 
-<p>Problemas pendentes: ${problems.filter(x=>x.status!=="Resolvido").length}</p>
+ const problems=myRecords("problems");
 
-${ests.map(est=>{const ins=inspections.filter(x=>x.establishment_id===est.id),prob=problems.filter(x=>x.establishment_id===est.id&&x.status!=="Resolvido");return `<hr><h3>${escapeHTML(est.name)}</h3><p>Responsável: ${escapeHTML(est.responsible||"—")}</p><p>Inspeções: ${ins.length}</p><p>Problemas pendentes: ${prob.length}</p>`}).join("")}`;
+ container.innerHTML=`<h2>Relatório FoodSafe Moz</h2>
+
+  <p>Data de emissão: ${dateLabel(new Date().toISOString())}</p>
+
+  <p>Estabelecimentos registados: ${ests.length}</p>
+
+  <p>Inspeções registadas: ${inspections.length}</p>
+
+  <p>Problemas pendentes: ${problems.filter(x=>x.status!=="Resolvido").length}</p>
+
+  ${ests.map(est=>{
+
+   const ins=inspections.filter(x=>x.establishment_id===est.id);
+
+   const prob=problems.filter(x=>x.establishment_id===est.id&&x.status!=="Resolvido");
+
+   return `<hr><h3>${escapeHTML(est.name)}</h3>
+
+    <p>Responsável: ${escapeHTML(est.responsible||"—")}</p>
+
+    <p>Inspeções: ${ins.length}</p><p>Problemas pendentes: ${prob.length}</p>`;
+
+  }).join("")}`;
 
 }
 
 function printReport(){renderReport();window.print()}
-
-function renderAll(){
-
-populateSelects();renderEstablishments();renderTemperatures();renderProblems();renderEvidences();renderHistory();renderDashboard();renderProfile();renderReport();
-
-}
 
 /* Formulários */
 
@@ -962,99 +1308,223 @@ $("loginForm").addEventListener("submit",login);
 
 $("demoButton").addEventListener("click",startDemo);
 
-document.querySelectorAll(".nav [data-page]").forEach(button=>button.addEventListener("click",()=>showPage(button.dataset.page)));
+document.querySelectorAll(".nav [data-page]").forEach(button=>
+
+ button.addEventListener("click",()=>showPage(button.dataset.page))
+
+);
 
 $("estForm").addEventListener("submit",event=>{
 
-event.preventDefault();
+ event.preventDefault();
 
-const name=$("estName").value.trim();
+ const name=$("estName").value.trim();
 
-if(!name){notice("Introduz o nome do estabelecimento.","error");return}
+ if(!name){notice("Introduz o nome do estabelecimento.","error");return}
 
-addRecord("establishments",{name,responsible:$("estResponsible").value.trim(),phone:$("estPhone").value.trim(),city:$("estCity").value.trim(),address:$("estAddress").value.trim(),type:$("estType").value,notes:$("estNotes").value.trim()});
+ const entry=addRecord("establishments",{
 
-event.target.reset();$("estCity").value="Nampula";notice("Estabelecimento guardado.","success");
+  name,
+
+  responsible:$("estResponsible").value.trim(),
+
+  phone:$("estPhone").value.trim(),
+
+  city:$("estCity").value.trim(),
+
+  address:$("estAddress").value.trim(),
+
+  type:$("estType").value,
+
+  notes:$("estNotes").value.trim()
+
+ });
+
+ if(!entry)return;
+
+ event.target.reset();
+
+ $("estCity").value="Nampula";
+
+ notice("Estabelecimento guardado localmente. A sincronização será confirmada separadamente.","info");
 
 });
 
 $("tempForm").addEventListener("submit",event=>{
 
-event.preventDefault();
+ event.preventDefault();
 
-const establishment_id=$("tempEst").value,value=Number($("tempValue").value),min=Number($("tempMin").value),max=Number($("tempMax").value);
+ const establishment_id=$("tempEst").value;
 
-if(!establishment_id||!Number.isFinite(value)||min>max){notice("Verifica o estabelecimento e os limites de temperatura.","error");return}
+ const value=Number($("tempValue").value);
 
-addRecord("temperatures",{establishment_id,item:$("tempItem").value.trim(),value,min,max,notes:$("tempNotes").value.trim()});
+ const min=Number($("tempMin").value);
 
-event.target.reset();$("tempMin").value="0";$("tempMax").value="5";notice("Temperatura registada.","success");
+ const max=Number($("tempMax").value);
+
+ if(!establishment_id||!Number.isFinite(value)||min>max){
+
+  notice("Verifica o estabelecimento e os limites de temperatura.","error");return;
+
+ }
+
+ const entry=addRecord("temperatures",{
+
+  establishment_id,item:$("tempItem").value.trim(),
+
+  value,min,max,notes:$("tempNotes").value.trim()
+
+ });
+
+ if(!entry)return;
+
+ event.target.reset();
+
+ $("tempMin").value="0";
+
+ $("tempMax").value="5";
+
+ notice("Temperatura guardada localmente. Aguarda a confirmação da sincronização.","info");
 
 });
 
 $("inspectionForm").addEventListener("submit",event=>{
 
-event.preventDefault();
+ event.preventDefault();
 
-const establishment_id=$("inspectionEst").value;
+ const establishment_id=$("inspectionEst").value;
 
-const checked=checklistItems.filter((item,index)=>document.querySelector(`[name="check-${index}"]`)?.checked);
+ if(!establishment_id){
 
-if(!establishment_id){notice("Seleciona o estabelecimento da inspeção.","error");return}
+  notice("Seleciona o estabelecimento da inspeção.","error");return;
 
-const unchecked=checklistItems.filter((item,index)=>!document.querySelector(`[name="check-${index}"]`)?.checked);
+ }
 
-const score=Math.round(checked.length/checklistItems.length*100);
+ const checked=checklistItems.filter((item,index)=>
 
-addRecord("inspections",{establishment_id,inspector:$("inspectorName").value.trim(),score,checked_items:checked,nonconformities:unchecked,notes:$("inspectionNotes").value.trim(),risk:score>=80?"Baixo":score>=50?"Moderado":"Alto"});
+  document.querySelector(`[name="check-${index}"]`)?.checked
 
-event.target.reset();notice(`Inspeção guardada. Conformidade: ${score}%.`,"success");
+ );
+
+ const unchecked=checklistItems.filter((item,index)=>
+
+  !document.querySelector(`[name="check-${index}"]`)?.checked
+
+ );
+
+ const score=Math.round(checked.length/checklistItems.length*100);
+
+ const entry=addRecord("inspections",{
+
+  establishment_id,
+
+  inspector:$("inspectorName").value.trim(),
+
+  score,checked_items:checked,nonconformities:unchecked,
+
+  notes:$("inspectionNotes").value.trim(),
+
+  risk:score>=80?"Baixo":score>=50?"Moderado":"Alto"
+
+ });
+
+ if(!entry)return;
+
+ event.target.reset();
+
+ notice(`Inspeção guardada localmente. Conformidade: ${score}%.`,"info");
 
 });
 
 $("problemForm").addEventListener("submit",event=>{
 
-event.preventDefault();
+ event.preventDefault();
 
-const establishment_id=$("problemEst").value,description=$("problemDesc").value.trim();
+ const establishment_id=$("problemEst").value;
 
-if(!establishment_id||!description){notice("Seleciona um estabelecimento e descreve o problema.","error");return}
+ const description=$("problemDesc").value.trim();
 
-addRecord("problems",{establishment_id,description,category:$("problemCategory").value,severity:$("problemSeverity").value,action:$("problemAction").value.trim(),status:"Aberto"});
+ if(!establishment_id||!description){
 
-event.target.reset();notice("Problema guardado.","success");
+  notice("Seleciona um estabelecimento e descreve o problema.","error");return;
+
+ }
+
+ const entry=addRecord("problems",{
+
+  establishment_id,description,
+
+  category:$("problemCategory").value,
+
+  severity:$("problemSeverity").value,
+
+  action:$("problemAction").value.trim(),
+
+  status:"Aberto"
+
+ });
+
+ if(!entry)return;
+
+ event.target.reset();
+
+ notice("Problema guardado localmente. A confirmar sincronização.","info");
 
 });
 
 $("evidenceForm").addEventListener("submit",event=>{
 
-event.preventDefault();
+ event.preventDefault();
 
-const establishment_id=$("evidenceEst").value,description=$("evidenceDesc").value.trim(),file=$("evidenceFile").files?.[0];
+ const establishment_id=$("evidenceEst").value;
 
-if(!establishment_id||!description){notice("Seleciona um estabelecimento e descreve a evidência.","error");return}
+ const description=$("evidenceDesc").value.trim();
 
-const saveEvidence=fileData=>{
+ const file=$("evidenceFile").files?.[0];
 
-addRecord("evidences",{establishment_id,description,fileName:file?.name||"",fileData:fileData||null,storage:"local"});
+ if(!establishment_id||!description){
 
-event.target.reset();notice("Evidência guardada neste dispositivo. A fotografia não foi enviada para a nuvem.","success");
+  notice("Seleciona o estabelecimento e descreve a evidência.","error");return;
 
-};
+ }
 
-if(!file){saveEvidence(null);return}
+ if(file&&file.size>1.5*1024*1024){
 
-if(file.size>1.5*1024*1024){notice("A fotografia excede 1,5 MB. Escolhe uma imagem mais pequena.","error");return}
+  notice("A fotografia excede 1,5 MB. Escolhe uma imagem mais pequena.","error");return;
 
-const reader=new FileReader();
+ }
 
-reader.onload=()=>saveEvidence({name:file.name,data:reader.result});
+ const saveEvidence=fileData=>{
 
-reader.onerror=()=>notice("Não foi possível ler a fotografia.","error");
+  const entry=addRecord("evidences",{
 
-reader.onload=()=>saveEvidence(reader.result);
+   establishment_id,description,
 
-reader.readAsDataURL(file);
+   fileName:file?.name||"",
+
+   fileData:fileData||null,
+
+   storage:"local"
+
+  });
+
+  if(!entry)return;
+
+  event.target.reset();
+
+  notice("Descrição da evidência guardada. A fotografia permanece neste dispositivo.","info");
+
+ };
+
+ if(!file){saveEvidence(null);return}
+
+ const reader=new FileReader();
+
+ reader.onload=()=>saveEvidence(reader.result);
+
+ reader.onerror=()=>notice("Não foi possível ler a fotografia.","error");
+
+ reader.readAsDataURL(file);
 
 });
 
@@ -1062,171 +1532,495 @@ $("profileEst").addEventListener("change",renderProfile);
 
 function changeProblemStatus(id){
 
-const problem=db.problems.find(x=>x.id===id&&isMine(x));if(!problem)return;
+ const problem=db.problems.find(x=>x.id===id&&isMine(x));
 
-const states=["Aberto","Em tratamento","Resolvido"];
+ if(!problem)return;
 
-problem.status=states[(states.indexOf(problem.status||"Aberto")+1)%states.length];
+ const states=["Aberto","Em tratamento","Resolvido"];
 
-problem.updated_at=new Date().toISOString();saveLocal();renderAll();
+ problem.status=states[(states.indexOf(problem.status||"Aberto")+1)%states.length];
 
-if(!demoMode&&currentUser)syncRecord("problems",problem);
+ problem.updated_at=new Date().toISOString();
 
-notice("Estado atualizado para: "+problem.status,"success");
+ if(!demoMode&&currentUser)problem._syncPending=true;
 
-}
+ if(!saveLocal())return;
 
-async function deleteRecord(table,id){
+ renderAll();
 
-const record=db[table]?.find(x=>x.id===id&&isMine(x));if(!record)return;
+ if(!demoMode&&currentUser)syncRecord("problems",problem);
 
-if(!confirm("Tens a certeza de que queres eliminar este registo?"))return;
+ else setConnection("Alteração guardada apenas neste dispositivo.",false);
 
-db[table]=db[table].filter(x=>x.id!==id);saveLocal();renderAll();
-
-if(!demoMode&&currentUser&&table!=="evidences"){
-
-try{
-
-const {error}=await supabaseClient.from(table).delete().eq("id",id).eq("user_id",currentUser.id);
-
-if(error)throw error;
-
-}catch(error){
-
-console.error("Erro ao eliminar na nuvem:",error);
-
-notice("Registo removido localmente, mas a eliminação na nuvem falhou. Verifica a ligação e o RLS.","error");return;
+ notice("Estado atualizado localmente para: "+problem.status,"info");
 
 }
 
+/* Preparação dos registos enviados à nuvem.
+
+   Fotografias e marcadores locais nunca são enviados como colunas SQL. */
+
+function cloudPayload(record){
+
+ const payload={...record};
+
+ delete payload.fileData;
+
+ delete payload.fileName;
+
+ delete payload.storage;
+
+ delete payload._syncPending;
+
+ delete payload._syncError;
+
+ payload.user_id=currentUser.id;
+
+ return payload;
+
 }
 
-notice("Registo eliminado.","success");
+function mergeCloudRow(cloudRow,localRow){
+
+ const merged={...cloudRow};
+
+ /* Preserva dados locais que não existem no registo remoto. */
+
+ if(localRow){
+
+  for(const key of ["fileData","fileName","storage"]){
+
+   if(localRow[key]!==undefined)merged[key]=localRow[key];
+
+  }
+
+ }
+
+ delete merged._syncPending;
+
+ delete merged._syncError;
+
+ return merged;
 
 }
-
-/* Supabase e sincronização */
-
-const cloudTables={establishments:"establishments",inspections:"inspections",temperatures:"temperatures",problems:"problems"};
 
 async function syncRecord(table,record){
 
-if(demoMode||!currentUser||!supabaseClient||!cloudTables[table])return;
+ if(demoMode||!currentUser||!supabaseClient||!cloudTables[table])return false;
 
-const payload={...record};delete payload.fileData;delete payload.fileName;delete payload.storage;
+ const localRecord=db[table].find(x=>x.id===record.id&&isMine(x));
 
-payload.user_id=currentUser.id;
+ if(!localRecord)return false;
 
-try{
+ localRecord._syncPending=true;
 
-const {error}=await supabaseClient.from(cloudTables[table]).upsert(payload,{onConflict:"id"});
+ saveLocal();
 
-if(error)throw error;
+ try{
 
-setConnection("Ligado — último registo sincronizado.",true);
+  const {error}=await supabaseClient
 
-}catch(error){
+   .from(cloudTables[table])
 
-console.error("Erro ao sincronizar "+table+":",error);
+   .upsert(cloudPayload(localRecord),{onConflict:"id"});
 
-setConnection("Registo guardado localmente; sincronização na nuvem falhou.",false);
+  if(error)throw error;
 
-notice("O registo ficou guardado neste dispositivo, mas não foi confirmado no Supabase. Verifica as colunas da tabela e as políticas RLS.","error");
+  localRecord._syncPending=false;
+
+  delete localRecord._syncError;
+
+  saveLocal();
+
+  setConnection("Sincronização confirmada para o último registo.",true);
+
+  return true;
+
+ }catch(error){
+
+  console.error("Erro ao sincronizar "+table+":",error);
+
+  localRecord._syncPending=true;
+
+  localRecord._syncError=error.message||String(error);
+
+  saveLocal();
+
+  setConnection("Há registos pendentes. A sincronização não foi confirmada.",false);
+
+  notice("O registo continua guardado localmente, mas o Supabase não confirmou a gravação. Consulta a consola e as políticas RLS.","error");
+
+  return false;
+
+ }
 
 }
 
-}
+/* Sincronização segura:
+
+   1. Lê primeiro os dados remotos.
+
+   2. Envia os registos locais que ainda não existem na nuvem,
+
+      e os que estão marcados como pendentes.
+
+   3. Só depois atualiza a lista local.
+
+   4. Se a leitura remota falhar, preserva os dados locais. */
 
 async function syncFromCloud(){
 
-if(!currentUser||!supabaseClient)return;
+ if(!currentUser||!supabaseClient)return false;
 
-const failures=[];
+ if(syncRunning){
 
-for(const table of Object.keys(cloudTables)){
+  setConnection("Sincronização já em curso.",false);
 
-try{
+  return false;
 
-const {data,error}=await supabaseClient.from(cloudTables[table]).select("*").eq("user_id",currentUser.id);
+ }
 
-if(error)throw error;
+ syncRunning=true;
 
-const cloudRows=Array.isArray(data)?data:[];
+ let failures=[];
 
-const localOthers=db[table].filter(row=>row.user_id!==currentUser.id);
+ let pending=0;
 
-const merged=new Map();
+ try{
 
-localOthers.forEach(row=>merged.set(row.id,row));
+  setConnection("A verificar e sincronizar os dados…",false);
 
-cloudRows.forEach(row=>merged.set(row.id,row));
+  for(const table of Object.keys(cloudTables)){
 
-db[table]=Array.from(merged.values());
+   let cloudRows;
 
-}catch(error){console.error("Erro ao carregar "+table+":",error);failures.push(table)}
+   try{
 
-}
+    const {data,error}=await supabaseClient
 
-saveLocal();renderAll();
+     .from(cloudTables[table])
 
-if(failures.length){
+     .select("*")
 
-setConnection("Ligação ativa, mas falhou a leitura de: "+failures.join(", "),false);
+     .eq("user_id",currentUser.id);
 
-notice("Alguns dados não foram carregados do Supabase. Confirma as permissões SELECT e as políticas RLS.","error");
+    if(error)throw error;
 
-}else setConnection("Ligado — dados da conta carregados.",true);
+    cloudRows=Array.isArray(data)?data:[];
+
+   }catch(error){
+
+    console.error("Erro ao ler "+table,error);
+
+    failures.push(table+" (leitura)");
+
+    continue;
+
+   }
+
+   const cloudIds=new Set(cloudRows.map(row=>row.id));
+
+   const localRows=db[table].filter(row=>row.user_id===currentUser.id);
+
+   const failedIds=new Set();
+
+   /* Nunca substituir um registo local pendente antes de tentar enviá-lo. */
+
+   for(const localRow of localRows){
+
+    const shouldUpload=!cloudIds.has(localRow.id)||localRow._syncPending===true;
+
+    if(!shouldUpload)continue;
+
+    try{
+
+     const {error}=await supabaseClient
+
+      .from(cloudTables[table])
+
+      .upsert(cloudPayload(localRow),{onConflict:"id"});
+
+     if(error)throw error;
+
+     localRow._syncPending=false;
+
+     delete localRow._syncError;
+
+     cloudIds.add(localRow.id);
+
+    }catch(error){
+
+     console.error("Falha ao enviar registo:",table,localRow.id,error);
+
+     localRow._syncPending=true;
+
+     localRow._syncError=error.message||String(error);
+
+     failedIds.add(localRow.id);
+
+     failures.push(table+" (gravação)");
+
+    }
+
+   }
+
+   /* Recarrega a nuvem depois das gravações. */
+
+   let refreshed=cloudRows;
+
+   try{
+
+    const {data,error}=await supabaseClient
+
+     .from(cloudTables[table])
+
+     .select("*")
+
+     .eq("user_id",currentUser.id);
+
+    if(error)throw error;
+
+    refreshed=Array.isArray(data)?data:[];
+
+   }catch(error){
+
+    console.error("Erro ao confirmar "+table,error);
+
+    failures.push(table+" (confirmação)");
+
+    /* Não substituir o estado local com uma leitura incompleta. */
+
+    continue;
+
+   }
+
+   const localMap=new Map(
+
+    db[table]
+
+     .filter(row=>row.user_id===currentUser.id)
+
+     .map(row=>[row.id,row])
+
+   );
+
+   const remoteMap=new Map(refreshed.map(row=>[row.id,row]));
+
+   const merged=new Map();
+
+   /* Mantém registos locais de outras contas sem os misturar na sessão. */
+
+   for(const row of db[table]){
+
+    if(row.user_id!==currentUser.id)merged.set(row.id,row);
+
+   }
+
+   for(const [id,localRow] of localMap){
+
+    if(failedIds.has(id)){
+
+     merged.set(id,localRow);
+
+    }else if(remoteMap.has(id)){
+
+     merged.set(id,mergeCloudRow(remoteMap.get(id),localRow));
+
+    }else{
+
+     /* Não eliminar localmente um registo só porque não veio na consulta. */
+
+     merged.set(id,localRow);
+
+    }
+
+   }
+
+   for(const [id,remoteRow] of remoteMap){
+
+    if(!merged.has(id)){
+
+     merged.set(id,mergeCloudRow(remoteRow,null));
+
+    }
+
+   }
+
+   db[table]=Array.from(merged.values());
+
+  }
+
+  saveLocal();
+
+  renderAll();
+
+  pending=Object.values(cloudTables).reduce((total,table)=>
+
+   total+db[table].filter(row=>
+
+    row.user_id===currentUser.id&&row._syncPending===true
+
+   ).length,0
+
+  );
+
+  if(failures.length||pending){
+
+   setConnection(
+
+    "Sincronização incompleta. Registos pendentes: "+pending+
+
+    ". Problemas: "+[...new Set(failures)].join(", "),
+
+    false
+
+   );
+
+   notice("Alguns registos continuam pendentes. Os dados locais foram preservados. Verifica os erros da tabela e as políticas RLS.","error");
+
+   return false;
+
+  }
+
+  setConnection("Ligação e sincronização confirmadas.",true);
+
+  return true;
+
+ }finally{
+
+  syncRunning=false;
+
+ }
 
 }
 
 async function manualSync(){
 
-if(demoMode||!currentUser){notice("A sincronização exige uma sessão autenticada no Supabase.","error");return}
+ if(demoMode||!currentUser){
 
-if(!supabaseClient){notice("O Supabase não está inicializado. Recarrega a página e tenta novamente.","error");return}
+  notice("A sincronização exige uma sessão autenticada no Supabase.","error");
 
-await syncFromCloud();
+  return;
 
-let failed=0;
+ }
 
-for(const table of Object.keys(cloudTables)){
+ if(!supabaseClient){
 
-const rows=db[table].filter(row=>row.user_id===currentUser.id);
+  notice("O Supabase não está inicializado. Recarrega a página.","error");
 
-for(const row of rows){
+  return;
 
-try{
+ }
 
-const payload={...row,user_id:currentUser.id};
+ const button=event?.currentTarget;
 
-const {error}=await supabaseClient.from(cloudTables[table]).upsert(payload,{onConflict:"id"});
+ if(button)button.disabled=true;
 
-if(error)throw error;
+ try{
 
-}catch(error){console.error("Erro de sincronização:",table,error);failed++}
+  const success=await syncFromCloud();
+
+  if(success)notice("Sincronização concluída e confirmada.","info");
+
+ }finally{
+
+  if(button)button.disabled=false;
+
+ }
 
 }
 
-}
+/* A eliminação remota deve ser confirmada antes de remover o registo local. */
 
-if(failed){setConnection("Sincronização incompleta: "+failed+" registo(s) falharam.",false);notice("A sincronização não foi concluída. Verifica as colunas e políticas das tabelas.","error")}
+async function deleteRecord(table,id){
 
-else{setConnection("Sincronização concluída sem erros reportados.",true);notice("Sincronização concluída.","success")}
+ const record=db[table]?.find(x=>x.id===id&&isMine(x));
+
+ if(!record)return;
+
+ if(!confirm("Tens a certeza de que queres eliminar este registo?"))return;
+
+ if(!demoMode&&currentUser){
+
+  try{
+
+   const {error}=await supabaseClient
+
+    .from(cloudTables[table])
+
+    .delete()
+
+    .eq("id",id)
+
+    .eq("user_id",currentUser.id);
+
+   if(error)throw error;
+
+  }catch(error){
+
+   console.error("Erro ao eliminar na nuvem:",error);
+
+   notice("A eliminação não foi confirmada pelo Supabase. O registo foi mantido no dispositivo.","error");
+
+   return;
+
+  }
+
+ }
+
+ db[table]=db[table].filter(x=>x.id!==id);
+
+ if(!saveLocal())return;
+
+ renderAll();
+
+ notice("Registo eliminado.", "info");
 
 }
 
 function exportData(){
 
-const blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"});
+ const blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"});
 
-const url=URL.createObjectURL(blob),link=document.createElement("a");
+ const url=URL.createObjectURL(blob);
 
-link.href=url;link.download="foodsafemoz-backup-"+today()+".json";
+ const link=document.createElement("a");
 
-document.body.appendChild(link);link.click();link.remove();
+ link.href=url;
 
-setTimeout(()=>URL.revokeObjectURL(url),1000);
+ link.download="foodsafemoz-backup-"+today()+".json";
+
+ document.body.appendChild(link);
+
+ link.click();
+
+ link.remove();
+
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+
+}
+
+function renderAll(){
+
+ populateSelects();
+
+ renderEstablishments();
+
+ renderTemperatures();
+
+ renderInspections();
+
+ renderProblems();
+
+ renderEvidences();
+
+ renderHistory();
+
+ renderDashboard();
+
+ renderProfile();
+
+ renderReport();
 
 }
 
@@ -1234,27 +2028,47 @@ setTimeout(()=>URL.revokeObjectURL(url),1000);
 
 async function initApp(){
 
-loadLocal();initSupabase();buildChecklist();
+ loadLocal();
 
-if(supabaseClient){
+ initSupabase();
 
-try{
+ buildChecklist();
 
-const {data,error}=await supabaseClient.auth.getSession();
+ if(supabaseClient){
 
-if(!error&&data?.session?.user){currentUser=data.session.user;demoMode=false;await enterApp();return}
+  try{
 
-}catch(error){console.error("Erro ao restaurar sessão:",error)}
+   const {data,error}=await supabaseClient.auth.getSession();
 
-}
+   if(error)throw error;
 
-$("login")?.classList.remove("hidden");
+   if(data?.session?.user){
 
-$("app")?.classList.add("hidden");
+    currentUser=data.session.user;
 
-$("nav")?.classList.add("hidden");
+    demoMode=false;
 
-setConnection("Entra com a tua conta para sincronizar os dados.",false);
+    await enterApp();
+
+    return;
+
+   }
+
+  }catch(error){
+
+   console.error("Erro ao restaurar sessão:",error);
+
+  }
+
+ }
+
+ $("login").classList.remove("hidden");
+
+ $("app").classList.add("hidden");
+
+ $("nav").classList.add("hidden");
+
+ setConnection("Entra com a tua conta para sincronizar os dados.",false);
 
 }
 
